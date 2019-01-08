@@ -171,6 +171,50 @@ class ActivityModel extends Model {
 
         return $activity;
     }
+	
+	public function importActivities()
+	{
+		$activity = $this->createEntity('Aktiviteter');
+		// Required values
+		$activity->updated = date('Y-m-d H:i:s');
+		$activity->navn = "Test";
+		$activity->title_en = "Test";
+		$activity->author = "Text";
+		$activity->type = 'rolle';
+		$activity->sprog = 'dansk';
+		$activity->min_deltagere_per_hold = 1;
+		$activity->max_deltagere_per_hold = 1;
+		$activity->spilledere_per_hold = 1;
+		$activity->pris = 0;
+		$activity->varighed_per_afvikling = 1;
+		$activity->teaser_dk = "TeaserDK";
+		$activity->teaser_en = "TeaserEN";
+		$activity->replayable = 'nej';
+		$activity->max_signups = 0;
+		$activity->foromtale = "foromtale"; // Can be null
+		$activity->description_en = "DescriptionEN";
+		
+		// Default values:
+		$activity->kan_tilmeldes = 'ja';
+		$activity->note = NULL;
+		$activity->lokale_eksklusiv = 'ja';
+		$activity->wp_link = 0;
+		$activity->tids_eksklusiv = 'ja';
+		
+		// Default values (which are not visible under "Opret Aktivitet")
+		$activity->hidden = 'nej';
+		$activity->karmatype = 0;
+		
+		if (!$activity->insert()) {
+            return false;
+        }
+		
+		// Optional values:
+		//$activity->setMinAge(7);
+		//$activity->setMaxAge(50);
+		
+		return true;
+	}
 
     /**
      * creates a scheduling for an activity with data from POST

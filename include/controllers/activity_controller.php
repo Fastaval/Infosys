@@ -215,6 +215,46 @@ class ActivityController extends Controller
 
         $this->page->model = $this->model;
     }
+	
+	public function importActivities()
+	{
+		$user = $this->model->getLoggedInUser();
+		
+		if ($this->page->request->isPost()) {
+            $post = $this->page->request->post;
+			
+			/*
+			Nothing in $post...
+			foreach ($post as $key => $value) {
+				echo "Field ".htmlspecialchars($key)." is ".htmlspecialchars($value)."<br>";
+			}
+			exit;
+			*/
+			
+            if (empty($post->importactivities)) { // skal jeg bruge file eller importactivities ?
+                $this->errorMessage('Ingen Excel fil valgt.');
+                $this->hardRedirect($this->url('aktiviteterhome'));
+            }
+			else {
+                try {
+                    if ($this->model->importActivities()) {
+						$this->successMessage('Aktiviteter blev importeret.');
+						$this->log("Aktiviter blev importeret af {$this->model->getLoggedInUser()->user}", 'Aktivitet', $this->model->getLoggedInUser());
+                        $this->hardRedirect($this->url('aktiviteterhome'));
+					} else
+					{
+						$this->errorMessage('Kunne ikke importere aktiviteter.'); 
+						$this->hardRedirect($this->url('aktiviteterhome'));
+					}
+                } catch (Exception $e) {
+                    $this->errorMessage('Kunne ikke importere aktiviteter.');
+                    $this->hardRedirect($this->url('aktiviteterhome'));
+                }
+            }
+        }
+		
+		$this->page->model = $this->model;
+	}
 
     /**
      * creates a scheduling for an activity

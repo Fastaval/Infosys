@@ -200,6 +200,7 @@ class Routes
         $this->routes['edit_aktivitet']            = array('url' => 'aktivitet/edit/:id:', 'controller' => 'Activity', 'method' => 'editAktivitet');
         $this->routes['edit_afvikling']            = array('url' => 'aktivitet/editafvikling/:id:', 'controller' => 'Activity', 'method' => 'editAfvikling');
         $this->routes['opret_aktivitet']           = array('url' => 'aktivitet/opret/', 'controller' => 'Activity', 'method' => 'opretAktivitet');
+		$this->routes['import_activities']         = array('url' => 'aktivitet/importer/', 'controller' => 'Activity', 'method' => 'importActivities');
         $this->routes['opret_afvikling']           = array('url' => 'aktivitet/opretafvikling/:aktivitet_id:', 'controller' => 'Activity', 'method' => 'opretAfvikling');
         $this->routes['slet_aktivitet']            = array('url' => 'aktivitet/slet/:id:', 'controller' => 'Activity', 'method' => 'sletAktivitet');
         $this->routes['slet_afvikling']            = array('url' => 'aktivitet/sletafvikling/:id:', 'controller' => 'Activity', 'method' => 'sletAfvikling');
