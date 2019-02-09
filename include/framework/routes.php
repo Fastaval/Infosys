@@ -330,10 +330,12 @@ class Routes
         $this->routes['test_signup'] = array('url' => 'deltager/testsignup/', 'controller' => 'Deltager', 'method' => 'test');
 
         // admin routes
-        $this->routes['admin_options']           = array('url' => 'admin/', 'controller' => 'Admin', 'method' => 'main');
-        $this->routes['admin_handle_users']      = array('url' => 'admin/users/', 'controller' => 'Admin', 'method' => 'handleUsers');
-        $this->routes['admin_handle_roles']      = array('url' => 'admin/roles/', 'controller' => 'Admin', 'method' => 'handleRoles');
-        $this->routes['admin_handle_privileges'] = array('url' => 'admin/privileges/', 'controller' => 'Admin', 'method' => 'handlePrivileges');
+        $this->routes['admin_options']              = array('url' => 'admin/', 'controller' => 'Admin', 'method' => 'main');
+        $this->routes['admin_handle_users']         = array('url' => 'admin/users/', 'controller' => 'Admin', 'method' => 'handleUsers');
+        $this->routes['admin_handle_roles']         = array('url' => 'admin/roles/', 'controller' => 'Admin', 'method' => 'handleRoles');
+        $this->routes['admin_handle_privileges']    = array('url' => 'admin/privileges/', 'controller' => 'Admin', 'method' => 'handlePrivileges');
+        $this->routes['admin_reset_signup_confirm'] = array('url' => 'admin/reset/confirm', 'controller' => 'Admin', 'method' => 'showConfirmReset');
+        $this->routes['admin_reset_signup_execute'] = array('url' => 'admin/reset/execute', 'controller' => 'Admin', 'method' => 'resetSignups');
 
         // admin ajax routes
         $this->routes['admin_ajax_changepass']      = array('url' => 'admin/ajax/changepass/:id:', 'controller' => 'Admin', 'method' => 'ajaxChangePass');

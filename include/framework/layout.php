@@ -580,6 +580,7 @@ HTML;
             <li><a href='{$this->url('admin_handle_users')}'>Users</a></li>
             <li><a href='{$this->url('admin_handle_roles')}'>Roles</a></li>
             <li><a href='{$this->url('admin_handle_privileges')}'>Privileges</a></li>
+            <li><a href='{$this->url('admin_reset_signup')}'>Reset signup</a></li>
         </ul>
     </li>
 HTML;

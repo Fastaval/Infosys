@@ -89,6 +89,35 @@ class AdminController extends Controller
         $this->page->privileges = $this->model->getAllPrivileges();
     }
 
+    /**
+     * shows a form to reset signups
+     *
+     * @access public
+     * @return void
+     */
+    public function showConfirmReset()
+    {
+    }
+
+    /**
+     * resets signups
+     *
+     * @access public
+     * @return void
+     */
+    public function resetSignups()
+    {
+        if (!$this->page->request->isPost() || empty($this->page->request->post->confirmReset)) {
+            $this->errorMessage('Not resetting as you did not confirm');
+
+        } else {
+            $this->model->resetSignups();
+            $this->successMessage('Signups reset');
+        }
+
+        $this->hardRedirect($this->url('index'));
+    }
+
     //{{{ ajax functions be here
 
     /**
