@@ -6,7 +6,8 @@ Your signup has been registered - with participant ID <?= $this->participant->id
 <h2>Payment</h2>
 <p>
     <?php if ($this->participant->betalt_beloeb == 0) : ?>
-Your payment amounts to <?= $this->prices['total'];?>kr. - deadline for payment is <?= $this->payment_day;?>.
+Your payment amounts to <?= $this->prices['total'];?>kr. - deadline for payment is <?= $this->payment_day;?>. If you sign up after <?= $this->payment_day;?>, payment is due same day as your signup.
+
     <?php else : ?>
 You have already paid <?= $this->participant->betalt_beloeb;?>kr. but it seems that you owe <?= ($this->prices['total'] - $this->participant->betalt_beloeb);?>kr. on your signup.
 You can pay via the online-payment functionality, by bank transfer or upon arriving at Fastaval.
@@ -16,7 +17,7 @@ You can pay via the online-payment functionality, by bank transfer or upon arriv
 You can pay online via the online payment solution at fritid.dk: <a href="<?= $this->payment_url;?>"><?= $this->payment_url;?></a>.
 </p>
 <p>
-Alternatively you can by bank transfer - please note that there is a fee on bank transfer amounting to 10 kr. (which makes the amount to pay <?= ($this->prices['total'] - $this->participant->betalt_beloeb + 10);?> kr.)<br/>
+Alternatively you can by bank transfer - please note that there is a fee on bank transfer amounting to 20 kr. (which makes the amount to pay <?= ($this->prices['total'] - $this->participant->betalt_beloeb + 20);?> kr.)<br/>
 * Paying from a Danish bank, use these details: Reg.: 9314 / Accountnr.: 4573884464<br/>
 * Paying from a non-Danish bank, then please contact <a href="mailto:bunker@fastaval.dk">bunker@fastaval.dk</a><br/>
 * deadline for payment is the same here: <?= $this->payment_day;?>

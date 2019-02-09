@@ -2429,9 +2429,9 @@ SET participant_id = ?, amount = ?, cost = ?, fees = ?, timestamp = NOW()
         }
 
         if ($participant->speaksDanish() && $lang !== 'en') {
-            $page->end_signup_changes_date = date('d/m-Y', $paytime - 86400);
+            $page->end_signup_changes_date = date('d/m-Y', $paytime + 7 * 86400);
         } else {
-            $page->end_signup_changes_date = date('M d, Y', $paytime - 86400);
+            $page->end_signup_changes_date = date('M d, Y', $paytime + 7 * 86400);
         }
 
         return $participant;

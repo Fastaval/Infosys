@@ -6,7 +6,8 @@ Din tilmelding er nu registreret - med deltagernummer <?= $this->participant->id
 <h2>Betaling</h2>
 <p>
     <?php if ($this->participant->betalt_beloeb == 0) : ?>
-Din tilmelding beløber sig til <?= $this->prices['total'];?>kr. der bedes betales senest d. <?= $this->payment_day;?>.
+Din tilmelding beløber sig til <?= $this->prices['total'];?>kr. der bedes betales senest d. <?= $this->payment_day;?> Tilmelder dig dig efter <?= $this->payment_day;?>, skal du betale samme dag som du tilmelder dig.
+
     <?php else : ?>
 Du har allerede betalt <?= $this->participant->betalt_beloeb;?>kr men det ser ud til at du stadig skylder <?= ($this->prices['total'] - $this->participant->betalt_beloeb);?>kr.
 Du kan betale nu via online-betalingen eller bankoverførsel, eller når du ankommer til Fastaval.
@@ -16,7 +17,7 @@ Du kan betale nu via online-betalingen eller bankoverførsel, eller når du anko
 Du kan betale online via betalingsløsningen hos fritid.dk: <a href="<?= $this->payment_url;?>"><?= $this->payment_url;?></a>.
 </p>
 <p>
-Alternativt kan du betale via indbetalingskort eller bankoverførsel - bemærk at der er et gebyr på bankoverførsel på 10 kr (og betalingen bliver derfor <?= ($this->prices['total'] - $this->participant->betalt_beloeb + 10);?> kr.)<br/>
+Alternativt kan du betale via indbetalingskort eller bankoverførsel - bemærk at der er et gebyr på bankoverførsel på 20 kr (og betalingen bliver derfor <?= ($this->prices['total'] - $this->participant->betalt_beloeb + 20);?> kr.)<br/>
 * Ved indbetaling på indbetalingskort: Kortart: +73 / Kreditornr.: 84520098<br/>
 * Ved bankoverførsel til vores bankkonto: Reg.: 9314 / Kontonr.: 4573884464<br/>
 * Ved indbetaling fra en bank UDENFOR Danmark så kontakt venligst bunker@fastaval.dk<br/>
