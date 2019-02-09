@@ -606,7 +606,7 @@ SQL;
         $page->site = $this->config->get('app.sitename');
 
         // send email
-        $mail = new Mail();
+        $mail = new Mail($this->config);
 
         $mail->setFrom($this->config->get('app.email_address'), $this->config->get('app.email_alias'))
             ->setRecipient($user->user)

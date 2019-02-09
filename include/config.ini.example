@@ -27,6 +27,8 @@ payment.pay_url    =
 payment.testing    =
 payment.service    =
 gcm.server_api_key =
+email.host         =
+email.port         =
 
 [test]
 db.host        = 'localhost'

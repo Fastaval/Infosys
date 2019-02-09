@@ -698,7 +698,7 @@ class ApiController extends Controller
             $html_body = $this->page->render();
             $txt_body  = strip_tags($html_body);
 
-            $mail = new Mail();
+            $mail = new Mail($this->config);
 
             $mail->setFrom($this->config->get('app.email_address'), $this->config->get('app.email_alias'))
                 ->setRecipient($participant->email)

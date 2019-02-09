@@ -1638,7 +1638,7 @@ class ParticipantController extends Controller
         $this->page->con_year  = $year;
         $this->page->next_year = $year + 1;
 
-        $mail = new Mail();
+        $mail = new Mail($this->config);
 
         $mail->setFrom($this->config->get('app.email_address'), $this->config->get('app.email_alias'))
             ->setRecipient($participant->email)
@@ -1758,7 +1758,7 @@ die('Not sending last payment reminders');
         }
 
 
-        $mail = new Mail();
+        $mail = new Mail($this->config);
 
         $mail->setFrom($this->config->get('app.email_address'), $this->config->get('app.email_alias'))
             ->setRecipient($participant->email)

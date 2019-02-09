@@ -49,22 +49,22 @@ class Mail
     private $attachments = array();
 
     /**
-     * set up a message for sending
+     * config service
      *
-     * @param string|array $from - from address
-     * @param string|array $to - to address
-     * @param string $subject - message subject
-     * @param string $message - message to send
-     * @param string|array $cc - addresses to cc
-     * @param string|array $bcc - addresses to bcc
-     * @param mixed $attachment - mail attachment
+     * @var Config
+     */
+    private $config;
+
+    /**
+     * set up a message for sending
      *
      * @throws MailException
      * @access public
-     * @return void
      */
-    public function __construct()
+    public function __construct(Config $config)
     {
+        $this->config = $config;
+
         try {
             $this->message = Swift_Message::newInstance();
 
@@ -216,7 +216,7 @@ class Mail
             throw new MailException("No message set");
         }
 
-        $transport = Swift_SmtpTransport::newInstance('127.0.0.1', 25);
+        $transport = Swift_SmtpTransport::newInstance($this->config->get('email.host'), $this->config->get('email.port'));
         return !!Swift_Mailer::newInstance($transport)->send($this->message);
     }
 

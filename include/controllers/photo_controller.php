@@ -167,7 +167,7 @@ class PhotoController extends Controller
 
             }
 
-            $mail = new Mail();
+            $mail = new Mail($this->config);
 
             $mail->setFrom($this->config->get('app.email_address'), $this->config->get('app.email_alias'))
                 ->setRecipient($participant->email)
