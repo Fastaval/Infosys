@@ -183,4 +183,24 @@ class AdminModel extends Model
         $role->description = trim($post->description);
         return (($role->insert()) ? $role : false);
     }
+
+    /**
+     * resets all signups
+     *
+     * @throws Exception
+     * @access public
+     * @return void
+     */
+    public function resetSignups()
+    {
+        $this->db->exec('DELETE FROM deltagere_gdstilmeldinger');
+        $this->db->exec('DELETE FROM deltagere_gdsvagter');
+        $this->db->exec('DELETE FROM deltagere_madtider');
+        $this->db->exec('DELETE FROM deltagere_tilmeldinger');
+        $this->db->exec('DELETE FROM deltagere_wear');
+        $this->db->exec('DELETE FROM pladser');
+        $this->db->exec('DELETE FROM participants_sleepingplaces');
+        $this->db->exec('DELETE FROM deltagere');
+        $this->db->exec('ALTER TABLE deltagere AUTO_INCREMENT = 1');
+    }
 }
