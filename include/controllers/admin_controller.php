@@ -115,7 +115,7 @@ class AdminController extends Controller
             $this->successMessage('Signups reset');
         }
 
-        $this->hardRedirect($this->url('index'));
+        $this->hardRedirect($this->url('home'));
     }
 
     //{{{ ajax functions be here
