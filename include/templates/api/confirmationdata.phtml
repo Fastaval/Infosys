@@ -123,10 +123,10 @@ case 'a':
 <?php if (!empty($this->entrance['otto'])) : ?>
 <tr><td colspan="2" class="headline"><strong>OTTOFESTEN:</strong></td></tr>
     <?php if (!empty($this->entrance['ottofest'])) : ?>
-<tr><td colspan="2">Jeg kommer til Ottofesten (90 kr)</td></tr>
+<tr><td colspan="2">Jeg kommer til Ottofesten (125 kr)</td></tr>
     <?php endif; ?>
     <?php if (!empty($this->entrance['Ottofest - Champagne'])) : ?>
-<tr><td colspan="2">Jeg vil gerne have bobler (110 kr)</td></tr>
+<tr><td colspan="2">Jeg vil gerne have bobler (99 kr)</td></tr>
     <?php endif;?>
     <?php if (!empty($this->entrance['Ottofest - rødvin'])) : ?>
 <tr><td colspan="2">Jeg vil gerne have rødvin (80 kr)</td></tr>
@@ -137,7 +137,7 @@ case 'a':
 <?php endif;?>
 <?php if (!empty($this->entrance['Leje af madras'])) : ?>
 <tr><td colspan="2" class="headline"><strong>ANDET:</strong></td></tr>
-<tr><td colspan="2">Leje af madras (100 kr)</td></tr>
+<tr><td colspan="2">Leje af madras (150 kr)</td></tr>
 <?php endif;?>
 </tbody>
 <?php if (!empty($this->wear)) : ?>
@@ -184,7 +184,7 @@ case 'a':
 <tr><td>Jeg vil spille på dansk:                                      </td><td><?= strpos($this->participant->sprog, 'dansk') !== false ? 'Ja' : 'Nej';?></td></tr>
 <tr><td>Jeg vil spille på engelsk:                                    </td><td><?= strpos($this->participant->sprog, 'engelsk') !== false ? 'Ja' : 'Nej';?></td></tr>
 <tr><td>Jeg vil spille på skandinavisk:                               </td><td><?= strpos($this->participant->sprog, 'skandinavisk') !== false ? 'Ja' : 'Nej';?></td></tr>
-<tr><td>Vil gerne med-arrangere Fastaval 2019:                        </td><td><?= $this->participant->arrangoer_naeste_aar === 'ja' ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Vil gerne med-arrangere Fastaval 2020:                        </td><td><?= $this->participant->arrangoer_naeste_aar === 'ja' ? 'Ja' : 'Nej';?></td></tr>
 <tr><td>Klargøre skolen fra mandag:                                   </td><td><?= $this->participant->ready_mandag === 'ja' ? 'Ja' : 'Nej';?></td></tr>
 <tr><td>Klargøre skolen fra tirsdag:                                  </td><td><?= $this->participant->ready_tirsdag === 'ja' ? 'Ja' : 'Nej';?></td></tr>
 <tr><td>Jeg vil være simultantolk:                                    </td><td><?= $this->participant->interpreter === 'ja' ? 'Ja' : 'Nej';?></td></tr>
