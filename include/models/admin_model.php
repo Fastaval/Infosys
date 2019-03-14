@@ -198,9 +198,52 @@ class AdminModel extends Model
         $this->db->exec('DELETE FROM deltagere_madtider');
         $this->db->exec('DELETE FROM deltagere_tilmeldinger');
         $this->db->exec('DELETE FROM deltagere_wear');
+        $this->db->exec('DELETE FROM deltagere_indgang');
         $this->db->exec('DELETE FROM pladser');
         $this->db->exec('DELETE FROM participants_sleepingplaces');
         $this->db->exec('DELETE FROM deltagere');
         $this->db->exec('ALTER TABLE deltagere AUTO_INCREMENT = 1');
+    }
+
+    /**
+     * returns config values
+     *
+     * @access public
+     * @return array
+     */
+    public function getConfigValues()
+    {
+        return array_reduce(
+            $this->db->query('SELECT id, name, configgroup, value FROM configuration'),
+            function ($aggregate, $row) {
+                $aggregate[$row['group']] = [
+                    'id'    => $row['id'],
+                    'name'  => $row['name'],
+                    'value' => $row['value'],
+                ];
+
+                return $aggregate;
+            },
+            $this->getDefaultConfigValues()
+        );
+    }
+
+    /**
+     * returns detaulf config values
+     *
+     * @access public
+     * @return array
+     */
+    public function getDefaultConfigValues()
+    {
+        return [
+            'Convention' => [
+                [
+                    'id' => 0,
+                    'name' => 'con.start',
+                    'value' => ''
+                ],
+            ]
+        ];
     }
 }
