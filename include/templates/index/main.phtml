@@ -22,6 +22,9 @@ $this->registerLateLoadJS('index.js');
         <?php foreach ($this->participant_data['age_group'] as $age => $count) : ?>
             <li><strong><?= $age;?>:</strong> <?= $count;?></li>
         <?php endforeach;?>
+        <?php if(isset($this->participant_data['average_age'])) : ?>
+            <li><strong>Gennemsnit:</strong> <?=$this->participant_data['average_age']?></li>
+        <?php endif;?>
         <!--<li><strong>Graf?</strong> <em><a href="<?= $this->url('graph_participant_shares');?>" class="graph-link">Ja tak!</a></em></li>-->
     </ul>
     <h3>Tilmeldinger per køn:</h3>

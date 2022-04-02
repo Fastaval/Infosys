@@ -162,14 +162,10 @@ ORDER BY
             }
         }
 
-        $query = 'SELECT d.gender, COUNT(*) AS count FROM deltagere AS d WHERE signed_up > "0000-00-00" GROUP BY d.gender ORDER BY d.gender';
-
+        $query = "SELECT AVG(TIMESTAMPDIFF(year, birthdate, NOW())) AS average_age FROM deltagere";
         if (($result = $this->db->query($query)) && !empty($result[0])) {
-            foreach ($result as $row) {
-                $stats['gender'][$row['gender']] = $row['count'];
-            }
+            $stats['average_age'] = $result[0]['average_age'];
         }
-
 
         return $stats;
     }
