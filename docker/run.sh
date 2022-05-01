@@ -4,7 +4,7 @@
 /bin/chown mysql:mysql /var/run/mysqld -R
 
 /usr/sbin/service nginx start
-/usr/sbin/service php5.6-fpm start
+/usr/sbin/service php8.0-fpm start
 /usr/sbin/service mysql start
 
 if [ ! -f /var/www/infosys/composer.phar ]
@@ -25,7 +25,7 @@ cd /var/www/infosys
 cd $OLD_PWD
 
 shutdown() {
-	/usr/sbin/service php5.6-fpm stop
+	/usr/sbin/service php8.0-fpm stop
     /usr/sbin/service nginx stop
     /usr/sbin/service mysql stop
 }

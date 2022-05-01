@@ -7,23 +7,22 @@ RUN apt update \
     && echo "Europe/Copenhagen" > /etc/timezone \
     && DEBIAN_FRONTEND=noninteractive apt install -y \
     nginx-full \
-    php5.6-cli \
-    php5.6-curl \
-    php5.6-fpm \
-    php5.6-gd \
-    php5.6-json \
-    php5.6-mbstring \
-    php5.6-mysql \
-    php5.6-opcache \
-    php5.6-sqlite3 \
-    php5.6-tidy \
-    php5.6-xml \
-    php5.6-zip \
+    php8.0-cli \
+    php8.0-curl \
+    php8.0-fpm \
+    php8.0-gd \
+    php8.0-mbstring \
+    php8.0-mysql \
+    php8.0-opcache \
+    php8.0-sqlite3 \
+    php8.0-tidy \
+    php8.0-xml \
+    php8.0-zip \
     mysql-server \
     wget
 
 RUN mkdir -p /var/www/ \
-    && rm /etc/php/5.6/fpm/pool.d/www.conf \
+    && rm /etc/php/8.0/fpm/pool.d/www.conf \
     && rm /etc/nginx/sites-enabled/default
 
 COPY run.sh /usr/local/bin
