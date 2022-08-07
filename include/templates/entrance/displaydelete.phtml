@@ -1,0 +1,9 @@
+<div id='wear-details'>
+    <fieldset>
+        <legend>Slet indgang?</legend>
+        <form action="<?php echo $this->url('delete_entry', array('id'=> $this->indgang->id));?>" method='post'>
+            <input type='submit' value='Slet' name='delete_entry'/>
+            <input type='submit' value='Fortryd'/>
+        </form>
+    </fieldset>
+</div>

@@ -1,0 +1,13 @@
+<?php echo $this->getMessagesHtml();?>
+<div class="infobox login">
+    <h2>Reset password</h2>
+    <form method='post' action='<?= $this->url('reset_pass_submit', ['hash' => $this->hash]);?>'>
+        <label for='new-pass'>Nyt password:</label><input id='new-pass' type='password' name='pass' />
+        <label for='check'>Gentag:</label><input id='check' type='password' name="check" />
+        <div class='clearit'></div>
+        <button type='submit'>Reset</button>
+    </form>
+</div>
+<script type='text/javascript'>
+    document.getElementById('username').focus();
+</script>

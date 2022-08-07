@@ -1,0 +1,77 @@
+<?php $this->registerLateLoadJS('shop.js');?>
+<div class="rows">
+    <div class="span8" style="background-color: #ddf">
+        <h2>Lager <img src="/img/upload.png" alt="Parse spreadsheet input" id="upload-spreadsheet-data"/></h2>
+        <table id="shop-overview-table">
+            <thead>
+                <tr>
+                    <th><img src="/img/delete.png" alt=""/></th>
+                    <th><img src="/img/good-mark.png" alt=""/></th>
+                    <th><img src="/img/warning.png" alt=""/></th>
+                    <th>Navn</th>
+                    <th>Kode</th>
+                    <th>Kostpris</th>
+                    <th>Salgspris</th>
+                    <th>Beholdning</th>
+                    <th>Indkøb</th>
+                    <th>Solgt</th>
+                    <th>Historik</th>
+                    <th>Profit</th>
+                </tr>
+            </thead>
+            <tbody>
+<?php foreach ($this->products as $product) : ?>
+                <tr data-id="<?= intval($product->id);?>">
+                    <td class="delete"><img src="/img/delete.png" alt=""/></td>
+                    <td class="good-product"><img src="/img/good-mark.png" alt=""/></td>
+                    <td class="product-warning"><img src="/img/warning.png" alt=""/></td>
+                    <td class="product-name"><?= $product->name;?></td>
+                    <td><?= $product->code;?></td>
+                    <td data-class="cost" class="editable"><?= $product->getCost();?></td>
+                    <td data-class="price" class="editable"><?= $product->getPrice();?></td>
+                    <td data-class="stock" class="editable stock-validation"><?= $product->getStock();?></td>
+                    <td class="increase-stock"><img src="/img/plus-icon.png" alt=""/></th>
+                    <td data-class="sold" class="editable sales-validation"><?= $product->getSold();?></td>
+                    <td class="product-development"><img src="/img/chart.png" alt=""/></td>
+                    <td><?= $product->getProfit();?>
+                </tr>
+<?php endforeach;?>
+            </tbody>
+        </table>
+    </div>
+    <div class="span4">
+        <h2>Stats</h2>
+        <dl>
+            <dt>Overskud</dd>
+            <dd><?= e($this->stats['overall_profit']);?></dt>
+        </dl>
+    </div>
+</div>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(function() {
+        window.googleChartsLoaded = true;
+    });
+</script>
+<script type="text/javascript">
+var parse_spreadsheet_url = '<?= $this->url('shop_parse_spreadsheet_data');?>',
+    single_update_url     = '<?= $this->url('shop_single_update');?>',
+    delete_product_url    = '<?= $this->url('shop_delete_product');?>',
+    graph_data_url        = '<?= $this->url('shop_product_graph_data');?>';
+</script>
+<script type="text/template" id="product-template">
+<tr data-id=":product-id:">
+    <td><img src="/img/delete.png" alt=""/></td>
+    <td><img src="/img/good-mark.png" alt=""/></td>
+    <td><img src="/img/warning.png" alt=""/></td>
+    <td>:name:</td>
+    <td>:code:</td>
+    <td data-class="cost" class="editable">:cost:</td>
+    <td data-class="price" class="editable">:price:</td>
+    <td data-class="stock" class="editable stock-validation">:stock:</td>
+    <td class="increase-stock"><img src="/img/plus-icon.png" alt=""/></th>
+    <td data-class="sold" class="editable sales-validation">:sold:</td>
+    <td><img src="/img/chart.png" alt=""/></td>
+</tr>
+</script>

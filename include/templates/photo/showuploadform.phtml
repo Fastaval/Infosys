@@ -1,0 +1,43 @@
+<div class="fv-logo"></div>
+<div class="content">
+    <h1><span>Upload dit billede til arrangørkort</span></h1>
+    <p>Her uploader du et vellignende portræt til arrangørkort. Start med at vælge et billede (eller dragndrop det i browseren), beskær det derefter så man tydeligt kan se hvem det er, og slut ved at klikke på upload. <strong>Husk du ikke er færdig før du har fået en succes-besked på siden!</strong></p>
+    <p>Krav til billede:</p>
+    <ul>
+        <li>Portrætfoto. Ikke et gruppebillede eller billede af helt andre folk</li>
+        <li>Vellignende. Ikke sløret, med underlige filtre, eller andet</li>
+        <li>Ordentlig opløsning. Ingen superpixelerede billeder</li>
+    </ul>
+    <p>Dit arrangørkort er et ID-kort på Fastaval -  det er et privilegie, ikke en rettighed. Hvis du vil være sikker på at få et, så sørg for at billedet lever op til kravene.</p>
+    <div id="image-cropper">
+        <div class="container-main">
+            <div class="container-image">
+                <div class="cropit-preview"></div>
+                <div class="container-tools">
+                    <div class="cropit-rotate-buttons">
+                        <span class="cropit-rotate-ccw"><i class="icon-ccw"></i></span>
+                        <span class="cropit-rotate-cw"><i class="icon-cw"></i></span>
+                    </div>
+                    <div class="zoom">
+                        <i class="icon-file-image smaller"></i><input type="range" class="cropit-image-zoom-input" /><i class="icon-file-image larger"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <div class="select-image-btn">Select new image</div>
+                <div class="upload-image-btn">Upload image</div>
+            </div>
+    </div>
+    <input type="file" class="cropit-image-input" />
+    </div>
+    <div class="upload-success">Takker! Dit billede er nu blevet uploadet!</div>
+    <div class="upload-failure">Noget gik galt undervejs! Kontakt <a href="mailto:info@fastaval.dk">info@fastaval.dk</a> med dit billede til arrangørkort og fortæl hvor i processen det gik galt.</div>
+</div>
+
+<script type="text/javascript">
+infosysExportWidth = <?= e($this->photo_width);?>;
+infosysExportHeight = <?= e($this->photo_height);?>;
+infosysCropUrl = "<?= $this->url('photo_upload_cropped', ['identifier' => $this->identifier]);?>";
+infosysOriginalUrl = "<?= $this->url('photo_upload_original', ['identifier' => $this->identifier]);?>";
+infosysExistingImageUrl = "<?= $this->existing_image ? $this->public_uri . e($this->existing_image) . "?rand=" . uniqid() : "";?>";
+</script>

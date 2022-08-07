@@ -1,0 +1,163 @@
+<?php
+$this->registerLateLoadJS('bscafe.js');
+$this->includeCSS('bscafe.css');?>
+
+        <img src="/img/upload.png" alt="Parse spreadsheet input" id="upload-spreadsheet-data">
+<a href="<?= $this->url("boardgames_reporting");?>">Reporting</a>
+<section class="boardgame-container">
+    <div class="action-pane">
+        <h2>Actions</h2>
+        <div class="action-board">
+            <ul>
+                <li><a href="#lend">Udlån</a></li>
+                <li><a href="#create">Opret</a></li>
+                <li><a href="#games">Spil</a></li>
+                <li><a href="#statistics">Stats</a></li>
+                <li><a href="#designerstatistics">FastavalStats</a></li>
+                <li><a href="#check">Tjek</a></li>
+            </ul>
+            <div class="action" id='lend'>
+                <label for="game-to-lend">Spil</label>
+                <input id="game-to-lend" type="text" name="game" placeholder="Navn, ID, stregkode, etc..."/>
+                <label for="borrower">Låner</label>
+                <input type="text" id="borrower" name="borrower" placeholder="Navn, ID, etc..."/>
+                <label for="borrowing-comment">Kommentar</label>
+                <textarea name="comment" id="borrowing-comment"></textarea>
+                <div>
+                    <button type="submit" class="lend-game">Markér udlånt</button>
+                </div>
+            </div>
+            <div class="action" id='create'>
+                <label for="gc-name">Spil titel</label>
+                <input id="gc-name" type="text" name="game" placeholder="Navn..."/>
+
+                <label for="gc-owner">Ejer</label>
+                <input type="text" id="gc-owner" name="owner" placeholder="Navn..."/>
+
+                <label for="gc-barcode">Stregkode</label>
+                <input type="text" id="gc-barcode" name="barcode" placeholder="Stregkode..."/>
+
+                <label for="gc-bgg-id">BGG ID</label>
+                <input type="text" id="gc-bgg-id" name="bgg_id" placeholder="BGG ID..."/>
+
+                <label for="gc-designergame">Fastaval</label>
+                <input type="checkbox" id="gc-designergame" name="designergame" value="1"/>
+
+                <label for="gc-comment">Kommentar</label>
+                <textarea name="comment" id="gc-comment"></textarea>
+                <div>
+                    <button type="submit" class="create-game">Opret</button>
+                </div>
+            </div>
+            <div class="action list" id='games'>
+                <div class="tools">
+                    <input type="text" id="registered-games-search" placeholder="Søg..."/>
+                    <div class="filters">
+                        <button class="filter" data-status="available">Hjemme</button>
+                        <button class="filter" data-status="borrowed">Lånt</button>
+                        <button class="filter" data-status="returned">Tilbageleveret</button>
+                    </div>
+                </div>
+                <ul class="registered-games">
+                </ul>
+            </div>
+            <div class="action" id='statistics'></div>
+            <div class="action" id='designerstatistics'></div>
+            <div class="action" id="check">
+                <button class="check-reset">Reset</button>
+                <button class="check-filter">Filter</button>
+                <div class="check-list">
+                    <ul class="check-list-index">
+                    </ul>
+                    <ul class="check-list-games">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="in-play-pane list">
+        <h2>Udlånt</h2>
+        <div class="in-play-list">
+            <input type="text" id="borrowed-games-search" placeholder="Søg..."/>
+            <ul>
+            </ul>
+        </div>
+    </div>
+    <div class="activity-pane list">
+        <h2>Noter</h2>
+        <div class="notes">
+            <textarea></textarea>
+        </div>
+        <h2>Aktiviteter</h2>
+        <div class="activity-list">
+            <ul>
+            </ul>
+        </div>
+    </div>
+</section>
+    <script type="text/template" id="check-list-indexItem">
+<li data-value=":value:" class="check-list-indexItem">:title:</li>
+    </script>
+    <script type="text/template" id="check-list-gamesItem">
+<li data-value=":name:" data-id=":id:" class="check-list-gamesItem :state:">:name:</li>
+    </script>
+    <script type="text/template" id="check-list-gamesDivider">
+<li data-value=":initial:" class="check-list-gamesDivider">:initial:</li>
+    </script>
+    <script type="text/template" id="in-play-game-template">
+<li data-id=":data-id:" data-sort=":game-title:"><span class="title"><img class="return-game" src="/img/undo2.png" alt="Mark game returned"/><span class="text">:game-title:<span class="popup-details"><span class="title">Ejer: <span class="name">:game-owner:</span></span><!--game-comment--><span class="comment">Kommentar: :game-comment:</span><!--game-comment--></span></span></span><span class="sub-info">- lånt af <span class="name">:borrower:</span> <span class="time">:time:</span><!--borrowing-comment--><span class="comment">Kommentar: :borrowing-comment:</span><!--borrowing-comment--></span></li>
+    </script>
+    <script type="text/template" id="activity-template">
+<li class="activity" data-sort=":time:">
+    <span class="time">:time:</span><span class="title">:name:</span> <div class="attendees">
+        <h3>Deltagere (:count:)</h3>
+        <attendee><span class="attendee">:attendee-name:</span></attendee>
+    </div>
+</li>
+    </script>
+    <script type="text/template" id="registered-game-template">
+<li class="registered-game :game-status:" data-id=":data-id:" data-sort=":title:">
+    <span class="title"><span class="text">:title: (ID: :data-id:) <em class="borrowed-count">(:borrowed:)</em><span class="popup-details"><span class="title">Ejer: <span class="name">:owner:</span></span><span class="log"></span></span></span></span>
+    <div class="editing">
+        <label>Spil titel
+        <input type="text" name="game" placeholder="Navn..." value=":title:" data-original=":title:"/></label>
+
+        <label>Ejer
+        <input type="text" name="owner" placeholder="Navn..." value=":owner:" data-original=":owner:"/></label>
+
+        <label>Stregkode
+        <input type="text" name="barcode" placeholder="Stregkode..." value=":barcode:" data-original=":barcode:"/></label>
+
+        <label>Fastaval
+        <input type="checkbox" name="designergame" value="1" data-original=":designergame:" fastaval-designergame/></label>
+
+        <label>Kommentar
+        <textarea name="comment" data-original=":comment:">:comment:</textarea></label>
+        <div>
+            <a href="javascript:void(0);" class="cancel-editing">Fortryd</a>
+            <button type="submit" class="update-game">Opdater</button>
+            <button type="submit" class="finish-game">Tilbagelevér</button>
+        </div>
+    </div>
+</li>
+    </script>
+    <script type="text/template" id="log-line-template">
+<span class="log-line">
+    <span class="timestamp">:timestamp:</span>
+    <span class="status">:status:</span>
+</span>
+    </script>
+    <script type="text/javascript">
+    $(function () {
+    window.boardgames_data_url        = '<?= $this->url('boardgames_data');?>';
+    window.boardgames_create_url      = '<?= $this->url('boardgames_create');?>';
+    window.boardgames_update_url      = '<?= $this->url('boardgames_update');?>';
+    window.boardgames_edit_url        = '<?= $this->url('boardgames_edit');?>';
+    window.boardgames_parse_url       = '<?= $this->url('boardgames_parse');?>';
+    window.boardgames_notes_url       = '<?= $this->url('boardgames_update_note');?>';
+    window.boardgames_presence_check  = '<?= $this->url('boardgames_presence_check');?>';
+    window.boardgames_presence_update = '<?= $this->url('boardgames_presence_update');?>';
+    window.boardgames_presence_reset  = '<?= $this->url('boardgames_presence_reset');?>';
+    BSCafe.init();
+    });
+    </script>

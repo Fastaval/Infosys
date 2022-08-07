@@ -1,0 +1,26 @@
+<div id='checkin-interface-container'>
+    <h1>Check-in</h1>
+    <div>
+        <div>
+            <p>Indtast/scan deltager id</p>
+            <input type='text' id='user-id'/> <input type='button' value='Check-in' id='mark-done'/>
+            <div id='registration-container' class='hidden'>
+                <fieldset>
+                    <legend>Resultat</legend>
+                    <div id='registration-result'>
+                    </div>
+                    <div class='hidden' id='undo-container'>
+                        <input type='button' value='Undo'/>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<audio preload="auto" src="/audio/oh-no.mp3" id="oh-no"/>
+<audio preload="auto" src="/audio/wait-for-it.mp3" id="wait"/>
+<script type='text/javascript' src="<?php echo $this->JSLink('checkin_interface.js');?>"></script>
+<script type='text/javascript'>
+var ajax_uri = '<?php echo $this->url('checkin_interface_ajax');?>';
+checkin_interface.setup();
+</script>

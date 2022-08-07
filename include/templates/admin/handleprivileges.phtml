@@ -1,0 +1,42 @@
+<div id='admin-container'>
+    <fieldset>
+        <legend>Privileges</legend>
+        <table id='privileges-table'>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Controller</th>
+                    <th>Method</th>
+                    <th>Used?</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->privileges as $priv) :?>
+                <tr>
+                    <td class="id"><?php echo $priv->id;?></td>
+                    <td><?php echo $priv->controller;?></td>
+                    <td><?php echo $priv->method;?></td>
+                    <td>&nbsp;</td>
+                    <td><input type='button' value='Slet' class='action_delete'/></td>
+                </tr>
+                <?php endforeach ;?>
+            </tbody>
+            <tfoot>
+                <tr id='divider-row'>
+                    <td colspan='5'><hr/></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><label>Controller: <input type='text' value='' id='priv_controller'/></label></td>
+                    <td colspan='2'><label>Method: <input type='text' value='' id='priv_method'/></label></td>
+                    <td><input type='button' value='Add privilege' id='action_addprivilege'/></td>
+                </tr>
+            </tfoot>
+        </table>
+    </fieldset>
+</div>
+<script type='text/javascript' src="<?php echo $this->JSLink('admin.js');?>"></script>
+<script>
+privileges_object.public_uri = '<?php echo $this->public_uri;?>';
+privileges_object.setup();
+</script>

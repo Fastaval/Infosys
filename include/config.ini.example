@@ -1,0 +1,38 @@
+[live]
+db.host            =
+db.port            =
+db.user            =
+db.password        =
+db.database        =
+db.type            =
+db.prefix          =
+app.public_uri     =
+app.sitename       =
+app.log_file       =
+app.email_address  =
+app.email_alias    =
+con.start          =
+con.end            =
+con.signupstart    =
+con.signupend      =
+sms.user           =
+sms.pass           =
+sms.baseurl        =
+sms.service        =
+payment.freehash   =
+payment.sic        =
+payment.event_id   =
+payment.ticket_url =
+payment.pay_url    =
+payment.testing    =
+payment.service    =
+gcm.server_api_key =
+
+[test]
+db.host        = 'localhost'
+db.user        = 'fasta'
+db.password    = 'fasta'
+db.database    = 'infosys2012'
+app.public_uri = 'http://infosys.dk/'
+sms.test       =
+sms.test       =

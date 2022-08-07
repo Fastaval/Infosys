@@ -1,0 +1,25 @@
+[live]
+db.host            = "db"
+db.user            = "fastaval2017"
+db.port            = 3306
+db.password        = "bohWiex1ohtuphue"
+db.database        = "infosys2017"
+db.type            = "mysql"
+db.prefix          =
+app.public_uri     = "https://infosys.fastaval.dk/"
+app.sitename       = "Infosys 2017"
+app.log_file       = "error_log.txt"
+app.email_address  = 'info@fastaval.dk'
+app.email_alias    = 'Fastaval'
+con.start          = "2017-04-12 00:00:00"
+con.end            = "2017-04-17 12:00:00"
+con.signupstart    = "2017-02-04 00:00:01"
+con.signupend      = "2017-03-04 02:00:16"
+con.paymentlimit   = "2017-03-12 00:00:00"
+sms.user           =
+sms.pass           =
+sms.baseurl        = "http://sms.justworks.dk/api/"
+payment.type       = "FritidDkUrl"
+payment.apikey     = "Aco51adw1in21WpokWKw5214WsCHJ12ccpP"
+#payment.apikey     = "fWo23F5JPpDjowpjOppq24lsfF213gbg1Zm"
+gcm.server_api_key =

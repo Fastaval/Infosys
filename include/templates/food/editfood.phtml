@@ -1,0 +1,38 @@
+<div id='wear-details'>
+    <fieldset>
+        <legend><?php echo (isset($this->mad) ? 'Opdater' : 'Opret');?> mad-kategori</legend>
+        <form action='' method='post'>
+            <input id='mad-id' type='hidden' value='<?php echo $this->id;?>'/>
+            <span class='label'>Kategori:</span> <span class='detail'><input type='text' name='kategori' value='<?php echo (isset($this->mad) ? $this->mad->kategori : '');?>'/></span><br/>
+            <span class='label'>Pris:</span> <span class='detail'><input type='text' name='pris' value='<?php echo (isset($this->mad) ? $this->mad->pris : '');?>'/></span><br/>
+            <hr/>
+            <table id='foodtimes'>
+                <caption><b>Mad tider</b></caption>
+                <thead>
+                    <th>Dato</th>
+                </thead>
+                <tbody>
+                    <?php if (isset($this->mad)) : foreach ($this->mad->getMadTider() as $tid) : ?>
+                    <tr>
+                        <td><input name='foodtime_id[]' value='<?php echo $tid->id;?>' type='hidden'/><input type='text' value='<?php echo $tid->dato;?>' name='foodtime_date[]'/></td>
+                        <td><input type='button' value='Slet' class='remove-foodtime' /></td>
+                    </tr>
+                    <?php endforeach; endif;?>
+                    <tr>
+                        <td><input id='foodtime' type='text' placeholder='YYYY-MM-DD'/></td>
+                        <td><input type='button' value='Tilføj' id='add-foodtime' /></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr/>
+            <?php if (isset($this->mad)):?>
+                <input type='submit' value='Opdater' name='update_food' class='centersubmits'/>
+                <input type='submit' value='Fortryd' class='centersubmits'/>
+                <input type='submit' value='Slet' name='delete_food' class='centersubmits'/>
+            <?php else:?>
+                <input type='submit' value='Opret' name='create_food'/>
+            <?php endif;?>
+        </form>
+    </fieldset>
+</div>
+<script type='text/javascript' src="<?php echo $this->JSLink('food.js');?>"></script>

@@ -1,0 +1,39 @@
+<div id="chart"></div>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(function() {
+        window.googleChartsLoaded = true;
+    });
+</script>
+<script>
+$(function() {
+    var json = <?= $this->data;?>;
+
+    function makeChart(chart_element, chart_data, chart_config) {
+        var data = new google.visualization.DataTable();
+        if (!google.visualization[chart_config.type]) {
+            throw {
+                name: 'InfosysError',
+                message: 'No such graph type'
+            };
+        }
+
+        for (var col in chart_config.columns) {
+            if (chart_config.columns.hasOwnProperty(col)) {
+                data.addColumn(chart_config.columns[col].type, chart_config.columns[col].name);
+            }
+        }
+        data.addRows(chart_data);
+
+        var options = {
+          title: chart_config.title
+        };
+
+        var chart = new google.visualization[chart_config.type](chart_element);
+        chart.draw(data, options);
+    }
+
+    makeChart(document.getElementById('chart'), json.chart_data, json.chart_config);
+});
+</script>

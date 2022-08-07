@@ -1,0 +1,16 @@
+<?php if ($this->convention_done) :?>
+<h2>The convention has ended</h2>
+<p>for this year - you cannot use the payment links anymore.</p>
+<?php elseif ($this->no_participant || $this->no_payment_url) : ?>
+<h2>Uh-oh</h2>
+<p>Det link du fulgte virker desværre ikke. Kontakt venligst <a href="mailto:info@fastaval.dk">info@fastaval.dk</a> og aftal nærmere omkring betaling for din Fastaval tilmelding. Husk at sende dit ID med.</p>
+<hr/>
+<h2>Uh-oh</h2>
+<p>The link you have used unfortunately does not work. Please contact <a href="mailto:info@fastaval.dk">info@fastaval.dk</a> to set up payment for your Fastaval participant. Remember to include your signup ID in the email.</p>
+<?php elseif ($this->nothing_outstanding) : ?>
+<h2>Yay!</h2>
+<p>Du har allerede betalt for din Fastaval tilmelding - og behøver derfor ikke at gøre mere! Udover at glæde dig uforskammet meget til Fastaval, ligesom vi gør!</p>
+<hr/>
+<h2>Yay!</h2>
+<p>You have already paid for your Fastaval participation - and therefore you do not need to do anything more. Apart from getting ready for all the excitement and fun!</p>
+<?php endif;?>

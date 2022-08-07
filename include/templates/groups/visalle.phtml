@@ -1,0 +1,31 @@
+<form action='' method='post'>
+    <div id='deltager_showall'>
+        <h1>Hold - (<?= count($this->hold);?>):</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Aktivitet</th>
+                    <th>Tid</th>
+                    <th>Holdnummer</th>
+                    <th>Lokale</th>
+                    <th>GMs?</th>
+                    <th>Gamers?</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->hold as $key => $team) : ?>
+                    <tr class='<?= ($key % 2 ? 'alterngrey' : '');?>'>
+                        <td><a href="<?= $this->url('vis_hold', array('id' => $team->id));?>"><?= $team->id;?></a></td>
+                        <td><?= e($team->getAktivitet()->navn);?></td>
+                        <td><?= e($this->replaceDayNames(date('D H:i', strtotime($team->getAfvikling()->start))));?>-<?= e($this->replaceDayNames(date('H:i', strtotime($team->getAfvikling()->slut))));?></td>
+                        <td><?= e($team->holdnummer);?></td>
+                        <td><a href="<?= e($this->url('vis_lokale', array('id' => $team->getLokale()->id)));?>"><?= e($team->getLokale()->beskrivelse);?></a></td>
+                        <td><?php if ($team->needsGMs()) : ?><span style="background-color: #ff0000;">Mangler GM</span><?php else : ?>OK<?php endif;?></td>
+                        <td><?php if ($team->needsGamers()) : ?><span style="background-color: #ff0000;">Mangler spillere</span><?php elseif ($team->canUseGamers()) : ?><span style="background-color: #ffff00;">Kan bruge spillere</span><?php else : ?>Fyldt<?php endif;?></td>
+                    </tr>
+                <?php endforeach;?>
+            </tbody>
+        </table>
+    </div>
+</form>

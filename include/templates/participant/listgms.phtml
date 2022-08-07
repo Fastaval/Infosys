@@ -1,0 +1,41 @@
+<div>
+    <?php $to_list = array_keys($this->gm_list);?>
+    <?php foreach ($this->activity_list as $activity) :
+        if (in_array($activity->id, $to_list)) : ?>
+        <div class='gmpage-aktivitet'>
+            <p class='gmpage-aktivitet-navn'><a href="<?php echo $this->url('visaktivitet', array('id' => $activity->id));?>"><?php echo e($activity->navn);?></a></p>
+            <?php foreach ($this->gm_list[$activity->id] as $key => $container) :
+                $afv = $this->model->findEntity('Afviklinger', $key);
+            ?>
+                    <p class='gmpage-afvikling-tid'>Afvikling: <?php echo $afv->start;?> -> <?php echo $afv->slut;?></p>
+                    <?php if (empty($container['signups'])) :?>
+                        <p class='gmpage-tilmeldinger'>Ingen har meldt sig som spilleder på denne afvikling.</p>
+                    <?php else : ?>
+                        <p class='gmpage-tilmeldinger'><?php echo count($container['signups']);?> tilmeldt(e) spilleder(e)</p>
+                        <?php foreach ($container['signups'] as $signup) :
+                                $deltager = $signup->getDeltager();?>
+                            <div class='gmpage-tilmelding'>
+                                <p class="<?php echo ($activity->tids_eksklusiv == 'ja' && $deltager->isBusyBetween($afv->start, $afv->slut) ? 'gm-is-busy' : '');?>">ID <?php echo $deltager->id;?>: <a href="<?php echo $this->url('visdeltager', array('id' => $deltager->id));?>"><?php echo e($deltager->fornavn);?> <?php echo e($deltager->efternavn);?></a><br/><?php echo e($deltager->adresse1);?>, <?php echo e($deltager->adresse2);?>, <?php echo e($deltager->postnummer);?> <?php echo e($deltager->by);?> - <?php echo e($deltager->land);?><br/>Mobil: <?php echo e($deltager->mobiltlf);?>, alternativ tlf: <?php echo e($deltager->tlf);?><br />Email: <?php echo e($deltager->email);?></p>
+                            </div>
+                        <?php endforeach;
+                    endif;
+                    if (empty($container['assigned'])) :?>
+                        <p class='gmpage-assigns'>Ingen spilledere er fordelt på denne afvikling.</p>
+                    <?php else :?>
+                        <p class='gmpage-assigns'>Fordelte spilledere.</p>
+                        <?php foreach ($container['assigned'] as $key => $hold) :
+                            foreach ($hold as $assign) :
+                            $deltager = $assign->getDeltager();?>
+                            <div class='gmpage-assigned'>
+                                    <p class='<?php echo ($deltager->isBusyBetween($afv->start, $afv->slut) ? 'gm-is-busy' : '');?>'>Hold ID: <a href="<?php echo $this->url('vis_hold', array('id' => $key));?>"><?php echo $key;?></a><br />ID: <?php echo $deltager->id;?> <a href="<?php echo $this->url('visdeltager', array('id' => $deltager->id));?>"><?php echo e($deltager->fornavn);?> <?php echo e($deltager->efternavn);?></a><br/><?php echo e($deltager->adresse1);?>, <?php echo e($deltager->adresse2);?>, <?php echo e($deltager->postnummer);?> <?php echo e($deltager->by);?> - <?php echo e($deltager->land);?><br/>Mobil: <?php echo e($deltager->mobiltlf);?>, alternativ tlf: <?php echo e($deltager->tlf);?><br />Email: <?php echo e($deltager->email);?></p>
+                            </div>
+                            <?php endforeach;
+                            endforeach;?>
+                        <div class='clearit'></div>
+                    <?php endif;
+                endforeach;?>
+            <div class='clearit'></div>
+        </div>
+        <?php endif;
+    endforeach;?>
+</div>

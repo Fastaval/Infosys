@@ -1,0 +1,16 @@
+<?php echo $this->getMessagesHtml();?>
+<h1>Vagter for <?php echo e($this->gds->navn);?> (<?php echo e($this->gds->title_en);?>)</h1>
+<?php if (!$this->no_external_link) : ?>
+<p>Eksternt link: <a href="<?= $this->url('external_list_all_shifts', ['hash' => base64_encode('GDS!' . $this->gds->id)]);?>">Link</a></p>
+<?php endif;?>
+<ul class="diyShiftList">
+    <?php foreach ($this->shifts as $shift) :?>
+        <li class="diyShiftList_timeSlot"><?php echo danishDayNames(date('l, H:i', strtotime($shift->start)));?>
+            <ul class="diyShiftList_timeSlot_participants">
+                <?php foreach ($shift->getParticipants() as $participant) :?>
+                    <li class="diyShiftList_timeSlot_participant"><span class="diyShiftList_timeSlot_participant_checkbox"></span> <?php echo e($participant->getName());?> - Mobil: <?php echo e($participant->mobiltlf);?></li>
+                <?php endforeach;?>
+            </ul>
+        </li>
+    <?php endforeach;?>
+</ul>

@@ -1,0 +1,75 @@
+<div class='middleboxes'>
+    <div id='aktivitetbox'>
+        <form method='post' action='' id='aktivitet-edit'>
+        <fieldset>
+            <legend>Opdater Aktivitet</legend>
+            <table>
+                <tr>
+                    <td><b>Id:</b> <?= $this->aktivitet->id;?></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><b>Titel:</b> <input name='aktivitet[navn]' class='aktivitet-title' value='<?= e($this->aktivitet->navn);?>' type='text' /></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><b>Engelsk titel:</b> <input name='aktivitet[title_en]' class='aktivitet-title' value='<?= e($this->aktivitet->title_en);?>' type='text' /></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><b>Forfatter(e):</b> <input class="aktivitet-title" name="aktivitet[author]" type="text" value="<?= e($this->aktivitet->author);?>"/></td>
+                </tr>
+                <tr>
+                    <td><strong>WP id:</strong> <input name='aktivitet[wp_link]' type='number' value='<?= $this->aktivitet->wp_link;?>'/></td>
+                    <td><b>Spiltype:</b> <?= $this->genSelect('aktivitet[type]', $this->model->getActivityTypes(), $this->aktivitet->type);?></td>
+                    <td><b>Varighed:</b> <input name='aktivitet[varighed_per_afvikling]' type='text' value='<?= e($this->aktivitet->varighed_per_afvikling);?>' /></td>
+                </tr>
+                <tr>
+                    <td><b>Min Spillere:</b> <input name='aktivitet[min_deltagere_per_hold]' type='text' value='<?= e($this->aktivitet->min_deltagere_per_hold);?>' /></td>
+                    <td><b>Max Spillere:</b> <input name='aktivitet[max_deltagere_per_hold]' type='text' value='<?= e($this->aktivitet->max_deltagere_per_hold);?>' /></td>
+                    <td><b>Spilledere:</b> <input name='aktivitet[spilledere_per_hold]' type='text' value='<?= e($this->aktivitet->spilledere_per_hold);?>' /></td>
+                </tr>
+                <tr>
+                    <td><b>Pris:</b> <input name='aktivitet[pris]' type='text' value='<?= e($this->aktivitet->pris);?>' /></td>
+                    <td><b>Kan tilmeldes:</b> <?= $this->genSelect('aktivitet[kan_tilmeldes]', array('ja', 'nej'), $this->aktivitet->kan_tilmeldes);?></td>
+                    <td><b>Fylder lokale:</b> <?= $this->genSelect('aktivitet[lokale_eksklusiv]', array('ja', 'nej'), $this->aktivitet->lokale_eksklusiv);?></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><strong>Sprog:</strong>
+                        <label><input type='radio' name='aktivitet[sprog]' value='dansk' <?= ($this->aktivitet->sprog == 'dansk' ? "checked='checked'" : '');?>> dansk</label>
+                        <label><input type='radio' name='aktivitet[sprog]' value='engelsk' <?= ($this->aktivitet->sprog == 'engelsk' ? "checked='checked'" : '');?>> engelsk</label>
+                        <label><input type='radio' name='aktivitet[sprog]' value='dansk+engelsk' <?= ($this->aktivitet->sprog == 'dansk+engelsk' ? "checked='checked'" : '');?>> dansk, med mulighed for engelsk</label>
+                    </td>
+                    <td><strong>Udelukker samtidige aktiviteter:</strong> <?= $this->genSelect('aktivitet[tids_eksklusiv]', array('ja', 'nej'), $this->aktivitet->tids_eksklusiv);?></td>
+                </tr>
+                <tr>
+                    <td><b>Kan spilles flere gange:</b> <?= $this->genSelect('aktivitet[replayable]', array('ja', 'nej'), $this->aktivitet->replayable);?></td>
+                    <td><b>Skjult:</b> <?= $this->genSelect('aktivitet[hidden]', array('ja', 'nej'), $this->aktivitet->hidden);?></td>
+                    <td>
+                        <b>Karmatype:</b>
+                        <select name="aktivitet[karmatype]">
+                            <option value="0">Ingen</option>
+                            <option value="<?= KARMATYPE_SMALL;?>" <?= intval($this->aktivitet->karmatype) === KARMATYPE_SMALL ? 'selected="selected"' : '';?>>Lille</option>
+                            <option value="<?= KARMATYPE_MEDIUM;?>" <?= intval($this->aktivitet->karmatype) === KARMATYPE_MEDIUM ? 'selected="selected"' : '';?>>Medium</option>
+                            <option value="<?= KARMATYPE_BIG;?>" <?= intval($this->aktivitet->karmatype) === KARMATYPE_BIG ? 'selected="selected"' : '';?>>Stor</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Aldersbegrænsning:</strong> <label>Min: <input type="number" min="0" max="200" name="min_age" size="4" step="1" value="<?= e($this->aktivitet->getMinAge());?>"/></label> <label>Max: <input type="number" min="0" max="200" size="4" name="max_age" step="1" value="<?= e($this->aktivitet->getMaxAge());?>"/></label></td>
+                    <td><b>Max tilmeldinger</b><input type="number" min="0" max="1000" step="1" value="<?= e($this->aktivitet->max_signups);?>" name="aktivitet[max_signups]"/></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><b>Note:</b> <textarea name='aktivitet[note]'><?= (isset($this->aktivitet->note) ? e($this->aktivitet->note) : "");?></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><b>Foromtale:</b> <textarea name='aktivitet[foromtale]'><?= (isset($this->aktivitet->foromtale) ? e($this->aktivitet->foromtale) : "") ;?></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><b>Engelsk foromtale:</b> <textarea name='aktivitet[description_en]'><?= (isset($this->aktivitet->description_en) ? e($this->aktivitet->description_en) : "") ;?></textarea></td>
+                </tr>
+            </table>
+            <input type='submit' value='Opdater' class='centersubmits' name='update_activity' />
+            <input type='submit' value='Fortryd' class='centersubmits' name='fortryd' />
+            <input type='submit' value='Slet' class='centersubmits' name='slet_aktivitet' />
+        </fieldset>
+        </form>
+    </div>
+</div>

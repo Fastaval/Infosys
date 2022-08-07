@@ -1,0 +1,31 @@
+<?= $this->getMessagesHtml();?>
+<?php $this->registerLateLoadJS('tradeablefood.js');?>
+<h1>Madbørs</h1>
+<?php foreach ($this->headings as $heading) : ?>
+    <h2><?= e($heading);?></h2>
+    <?php
+        $categories = array();
+        if (!empty($this->tradeable_food[$heading])) {
+            $categories = array_keys($this->tradeable_food[$heading]);
+        }
+
+        if (!empty($this->maybe_tradeable_food[$heading])) {
+            $categories = array_merge($categories, array_keys($this->maybe_tradeable_food[$heading]));
+        }
+
+        foreach ($categories as $category) :?>
+            <h3><?= e($category);?></h3>
+            <?php if (!empty($this->tradeable_food[$heading][$category])) :?>
+                <p>Ikke betalt, ikke checket in: <strong><?= intval($this->tradeable_food[$heading][$category]);?></strong></p>
+            <?php endif;?>
+            <?php if (!empty($this->maybe_tradeable_food[$heading][$category])) :?>
+                <p>Betalt, ikke checket in: <strong><?= count($this->maybe_tradeable_food[$heading][$category]);?></strong>
+                <ul class="tradeable-foodies">
+                    <?php foreach ($this->maybe_tradeable_food[$heading][$category] as $participant) : ?>
+                        <li><a href="<?= $this->url('visdeltager', array('id' => $participant['participant_id']));?>"><?= e($participant['name']);?></a></li>
+                    <?php endforeach;?>
+                </ul>
+                </p>
+            <?php endif;?>
+        <?php endforeach;
+endforeach;?>

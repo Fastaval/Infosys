@@ -1,0 +1,44 @@
+<div class='edit_details'>
+    <form action='' method='post'>
+        <fieldset id='edit_pages'>
+            <legend>Opdater GDS Tilmeldinger</legend>
+            <table>
+                <tr>
+                    <td>
+                        <select id='gds_navn'>
+                            <option value=''>Vælg</option>
+                            <?php foreach ($this->categories as $g) : ?>
+                                <option value='<?= e($g->id);?>'><?= e($g->name_da);?></option>
+                            <?php endforeach?>
+                        </select>
+                        <select id='gds_tid'>
+                        </select><br />
+                        <input type='button' id='gds_tilfoej' value='Tilføj GDSVagt'/>
+                    </td>
+                    <td>
+                        <table id='gds_edit'>
+                            <tbody>
+                                <?php if ($tilmeldinger = $this->deltager->getGDSTilmeldinger()) :
+                                    foreach ($tilmeldinger as $vagt) : ?>
+                                        <tr>
+                                            <td class='choice'><input type='hidden' name='gds[]' value='<?= e($vagt->category_id);?>'/><input type='hidden' name='period[]' value='<?= e($vagt->period);?>'/><?= e($vagt->getGDSCategory()->name_da);?> <?= danishDayNames($vagt->getMeaningfulPeriod());?></td>
+                                            <td><input type='button' class="delete" value='Slet'/></td>
+                                        </tr>
+                                <?php endforeach;
+                                endif; ?>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <hr/>
+            <input type='submit' class='centersubmits' value='Opdater' name='update_gds' /><input type='submit' class='centersubmits' value='Fortryd'/>
+        </fieldset>
+    </form>
+    <script src="<?= $this->JSLink('imwedit.js');?>" type='text/javascript'></script>
+    <script type='text/javascript'>
+madwearedit.deltager_id = <?= $this->deltager->id;?>;
+madwearedit.public_uri  = '<?= $this->public_uri;?>';
+madwearedit.setupGDSShifts();
+    </script>
+</div>

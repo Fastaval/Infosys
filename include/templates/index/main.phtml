@@ -1,0 +1,96 @@
+<?php echo $this->getMessagesHtml();
+$this->registerLateLoadJS('index.js');
+?>
+<div class="infobox stats">
+    <h2>Tilmeldings stats</h2>
+    <h3>Tilmeldinger indenfor sidste:</h3>
+    <ul>
+        <li><strong>24 timer:</strong> <?= $this->participant_data['24h_signups'];?></li>
+        <li><strong>7 dage:</strong> <?= $this->participant_data['7d_signups'];?></li>
+        <li><strong>Hele perioden:</strong> <?= $this->participant_data['overall_signups'];?></li>
+        <li><strong>Graf?</strong> <em><a href="<?= $this->url('graph_participant_signups');?>" class="graph-link">Ja tak!</a> og <a href="<?= $this->url('graph_participant_signups_total');?>" class="graph-link">Ja tak!</a></em></li>
+    </ul>
+    <h3>Tilmeldinger fordelt på type:</h3>
+    <ul>
+        <?php foreach ($this->participant_data['kategori'] as $type => $count) : ?>
+            <li><strong><?= $type;?>:</strong> <?= $count;?></li>
+        <?php endforeach;?>
+        <li><strong>Graf?</strong> <em><a href="<?= $this->url('graph_participant_shares');?>" class="graph-link">Ja tak!</a></em></li>
+    </ul>
+    <h3>Tilmeldinger per aldersgruppe:</h3>
+    <ul>
+        <?php foreach ($this->participant_data['age_group'] as $age => $count) : ?>
+            <li><strong><?= $age;?>:</strong> <?= $count;?></li>
+        <?php endforeach;?>
+        <!--<li><strong>Graf?</strong> <em><a href="<?= $this->url('graph_participant_shares');?>" class="graph-link">Ja tak!</a></em></li>-->
+    </ul>
+    <h3>Tilmeldinger per køn:</h3>
+    <ul>
+        <?php foreach ($this->participant_data['gender'] as $gender => $count) : ?>
+            <li><strong><?= $gender;?>:</strong> <?= $count;?></li>
+        <?php endforeach;?>
+        <!--<li><strong>Graf?</strong> <em><a href="<?= $this->url('graph_participant_shares');?>" class="graph-link">Ja tak!</a></em></li>-->
+    </ul>
+</div>
+
+<div class="infobox stats">
+    <h2>Billet stats</h2>
+    <h3>Kategorier:</h3>
+    <ul>
+        <?php foreach ($this->entrance_data['types'] as $type => $count) : ?>
+            <li><strong><?= $type;?>:</strong> <?= $count;?></li>
+        <?php endforeach;?>
+    </ul>
+    <h3>Check-in indenfor sidste:</h3>
+    <ul>
+        <li><strong>24 timer:</strong> <?= $this->participant_data['24h_checkins'];?></li>
+        <li><strong>72 timer:</strong> <?= $this->participant_data['3d_checkins'];?></li>
+        <li><strong>Hele perioden:</strong> <?= $this->participant_data['overall_checkins'];?></li>
+    </ul>
+    <h3>No shows:</h3>
+    <ul>
+        <li><strong>Antal udeblevne:</strong> <?= $this->participant_data['no_shows'];?></li>
+    </ul>
+</div>
+
+<div class="infobox stats">
+    <h2>Wear stats</h2>
+    <h3>Wear bestillinger:</h3>
+    <ul>
+        <?php foreach ($this->wear_data['types'] as $type => $orders) :?>
+            <li><strong><?= e($type);?>:</strong> <?= e($orders);?></li>
+        <?php endforeach;?>
+    </ul>
+    <h3>Wear udleveret:</h3>
+    <ul>
+        <?php foreach ($this->wear_data['received'] as $type => $count) :?>
+            <li><strong><?= e($type);?>:</strong> <?= e($count);?></li>
+        <?php endforeach;?>
+    </ul>
+</div>
+
+<div class="infobox stats">
+    <h2>Mad stats</h2>
+    <h3>Mad bestillinger:</h3>
+    <ul>
+        <?php foreach ($this->food_data['types'] as $type => $orders) :?>
+            <li><strong><?= e($type);?>:</strong> <?= e($orders);?></li>
+        <?php endforeach;?>
+        <li><strong>Graf?</strong> <em><a href="<?= $this->url('graph_food_shares');?>" class="graph-link">Ja tak!</a></em></li>
+    </ul>
+    <h3>Mad udleveret:</h3>
+    <ul>
+        <?php foreach ($this->food_data['received'] as $type => $count) :?>
+            <li><strong><?= e($type);?>:</strong> <?= e($count);?></li>
+        <?php endforeach;?>
+    </ul>
+</div>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(function() {
+        window.googleChartsLoaded = true;
+    });
+</script>
+

@@ -1,0 +1,29 @@
+<div id="newsletter-container">
+    <h1>Fastavals nyhedsbrev</h1>
+    <?php echo $this->getMessagesHtml();
+    if (empty($this->subscribed)) : ?>
+        <p>Her kan du tilmelde dig Fastavals nyhedsbrev, der udkommer 4-6 gange om året og indeholder masser af interessante nyheder om Fastaval present and future.</p>
+        <form action="" method="post">
+            <input type="text" id="email" name="email" placeholder="Email ..."/> <label for="email">Email adresse</label><br/>
+            <input type="submit" value="Tilmeld"/>
+        </form>
+        <script type="text/javascript">
+            $('email').observe('focus', function(e){
+                var e = e || window.event;
+                var target = e.target || e.srcElement;
+                if (target.value == 'Skriv din email adresse')
+                {
+                    target.value = '';
+                }
+            });
+            $('email').observe('blur', function(e){
+                var e = e || window.event;
+                var target = e.target || e.srcElement;
+                if (target.value == '')
+                {
+                    target.value = 'Skriv din email adresse';
+                }
+            });
+        </script>
+    <?php endif ;?>
+</div>

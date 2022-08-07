@@ -1,0 +1,58 @@
+<div id='admin-container'>
+    <fieldset>
+        <legend>Roles</legend>
+        <table id='roles-table'>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Privileges</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($this->roles as $role) :?>
+                <tr>
+                    <td><a href='#' class='action_deleterole'><img src="<?php echo $this->imgLink('remove.png');?>" alt='Remove role'/></a>&nbsp;<span class='role_id'><?php echo $role->id;?></span></td>
+                    <td><?php echo $role->name;?></td>
+                    <td class='role-description'><?php echo $role->description;?></td>
+                    <td class='privileges'>
+                        <?php foreach($role->getPrivileges() as $priv):?>
+                            <span class='priv-id-<?php echo $priv->id;?> span-block'><a href='#' class='action_removepriv'><img src="<?php echo $this->imgLink('remove.png');?>" alt='Remove privilege'/></a> <?php echo $priv->controller;?>, <?php echo $priv->method;?></span>
+                        <?php endforeach;?>
+                    </td>
+                    <td>
+                        <select class='priv_select'>
+                            <?php foreach ($this->privileges as $priv) :?>
+                            <option value='<?php echo $priv->id;?>'><?php echo $priv->controller;?>, <?php echo $priv->method;?></option>
+                            <?php endforeach;?>
+                        </select>
+                        <input type='button' value='Add privilege' class='action_addpriv'/>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+            </tbody>
+            <tfoot>
+                <tr id='divider-row'>
+                    <td colspan='5'><hr/></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><label>Role: <input type='text' value='' id='role_name'/></label></td>
+                    <td><label>Description: <input type='text' value='' id='role_description'/></label></td>
+                    <td><input type='button' value='Add role' id='action_addrole'/></td>
+                </tr>
+            </tfoot>
+        </table>
+    </fieldset>
+</div>
+<script type='text/javascript' src="<?php echo $this->JSLink('admin.js');?>"></script>
+<script>
+roles_object.public_uri = '<?php echo $this->public_uri;?>';
+roles_object.privileges = {
+    <?php $i = count($this->privileges); foreach($this->privileges as $priv) :?>
+'id<?php echo $priv->id;?>': '<?php echo $priv->controller;?>, <?php echo $priv->method;?>'<?php echo --$i ? ',' : '';?>
+    <?php endforeach;?>
+};
+roles_object.setup();
+</script>

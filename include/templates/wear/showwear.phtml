@@ -1,0 +1,35 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='wear-details'>
+    <fieldset>
+        <legend>Wear: <?php echo $this->wear->navn;?> - <a href="<?php echo $this->url('edit_wear',array('id' => $this->wear->id));?>">ret/slet</a></legend>
+        <span class='label'>Id:</span> <span class='detail'><?php echo $this->wear->id;?></span><br class='clearit'/>
+        <span class='label'>Navn:</span> <span class='detail'><?php echo $this->wear->navn;?></span><br class='clearit'/>
+        <span class='label'>Engelsk titel:</span> <span class='detail'><?php echo $this->wear->title_en;?></span><br class='clearit'/>
+        <span class='label'>Str.:</span> <span class='detail'><?php echo $this->wear->size_range;?></span><br class='clearit'/>
+        <span class='label'>Beskrivelse:</span> <span class='detail'><?php echo $this->wear->beskrivelse;?></span><br class='clearit'/>
+        <span class='label'>Engelsk beskrivelse:</span> <span class='detail'><?php echo $this->wear->description_en;?></span><br class='clearit'/>
+        <hr/>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Brugerkategori</th>
+                    <th>Pris</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    if ($prices = $this->wear->getWearpriser()) :
+                        foreach ($prices as $price) :
+                ?>
+                <tr id='wp_<?php echo $price->id;?>'>
+                    <td><?php echo $price->id;?></td>
+                    <td><?php echo $price->getCategory()->navn;?></td>
+                    <td><?php echo $price->pris;?></td>
+                </tr>
+                <?php endforeach;
+                endif;?>
+            </tbody>
+        </table>
+    </fieldset>
+</div>

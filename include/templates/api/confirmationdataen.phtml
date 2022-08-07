@@ -1,0 +1,220 @@
+<table id="info-table">
+<tbody>
+<tr><th colspan="2" class="large">PERSONAL DETAILS</th></tr>
+<tr><td>Name:                                  </td><td><?= e($this->participant->fornavn . ' ' . $this->participant->efternavn);?></td></tr>
+<?php if ($this->participant->adresse1) : ?>
+<tr><td>Address:                               </td><td><?= e($this->participant->adresse1 . ' ' . $this->participant->adresse2);?></td></tr>
+<tr><td>Postal code:                               </td><td><?= e($this->participant->postnummer);?></td></tr>
+<tr><td>City:                                    </td><td><?= e($this->participant->by);?></td></tr>
+<?php endif;?>
+<tr><td>Country:                                  </td><td><?= e($this->participant->land);?></td></tr>
+<?php if ($this->participant->mobiltlf) : ?>
+<tr><td>Mobile:    </td><td><?= e($this->participant->mobiltlf);?> (<?= $this->participant->medbringer_mobil === 'ja' ? 'Yes' : 'No';?>)</td></tr>
+<?php endif;?>
+<?php if ($this->participant->tlf) : ?>
+<tr><td>Emergency number:             </td><td><?= e($this->participant->tlf);?></td></tr>
+<?php endif;?>
+<tr><td>Gender:                                   </td><td><?php
+switch ($this->participant->gender) {
+case 'm':
+    echo 'Male';
+    break;
+
+case 'k':
+    echo 'Female';
+    break;
+
+case 'a':
+    echo 'Other';
+    break;
+
+}
+?></td></tr>
+<tr><td>Birthdate                            </td><td><?= date('d/m-Y', strtotime($this->participant->birthdate));?></td></tr>
+<tr><td>Email:                                 </td><td><?= e($this->participant->email);?></td></tr>
+<tr><td colspan="2" class="headline">ALEA:</td></tr>
+<tr><td>Want membership of Alea (75kr):    </td><td><?= !empty($this->entrance['alea-membership']) ? 'Yes' : 'No';?></td></tr>
+<tr><td colspan="2" class="headline">MISC:</td></tr>
+<tr><td>Organiser:                              </td><td><?= $this->participant->isArrangoer() ? 'Yes' : 'No';?></td></tr>
+<?php if ($this->participant->arbejdsomraade) : ?>
+<tr><td>Work area:                     </td><td><?= e($this->participant->arbejdsomraade);?></td></tr>
+<?php endif;?>
+<?php if ($this->participant->scenarie) : ?>
+<tr><td>Scenario:                              </td><td><?= e($this->participant->scenarie);?></td></tr>
+<?php endif;?>
+<?php if ($this->participant->ungdomsskole) : ?>
+<tr><td>School/group:                   </td><td><?= e($this->participant->ungdomsskole);?></td></tr>
+<?php endif;?>
+</tbody>
+<tbody>
+<tr><th colspan="2" class="large">PRACTICAL BITS</th></tr>
+<tr><td colspan="2" class="headline"><strong>ENTRANCE:</strong></td></tr>
+<?php if (!empty($this->entrance['entrance-partout'])) : ?>
+<tr><td colspan="2">All-days access</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-partout'])) : ?>
+<tr><td colspan="2">Sleeping area (all-days)</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-23'])) : ?>
+<tr><td colspan="2">Entrance Wednesday 28/3</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-23'])) : ?>
+<tr><td colspan="2">Sleeping area Wednesday 28/3</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-24'])) : ?>
+<tr><td colspan="2">Entrance Thursday 29/3</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-24'])) : ?>
+<tr><td colspan="2">Sleeping area Thursday 29/3</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-25'])) : ?>
+<tr><td colspan="2">Entrance Friday 30/3</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-25'])) : ?>
+<tr><td colspan="2">Sleeping area Friday 30/3</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-26'])) : ?>
+<tr><td colspan="2">Entrance Saturday 31/3</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-26'])) : ?>
+<tr><td colspan="2">Sleeping area Saturday 31/3</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-27'])) : ?>
+<tr><td colspan="2">Entrance Sunday 1/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-27'])) : ?>
+<tr><td colspan="2">Sleeping area Sunday 1/4</td></tr>
+<?php endif;?>
+
+<?php if (!empty($this->food)) : ?>
+<tr><td colspan="2" class="headline"><strong>MAD:</strong></td></tr>
+    <?php foreach ($this->food as $fooditem) : ?>
+        <?php $food = $fooditem->getMad();
+        switch (date('d', strtotime($fooditem->dato))) {
+        case '23':
+            $day_da = 'Onsdag';
+            $day_en = 'Wednesday';
+            break;
+
+        case '24':
+            $day_da = 'Torsdag';
+            $day_en = 'Thursday';
+            break;
+
+        case '25':
+            $day_da = 'Fredag';
+            $day_en = 'Friday';
+            break;
+
+        case '26':
+            $day_da = 'Lørdag';
+            $day_en = 'Saturday';
+            break;
+
+        case '27':
+            $day_da = 'Sønddag';
+            $day_en = 'Sunday';
+            break;
+        }
+        ?>
+<tr><td colspan="2"><?= e($food->kategori);?> - <?= $day_en;?> d.<?= date('d/m', strtotime($fooditem->dato));?> (<?= e($food->pris);?>kr)</td></tr>
+    <?php endforeach;?>
+<?php endif;?>
+<?php if (!empty($this->entrance['otto'])) : ?>
+<tr><td colspan="2" class="headline"><strong>OTTOPARTY:</strong></td></tr>
+    <?php if (!empty($this->entrance['ottofest'])) : ?>
+<tr><td colspan="2">I am attending the Ottoparty (90 kr)</td></tr>
+    <?php endif; ?>
+    <?php if (!empty($this->entrance['Ottofest - Champagne'])) : ?>
+<tr><td colspan="2">I should like me some bubbles (110 kr)</td></tr>
+    <?php endif;?>
+    <?php if (!empty($this->entrance['Ottofest - rødvin'])) : ?>
+<tr><td colspan="2">I would like the red wine (80 kr)</td></tr>
+    <?php endif;?>
+    <?php if (!empty($this->entrance['Ottofest - hvidvin'])) : ?>
+<tr><td colspan="2">I would like the white wine (80 kr)</td></tr>
+    <?php endif;?>
+<?php endif;?>
+<?php if (!empty($this->entrance['Leje af madras'])) : ?>
+<tr><td colspan="2" class="headline"><strong>MISC:</strong></td></tr>
+<tr><td colspan="2">Mattress rental (100 kr)</td></tr>
+<?php endif;?>
+</tbody>
+<?php if (!empty($this->wear)) : ?>
+
+<tbody>
+<tr><th class="large" colspan="2">WEAR</td></tr>
+    <?php foreach ($this->wear as $order) : ?>
+        <?php $price = $order->getWearpris();
+      $name  = $order->getWearname('en');?>
+<tr><td colspan="2"><?= e($order->antal);?> <?= e($name);?>, str. <?= e($order->size);?> (<?= e($price->pris);?>kr.)</td></tr>
+    <?php endforeach;?>
+</tbody>
+<?php endif;?>
+
+<?php if (!empty($this->gds)) : ?>
+
+<tbody>
+<tr><th colspan="2" class="large">DIY SIGNUP</td></tr>
+    <?php foreach ($this->gds as $gds_signup) : ?>
+<tr><td colspan="2"><?= e($gds_signup->getGDSCategory()->name_en);?> <?= e($gds_signup->getTextDescription('en'));?> - d.<?= date('d/m', strtotime($gds_signup->getDate()));?></td></tr>
+    <?php endforeach;?>
+</tbody>
+<?php endif;?>
+
+<?php if (!empty($this->activities)) : ?>
+
+<tbody>
+<tr><th colspan="2" class="large">Activity Signup</td></tr>
+    <?php foreach ($this->activities as $activity_signup) : ?>
+        <?php $activity = $activity_signup->getActivity();
+              $schedule = $activity_signup->getAfvikling();?>
+<tr><td colspan="2"><?= e($activity->title_en);?>  d.<?= date('d/m', strtotime($schedule->start));?> - <?= $activity_signup->tilmeldingstype === 'spiller' ? e($activity_signup->prioritet) . '.priority' : 'Gamemaster';?></td></tr>
+    <?php endforeach;?>
+</tbody>
+<?php endif;?>
+
+<tbody>
+<tr><th colspan="2" class="large">Other info</th></tr>
+<tr><td>Maximum number of games I would like to play (0 meaning no limit):  </td><td><?= e($this->participant->desired_activities);?></td></tr>
+<tr><td>Maximum number of DIY shifts (0 meaning no limit):                  </td><td><?= e($this->participant->desired_diy_shifts);?></td></tr>
+<tr><td>I am a super GM:                                                    </td><td><?= $this->participant->supergm === 'ja' ? 'Yes' : 'No';?></td></tr>
+<tr><td>I am a super DIY-type:                                              </td><td><?= $this->participant->supergds === 'ja' ? 'Yes' : 'No';?></td></tr>
+<tr><td>I can take on more than one DIY shift:                              </td><td><?= $this->participant->flere_gdsvagter === 'ja' ? 'Yes' : 'No';?></td></tr>
+<tr><td>I want to play in Danish:                                           </td><td><?= strpos($this->participant->sprog, 'dansk') !== false ? 'Yes' : 'No';?></td></tr>
+<tr><td>I want to play in English:                                          </td><td><?= strpos($this->participant->sprog, 'engelsk') !== false ? 'Yes' : 'No';?></td></tr>
+<tr><td>I want to play in Scandinavian:                                     </td><td><?= strpos($this->participant->sprog, 'skandinavisk') !== false ? 'Yes' : 'No';?></td></tr>
+<tr><td>I want to be part of organizing Fastaval 2019:                      </td><td><?= $this->participant->arrangoer_naeste_aar === 'ja' ? 'Yes' : 'No';?></td></tr>
+<tr><td>I will help setup the place Monday:                                 </td><td><?= $this->participant->ready_mandag === 'ja' ? 'Yes' : 'No';?></td></tr>
+<tr><td>I will help setup the place Tuesday:                                </td><td><?= $this->participant->ready_tirsdag === 'ja' ? 'Yes' : 'No';?></td></tr>
+<tr><td>I can help translate on-site:                                       </td><td><?= $this->participant->interpreter === 'ja' ? 'Yes' : 'No';?></td></tr>
+<?php if ($this->participant->sovesal === 'ja') : ?>
+<tr><td>I would like a spot in the organisers sleeping area:              </td><td>Yes</td></tr>
+<?php endif;?>
+<?php if ($this->participant->skills) : ?>
+<tr><td>Any skills you can and would like to help Fastaval with:                        </td><td><?= e($this->participant->skills);?></td></tr>
+<?php endif;?>
+<?php if ($this->participant->deltager_note) : ?>
+<tr><td>Other comments:                                            </td><td><?= e($this->participant->deltager_note);?></td></tr>
+<?php endif;?>
+<?php if ($this->participant->rig_onkel === 'ja') : ?>
+<tr><td>I am a rich aunty/uncle (supporting Fastaval with 300kr.)                       </td><td>Yes</td></tr>
+<?php endif;?>
+<?php if ($this->participant->hemmelig_onkel === 'ja') : ?>
+<tr><td>I am a secretive aunty/uncle (supporting Fastaval anonymously with 300kr.)          </td><td>Yes</td></tr>
+<?php endif;?>
+</tbody>
+
+<tbody>
+<tr><th colspan="2" class="large">Price</th></tr>
+<tr><td>Entrance                                  </td><td><?= e($this->prices['entrance']);?>kr.</td></tr>
+<tr><td>Sleeping                            </td><td><?= e($this->prices['sleeping']);?>kr.</td></tr>
+<tr><td>Alea membership                       </td><td><?= e($this->prices['alea']);?>kr.</td></tr>
+<tr><td>Food &amp; party                         </td><td><?= e($this->prices['food']);?>kr.</td></tr>
+<tr><td>Activities                            </td><td><?= e($this->prices['activities']);?>kr.</td></tr>
+<tr><td>Wear                                   </td><td><?= e($this->prices['wear']);?>kr.</td></tr>
+<tr><td>Others                                  </td><td><?= e($this->prices['other-stuff']);?>kr.</td></tr>
+<tr><td>Ticketfee                                </td><td><?= e($this->prices['fees']);?>kr.</td></tr>
+<tr><td>In total                                  </td><td><?= e($this->prices['total']);?>kr.</td></tr>
+</tbody>
+</table>

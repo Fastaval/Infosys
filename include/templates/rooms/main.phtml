@@ -1,0 +1,8 @@
+<?php echo $this->getMessagesHtml();?>
+<p>Du kan:
+    <ul>
+        <li><a href="<?php echo $this->url('vis_alle_lokaler');?>">se alle lokaler</a>.</li>
+        <li><a href="<?php echo $this->url('opret_lokale');?>">oprette et lokale</a>.</li>
+        <li><a href="<?php echo $this->url('lokale_brug', array('day' => 0));?>">se oversigt over lokale-brug</a> (hvilke lokaler er i brug hvornår).</li>
+    </ul>
+</p>

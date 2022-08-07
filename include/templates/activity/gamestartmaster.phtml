@@ -1,0 +1,52 @@
+<?php
+$this->includeCSS('bootstrap.min.css');
+$this->includeCSS('bootstrap-responsive.min.css');
+$this->includeCSS('main.css');
+$this->registerLateLoadJS('ajax.js');
+$this->registerLateLoadJS('gamestart_master.js');
+
+$i = 0;
+?>
+<div class="gamestart-app">
+    <h1>Spilstart <?= danishDayNames(date('l H:i', strtotime($this->gamestart->datetime)));?> - <?= count($this->gamestart_details);?> aktiviteter</h1>
+
+    <?php foreach ($this->gamestart_details as $detail) :
+        $groups             = $detail['run']->getHold();
+        $groups_without_gms = $detail['run']->countLackingGMs();
+
+        $taken_spots     = count($detail['run']->getParticipantsOnTeams('spiller'));
+        $available_spots = (count($groups) * $detail['activity']->max_deltagere_per_hold) - $taken_spots;
+    ?>
+        <div class="gamestart-activity <?= $i++ % 2 ? 'alternate' : '';?>" data-schedule_id="<?= e($detail['run']->id);?>">
+            <h2 class="float-left"><a href="http://www.fastaval.dk/?p=<?= e($detail['activity']->wp_link);?>&amp;post_type=activity" target="_blank"><?= e($detail['activity']->navn);?></a></h2>
+            <div class="clearit"></div>
+            <?php if (!empty($groups_without_gms) || $available_spots) :?>
+                <p class="text-error"><?php if ($groups_without_gms) :?>Der mangler <?= $groups_without_gms;?> spilleder(e)!<?php endif;?><?php if ($available_spots) :?><span class="float-right spots-available" data-spots="<?= $available_spots;?>"><?= $available_spots;?> ledig(e) plads(er) før start</span><?php endif;?></p>
+                <div class="clearit"></div>
+            <?php endif;?>
+
+            <div class="places-status">
+                <span class="float-left">Spilledere:</span>
+                <?php foreach ($groups as $group) :
+                    for ($ii = 0; $ii < $detail['activity']->spilledere_per_hold; $ii++) :?>
+                        <div class="gm-spot noshow">SL</div>
+                    <?php endfor;
+                endforeach;?>
+                
+                <div class="ga-container gamers"><span>Manglende spillere:</span></div>
+                <div class="ga-container offered"><span>Tilbudt:</span></div>
+                <div class="ga-container accepted"><span>Accepteret:</span></div>
+            </div>
+            <img class="add-reservist" alt="" src="/img/add_person.png"/>
+            <div class="clearit"></div>
+        </div>
+    <?php endforeach;?>
+</div>
+<script type="text/javascript">
+$(function() {
+    master.init({
+        info_url: '<?= $this->url('gamestart_ajax_info', array('id' => $this->gamestart->id));?>',
+        change_url: '<?= $this->url('gamestart_master_change', array('id' => $this->gamestart->id));?>'
+    });
+});
+</script>

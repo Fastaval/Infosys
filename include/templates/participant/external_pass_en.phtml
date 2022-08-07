@@ -1,0 +1,16 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='loginbox'>
+    <fieldset>
+        <legend>Log in to your signup details</legend>
+        <form method='post' action=''>
+            <div>
+                <label for='password'>Password:</label><input id="password" type='password' name='password' />
+                <div class='clearit'></div>
+                <button>Check details</button>
+            </div>
+        </form>
+    </fieldset>
+</div>
+<script type='text/javascript'>
+    document.getElementById('password').focus();
+</script>

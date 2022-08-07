@@ -1,0 +1,10 @@
+<div>
+    <fieldset>
+        <legend>Slet afvikling?</legend>
+        <p>Er du sikker på du vil slette denne afvikling?</p>
+        <form action="<?php echo $this->url('slet_afvikling', array('id' => $this->afvikling->id));?>" method='post'>
+            <input type='submit' value='Slet' name='slet_afvikling' />
+            <input type='submit' value='Fortryd' />
+        </form>
+    </fieldset>
+</div>

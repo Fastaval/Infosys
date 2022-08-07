@@ -1,0 +1,21 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='entry_table'>
+    <table>
+        <thead>
+            <tr>
+                <th style='border-right: 1px solid #000000;'>Id</th>
+                <th>Kategori</th>
+                <th>Pris</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->food_types as $type) : ?>
+            <tr>
+                <td class='first'><a href="<?php echo $this->url('show_food', array('id' => $type->id));?>"><?php echo $type->id;?></a></td>
+                <td><a href="<?php echo $this->url('show_food',array('id' => $type->id));?>"><?php echo $type->kategori;?></a></td>
+                <td><?php echo $type->pris;?></td>
+            </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table>
+</div>

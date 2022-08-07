@@ -1,0 +1,20 @@
+
+.icon-floppy:before { content: '\e800'; } /* '' */
+.icon-plus-circled:before { content: '\e801'; } /* '' */
+.icon-minus-circled:before { content: '\e802'; } /* '' */
+.icon-ccw:before { content: '\e803'; } /* '' */
+.icon-cw:before { content: '\e804'; } /* '' */
+.icon-infinity:before { content: '\e805'; } /* '' */
+.icon-male-1:before { content: '\e806'; } /* '' */
+.icon-female-1:before { content: '\e807'; } /* '' */
+.icon-meeple-king:before { content: '\e808'; } /* '' */
+.icon-ages:before { content: '\e809'; } /* '' */
+.icon-heart-empty:before { content: '\e80a'; } /* '' */
+.icon-chat:before { content: '\e80b'; } /* '' */
+.icon-uk:before { content: '\e80c'; } /* '' */
+.icon-dk:before { content: '\e80d'; } /* '' */
+.icon-docs:before { content: '\f0c5'; } /* '' */
+.icon-help:before { content: '\f128'; } /* '' */
+.icon-file-image:before { content: '\f1c5'; } /* '' */
+.icon-transgender-alt:before { content: '\f225'; } /* '' */
+.icon-balance-scale:before { content: '\f24e'; } /* '' */

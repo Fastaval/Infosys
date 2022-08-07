@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wear labels</title>
+    <link href="/css/wear-labels.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<?php foreach ($this->groups as $group) : ?>
+    <section class="page">
+
+    <?php foreach ($group as $label) : ?>
+
+        <div class="wear-label">
+            <img class="wear-label-logo" src="/img/wear-logo.png" alt="logo"/>
+            <span class="wear-label-name"><?= $label['name'];?></span>
+            <div class="wear-label-wear">
+            <?php foreach ($label['wear'] as $line) :?>
+                <span class="wear-label-wear-line"><?= $line;?></span>
+            <?php endforeach;?>
+            </div>
+        </div>
+
+    <?php endforeach;?>
+    </section>
+<?php endforeach;?>
+</body>
+</html>

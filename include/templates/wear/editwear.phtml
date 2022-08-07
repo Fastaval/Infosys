@@ -1,0 +1,63 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='wear-details'>
+    <fieldset>
+        <legend><?php echo (isset($this->wear) ? 'Opdater' : 'Opret');?> wear</legend>
+        <form action='' method='post'>
+            <span class='label'>Navn:</span> <span class='detail'><input type='text' name='navn' value='<?php echo (isset($this->wear) ? $this->wear->navn : '');?>'/></span><br/>
+            <span class='label'>Beskrivelse:</span> <span class='detail'><input type='text' name='beskrivelse' value='<?php echo (isset($this->wear) ? $this->wear->beskrivelse : '');?>'/></span><br/>
+            <span class='label'>Engelsk titel:</span> <span class='detail'><input type='text' name='title_en' value='<?php echo (isset($this->wear) ? $this->wear->title_en : '');?>'/></span><br/>
+            <span class='label'>Engelsk beskrivelse:</span> <span class='detail'><input type='text' name='description_en' value='<?php echo (isset($this->wear) ? $this->wear->description_en : '');?>'/></span><br/>
+            <span class='label'>Min str.:</span> <span class='detail'><?php echo $this->genSelect('min_size', $this->model->getWearSizes(), isset($this->wear) ? $this->wear->getMinSize() : null);?></span><br/>
+            <span class='label'>Max str.:</span> <span class='detail'><?php echo $this->genSelect('max_size', $this->model->getWearSizes(), isset($this->wear) ? $this->wear->getMaxSize() : null);?></span><br/>
+            <?php if (isset($this->wear)) : ?>
+                <hr/>
+                <table id='wear-priser'>
+                    <caption><b>Wear priser</b></caption>
+                    <thead>
+                        <th>Brugerkategori</th>
+                        <th>Pris</th>
+                    </thead>
+                    <tbody>
+                        <?php
+                            if ($result = $this->wear->getWearpriser()) :
+                                foreach ($result as $price) : ?>
+                                    <tr>
+                                        <td><input name='wearpriceid[]' value='<?php echo $price->id;?>' type='hidden'/><input name='wearprice_category[]' value='<?php echo $price->brugerkategori_id;?>' type='hidden'/><input value='<?php echo $price->getCategory()->navn;?>' type='hidden'/><input type='hidden' value='<?php echo $price->wear_id;?>' name='wearprice_wearid[]'/><?php echo $price->getCategory()->navn;?></td>
+                                        <td><input type='text' name='wearprice_price[]' value='<?php echo $price->pris;?>'/></td>
+                                        <td><input type='button' value='Slet' class='remove-wearprice' /></td>
+                                    </tr>
+                        <?php
+                                endforeach;
+                            endif; ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <select id='category-select'>
+                                    <?php foreach ($this->model->getAllParticipantCategories() as $cat) :
+                                        if (!in_array($cat->id, $this->wear->getUsedUserCategories())) : ?>
+                                            <option value='<?php echo $cat->id;?>'><?php echo $cat->navn;?></option>
+                                        <?php endif;
+                                    endforeach; ?>
+                                </select>
+                                <input type='hidden' id='wear-id' value='{$id}'/>
+                            </td>
+                            <td><input id='category-price' type='text' value=''/></td>
+                            <td><input type='button' value='Tilføj' id='add-wearprice' /></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            <?php endif;?>
+            <hr/>
+            <?php if (isset($this->wear)) : ?>
+                <input type='submit' value='Opdater' name='update_wear' class='centersubmits'/>
+                <input type='submit' value='Fortryd' class='centersubmits'/>
+                <input type='submit' value='Slet' name='delete_wear' class='centersubmits'/>
+            <?php else : ?>
+                <input type='submit' value='Opret' name='create_wear'/>
+            <?php endif;?>
+        </form>
+    </fieldset>
+</div>
+<script type='text/javascript' src="<?php echo $this->JSLink('wear.js');?>"></script>
+

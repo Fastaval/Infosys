@@ -1,0 +1,20 @@
+<div id='group-boxes'>
+    <form action='' method='post' id='group-edit'>
+        <fieldset>
+            <legend>Ret hold</legend>
+            <div class='select'>
+                <span class='label'>Vælg lokale:</span>
+                <select id='lokale' name='lokale_id'>
+                    <?php $room = $this->hold->getLokale();?>
+                    <option value="<?= e($room->id);?>"><?= e(trim($room->beskrivelse . ', ' . $room->omraade . ', ' . $room->skole, ' ,'));?></option>
+                <?php foreach ($this->rooms as $room) :?>
+                    <option value="<?= e($room->id);?>"><?= e(trim($room->beskrivelse . ', ' . $room->omraade . ', ' . $room->skole, ' ,'));?></option>
+                <?php endforeach;?>
+                </select>
+            </div>
+            <input name='hold_edit' value='Ret' type='submit' />
+            <input value='Fortryd' type='submit' />
+            <input name='hold_slet' value='Slet' type='submit' />
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,10 @@
+<div>
+    <fieldset>
+        <legend>Slet hold?</legend>
+        <p>Er du sikker på du vil slette lokale #<?php echo $this->lokale->id;?>?</p>
+        <form action="<?php echo $this->url('slet_lokale', array('id' => $this->lokale->id ));?>" method='post'>
+            <input type='submit' value='Slet' name='lokale_slet' />
+            <input type='submit' value='Fortryd' />
+        </form>
+    </fieldset>
+</div>

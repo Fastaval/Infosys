@@ -1,0 +1,13 @@
+<?php echo $this->getMessagesHtml();?>
+<h1>Indgangs stats</h1>
+<?php foreach ($this->stats as $entry) :
+    $first = reset($entry);
+?>
+    <h2><?php echo $first->getProperType();?></h2>
+    <ul>
+    <?php foreach ($entry as $day => $e) :
+        if (!($time = strtotime($day))) continue; ?>
+        <li><?php echo DanishDayNames(date('D, j', $time));?> &mdash; <strong><?php echo $e->getParticipantCount();?></strong></li>
+    <?php endforeach;?>
+    </ul>
+<?php endforeach;?>

@@ -1,0 +1,147 @@
+body {
+    font-family: 'helvetica neue', helvetica;
+}
+
+table {
+    width: 100%;
+}
+
+td.label {
+    width: 20%;
+    font-weight: bold;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+fieldset {
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+
+    -webkit-box-shadow: 2px 2px 5px rgba(127, 127, 127, .5);
+    -moz-box-shadow: 2px 2px 5px rgba(127, 127, 127, .5);
+    -ms-box-shadow: 2px 2px 5px rgba(127, 127, 127, .5);
+    -o-box-shadow: 2px 2px 5px rgba(127, 127, 127, .5);
+    box-shadow: 2px 2px 5px rgba(127, 127, 127, .5);
+    margin-bottom: 20px;
+
+    margin-right: 0.5%;
+}
+
+fieldset legend {
+    -webkit-text-shadow: 1px 1px 5px rgba(127, 127, 127, 0.5);
+    -moz-text-shadow: 1px 1px 5px rgba(127, 127, 127, 0.5);
+    -ms-text-shadow: 1px 1px 5px rgba(127, 127, 127, 0.5);
+    -o-text-shadow: 1px 1px 5px rgba(127, 127, 127, 0.5);
+    text-shadow: 1px 1px 5px rgba(127, 127, 127, 0.5);
+}
+
+.priser {
+    text-align: right;
+}
+
+.pris-underline {
+    text-decoration: underline;
+}
+
+div#loginbox {
+    text-align: center;
+    width: 100%;
+}
+
+div#loginbox fieldset {
+    width: 300px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.w33 {
+    width: 30%;
+}
+
+
+/* food handout page */
+div#food-handout-container, div#wear-handout-container, div#checkin-interface-container {
+    padding: 40px;
+}
+
+div#food-handout-container div#registration-result div, div#wear-handout-container div#registration-result div, div#checkin-interface-container div#registration-result div {
+    margin: 10px;
+    padding: 10px;
+}
+
+div#food-handout-container div.error, div#wear-handout-container div.error, div#checkin-interface-container div.error {
+    background-color: #ff4444;
+}
+
+div#food-handout-container div.success, div#wear-handout-container div.success, div#checkin-interface-container div.success {
+    background-color: #44ff44;
+}
+
+div#food-handout-container fieldset#stats-fieldset {
+    background-color: #eeeeee;
+    padding: 10px;
+    border
+}
+
+div#food-handout-container div#stats-boxes div.stats-box {
+    float: left;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+}
+
+div#food-handout-container div#stats-container span {
+    padding: 2px 5px;
+}
+
+div#food-handout-container .color1 {
+    background-color: #009933;
+}
+
+div#food-handout-container .color2 {
+    background-color: #ffff66;
+}
+
+div#food-handout-container .color3 {
+    background-color: #003399;
+    color: #ffffff;
+}
+
+div#food-handout-container .color4 {
+    background-color: #6600cc;
+    color: #ffffff;
+}
+
+.header {
+    border-bottom: 1px solid #ccc;
+}
+
+a {
+    color: #000;
+}
+
+a:hover {
+    color: #444;
+}
+
+a:active {
+    color: #777;
+}
+
+.votingModule {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}

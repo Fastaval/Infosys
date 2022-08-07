@@ -1,0 +1,32 @@
+<?php $this->registerEarlyLoadJS('DataTables-1.9.0/media/js/jquery.dataTables.js');
+$this->registerLateLoadJS('gds.js');
+$this->includeCSS('../js/DataTables-1.9.0/media/css/jquery.dataTables.css');
+$this->includeCSS('../js/DataTables-1.9.0/media/css/jquery.dataTables_themeroller.css');
+echo $this->getMessagesHtml();
+?>
+<a href="<?= $this->url('gds_create_category');?>"><img src='<?= $this->imgLink('plus.png');?>' alt='Add column'/> Tilføj kategori</a>
+<table class='data-table current'>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Navn</th>
+            <th>Beskrivelse</th>
+            <th>Mødested</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->categories as $category) : ?>
+            <tr>
+                <td><a href="<?= $this->url('gds_category', ['gds_id' => $category->id]);?>"><?= e($category->id);?></a></td>
+                <td><a href="<?= $this->url('gds_category', ['gds_id' => $category->id]);?>"><?= e($category->navn);?></a></td>
+                <td><?= e($category->beskrivelse);?></td>
+                <td><?= e($category->moedested);?></td>
+            </tr>
+        <?php endforeach;?>
+    </tbody>
+</table>
+<script>
+    var infosys_data = {
+        all_users_ajax: '<?= $this->url('all_users_ajax');?>'
+    };
+</script>

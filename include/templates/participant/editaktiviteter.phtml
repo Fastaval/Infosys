@@ -1,0 +1,70 @@
+<div class='edit_details'>
+    <form action='' method='post'>
+        <fieldset id='edit_pages'>
+            <legend>Opdater Aktiviteter</legend>
+            <table>
+                <tr>
+                    <td>
+                        <select id='aktivitet_navn'>
+                            <option value=''>Vælg</option>
+                            <?php foreach ($this->aktiviteter as $activity) :
+                                if ($activity->kan_tilmeldes != 'nej') :?>
+                                <option value='<?php echo e($activity->id);?>'><?= e($activity->navn);?> / <?= e($activity->title_en);?></option>
+                                <?php endif;
+                            endforeach;?>
+                        </select>
+                        <select id='aktivitet_tid'>
+                        </select>
+                        <select id='aktivitet_hold'>
+                        </select>
+                        <select id='aktivitet_sl'>
+                        </select><br/>
+                        <input type='button' id='aktivitet_tilfoej' value='Tilføj Aktivitet'/>
+                    </td>
+                    <td>
+                        <table id='aktivitet_edit'>
+                            <tbody>
+                                <?php foreach ($this->deltager->getPladser() as $plads) :
+                                    $afv = $plads->getAfvikling();
+                                ?>
+                                <tr>
+                                    <td class='choice'>
+                                        <input type='hidden' name='hold_id[]' value="<?= $plads->hold_id;?>"/>
+                                        <input type='hidden' name='type[]' value='<?= e($plads->type);?>'/><?= e($plads->getAktivitet()->navn);?> / <?= e($plads->getAktivitet()->title_en);?> &mdash; <?= e($plads->type);?>, hold <?= e($plads->getHold()->holdnummer);?>, <?= $this->replaceDayNames(date('D H:i', strtotime($afv->start)) . '-' . date('H:i', strtotime($afv->slut)));?></td>
+                                    <td><input type='button' value='Slet'/></td>
+                                </tr>
+                                <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <hr/>
+            <input type='submit' class='centersubmits' value='Opdater' name='update_gds' />
+            <hr/>
+            <?php if ($tilmeldinger = $this->deltager->getTilmeldinger()) :?>
+                <table>
+                    <tbody>
+                        <tr><th colspan='2'>Deltagerens tilmeldinger</th></tr>
+                        <?php foreach ($tilmeldinger as $tilmelding) :?>
+                        <tr>
+                            <td><?= e($tilmelding->getAktivitet()->navn);?> / <?= e($tilmelding->getAktivitet()->title_en);?> &mdash; <?= $this->replaceDayNames(date('D H:i', strtotime($tilmelding->getAfvikling()->start)));?>-<?= $this->replaceDayNames(date('H:i', strtotime($tilmelding->getAfvikling()->slut)));?>, <?= $tilmelding->tilmeldingstype;?>, <?= $tilmelding->prioritet;?>. prioritet</td>
+                            <td>
+                                <?php if (!($tilmelding->getAktivitet()->tids_eksklusiv == 'ja' && $this->deltager->isBusyBetween($tilmelding->getAfvikling()->start, $tilmelding->getAfvikling()->slut)) && $tilmelding->getAfvikling()->getGroupNeeding($tilmelding->tilmeldingstype)) :?>
+                                    <input type='button' value='Tilføj' onClick='addTilmeldtAktivitet(<?= $tilmelding->getAfvikling()->id;?>, "<?= $tilmelding->tilmeldingstype;?>", this);' />
+                                <?php endif;?>
+                            </td>
+                        </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+            <?php endif;?>
+        </fieldset>
+    </form>
+    <script src="<?php echo $this->public_uri;?>js/imwedit.js" type='text/javascript'></script>
+    <script type='text/javascript'>
+            madwearedit.public_uri = '<?php echo $this->public_uri;?>';
+            madwearedit.setupAktivitet();
+            madwearedit.deltager_id = <?php echo $this->deltager->id;?>;
+    </script>
+</div>

@@ -1,0 +1,26 @@
+<?php echo $this->getMessagesHtml();?>
+<a class='print_link' href="<?php echo $this->url('detailed_order_list_print');?>">Print version</a>
+<div>
+    <?php foreach ($this->orders as $ord) :
+        $deltager = $ord->getDeltager();
+    ?>
+        <div class='deltager-wearorder'>
+            <p class='deltager-wearorder-deltager'>ID: <b><?php echo $deltager->id;?></b> &mdash; Navn: <a href='<?php echo $this->url('visdeltager', array('id' => $deltager->id));?>'><b><?php echo $deltager->getName();?></b></a> &mdash; <?php echo $deltager->getBrugerKategori()->navn;?></p>
+            <table class='deltager-wearorder-order'>
+                <tbody>
+                    <?php foreach ($ord->getDeltagerWearBestillinger($deltager) as $order) : ?>
+                    <tr>
+                        <td class='deltager-wearorder-type'>Kategori: <?php echo $order->getWearName();?></td>
+                        <td><?php echo $order->getWearpris()->getCategory()->navn;?></td>
+                        <td>Antal: <?php echo $order->antal;?></td>
+                        <td>Str.: <?php echo $order->size;?></td>
+                        <td class='print-hidden'>Status: <?php echo ($order->received == 'f' ? 'Ikke udleveret' : 'Udleveret');?></td>
+                        <td class='print-hidden'><input type='button' value="<?php echo ($order->received == 'f' ? 'Marker udleveret' : 'Fortryd udlevering');?>" class="wear-hand-out <?php echo ($order->received == 'f' ? '' : 'handed-out');?>" id='<?php echo $order->deltager_id;?>-<?php echo $order->wearpris_id;?>'/></td>
+                    </tr>
+                    <?php endforeach;?>
+                </tbody>
+            </table>
+        </div>
+    <?php endforeach ;?>
+</div>
+

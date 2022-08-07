@@ -1,0 +1,21 @@
+<table>
+    <thead>
+        <tr>
+            <?php foreach ($this->headers as $header) :?>
+            <th style='border: 1px solid black'><?php echo e($header);?></th>
+            <?php endforeach;?>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->result as $key => $rows):?>
+        <tr <?php echo ($key % 2 ? "class='alterngrey'" : '');?>>
+            <?php foreach ($rows as $cell) :?>
+            <td><?php echo e($cell);?></td>
+            <?php endforeach;?>
+        </tr>
+        <?php endforeach;?>
+    </tbody>
+</table>
+<script type='text/javascript'>
+window.print();
+</script>

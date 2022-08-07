@@ -1,0 +1,10 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='wear-details'>
+    <fieldset>
+        <legend>Type: <?php echo $this->indgang->getDescription();?> - <a href="<?php echo $this->url('edit_entry', array('id' => $this->indgang->id));?>">ret/slet</a></legend>
+        <span class='label'>Id:</span> <span class='detail'><?php echo $this->indgang->id;?></span><br class='clearit'/>
+        <span class='label'>Type:</span> <span class='detail'><?php echo $this->indgang->type;?></span><br class='clearit'/>
+        <span class='label'>Pris:</span> <span class='detail'><?php echo $this->indgang->pris;?></span><br class='clearit'/>
+        <span class='label'>Start:</span> <span class='detail'><?php echo $this->indgang->start;?></span><br class='clearit'/>
+    </fieldset>
+</div>

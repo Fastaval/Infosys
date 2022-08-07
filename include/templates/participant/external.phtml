@@ -1,0 +1,236 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='personal_info'>
+    <fieldset>
+        <legend>Personlig info</legend>
+    <table id='signup-details'>
+        <tbody>
+            <tr>
+                <td class='label'>Id:</td>
+                <td class="w33"><?= $this->deltager->id;?></td>
+                <td rowspan='4'><p style='margin: 5px; padding: 5px; background-color: #bb3333; color: #ffffff;'>Vær opmærksom på at ingenting ligger helt fast før Fastaval officielt starter. Oplysningerne på denne side <b>kan derfor godt ændre sig</b> indtil da - bl.a. vil GDS-detaljer blive opdateret inden Fastaval.</p><p style='margin: 5px; padding: 5px; background-color: #bb3333; color: #ffffff;'>
+Hvis du har spørgsmål til dine detaljer her, så kan du maile til os på <a style='color: #000000;' href='mailto:info@fastaval.dk'>info@fastaval.dk</a>.</p>
+</td>
+            </tr>
+            <tr>
+                <td class='label'>Navn:</td>
+                <td><?= e($this->deltager->fornavn);?> <?= e($this->deltager->efternavn);?></td>
+            </tr>
+            <tr>
+                <td class='label'>E-mail:</td>
+                <td><?= e($this->deltager->email);?></td>
+            </tr>
+            <tr>
+                <td class='label'>Dato tilmeldt:</td>
+                <td><?= $this->replaceDayNames(date('Y-m-d', strtotime($this->deltager->signed_up)));?></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <table class="misc-details">
+        <tbody>
+            <tr>
+                <td class='label'>Hjælper mandag:</td>
+                <td><?= e($this->deltager->ready_mandag);?></td>
+                <td class='label'>Hjælper tirsdag:</td>
+                <td><?= e($this->deltager->ready_tirsdag);?></td>
+            </tr>
+            <tr>
+                <td colspan='6'><hr/></td>
+            </tr>
+            <tr>
+                <td class='label'>SuperGM:</td>
+                <td><?= e($this->deltager->supergm);?></td>
+                <td class='label'>SuperGDS:</td>
+                <td><?= e($this->deltager->supergds);?></td>
+                <td class='label'>Flere GDS-vagter:</td>
+                <td><?= e($this->deltager->flere_gdsvagter);?></td>
+            </tr>
+            <tr>
+                <td class='label'>Arrangør næste år:</td>
+                <td><?= e($this->deltager->arrangoer_naeste_aar);?></td>
+                <td class='label'>Ønsket antal aktiviteter:</td>
+                <td><?= ($this->deltager->desired_activities ? e($this->deltager->desired_activities) : 'Ikke specificeret');?></td>
+                <td class='label'>Ønsket antal GDS:</td>
+                <td><?= ($this->deltager->desired_diy_shifts ? e($this->deltager->desired_diy_shifts) : 'Ikke specificeret');?></td>
+            </tr>
+            <tr>
+                <td colspan='6'><hr/></td>
+            </tr>
+            <?php if (!empty($this->deltager->ungdomsskole)) : ?>
+            <tr>
+                <td class='label'>Ungdomsskole/klub:</td>
+                <td colspan="5"><?= e($this->deltager->ungdomsskole);?></td>
+            </tr>
+            <?php endif;?>
+            <?php if (!empty($this->deltager->arbejdsomraade)) : ?>
+            <tr>
+                <td class='label'>Arrangør-område:</td>
+                <td colspan="5"><?= e($this->deltager->arbejdsomraade);?></td>
+            </tr>
+            <?php endif;?>
+            <?php if (!empty($this->deltager->scenarie)) : ?>
+            <tr>
+                <td class='label'>Scenarie:</td>
+                <td colspan="5"><?= e($this->deltager->scenarie);?></td>
+            </tr>
+            <?php endif;?>
+        </tbody>
+    </table>
+</fieldset>
+<fieldset>
+    <legend>Tildelte aktiviteter</legend>
+    <table>
+        <?php
+        $dates = $helcon = array();
+
+        foreach ($this->deltager->getPladser() as $plads) {
+            $schedule = $plads->getAfvikling();
+            $date     = date('Y-m-d', strtotime($schedule->start));
+            $activity = $plads->getAktivitet();
+
+            if ((strtotime($schedule->slut) - strtotime($schedule->start)) > 86400) {
+                $helcon[] = '
+            <tr>
+                <td><strong>' . ($activity->wp_link ? '<a href="http://www.fastaval.dk/?p=' . $activity->wp_link . '">' : '') . e($activity->navn) . ($activity->wp_link ? '</a>' : '') . '</strong> &mdash; <em>' . e($plads->type) . '</em></td>
+            </tr>
+';
+                continue;
+            }
+
+            if ($activity->hidden === 'ja') {
+                continue;
+            }
+            
+            $dates[$date][] = '
+            <tr>
+                <td><strong>' . ($activity->wp_link ? '<a href="http://www.fastaval.dk/?p=' . $activity->wp_link . '">' : '') . e($activity->navn) . ($activity->wp_link ? '</a>' : '') . '</strong> &mdash; <em>' . e($plads->type) . '</em>. ' . $this->replaceDayNames(date('D H:i', strtotime($schedule->start))) . ' - ' . $this->replaceDayNames(date('D H:i', strtotime($schedule->slut))) . '</td></tr>
+';
+
+            foreach ($schedule->getMultiBlok() as $block) {
+                $date = date('Y-m-d', strtotime($block->start));
+
+                $dates[$date][] = '
+                <tr>
+                    <td><strong>' . e($activity->navn) . '</strong> &mdash; <em>' . e($plads->type) . '</em>. ' . $this->replaceDayNames(date('D H:i', strtotime($block->start))) . ' - ' . $this->replaceDayNames(date('D H:i', strtotime($block->slut))) . '</td></tr>
+    ';
+            }
+
+        }
+
+        if ($helcon) {
+?>
+            <tr>
+                <td class="header" align='center'><b>Hele con&#39;en</b></td>
+            </tr>
+<?php
+            foreach ($helcon as $event) {
+                echo $event;
+            }
+        }
+
+        foreach ($dates as $date => $stuff) : ?>
+            <tr>
+                <td class="header" align='center'><b><?php echo $this->replaceDayNames(date('D', strtotime($date)));?></b></td>
+            </tr>
+            <?php foreach ($stuff as $activity) {
+                echo $activity;
+            }
+        endforeach ;?>
+    </table>
+</fieldset>
+<fieldset>
+    <legend>Tildelte GDS-vagter</legend>
+    <table>
+        <tbody>
+        <?php
+        $date = false;
+        foreach ($this->deltager->getGDSVagter() as $vagt) :
+            if ($date != date('Y-m-d', strtotime($vagt->start))) :
+                $date = date('Y-m-d', strtotime($vagt->start));?>
+            <tr tal:condition="php:date != date('Y-m-d',strtotime(vagt.start))">
+                <td align='center'><b><?php echo $this->replaceDayNames(date('D', strtotime($vagt->start)));?></b></td>
+            </tr>
+            <?php endif;?>
+            <tr>
+                <td><b><?php echo e($vagt->getGDS()->navn);?>.</b> <?php echo $this->replaceDayNames(date('D H:i', strtotime($vagt->start)));?> - <?php echo $this->replaceDayNames(date('D H:i', strtotime($vagt->slut)));?></td></tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+</fieldset>
+
+    <fieldset class="float-left w33">
+        <legend>Indgang / overnatning</legend>
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan='2'><strong>Indgang:</strong> <em>
+                        <?php if (!empty($this->deltager_info['indgang'])) :
+                            $strings = array();
+                            foreach ($this->deltager_info['indgang'] as $day) :
+                                if ($day->isEntrance()) :
+                                    $strings[]= $day->getShortDescription();
+                                endif;
+                            endforeach;
+                            echo implode(', ', $strings);
+                        endif;?>
+                    </em></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><strong>Overnatning:</strong> <em>
+                        <?php if (!empty($this->deltager_info['indgang'])) :
+                            $strings = array();
+                            foreach ($this->deltager_info['indgang'] as $day) :
+                                if ($day->isSleepTicket()) :
+                                    $strings[]= $day->getShortDescription();
+                                endif;
+                            endforeach;
+                            echo implode(', ', $strings);
+                        endif;?>
+                    </em></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><strong>Andet:</strong> <em>
+                        <?php if (!empty($this->deltager_info['indgang'])) :
+                            $strings = array();
+                            foreach ($this->deltager_info['indgang'] as $day) :
+                                if (!$day->isSleepTicket() && !$day->isEntrance()) :
+                                    $strings[]= $day->getDescription();
+                                endif;
+                            endforeach;
+                            echo implode(', ', $strings);
+                        endif;?>
+                    </em></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset class="float-left w33">
+        <legend>Mad</legend>
+        <table>
+            <tbody>
+                <?php if (!empty($this->deltager_info['mad'])) :
+                    foreach ($this->deltager_info['mad'] as $madtid) : ?>
+                        <tr>
+                            <td class="label"><?= danishDayNames(date('D', strtotime($madtid->dato)));?></td>
+                            <td><?= e($madtid->getMad()->getCategory());?></td>
+                        </tr>
+                    <?php endforeach;
+                endif;?>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset class="float-right w33">
+        <legend>Wear</legend>
+        <table>
+            <tbody>
+                <?php if (!empty($this->deltager_info['wear'])) :
+                    foreach ($this->deltager_info['wear'] as $wear) :?>
+                        <tr>
+                            <td class="label"><?= e($wear->antal);?> <?= e($wear->getWearName());?>, size <?= e($wear->size);?></td>
+                        </tr>
+                    <?php endforeach;
+                endif;?>
+            </tbody>
+        </table>
+    </fieldset>
+</div>

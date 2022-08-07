@@ -1,0 +1,11 @@
+<h1>Aktiviteter:</h1>
+    <?php foreach ($this->aktiviteter as $type => $bunch) : ?>
+    <div class="half float-left">
+        <h2><?= tt($type);?></h2> 
+        <ul>
+            <?php foreach ($bunch as $aktivitet) :?>
+                <li><a href="<?= $this->url('visaktivitet', array('id' => $aktivitet->id));?>"><strong><?= e($aktivitet->navn);?> / <?= e($aktivitet->title_en);?></strong> - <em>ID <?= $aktivitet->id;?></em></a></li>
+            <?php endforeach;?>
+        </ul>
+    </div>
+    <?php endforeach;?>

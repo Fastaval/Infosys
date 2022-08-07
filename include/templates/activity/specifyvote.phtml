@@ -1,0 +1,8 @@
+<div class="votingModule">
+    <form action="<?= $this->url('activity_vote_post');?>" method="POST">
+        <h2>Vote for Participants Award / Stem til Deltagernes Pris</h2>
+        <p>Enter your code / Indtast din kode</p>
+        <p><input type="text" name="code" placeholder="Code ..."/></p>
+        <?= $this->getMessagesHtml();?>
+    </form>
+</div>

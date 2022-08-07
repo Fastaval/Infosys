@@ -1,0 +1,139 @@
+<div id='gds-calendar'>
+    <p id='gds-categories'>
+        <?php foreach ($this->gds_categories as $gds) :?>
+            <span class='gds-category-span'><a href='#' class='gds-category-link' id='gds-link-<?= $gds->id;?>'><?= $gds->navn;?></a><span class='gds-list-popup'><a href='<?= $this->url('list_all_shifts', array('id' => $gds->id));?>'>Liste over vagter</a><br/><a href='<?= $this->url('gds_category', array('gds_id' => $gds->id));?>'>Rediger kategori</a></span></span>
+        <?php endforeach;?>
+        <a href='#' class='gds-category-link' id='gds-link-all'>Alle</a>
+    </p>
+    <table id='gds-calendar-table'>
+        <thead>
+            <tr>
+                <td colspan='2'>&nbsp;</td>
+                <?php foreach ($this->gds_dates as $date) :
+                    $current = $date == $this->selected_date ? ' gds-current-date' : '';?>
+                    <td><a href="<?= $this->url('gds_calendar_date', array('date' => $date));?>" class='gds-calendar-date-link<?= $current;?>' id='gds-datelink-<?= $date;?>'><?= date('d/m', strtotime($date));?><br/><?= $this->replaceDayNames(date('D', strtotime($date)));?></a></td>
+                <?php endforeach;?>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> </td>
+                <td><h3><?= $this->replaceDayNames(date('D', strtotime($this->selected_date)));?></h3></td>
+            </tr>
+            <?php
+                $prev_time = 0;
+                foreach ($this->shifts as $shift) :
+                    $participants = $shift->getParticipants();
+                    $part_ids     = $this->extractIds($participants);
+                    ?>
+                        <tr class='gds_<?= $shift->gds_id;?> gds-shift-row'>
+                            <td><?php if ($shift->start !== $prev_time) :?><?= date('H:i', strtotime($shift->start));?></span><?php endif;?></td>
+                            <td>
+                                <span class='gds-shift-popupdetails' id='gds-shift-details-<?= $shift->id;?>' style='display: none'>
+                                    <div class='gds-popuptable' data-shift="<?= e($shift->id);?>">
+                                        <a href='#' style='float: right; clear: none' class='gds-close-popup'>Luk</a>
+                                        <div class='gds-tablewrapper'>
+                                            <table cellspacing='0' cellpadding='0' class='gds-participant-table'>
+                                                <caption>Sat på</caption>
+                                                <thead>
+                                                    <tr>
+                                                        <th class='gds-checkbox-cell'>&nbsp;</th>
+                                                        <th>Deltager</th>
+                                                        <th>Mobil</th>
+                                                        <th>No-show</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($participants as $key => $d) :
+                                                        $class = $key % 2 ? 'gds-altern' : '';
+                                                        $class = $d->signedUpForGDSShift($shift) ? $class . ' gds-signup-row' : $class;
+                                                        $noshow = $shift->participantWasNoshow($d);
+                                                    ?>
+                                                        <tr class="<?= $class;?>" data-name="<?= e($d->getName());?>" data-phone="<?= e($d->mobiltlf);?>" data-email="<?= e($d->email);?>" data-note="" data-medical-note="" data-age="">
+                                                            <td class='gds-checkbox-cell'><input type='checkbox' class='gds-remove-participant-<?= $d->id;?>'/></td>
+                                                            <td><a href="<?= $this->url('visdeltager',array('id' => $d->id));?>"><?= $d->fornavn;?> <?= $d->efternavn;?></a></td>
+                                                            <td><?= $d->mobiltlf;?></td>
+                                                            <td class="noshow"><input type="checkbox" class="no-show" data-participant="<?= e($d->id);?>" data-shift="<?= e($shift->id);?>" <?= $noshow ? 'checked="checked"' : '';?>/></td>
+                                                        </tr>
+                                                    <?php endforeach;?>
+                                                </tbody>
+                                            </table>
+                                            <a href='#' class='gds-remove-participants'>Fjern deltager(e)</a>
+                                        </div>
+                                        <div class='gds-tablewrapper'>
+                                            <table cellspacing='0' cellpadding='0' class='gds-signup-table'>
+                                                <caption>Tilmeldte</caption>
+                                                <thead>
+                                                    <tr>
+                                                        <th class='gds-checkbox-cell'>&nbsp;</th>
+                                                        <th>Deltager</th>
+                                                        <th>Mobil</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                            <a href='#' class='gds-add-signups'>Tilføj deltager(e)</a>
+                                            <span class="float-right"><a class="find-suggestions" href="javascript:void(0);">Find forslag</a></span>
+                                        </div>
+                                        <div class='clearit'></div>
+                                        <div style='float: right; clear: none; border: 1px solid black;padding:5px;'>
+                                            <label><input type='checkbox' class='gds-override'/> Override</label>
+                                        </div>
+                                        <input type='text' class='gds-search-box'/>
+                                        <input type='button' value='Søg' class='gds-search-button'/>
+                                        <div class='gds-tablewrapper'>
+                                            <table cellspacing='0' cellpadding='0' class='gds-search-table'>
+                                                <thead>
+                                                    <tr>
+                                                        <th class='gds-checkbox-cell'>&nbsp;</th>
+                                                        <th>Deltager</th>
+                                                        <th>Mobil</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                            <a href='#' class='gds-add-randoms'>Tilføj deltager(e)</a>
+                                        </div>
+                                    </div>
+                                </span>
+                                <a href='#' class='gds-shift-link' id='gds-shift-<?= $shift->id;?>'><?= $shift->getGDSName();?></a> (<span id='gds-shift-live-count-<?= $shift->id;?>'><?= $shift->getParticipantCount();?></span> / <?= $shift->antal_personer;?>) <img src="/img/search.png" alt="" data-role="shift-search" data-shift-id="<?= e($shift->id);?>"/>
+                            </td>
+                            <td> </td>
+                        </tr>
+                        <?php $prev_time = $shift->start;
+                    endforeach;?>
+        </tbody>
+    </table>
+</div>
+<script type="text/template" id="gds-participant-popup-template">
+<div class="gds-participant-popup">
+<dl>
+    <dt>Id</dt>
+    <dd>{{id}}</dd>
+    <dt>Navn</dt>
+    <dd>{{name}}</dd>
+    <dt>Alder</dt>
+    <dd>{{age}}</dd>
+    <dt>Mobil</dt>
+    <dd>{{phone}}</dd>
+    <dt>Email</dt>
+    <dd>{{email}}</dd>
+    <dt>Note</dt>
+    <dd>{{note}}</dd>
+    <dt>Medical note</dt>
+    <dd>{{medical-note}}</dd>
+    <dt>Tildelte vagter</dt>
+    <dd>{{assigned-shifts}}</dd>
+    <dt>Spilleder</dt>
+    <dd>{{gamemaster}}</dd>
+</dl>
+</div>
+</script>
+<script type='text/javascript' src="<?= $this->JSLink('gds.js');?>"></script>
+<script type='text/javascript'>
+gds_object.public_uri = '<?= $this->public_uri;?>';
+gds_object.shift_search_uri = '<?= $this->url('gds_shift_participants');?>';
+gds_object.setup();
+</script>

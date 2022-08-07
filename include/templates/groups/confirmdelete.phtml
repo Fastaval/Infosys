@@ -1,0 +1,10 @@
+<div>
+    <fieldset>
+        <legend>Slet hold?</legend>
+        <p>Er du sikker på du vil slette hold #<?php echo e($this->hold->holdnummer);?> for <i><?php echo e($this->hold->getAktivitet()->navn);?></i>?</p>
+        <form action="<?php echo $this->url('delete_hold', array('id' => $this->hold->id ));?>" method='post'>
+            <input type='submit' value='Slet' name='delete_hold' />
+            <input type='submit' value='Fortryd' />
+        </form>
+    </fieldset>
+</div>

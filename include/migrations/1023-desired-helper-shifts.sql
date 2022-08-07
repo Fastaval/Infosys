@@ -1,0 +1,1 @@
+ALTER TABLE deltagere ADD COLUMN desired_diy_shifts TINYINT UNSIGNED NOT NULL DEFAULT 0;

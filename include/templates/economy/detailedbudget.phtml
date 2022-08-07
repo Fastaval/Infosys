@@ -1,0 +1,77 @@
+<table>
+    <tbody>
+        <tr>
+            <th colspan="4">Normale deltagere</th>
+            <th colspan="2">Rabat</th>
+            <th colspan="3">Indgang</th>
+            <th colspan="4">Wear, mad and stuffs</th>
+        </tr>
+        <tr>
+            <th>Id</th>
+            <th>Navn</th>
+            <th>Kategori</th>
+            <th>Forudbetalt</th>
+            <th>Indgang</th>
+            <th>Overnatning</th>
+            <th>Wear</th>
+            <th>Mad</th>
+            <th>Aktiviteter</th>
+            <th>Onkel</th>
+        </tr>
+        <?php $i = 0;
+        foreach ($this->budget_details as $p) :
+            if ($p['udeblevet'] == 'nej') :?>
+                <tr <?php echo ($i++ % 2 ? '' : "style='background-color: #c0c0c0'");?>>
+                    <td><?= intval($p['id']);?></td>
+                    <td><?= e($p['name']);?></td>
+                    <td><?= e($p['category']);?></td>
+                    <td><?= e($p['paid_amount']);?></td>
+                    <td><?= e($p['entrance_cost']);?></td>
+                    <td><?= e($p['sleep_cost']);?></td>
+                    <td><?= e($p['wear_cost']);?></td>
+                    <td><?= e($p['food_cost']);?></td>
+                    <td><?= e($p['activity_cost']);?></td>
+                    <td><?= e($p['uncle_cost']);?></td>
+                </tr>
+            <?php endif;
+            endforeach;?>
+    </tbody>
+    <tbody>
+        <tr>
+            <th colspan="4">Udeblevne deltagere</th>
+            <th colspan="2">Rabat</th>
+            <th colspan="3">Indgang</th>
+            <th colspan="4">Wear, mad and stuffs</th>
+        </tr>
+        <tr>
+            <th>Id</th>
+            <th>Navn</th>
+            <th>Kategori</th>
+            <th>Forudbetalt</th>
+            <th>Arrangørrabat</th>
+            <th>Indgang</th>
+            <th>Overnatning</th>
+            <th>Wear</th>
+            <th>Mad</th>
+            <th>Aktiviteter</th>
+            <th>Onkel</th>
+        </tr>
+        <?php $i = 0;
+        foreach ($this->budget_details as $p) :
+            if ($p['udeblevet'] == 'ja') :?>
+                <tr <?php echo ($i++ % 2 ? '' : "style='background-color: #c0c0c0'");?>>
+                    <td><?= intval($p['id']);?></td>
+                    <td><?= e($p['name']);?></td>
+                    <td><?= e($p['category']);?></td>
+                    <td><?= e($p['paid_amount']);?></td>
+                    <td><?= e($p['entrance_cost']);?></td>
+                    <td><?= e($p['sleep_cost']);?></td>
+                    <td><?= e($p['wear_cost']);?></td>
+                    <td><?= e($p['food_cost']);?></td>
+                    <td><?= e($p['activity_cost']);?></td>
+                    <td><?= e($p['uncle_cost']);?></td>
+                </tr>
+            <?php endif;
+            endforeach;?>
+    </tbody>
+</table>

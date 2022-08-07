@@ -1,0 +1,101 @@
+<div id='admin-container'>
+    <fieldset>
+        <legend>Users</legend>
+        <table id='users-table'>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Disabled</th>
+                    <th>Password</th>
+                    <th>Roles</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->users as $user) :?>
+                <tr>
+                    <td class='user-id'><?php echo $user->id;?></td>
+                    <td><?php echo $user->user;?></td>
+                    <td class='status'><?php echo $user->disabled;?></td>
+                    <td>
+                        <input class='new_pass' value='' type='text'/>
+                        <input type='button' value='Change' class='action_changepass'/>
+                    </td>
+                    <td class="roles">
+                        <?php foreach ($user->getRoles() as $role) :?>
+                            <span><a href='javascript:void(0);' class='action_removerole'><img src="<?= $this->imgLink('remove.png');?>" alt='Remove role'/><input type="hidden" value="<?= e($role->id);?>"/></a>&nbsp;<?= e($role->name);?><br/></span>
+                        <?php endforeach;?>
+                    </td>
+                    <td>
+                        <select class='role_select'>
+                        <?php foreach ($this->all_roles as $role) :?>
+                        <option value='<?php echo $role->id;?>'><?php echo $role->name;?></option>
+                        <?php endforeach;?>
+                        </select><input type='button' value='Add role' class='action_addrole'/>
+                    </td>
+                    <td><input type='button' value="<?php echo ($user->disabled == 'ja' ? 'Enable' : 'Disable');?>" class='action_disable'/></td>
+                    <td><input type='button' value='Delete' class='action_delete'/></td>
+                </tr>
+                <?php endforeach;?>
+            </tbody>
+            <tfoot>
+                <tr id='divider-row'>
+                    <td colspan='7'><hr/></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><label>User: <input type='text' value='' id='user_name'/></label></td>
+                    <td colspan='2'><label>Pass: <input type='text' value='' id='user_pass'/></label></td>
+                    <td colspan='2'>
+                        <select id='role_select'>
+                            <option value=''></option>
+                            <?php foreach ($this->all_roles as $role) :?>
+                            <option value='<?php echo $role->id;?>'><?php echo $role->name;?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </td>
+                    <td><input type='button' value='Add user' id='action_adduser'/></td>
+                </tr>
+
+                <tr class="hidden user-template">
+                    <td class='user-id'>user-id-placeholder</td>
+                    <td>user-name-placeholder</td>
+                    <td class='status'>nej</td>
+                    <td>
+                        <input class='new_pass' value='' type='text'/>
+                        <input type='button' value='Change' class='action_changepass'/>
+                    </td>
+                    <td class="roles">
+                    </td>
+                    <td>
+                        <select class='role_select'>
+                        <?php foreach ($this->all_roles as $role) :?>
+                            <option value='<?php echo $role->id;?>'><?php echo $role->name;?></option>
+                        <?php endforeach;?>
+                        </select><input type='button' value='Add role' class='action_addrole'/>
+                    </td>
+                    <td><input type='button' value="Disable" class='action_disable'/></td>
+                    <td><input type='button' value='Delete' class='action_delete'/></td>
+                </tr>
+            </tfoot>
+        </table>
+    </fieldset>
+
+
+    <div class="role-template hidden">
+        <span><a href='javascript:void(0);' class='action_removerole'><img src="<?= $this->imgLink('remove.png');?>" alt='Remove role'/><input type="hidden" value="role-id-placeholder"/></a>&nbsp;role-name-placeholder<br/></span>
+    </div>
+</div>
+<script type='text/javascript' src="<?php echo $this->JSLink('admin.js');?>"></script>
+<script>
+users_object.public_uri = '<?php echo $this->public_uri;?>';
+users_object.roles = {
+<?php $i = count($this->all_roles);
+    foreach ($this->all_roles as $role) :?>
+    <?= e($role->id);?>: '<?= e($role->name);?>'<?php echo (--$i ? ',' : '');?>
+<?php endforeach ;?>
+};
+users_object.setup();
+</script>

@@ -1,0 +1,55 @@
+<?php $this->registerEarlyLoadJS('DataTables-1.9.0/media/js/jquery.dataTables.js');
+$this->registerLateLoadJS('show_all.js');
+$this->includeCSS('../js/DataTables-1.9.0/media/css/jquery.dataTables.css');
+$this->includeCSS('../js/DataTables-1.9.0/media/css/jquery.dataTables_themeroller.css');
+echo $this->getMessagesHtml();?>
+<p>
+    <a href="javascript:void();" class="search btn btn-primary">Søg</a>
+    <a href="<?= $this->url('sms_dialog');?>" class="message btn">Send SMS</a>
+    <a href="<?= $this->url('email_list');?>" class="message btn">Emails</a>
+    <a class="float-right character-sheet btn" href="<?= $this->url('spillersedler', array('id_range' => 'id_range'));?>">Print deltagersedler</a>
+    <a class="float-right id-cards btn" href="<?= $this->url('id_card_render');?>?ids=id_range">Print ID kort</a>
+</p>
+<p class="list-helpers">
+
+    <span class='more-columns'><img src='<?= $this->imgLink('plus.png');?>' alt='Add column'/> Tilføj/fjern kolonne</span>
+    <span class='reset-columns'><img src='<?= $this->imgLink('kryds.png');?>' alt='Reset columns'/> Reset kolonner</span>
+
+<?php if ($this->search_term) : ?>
+<span class='reset-search'>Søgning: <strong><?= e($this->search_term);?></strong> <img src='<?= $this->imgLink('kryds.png');?>' alt='Reset search'/></span>
+<?php endif;?>
+
+</p>
+
+<div class='available-columns no-display'>
+<?php foreach ($this->available_columns as $field => $column) :?>
+    <span id='<?= e($field);?>' class='addable-column'><?= e($column);?></span>
+<?php endforeach;?>
+    <div class='clearit'>&nbsp;</div>
+</div>
+<table class='data-table current'>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Navn</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->users as $user) : ?>
+            <tr>
+                <td><a href="<?= $this->url('visdeltager', array('id' => $user['id']));?>"><?= e($user['id']);?></a></td>
+                <td><a href="<?= $this->url('visdeltager', array('id' => $user['id']));?>"><?= e($user['navn']);?></a></td>
+            </tr>
+        <?php endforeach;?>
+    </tbody>
+</table>
+<script>
+    var infosys_data = {
+        all_users_ajax: '<?= $this->url('all_users_ajax');?>',
+        initial_rows: <?= $this->row_count;?>
+    };
+</script>
+
+<form action="<?php echo $this->url('participant_ajax_search_parameters');?>" method='post' class="deltager-search-box no-display">
+    <?php echo $this->viewhelper->deltagerSearchbox(array(), $this->model);?>
+</form>

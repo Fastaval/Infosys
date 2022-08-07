@@ -1,0 +1,4 @@
+"Game","Count","Minutes","Designer"
+<?php foreach ($this->data as $name => $stuff) :
+    printf('"%s","%s","%s","%s"' . PHP_EOL, $name, $stuff['count'], $stuff['time'], $stuff['designergame']);
+endforeach;

@@ -1,0 +1,58 @@
+<?= $this->getMessagesHtml();?>
+<?php
+$this->registerLateLoadJS('gamestartdetails.js');
+?>
+<h1>Detaljer for spilstart: <?php echo danishDayNames(date('l H:i', strtotime($this->time)));?></h1>
+<?php if ($this->can_run_gamestart) :
+    switch ($this->gamestart->status) {
+    case 1:
+        $text = 'Se aktiv spilstart';
+        break;
+
+    case 2:
+        $text = 'Genoptag spilstart';
+        break;
+
+    default:
+        $text = 'Kør spilstart';
+    }
+
+?>
+    <a class="btn btn-primary" href="<?= $this->url('gamestart_master', array('time' => str_replace(' ', '_', $this->time)));?>"><?= $text;?></a>
+<?php endif;?>
+<p><a class="btn btn-primary prepareVotes <?= $this->gamestart_votes_already_printed ? 'hasVotes' : '';?>" href="<?= $this->url('prepare_schedule_votes', array('time' => str_replace(' ', '_', $this->time)));?>" target="_blank">Print stemmesedler</a></p>
+<p>Antal aktiviteter: <?php echo count($this->gamestart_details);?></p>
+<ul>
+    <?php foreach ($this->gamestart_details as $detail) :?>
+        <li><h3><a href='<?php echo $this->url('visaktivitet', array('id' => $detail['activity']->id));?>'><?php echo e($detail['activity']->navn);?></a></h3></li>
+        <ul>
+            <?php if ($this->gamestart->status == 1) :?>
+            <li><a href="<?= $this->url('gamestart_minion', array('id' => $detail['run']->id));?>" class="btn btn-primary">Kør spilstart for hold</a></li>
+            <?php endif;?>
+            <li><strong>Forfatter/designer:</strong> <?= e($detail['activity']->author);?></li>
+            <?php if (!empty($detail['run']->note)) :?>
+            <li><b>Noter:</b> <?php echo e($detail['run']->note);?></li>
+            <?php endif;
+            $groups_needing = $detail['run']->getGroupNeeding('spilleder');
+            ?>
+            <li><b>Spilledere:</b> <?php echo count($detail['run']->getHold()) * $detail['activity']->spilledere_per_hold;?><?php if ($groups_needing) :?> - <span style="background-color: #ff0000; color: #ffffff;">der er mindst 1 hold, der mangler spilleder(e)!</span><?php endif;?></li>
+            <ul>
+                <?php foreach ($detail['run']->getAssignedGMs() as $gms) :
+                    foreach ($gms as $gm) :?>
+                    <li><?php echo e($gm->getDeltager()->fornavn);?> <?php echo e($gm->getDeltager()->efternavn);?> (<?php echo e($gm->getDeltager()->mobiltlf);?>)</li>
+                    <?php endforeach;
+                endforeach;?>
+            </ul>
+            <li><b>Spillere:</b> min. <?php echo e($detail['activity']->min_deltagere_per_hold);?>, max. <?php echo e($detail['activity']->max_deltagere_per_hold);?></li>
+            <li><b>Hold:</b> <?php echo count($detail['run']->getHold());?></li>
+            <li><?php echo e($detail['run']->getLokale());?></li>
+            <li><b>Lokaler:</b></li>
+            <ul>
+                <?php foreach ($detail['run']->getHold() as $hold) :?>
+                <li>Lokale <?php echo e($hold->getLokale()->beskrivelse);?></li>
+                <?php endforeach;?>
+            </ul>
+
+        </ul>
+    <?php endforeach;?>
+</ul>

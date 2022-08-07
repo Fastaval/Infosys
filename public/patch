@@ -1,0 +1,71 @@
+diff --git a/include/models/boardgames_model.php b/include/models/boardgames_model.php
+index a3e1566..cdeb4a6 100644
+--- a/include/models/boardgames_model.php
++++ b/include/models/boardgames_model.php
+@@ -428,7 +428,7 @@ GROUP BY
+ 
+     public function createBoardgame(RequestVars $post)
+     {
+-        if (!$post->name || !$post->owner || !$post->barcode) {
++        if (!$post->name || !$post->owner) {
+             throw new Exception('Missing data for boardgame creation');
+         }
+ 
+@@ -439,6 +439,7 @@ GROUP BY
+         $boardgame->barcode      = $post->barcode;
+         $boardgame->designergame = intval($post->designergame);
+         $boardgame->comment      = isset($post->comment) ? $post->comment : '';
++        $boardgame->bgg_id       = isset($post->bgg_id) ? intval($post->bgg_id) : 0;
+ 
+         $boardgame->insert();
+ 
+diff --git a/include/templates/boardgames/overview.phtml b/include/templates/boardgames/overview.phtml
+index 65eebfb..9cb7896 100644
+--- a/include/templates/boardgames/overview.phtml
++++ b/include/templates/boardgames/overview.phtml
+@@ -36,6 +36,9 @@ $this->includeCSS('bscafe.css');?>
+                 <label for="gc-barcode">Stregkode</label>
+                 <input type="text" id="gc-barcode" name="barcode" placeholder="Stregkode..."/>
+ 
++                <label for="gc-bgg-id">BGG ID</label>
++                <input type="text" id="gc-bgg-id" name="bgg_id" placeholder="BGG ID..."/>
++
+                 <label for="gc-designergame">Fastaval</label>
+                 <input type="checkbox" id="gc-designergame" name="designergame" value="1"/>
+ 
+diff --git a/public/js/bscafe.js b/public/js/bscafe.js
+index 41ebbbe..5182270 100644
+--- a/public/js/bscafe.js
++++ b/public/js/bscafe.js
+@@ -513,6 +513,7 @@ var BSCafe = (function ($, window) {
+                 barcodeString     = module.elements.$gcBarcode.val(),
+                 designergameValue = module.elements.$gcDesignergame.prop('checked'),
+                 commentString     = module.elements.$gcComment.val(),
++                bggId             = module.elements.$gcBggId.val(),
+                 gameRegistered = function (data) {
+                     var game = {
+                         id: parseInt(data.id, 10),
+@@ -531,6 +532,7 @@ var BSCafe = (function ($, window) {
+                     module.elements.$gcOwner.val('');
+                     module.elements.$gcBarcode.val('');
+                     module.elements.$gcComment.val('');
++                    module.elements.$gcBggId.val('');
+                     module.elements.$gcDesignergame.prop('checked', false);
+ 
+                     module.elements.$gamesTab.addClass('auto-highlight');
+@@ -552,6 +554,7 @@ var BSCafe = (function ($, window) {
+                     barcode: barcodeString,
+                     designergame: designergameValue ? 1 : 0,
+                     comment: commentString,
++                    bgg_id: bggId,
+                 },
+                 success: gameRegistered,
+                 error: function () {
+@@ -846,6 +849,7 @@ var BSCafe = (function ($, window) {
+                 module.elements.$gcBarcode              = $('#gc-barcode');
+                 module.elements.$gcDesignergame         = $('#gc-designergame');
+                 module.elements.$gcComment              = $('#gc-comment');
++                module.elements.$gcBggId                = $('#gc-bgg-id');
+                 module.elements.$borrowingComment       = $('#borrowing-comment');
+                 module.elements.$inPlayList             = $('div.in-play-list ul');
+                 module.elements.$actionPane             = $('div.action-pane');

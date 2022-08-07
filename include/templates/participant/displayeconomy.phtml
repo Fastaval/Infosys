@@ -1,0 +1,19 @@
+<div id='finances'>
+    <fieldset>
+        <legend>Money stuffs</legend>
+        <table>
+            <tbody>
+                <?php foreach ($this->figures as $key => $figure) : ?>
+                    <tr>
+                        <?php if ($figure === 'break') : ?>
+                            <td colspan="2"><hr/></td>
+                        <?php else :?>
+                            <td><?php echo e($key);?></td>
+                            <td><?php echo e($figure);?></td>
+                        <?php endif ;?>
+                    </tr>
+                <?php endforeach;?>
+            </tbody>
+        </table>
+    </fieldset>
+</div>

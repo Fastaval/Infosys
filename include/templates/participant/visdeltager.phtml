@@ -1,0 +1,484 @@
+<?= $this->getMessagesHtml();
+$this->registerEarlyLoadJS('jquery.jeditable.mini.js');
+$this->registerLateLoadJS('participant.js');
+?>
+
+<script>
+    var participant = {
+        id: <?= $this->deltager->id;?>
+    };
+</script>
+<div class="prev-next-buttons">
+        <a class="btn btn-danger" href="<?= $this->url('spillersedler', array('id_range' => $this->deltager->id));?>" target="_blank">Print spillerseddel</a>
+    <?php if ($this->allow_checkin && $this->deltager->checkin_time === '0000-00-00 00:00:00' && $this->deltager->annulled === 'nej') :?>
+        <a id="checkin" class="btn btn-primary" href="javascript:void(0);">Check in</a>
+        <a id="checkin-print" class="btn" href="javascript:void(0);">Check in &amp; print</a>
+    <?php endif;?>
+        <a class="btn btn-danger" href="<?= $this->url('participant_signup_email', array('id' => $this->deltager->id));?>" target="_blank">Send tilmeldings email</a>
+    <?php if ($this->payment_edit) : ?>
+        <a class="btn btn-success register-bank-payment" href="javascript:void(0);">Registrer bankoverførsel</a>
+    <?php endif;?>
+    <?php if ($previous = $this->deltager->getPrevious()) :?>
+        <form action="<?= $this->url('visdeltager', array('id' => $previous->id));?>" method="get" id="prev-participant"><button type="submit">Vis forrige</button></form>
+    <?php endif;
+    if ($next = $this->deltager->getNext()) :?>
+    <form action="<?= $this->url('visdeltager', array('id' => $next->id));?>" method="get" id="next-participant"><button type="submit">Vis næste</button></form>
+    <?php endif;?>
+
+    <form action="<?= $this->url('visdeltager', array('id' => $this->deltager->id));?>" method="get"><button type="submit"><?= ($this->payment_edit ? 'Normal mode' : 'Betalings mode');?></button><?php if (!$this->payment_edit) :?><input type="hidden" name="payment_edit" value="true"/><?php endif; ?></form>
+</div>
+<div id='topboxes'>
+    <div id='personal_info'>
+        <fieldset>
+            <legend>Personlig info - <a href="<?= $this->url('edit_deltager', array('id' => $this->deltager->id));?>">Ret/slet</a> - <a id="character-sheet-link" href="<?= $this->url('spillersedler', array('id_range' => $this->deltager->id));?>" target="_blank">Spillerseddel</a></legend>
+            <table>
+                <tr>
+                    <td class='label'>ID: </td><td><?= $this->deltager->id;?></td>
+                    <td colspan='4'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class='label'>Fødselsdato: </td><td id='birthdate' class='editable text'><?= e(date('d-m-Y', strtotime($this->deltager->birthdate)));?></td>
+                    <td class='label'>Navn: </td><td colspan='3' id='name' class='editable text'><?= e($this->deltager->fornavn);?> <?= e($this->deltager->efternavn);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Køn: </td><td id='gender' class='editable gender'><?= e($this->deltager->gender);?></td>
+                    <td class='label'>Kategori: </td><td class='editable usertype' id='brugerkategori_id'><?= $this->deltager_info['brugerkategori']->navn;?></td>
+                    <td class='label'>Forudbetalt: </td><td id='betalt_beloeb' class='editable text'><?= e($this->deltager->betalt_beloeb);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Adresse: </td><td colspan='3' id='address' class='editable text'><?= e($this->deltager->adresse1);?> <?= e($this->deltager->adresse2);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Postnr: </td><td id='postnummer' class='editable text'><?= e($this->deltager->postnummer);?></td>
+                    <td class='label'>By: </td><td id='by' class='editable text'><?= e($this->deltager->by);?></td>
+                    <td class='label'>Land: </td><td id='land' class='editable text'><?= e($this->deltager->land);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Mobil: </td><td id='mobiltlf' class='editable text'><?= e($this->deltager->mobiltlf);?></td>
+                    <td class='label'>E-mail: </td><td colspan='3' id='email' class='editable text'><?= e($this->deltager->email);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>International: </td><td id='international' class='editable yesno'><?= $this->deltager->international;?></td>
+                    <td class='label'>Mobil med: </td><td id='medbringer_mobil' class='editable yesno'><?= $this->deltager->medbringer_mobil;?></td>
+                    <td class='label'>NødTlf: </td><td id='tlf' class='editable text'><?= e($this->deltager->tlf);?></td>
+                </tr>
+                <?php if (!($this->payment_edit || $this->is_read_only)) :?>
+                <tr>
+                    <td colspan='6'><hr/></td>
+                </tr>
+                <tr>
+                    <td class='label'>Extra vouchers: </td><td id='extra_vouchers' class='editable text'><?= $this->deltager->extra_vouchers;?></td>
+                </tr>
+                <tr>
+                    <td colspan='6'><hr/></td>
+                </tr>
+                <tr>
+                    <!--<td class='label'>Scen. konk.: </td><td id='tilmeld_scenarieskrivning' class='editable yesno'><?= $this->deltager->tilmeld_scenarieskrivning;?></td>-->
+                    <td class='label'>Sprog: </td><td colspan='2' id='sprog'><?= implode(', ', $this->deltager->getSprog());?></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan='6'><hr/></td>
+                </tr>
+                <tr>
+                    <td class='label'>SuperGDS: </td><td id='supergds' class='editable yesno'><?= $this->deltager->supergds;?></td>
+                    <td class='label'>Flere GDS vagter: </td><td id='flere_gdsvagter' class='editable yesno'><?= $this->deltager->flere_gdsvagter;?></td>
+                    <td class='label'>SuperGM: </td><td id='supergm' class='editable yesno'><?= $this->deltager->supergm;?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Hjælper mandag: </td><td id='ready_mandag' class='editable yesno'><?= $this->deltager->ready_mandag;?></td>
+                    <td class='label'>Hjælper tirsdag: </td><td id='ready_tirsdag' class='editable yesno'><?= $this->deltager->ready_tirsdag;?></td>
+                    <td class='label'>Pakkeløsning: </td><td id='package_gds' class='editable package_gds'><?= $this->deltager->package_gds ? 'Ja' : 'Nej';?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Arr. næste år: </td><td id='arrangoer_naeste_aar' class='editable yesno'><?= $this->deltager->arrangoer_naeste_aar;?></td>
+                    <td class='label'>Arr. sovesal: </td><td id='sovesal' class='editable yesno'><?= $this->deltager->sovesal;?></td>
+                    <td class='label'>Forfatter: </td><td id='forfatter' class='editable yesno'><?= $this->deltager->forfatter;?></td>
+                </tr>
+                <tr>
+                    <td class='label'><strong>Ønsket antal aktiviteter:</strong> </td><td id='desired_activities' class='editable text'><?= e($this->deltager->desired_activities);?></td>
+                    <td class='label'><strong>Ønsket antal GDS:</strong> </td><td id='desired_diy_shifts' class='editable text'><?= e($this->deltager->desired_diy_shifts);?></td>
+                    <td class='label'><strong>Simultantolk:</strong> </td><td id='interpreter' class='editable yesno'><?= e($this->deltager->interpreter);?></td>
+                </tr>
+
+                <tr>
+                    <td colspan='6'><hr/></td>
+                </tr>
+                <tr>
+                    <td class='label'>Udeblevet: </td><td id='udeblevet' class='editable yesno'><?= $this->deltager->udeblevet;?></td>
+                    <td class='label'>Karma: </td><td><?= $this->participant_karma;?></td>
+                    <td class='label'><b>Annulleret:</b> </td><td id="annulled" class="editable yesno"><span <?php if ($this->deltager->annulled === 'ja') :?>style='color: #ffffff;background-color: #ff0000;'<?php endif; ?>><?= ucfirst($this->deltager->annulled);?></span></td>
+
+                </tr>
+                <tr>
+                    <td class='label'><b>Tilmeldt:</b> </td><td><?php if ($this->late_signup) :?><span style='color: #ffffff;background-color: #ff0000;'><?php endif; echo date('Y-m-d', strtotime($this->deltager->signed_up));?></span></td>
+                    <td class='label'><b>Checked in:</b> </td><td class="checkin-time"><?= strtotime($this->deltager->checkin_time) ? date('Y-m-d H:i', strtotime($this->deltager->checkin_time)) : 'Ikke tjekket ind';?></td>
+                    <td class='label'><b>Aktivitets-låst:</b> </td><td id="activity_lock" class='editable yesno'><?= e($this->deltager->activity_lock);?></td>
+                </tr>
+                <tr>
+                    <td colspan='6'><hr/></td>
+                </tr>
+                <tr>
+                    <td class='label'>Ungdomsskole: </td><td colspan='5' id='ungdomsskole' class='editable text'><?= e($this->deltager->ungdomsskole);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Arrangørområde: </td><td colspan='5' id='arbejdsomraade' class='editable text'><?= e($this->deltager->arbejdsomraade);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Scenarie: </td><td colspan='5' id='scenarie' class='editable text'><?= e($this->deltager->scenarie);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Skills: </td><td colspan='5' id='skills' class='editable text'><?= e($this->deltager->skills);?></td>
+                </tr>
+                <?php endif;?>
+            </table>
+        </fieldset>
+    </div>
+    <?php if (!($this->payment_edit || $this->is_read_only)) :?>
+    <div id='indgang_mad_info'>
+        <fieldset>
+            <legend>Indgang / Mad - <a href="<?= $this->url('update_deltager_madwear', array('id' => $this->deltager->id));?>">Ret/slet</a></legend>
+            <table>
+                <tr>
+                    <td colspan='2'><b>Indgang:</b> <em>
+                        <?php if (!empty($this->deltager_info['indgang'])) :
+                            $strings = array();
+                            foreach ($this->deltager_info['indgang'] as $day) :
+                                if ($day->isEntrance()) :
+                                    $strings[]= $day->getShortDescription();
+                                endif;
+                            endforeach;
+                            echo implode(', ', $strings);
+                        endif;?>
+                    </em></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Overnatning:</b> <em>
+                        <?php if (!empty($this->deltager_info['indgang'])) :
+                            $strings = array();
+                            foreach ($this->deltager_info['indgang'] as $day) :
+                                if ($day->isSleepTicket()) :
+                                    $strings[]= $day->getShortDescription();
+                                endif;
+                            endforeach;
+                            echo implode(', ', $strings);
+                        endif;?>
+                    </em></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Andet:</b> <em>
+                        <?php if (!empty($this->deltager_info['indgang'])) :
+                            $strings = array();
+                            foreach ($this->deltager_info['indgang'] as $day) :
+                                if (!$day->isSleepTicket() && !$day->isEntrance()) :
+                                    $strings[]= $day->getDescription();
+                                endif;
+                            endforeach;
+                            echo implode(', ', $strings);
+                        endif;?>
+                    </em></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Mad:</b>
+                        <?php if (!empty($this->deltager_info['mad'])) : ?>
+                            <ul>
+                            <?php
+                            foreach ($this->deltager_info['mad'] as $madtid) : ?>
+                                 <li><?= danishDayNames(date('D', strtotime($madtid->dato))) . " " . $madtid->getMad()->kategori;?> &mdash; (<em><?= $madtid->isReceived($this->deltager) ? 'Udleveret' : 'Ikke udleveret';?></em>)</li>
+                            <?php endforeach; ?>
+                            </ul>
+                        <?php endif;?>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <div id="id-card-content">
+        <fieldset>
+            <legend>IDkort</legend>
+            <?php if ($this->cropped_photo) : ?>
+            <img src="<?= e($this->cropped_photo);?>?rand=<?= uniqid();?>" alt=""/>
+            <?php endif;?>
+            <div class="actions">
+                <a href="<?= $this->participant_photo_upload_link;?>" class="btn btn-primary" target="_blank">Foto upload</a>
+                <a href="<?= $this->participant_id_card_link;?>" class="btn" target="_blank">Idkort</a>
+            </div>
+            <div class="id-card-content-template">
+                <span class="id-card-content-template-label">Skabelon:</span><span class="id-card-content-template-selected editable" id="participant-template"><?php if (!$this->id_template) : ?>Default (<?= $this->default_template ? e($this->default_template->name) : 'ingen';?>)<?php else : ?><?= e($this->id_template->name);?><?php endif;?></span>
+            </div>
+        </fieldset>
+    </div>
+    <div id='sleeping'>
+        <fieldset>
+            <legend>Soveplads - <a href="<?= $this->url('update_participant_sleeping', array('id' => $this->deltager->id));?>">Ret/slet</a></legend>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tidsrum</th>
+                        <th>Sted</th>
+                    </tr>
+                </thead>
+                <tbody>
+<?php foreach ($this->sleep_data as $row) : ?>
+                    <tr>
+                        <td><?= e($row['starts']);?> -&gt; <?= e($row['ends']);?></td>
+                        <td><?= e($row['room']->beskrivelse);?></td>
+                    </tr>
+<?php endforeach;?>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div id='wear_info'>
+        <fieldset>
+            <legend>Wear - <a href="<?= $this->url('update_deltager_madwear', array('id' => $this->deltager->id));?>">Ret/slet</a></legend>
+            <table>
+                <tr>
+                    <td colspan='2'><em>
+                        <?php if (!empty($this->deltager_info['wear'])) :
+                            foreach ($this->deltager_info['wear'] as $wear) :?>
+                            <?= $wear->antal;?> stk. <?= $wear->getWearName();?>, str. <?= $wear->size;?> &mdash; <?= $wear->getWearpris()->pris * $wear->antal;?>,- (<?= $wear->getWearpris()->pris;?>,-) &mdash; (<em><?= $wear->received == 't' ? 'Udleveret' : 'Ikke udleveret';?></em>)<br/>
+                            <?php endforeach;
+                        endif;?>
+                    </em></td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <?php endif;?>
+    <div id='prisbreakdown'>
+        <fieldset>
+            <legend>Pris breakdown</legend>
+            <table cellpadding='0' cellspacing='0'>
+                <tr>
+                    <td>Pris fra tilmelding</td>
+                    <td class='priser'><?= $this->deltager->original_price;?>,-</td>
+                </tr>
+                <tr>
+                    <td colspan='2'><hr/></td>
+                </tr>
+                <tr>
+                    <td>Indgang + overnatning</td>
+                    <td class='priser'><?= $this->deltager->calcEntry();?>,-</td>
+                </tr>
+                <tr>
+                    <td>Mad</td>
+                    <td class='priser'><?= $this->deltager->calcFood();?>,-</td>
+                </tr>
+                <tr>
+                    <td>Wear</td>
+                    <td class='priser'><?= $this->deltager->calcWear();?>,-</td>
+                </tr>
+                <tr>
+                    <td>Aktiviteter</td>
+                    <td class='priser'><?= $this->deltager->calcActivities();?>,-</td>
+                </tr>
+                <tr>
+                    <td>Andet (fest, etc)</td>
+                    <td class='priser'><?= $this->deltager->calcOtherStuff();?>,-</td>
+                </tr>
+                <tr>
+                    <td>Alea</td>
+                    <td class='priser'><?= $this->deltager->calcAlea();?>,-</td>
+                </tr>
+                <?php if ($this->deltager->rig_onkel == 'ja' || $this->deltager->hemmelig_onkel == 'ja') :?>
+                <tr>
+                    <td class='pris-underline'>Onkel</td>
+                    <td class='priser pris-underline'><?= $this->deltager->calcRichBastard();?>,-</td>
+                </tr>
+                <?php endif;?>
+                <tr>
+                    <td class='pris-underline'>Reel total</td>
+                    <td class='priser pris-underline'><?= $this->deltager->calcRealTotal();?>,-</td>
+                </tr>
+                <tr>
+                    <td class='pris-underline'>Tilmelding total</td>
+                    <td class='priser pris-underline'><?= $this->deltager->calcSignupTotal();?>,-</td>
+                </tr>
+                <tr>
+                    <td class='pris-underline'>Difference (<?= $this->deltager->calcRealTotal();?> - <?= $this->deltager->betalt_beloeb;?>):</td>
+                    <td class='priser pris-underline difference' style='background-color: #e0e0e0'><?= $this->deltager->calcRealTotal() - $this->deltager->betalt_beloeb;?>,-</td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <div class='clearit'></div>
+</div>
+<?php if (!($this->is_read_only)) :?>
+<div class='middleboxes'>
+    <div id='note1' class='note'>
+        <fieldset>
+            <legend>Admin-noter (internt) - <a href="<?= $this->url('edit_deltager_note', array('textfield' => 'admin_note', 'id' => $this->deltager->id));?>">Ret/slet</a></legend>
+            <p class="editable textarea" id="admin_note"><?= nl2br(htmlspecialchars($this->deltager->admin_note, ENT_QUOTES));?></p>
+        </fieldset>
+    </div>
+    <div id='note2' class='note'>
+        <fieldset>
+            <legend>Deltagerens noter (til Fastaval) - <a href="<?= $this->url('edit_deltager_note', array('textfield' => 'deltager_note', 'id' => $this->deltager->id));?>">Ret/slet</a></legend>
+            <p class="editable textarea" id="deltager_note"><?= nl2br(htmlspecialchars($this->deltager->deltager_note, ENT_QUOTES));?></p>
+        </fieldset>
+    </div>
+    <div id='note3' class='note'>
+        <fieldset>
+            <legend>Beskeder til deltageren (fra Fastaval) - <a href="<?= $this->url('edit_deltager_note', array('textfield' => 'beskeder', 'id' => $this->deltager->id));?>">Ret/slet</a></legend>
+            <p class="editable textarea" id="beskeder"><?= nl2br(htmlspecialchars($this->deltager->beskeder, ENT_QUOTES));?></p>
+        </fieldset>
+    </div>
+    <div id='note4' class='note'>
+        <fieldset>
+            <legend>Økonomi-note - <a href="<?= $this->url('edit_deltager_note', array('textfield' => 'paid_note', 'id' => $this->deltager->id));?>">Ret/slet</a></legend>
+            <p class="editable textarea" id="paid_note"><?= nl2br(htmlspecialchars($this->deltager->paid_note, ENT_QUOTES));?></p>
+        </fieldset>
+    </div>
+    <div id='note5' class='note'>
+        <fieldset>
+            <legend>Helbreds-note - <a href="<?= $this->url('edit_deltager_note', array('textfield' => 'medical_note', 'id' => $this->deltager->id));?>">Ret/slet</a></legend>
+            <p class="editable textarea" id="medical_note"><?= nl2br(htmlspecialchars($this->deltager->medical_note, ENT_QUOTES));?></p>
+        </fieldset>
+    </div>
+    <div id='note6' class='note'>
+        <fieldset>
+            <legend>Skills-note - <a href="<?= $this->url('edit_deltager_note', array('textfield' => 'skills', 'id' => $this->deltager->id));?>">Ret/slet</a></legend>
+            <p class="editable textarea" id="skills"><?= nl2br(htmlspecialchars($this->deltager->skills, ENT_QUOTES));?></p>
+        </fieldset>
+    </div>
+    <div class='clearit'></div>
+</div>
+<?php endif;?>
+<?php if (!($this->payment_edit || ($this->is_read_only && !$this->is_read_only_activity))) :?>
+<div class='middleboxes'>
+    <div class='aktivitetboxen'>
+        <fieldset>
+            <legend>Aktiviteter<?php if (!($this->deltager->activity_lock === 'ja' || $this->is_read_only)) : ?><span id="activity-edit-link"> - <a href="<?= $this->url('update_deltager_aktiviteter', array('id' => $this->deltager->id));?>">Ret/slet</a></span><?php endif;?></legend>
+            <table class='aktivitet_table' cellspacing='5'>
+                <?php if (!empty($this->deltager_info['pladser'])) : ?>
+                    <tr>
+                        <th>Aktivitet</th>
+                        <th>Tid</th>
+                        <th>S / SL</th>
+                        <th>Hold</th>
+                        <th>Sted</th>
+                    </tr>
+                    <?php foreach ($this->deltager_info['pladser'] as $plads) :?>
+                    <tr>
+                        <td><b><a href="<?= $this->url('visaktivitet', array('id' => $plads->getAktivitet()->id));?>" title='Se aktivitet'><?= $plads->getAktivitet()->navn;?></a></b></td>
+                        <td><em><?= $this->replaceDayNames(date('D H:i', strtotime($plads->getAfvikling()->start)));?> -&gt; <?= $this->replaceDayNames(date('D H:i', strtotime($plads->getAfvikling()->slut)));?></em></td>
+                        <td><?= $plads->type;?></td>
+                        <td><a href="<?= $this->url('vis_hold',array('id' => $plads->getHold()->id));?>" title='Se hold'><?= $plads->getHold()->holdnummer;?></a></td>
+                        <td><a href="<?= $this->url('vis_lokale',array('id' => $plads->getLokale()->id));?>" title='Se lokale'><?= $plads->getLokale()->beskrivelse;?>, <?= $plads->getLokale()->skole;?></a></td>
+                    </tr>
+                    <?php endforeach;
+                endif;?>
+            </table>
+        </fieldset>
+    </div>
+    <div class='gdsbox'>
+        <fieldset>
+            <legend>GDS Vagter<?php if (!$this->is_read_only) : ?> - <a href="<?= $this->url('update_deltager_gds', array('id' => $this->deltager->id));?>">Ret/slet</a><?php endif;?></legend>
+            <table class='gds_table'>
+                <?php if (!empty($this->deltager_info['gds'])) :
+                    foreach ($this->deltager_info['gds'] as $gds) :?>
+                    <tr>
+                        <td><b><?= $gds->getGDSName();?> (<?= $gds->getParticipantCount();?> / <?= $gds->antal_personer;?>)</b></td>
+                        <td><?= $this->replaceDayNames(date('D H:i', strtotime($gds->start)));?> -&gt; <?= $this->replaceDayNames(date('D H:i', strtotime($gds->slut)));?></td>
+                    </tr>
+                    <?php endforeach;
+                endif;?>
+            </table>
+        </fieldset>
+    </div>
+    <div class='clearit'></div>
+</div>
+<div class='middleboxes'>
+    <div class="aktivitetboxen">
+        <fieldset>
+            <legend>Aktivitetstilmeldinger<?php if (!($this->deltager->activity_lock === 'ja' || $this->is_read_only)) : ?> - <a class="activity-signup-edit" href="<?= $this->url('update_deltager_aktivitets_tilmeldinger', array('id' => $this->deltager->id));?>">Ret/slet</a><?php endif;?></legend>
+            <table class='aktivitet_table activity-signup' cellspacing='5'>
+                <thead>
+                    <tr>
+                        <th>Aktivitet</th>
+                        <th>Tid</th>
+                        <th>Prio</th>
+                        <th>S / SL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php if (!empty($this->deltager_info['tilmeldinger'])) :?>
+                    <?php foreach ($this->deltager_info['tilmeldinger'] as $tilmelding) :
+                        $activity = $tilmelding->getActivity();
+                    ?>
+                    <tr>
+                        <td class="activity-name dlg-editable">
+                            <input type="hidden" class="schedule-id" value="<?= e($tilmelding->afvikling_id);?>"/>
+                            <input type="hidden" class="activity-id" value="<?= e($activity->id);?>"/>
+                            <a href="<?= $this->url('visaktivitet', array('id' => $activity->id));?>" title='Se aktivitet'><?= e($activity->navn);?> / <?= e($activity->title_en);?></a></td>
+                        <td class="dlg-editable schedule"><em><?= $this->replaceDayNames(date('D H:i', strtotime($tilmelding->getAfvikling()->start)));?> -&gt; <?= $this->replaceDayNames(date('D H:i', strtotime($tilmelding->getAfvikling()->slut)));?></em></td>
+                        <td class="dlg-editable priority" align='center'><em><?= $tilmelding->prioritet;?></em></td>
+                        <td class="dlg-editable role"><?= $tilmelding->tilmeldingstype;?></td>
+                    </tr>
+                    <?php endforeach;
+                endif;?>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class='gdsbox'>
+        <fieldset>
+            <legend>GDS Tilmeldinger<?php if (!$this->is_read_only) : ?> - <a href="<?= $this->url('update_deltager_gdstilmeldinger', array('id' => $this->deltager->id));?>">Ret/slet</a><?php endif;?></legend>
+            <table class='gds_table'>
+                <?php if (!empty($this->deltager_info['gdstilmeldinger'])) :
+                    foreach ($this->deltager_info['gdstilmeldinger'] as $gds) : ?>
+                    <tr>
+                        <td><b><?= e($gds->getGDSCategory()->name_da);?></b></td>
+                        <td><?= e(danishDayNames($gds->getMeaningfulPeriod()));?></td>
+                    </tr>
+                    <?php endforeach;
+                endif;?>
+            </table>
+        </fieldset>
+    </div>
+</div>
+<?php endif;?>
+<hr/>
+<div class="prev-next-buttons">
+    <?php if ($previous) :?>
+        <form action="<?= $this->url('visdeltager', array('id' => $previous->id));?>" method="get"><input type="submit" value="Vis forrige"/></form>
+    <?php endif;
+    if ($next) :?>
+    <form action="<?= $this->url('visdeltager', array('id' => $next->id));?>" method="get"><input type="submit" value="Vis næste"/></form>
+    <?php endif;?>
+</div>
+<!-- todo: add url for bank payment registration -->
+<script type='text/javascript'>
+    var infosys_data = {
+        participant_editable_url:    '<?= $this->url('participant_editable_url', array('id' => $this->deltager->id));?>',
+        ajax_get_user_types_url:     '<?= $this->url('ajax_get_user_types');?>',
+        ajax_check_for_vouchers_url: '<?= $this->url('participant_check_for_voucher', array('participant_id' => $this->deltager->id));?>',
+        checkin_url:                 '<?= $this->url('checkin_interface_ajax');?>',
+        register_bank_transfer_url:  '<?= $this->url('participant_register_bank_payment', array('id' => $this->deltager->id));?>',
+        id_template_data:            <?= json_encode($this->id_template_select_data);?>
+    };
+</script>
+<script type="text/template" id="checkin-template">
+<div class="inner">
+    <p>Deltageren har et udestående med Fastaval.</p>
+    <h2>:money:,-</h2>
+    <h2>:vouchers: voucher(s)</h2>
+    <hr/>
+    <a class="btn btn-success continue" href="javascript:void(0);">Marker betalt og fortsæt</a>
+    <a class="btn btn-danger cancel" href="javascript:void(0);">Fortryd</a>
+</div>
+</script>
+<script type="text/template" id="bank-payment-template">
+<p>Registrer bankoverførsel for deltager. Tilføjer gebyr til deltagers tilmelding medmindre dette fravælges.</p>
+<ul>
+    <li>Dato: <input type="date" value="<?= date('Y-m-d');?>" placeholder="Dato ..." name="date"/></li>
+    <li>ID: <input type="text" placeholder="Overførsels-id ..." name="id"/></li>
+    <li>Beløb: <input type="number" value="<?= e($this->deltager->original_price);?>" placeholder="Beløb ..." name="amount"/></li>
+<?php if ($this->banking_fee) : ?>
+    <li>Gebyr: <?= e($this->banking_fee->pris);?> kr. <input type="checkbox" value="<?= e($this->banking_fee->pris);?>" data-id="<?= e($this->banking_fee->id);?>" name="fee" checked/></li>
+<?php endif;?>
+    <li>Total: <span class="total"><?= intval($this->deltager->original_price + ($this->banking_fee ? $this->banking_fee->pris : 0));?></span></li>
+    <li><button class="commit">Opdatér</button></li>
+</ul>
+</script>

@@ -1,0 +1,17 @@
+<?= $this->getMessagesHtml();?>
+<div id='sms-dialog'>
+    <fieldset>
+        <legend><b>Send beskeder (SMS eller via app)</b></legend>
+        <p>Antal modtagere: <?php echo count($this->receivers);?></p>
+        <form action="<?php echo $this->url('sms_send');?>" method='post'>
+            <label for='afsender'>Afsender:</label> <input type='text' name='sms_afsender' id='afsender' value='Fastaval'/><br/>
+            <label for='besked'>Besked:</label> <textarea name='sms_besked' id='besked'></textarea><br/>
+            <label style="border: 1px solid #555; border-radius: 0.5rem; padding: 0.5rem; display: inline-block; margin-bottom: 1rem;"><input type='checkbox' value='1' name='app_only'/> Kun til apps, ingen SMS</label><br/>
+            <input type='submit' value='Send beskeder'/>
+        </form>
+        <p>Du sender til:<br/>
+        <?php foreach ($this->receivers as $receiver) : ?>
+            <?php echo e($receiver->mobiltlf);?> - <?php echo e($receiver->fornavn);?> <?php echo e($receiver->efternavn);?><br/>
+        <?php endforeach;?>
+    </fieldset>
+</div>

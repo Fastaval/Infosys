@@ -1,0 +1,61 @@
+<a name='top'/>
+<div class='day-box'>
+    <h3>Dage</h3>
+    <?php foreach (array_keys($this->room_use) as $day) : ?>
+        <p><a href='#<?php echo $day;?>'><?php echo $this->replaceDayNames(date('D Y:m:d', strtotime($day)));?></a></p>
+    <?php endforeach;?>
+</div>
+<?php foreach ($this->room_use as $key => $date) :?>
+    <a name='<?php echo $key;?>'></a>
+    <table class='room-use'>
+        <thead>
+            <tr class='room-use-header'>
+                <th colspan='26'><?php echo $this->replaceDayNames(date('D d-m-Y', strtotime($key)));?></th>
+            </tr>
+            <tr class='room-use-subheader'>
+                <th>&nbsp;</th>
+                <?php foreach (range(0, 24) as $time) :
+                    $offset_time = ($time + 4) % 24;
+                ?>
+                    <th><?php echo sprintf('%02d', $offset_time);?></th>
+                <?php endforeach;?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->lokaler as $lkey => $lokale) : ?>
+            <tr>
+                <td class='room-use-type'>
+                    <a href="<?php echo $this->url('vis_lokale', array('id' => $lokale->id));?>"><?php echo e($lokale->skole);?>, <?php echo e($lokale->beskrivelse);?></a>
+                </td>
+                <?php if (empty($date[$lokale->id])) : ?>
+                    <td class="<?php echo ($lkey % 2 ? 'room-use-alt' : '');?>" colspan='25'>&nbsp;</td>
+                <?php else :
+                $time = strtotime($key) + (4 * 3600);
+                    foreach ($date[$lokale->id]['use'] as $use) : ?>
+                    <?php if (floor((strtotime($use['start']) - $time) / 3600)) : ?>
+                        <td colspan="<?php echo floor((strtotime($use['start']) - $time) / 3600);?>"  class="<?php echo ($lkey % 2 ? 'room-use-alt' : '');?>">&nbsp;</td>
+                    <?php $time += floor((strtotime($use['start']) - $time) / 3600) * 3600;
+                    endif;?>
+                    <td colspan="<?php echo ceil((strtotime($use['end']) - $time) / 3600);?>">
+                    <?php $starthour = strtotime($use['start']) / 3600;?>
+                        <p class="room-use-in-use <?php echo (count($use['activities']) > 1 ? 'multi-room-use' : '');?>" onMouseOver="$('#r<?php echo $lokale->id;?><?php echo $starthour;?>').css('display', 'block');" onMouseOut="$('#r<?php echo $lokale->id;?><?php echo $starthour;?>').css('display', 'none');">&nbsp;
+                            <span id='r<?php echo $lokale->id;?><?php echo $starthour;?>' class='pop-up'>
+                            <?php foreach ($use['activities'] as $activity_array) : ?>
+                                <a href="<?php echo $this->url('vis_hold', array('id' => $activity_array['team']->id));?>">Hold <?php echo $activity_array['team']->holdnummer;?></a>, <i><a href="<?php echo $this->url('visaktivitet',array('id'=> $activity_array['activity']->id));?>"><?php echo e($activity_array['activity']->navn);?></a></i><br/>
+                            <?php endforeach;?>
+                            </span> 
+                        </p>
+                    </td>
+                    <?php $time = strtotime($use['end']);
+                    endforeach;
+                endif;
+                if ($time < strtotime($key) + (29 * 3600)) : ?>
+                    <td colspan="<?php echo floor(((strtotime($key) + 29 * 3600) - $time) / 3600);?>" class="<?php echo ($lkey % 2 ? 'room-use-alt' : '');?>">&nbsp;</td>
+                <?php endif; ?>
+            </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table><a href='#top'>Tilbage til toppen</a>
+    <br />
+    <br />
+<?php endforeach;?>

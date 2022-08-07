@@ -1,0 +1,751 @@
+<?php
+    $first = true;
+    foreach ($this->deltagere as $d) :
+        if ($first) :
+            $first = false; ?>
+        <?php else : ?>
+    <div style='page-break-before: always; height: 1px; padding: 0px; margin: 0px;'>&nbsp;</div>
+        <?php endif;
+        
+        $pladser = $d->getPladser();
+        $vouchers = intval($d->extra_vouchers);
+        if ($pladser) {
+            foreach ($pladser as $plads) {
+                if ($plads->type == 'spilleder') {
+                    $vouchers++;
+                }
+            }
+        }
+
+        ?>
+
+    <div class='deltager-container'>
+        <?php if ($d->international == 'ja') :?>
+        <table class='sheet-table' cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <td class='column'><img src="<?php echo $this->imgLink('charactersheet-logo-2018.png');?>" alt='Otto'/></td>
+                    <td class='column'>
+                        <table class='subtable' cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                                <tr>
+                                    <td class='label'>Id:</td>
+                                    <td colspan='2' class='align-right'><?php echo e($d->id);?></td>
+                                    <td class='align-right' rowspan='4'><img class='barcode-image' src='/participant/ean8sheet/<?= $d->id;?>' alt='barcode'/></td>
+                                </tr>
+                                <tr>
+                                    <td class='label'>Name:</td>
+                                    <td colspan='2' class='align-right'><?php echo e($d->getName());?></td>
+                                </tr>
+                                <tr>
+                                    <td class='label' colspan='3'>Pass&nbsp;(app): <span class='float-right' style='font-weight: normal'><?php echo e($d->password);?></span></td>
+                                </tr>
+                                <?php if ($d->arbejdsomraade || $d->sovesal == 'ja' || $d->ungdomsskole) :?>
+                                    <tr>
+                                        <td colspan='4' class='border-top'></td>
+                                    </tr>
+                                    <tr>
+                                    <?php if ($d->arbejdsomraade) :?>
+                                        <td class='label'>Volunteer area:</td>
+                                        <td><?php echo e($d->arbejdsomraade);?></td>
+                                    <?php else: ?>
+                                        <td colspan='2'> </td>
+                                    <?php endif;?>
+                                    <?php if ($d->sovesal == 'ja') :?>
+                                        <td class='label'>Vol. sleep area:</td>
+                                        <td><?php echo e($d->sovesal);?></td>
+                                    <?php else: ?>
+                                        <td colspan='2'> </td>
+                                    <?php endif;?>
+                                    </tr>
+                                    <?php if ($d->ungdomsskole) :?>
+                                    <tr>
+                                        <td class='label'>Organisation:</td>
+                                        <td colspan='3'><?php echo e($d->ungdomsskole);?></td>
+                                    </tr>
+                                    <?php endif;
+                                endif;?>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+<!-- activities -->
+                <?php if ($pladser) :?>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth activities' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Activities:</caption>
+                        <?php $dates = array();
+
+                            $index = 0;
+                            foreach ($pladser as $plads) :
+                                $schedule = $plads->getAfvikling();
+                                $activity = $schedule->getActivity();
+
+                                if ($activity->hidden === 'ja') {
+                                    continue;
+                                }
+
+                                $date = strtotime(date('Y-m-d', strtotime($schedule->start) - 18000));
+
+                                $long_play = false;
+                                if (strtotime($schedule->slut) - strtotime($schedule->start) > 86400) {
+                                    $date      = $index++;
+                                    $long_play = true;
+                                }
+
+                                $dates[$date][] = '
+                                <tr row-class>
+                                    <td>' . e($activity->title_en) . '</td>
+                                    <td>' . ($plads->type == 'spilleder' ? 'Gamemaster' : '') . '</td>
+                                    <td>' . ($long_play ? '' : date('D H:i', strtotime($schedule->start)) . ' - ' . date('D H:i', strtotime($schedule->slut))) . '</td>
+                                    <td>' . ($long_play ? e($activity->note) : e($schedule->getRoom()) . ($plads->type == 'spilleder' ? ' Room: ' . e($plads->getHold()->getLokale()->beskrivelse) : '')) . '</td>
+                                </tr>
+';
+
+                            foreach ($schedule->getMultiBlok() as $block) {
+                                $date = strtotime(date('Y-m-d', strtotime($block->start) - 18000));
+
+                                $dates[$date][] = '
+                                <tr row-class>
+                                    <td>' . e($activity->title_en) . '</td>
+                                    <td>' . ($plads->type == 'spilleder' ? 'Gamemaster' : '') . '</td>
+                                    <td>' . date('D H:i', strtotime($block->start)) . ' - ' . date('D H:i', strtotime($block->slut)) . '</td>
+                                    <td>' . e($block->getRoom()) . ($plads->type == 'spilleder' ? ' Room: ' . e($plads->getHold()->getLokale()->beskrivelse) : '') . '</td>
+                                </tr>
+';
+                            }
+
+                            endforeach;
+
+                            foreach ($dates as $date => $stuff) :
+                                $date = intval($date) < 100 ? 'Entire convention' : date('l', $date);
+                                    ?>
+                                    <tr class="heading">
+                                        <td colspan="4" class='align-center heading'><em><?= $date;?></em></td>
+                                    </tr>
+                                <?php $i = 1;
+                                foreach ($stuff as $row) :
+                                    echo str_replace('row-class', $i++ % 2 ? 'class="alternate"' : '', $row);
+                                endforeach;
+                            endforeach;?>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+<!-- GDS -->
+                <?php if ($vagter = $d->getGDSVagter()) :?>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>GDS duties:</caption>
+                        <?php $date = false;
+                            $i = 0;
+                            foreach ($vagter as $vagt) :
+                                if ($date != date('l', strtotime($vagt->start) - 18000)) :
+                                    $date = date('l', strtotime($vagt->start) - 18000);
+                                    ?>
+                                    <tr>
+                                        <td class='align-center heading' colspan='3'><em><?php echo $date;?></em></td>
+                                    </tr>
+                                <?php $i = 0;
+                                endif;?>
+                                <tr <?php echo $i++ % 2 ? "class='alternate'" : "";?>>
+                                    <td><?php echo e($vagt->getGDSName(true));?>:</td>
+                                    <td><?php echo date('H:i', strtotime($vagt->start));?> - <?php echo date('H:i', strtotime($vagt->slut));?></td>
+                                    <td><em><?php echo e($vagt->getGDS()->moedested);?></em></td>
+                                </tr>
+                            <?php endforeach;?>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+<!-- food -->
+                <?php if ($food = $d->getMadtider()) : ?>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Food</caption>
+                            <tr>
+                                <td colspan='8' class='align-center'><em>NOTE: Dinner is served in rounds. The time given here shows when YOU can get your dinner (check posters onsite for more details)</em></td>
+                            </tr>
+                            <tr>
+                                <td class='label' width="5%">&nbsp;</td>
+                                <td class='label align-center'>Breakfast</td>
+                                <td class='label align-center'>Lunch</td>
+                                <td class='label align-center'>Dinner</td>
+                            </tr>
+                            <?php $day = strtotime($this->con_start);
+                                    $end = strtotime($this->con_end);
+                                    $i = 0;
+                            while ($day <= $end) :
+                                $date = date('Y-m-d', $day);
+                                ?>
+                            <tr <?php echo $i++ % 2 ? "class='alternate'" : "";?>>
+                                <td class='label'><?php echo date('l', $day);?></td>
+                                <?php $done = false;
+
+                                foreach ($food as $madtid) :
+                                    if (substr($madtid->dato, 0, 10) == $date && $madtid->isBreakfast()) :?>
+                                        <td class='align-left'>Yes (8:00 - 11:00)</td>
+                                    <?php $done = true;
+                                        break;
+                                    endif;
+                                endforeach;
+
+                                if (!$done) : ?>
+                                    <td>&nbsp;</td>
+                                <?php endif;
+
+                                $done = false;
+
+                                foreach ($d->getMadtider() as $madtid) :
+                                    if (substr($madtid->dato, 0, 10) == $date && $madtid->isLunch()) :?>
+                                        <td class='align-left'><?php echo e($madtid->getMad()->title_en);?> (<?php echo $madtid->getHandoutTime($d);?>)</td>
+                                    <?php $done = true;
+                                        break;
+                                    endif;
+                                endforeach;
+
+                                if (!$done) : ?>
+                                    <td>&nbsp;</td>
+                                <?php endif;
+
+                                $done = false;
+
+                                foreach ($d->getMadtider() as $madtid) :
+                                    if (substr($madtid->dato, 0, 10) == $date && $madtid->isDinner()) :?>
+                                        <td class='align-left'><?php echo e($madtid->getMad()->title_en);?> (<?php echo $madtid->getHandoutTime($d);?>)</td>
+                                    <?php $done = true;
+                                        break;
+                                    endif;
+                                endforeach;
+
+                                if (!$done) : ?>
+                                    <td>&nbsp;</td>
+                                <?php endif;?>
+                            </tr>
+
+                            <?php
+                                $day = strtotime(date('Y-m-d', $day) . ' + 1 day');
+                            endwhile;?>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+<!-- entrance -->
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Entrance details</caption>
+                            <tr>
+                                <td class='label'>Entrance:</td>
+                                <td>
+                                    <?php $strings = array();
+                                    $party = false;
+
+                                    $sleep_strings = array();
+                                    $other_strings = array();
+
+                                    foreach ($d->getIndgang() as $day) {
+                                        if ($day->isEntrance()) {
+                                            $strings[]= e($day->getShortDescription(true));
+
+                                        } elseif ($day->isParty()) {
+                                            $party = true;
+
+                                        } elseif ($day->isSleepTicket()) {
+                                            $sleep_strings[]= e($day->getShortDescription(true));
+
+                                        } elseif (!$day->isAleaMembership()) {
+                                            $other_strings[]= e($day->getDescription(true));
+                                        }
+                                    }
+                                    echo implode(', ', $strings);
+                                    ?>
+                                </td>
+                                <td class='label'>Overnight stay:</td>
+                                <td>
+                                    <?php
+                                    if (!empty($sleep_strings)) {
+                                        echo implode(', ', $sleep_strings);
+                                    } else {
+                                        echo "None";
+                                    }
+                                    ?>
+                                </td>
+                                <?php if ($party) :?>
+                                    <td class='label'>Party:</td>
+                                    <td>Sunday at 8PM</td>
+                                <?php else:?>
+                                    <td colspan='2'>&nbsp;</td>
+                                <?php endif;?>
+                            </tr>
+                            <?php if ($other_strings) :?>
+                            <tr>
+                                <td class="label">Other items:</td>
+                                <td><?= implode(', ', $other_strings);?></td>
+                            </tr>
+                            <?php endif;?>
+                            <?php if ($vouchers) : ?>
+                            <tr>
+                                <td class='label'>Vouchers:</td>
+                                <td><?= $vouchers;?></td>
+                            </tr>
+                            <?php endif;?>
+                        </table>
+                    </td>
+                </tr>
+<!-- wear -->
+                <?php if ($wear = $d->getWear()) : ?>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Wear:</caption>
+                            <tr>
+                                <td>
+                                    <?php $strings = array();
+                                    foreach ($wear as $wear) :
+                                        $strings[] = "{$wear->antal} {$wear->getWearName()} size: {$wear->size} ({$wear->getWearpris()->getCategory()->navn})";
+                                    endforeach;
+                                    echo implode('<br/>', $strings);
+                                    ?>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+<!-- ticket cost -->
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Ticket cost information:</caption>
+                            <tr>
+                                <td class='label' style='width: 35%'>Entry + overnight stay:</td>
+                                <td style='width: 15%' class='align-right'><?php echo $d->calcEntry();?>,-</td>
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <tr class='alternate'>
+                                <td class='label'>Food</td>
+                                <td class='align-right'><?php echo $d->calcFood();?>,-</td>
+                                <?php if ($d->rig_onkel == 'ja') :?>
+                                <td class='label'>FV support</td>
+                                <td class='align-right'><?php echo ($d->rig_onkel == 'ja' ? '300,-' : '0,-');?></td>
+                                <?php else :?>
+                                <td colspan='2'>&nbsp;</td>
+                                <?php endif;?>
+                            </tr>
+                            <tr>
+                                <td class='label'>Wear</td>
+                                <td class='align-right'><?php echo $d->calcWear();?>,-</td>
+                                <td class='label'>Currently paid</td>
+                                <td class='align-right'><?php echo $d->betalt_beloeb;?>,-</td>
+                            </tr>
+                            <tr class='alternate'>
+                                <td class='label'>Activities</td>
+                                <td class='align-right'><?php echo $d->calcActivities();?>,-</td>
+                                <td class='label'>Total</td>
+                                <td class='align-right'><?php echo $d->calcRealTotal();?>,-</td>
+                            </tr>
+                            <tr>
+                                <td class='label'>Other (party, etc)</td>
+                                <td class='align-right'><?php echo $d->calcOtherStuff();?>,-</td>
+                                <td class='label'>Signup total</td>
+                                <td class='align-right'><?php echo $d->calcSignupTotal();?>,-</td>
+                            </tr>
+                            <tr class='alternate'>
+                                <?php if ($d->calcAlea()) :?>
+                                <td class='label'>Alea membership</td>
+                                <td class='align-right'><?php echo $d->calcAlea();?>,-</td>
+                                <?php else :?>
+                                <td colspan='2'>&nbsp;</td>
+                                <?php endif;?>
+                                <td class='label'>Difference (<?php echo $d->calcRealTotal();?> - <?php echo $d->betalt_beloeb;?>):</td>
+                                <td class='align-right' style='text-decoration: underline'><?php echo $d->calcRealTotal() - $d->betalt_beloeb;?>,-</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+<!-- messages -->
+                <?php if ($d->beskeder) : ?>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Messages:</caption>
+                            <tr>
+                                <td><?php echo $d->beskeder;?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+            </tbody>
+        </table>
+        <?php else : ?>
+        <table class='sheet-table' cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <td class='column'><img src="<?php echo $this->imgLink('charactersheet-logo-2018.png');?>" alt='Otto'/></td>
+                    <td class='column'>
+                        <table class='subtable' cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                                <tr>
+                                    <td class='label'>Id:</td>
+                                    <td colspan='2' class='align-right'><?php echo e($d->id);?></td>
+                                    <td class='align-right' rowspan='4'><img class='barcode-image' src='/participant/ean8sheet/<?= $d->id;?>' alt='barcode'/></td>
+                                </tr>
+                                <tr>
+                                    <td class='label'>Navn:</td>
+                                    <td colspan='2' class='align-right'><?php echo e($d->getName());?></td>
+                                </tr>
+                                <tr>
+                                    <td class='label' colspan='3'>Kode&nbsp;(app): <span class='float-right' style='font-weight: normal'><?php echo e($d->password);?></span></td>
+                                </tr>
+                                <?php if ($d->arbejdsomraade || $d->sovesal == 'ja' || $d->ungdomsskole) :?>
+                                    <tr>
+                                        <td colspan='4' class='border-top'>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                    <?php if ($d->arbejdsomraade) :?>
+                                        <td class='label'>Arr.område:</td>
+                                        <td><?php echo e($d->arbejdsomraade);?></td>
+                                    <?php else: ?>
+                                        <td colspan='2'> </td>
+                                    <?php endif;?>
+                                    <?php if ($d->sovesal == 'ja') :?>
+                                        <td class='label'>Arr. sovesal:</td>
+                                        <td><?php echo e($d->sovesal);?></td>
+                                    <?php else: ?>
+                                        <td colspan='2'> </td>
+                                    <?php endif;?>
+                                    </tr>
+                                    <?php if ($d->ungdomsskole) :?>
+                                    <tr>
+                                        <td class='label'>Ungdomsskole/Klub:</td>
+                                        <td colspan='3'><?php echo e($d->ungdomsskole);?></td>
+                                    </tr>
+                                    <?php endif;
+                                endif;?>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+<!-- activities -->
+                <?php if ($pladser) :?>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth activities' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Aktiviteter:</caption>
+                        <?php $dates = array();
+
+                            $index = 0;
+                            foreach ($pladser as $plads) :
+                                $schedule = $plads->getAfvikling();
+                                $activity = $schedule->getAktivitet();
+
+                                if ($activity->hidden === 'ja') {
+                                    continue;
+                                }
+
+                                $date      = strtotime(date('Y-m-d', strtotime($schedule->start) - 18000));
+                                $long_play = false;
+
+                                if (strtotime($schedule->slut) - strtotime($schedule->start) > 86400) {
+                                    $date      = $index++;
+                                    $long_play = true;
+                                }
+
+                                $dates[$date][] = '
+                                <tr row-class>
+                                    <td>' . e($activity->navn) . '</td>
+                                    <td>' . ($plads->type == 'spilleder' ? 'Spilleder' : '') . '</td>
+                                    <td>' . ($long_play ? '' : danishDayNames(date('D H:i', strtotime($schedule->start))) . ' - ' . danishDayNames(date('D H:i', strtotime($schedule->slut)))) . '</td>
+                                    <td>' . ($long_play ? e($activity->note) : e($schedule->getLokale()) . ($plads->type == 'spilleder' ? ' Spillelokale: ' . e($plads->getHold()->getLokale()->beskrivelse) : '')) . '</td>
+                                </tr>
+';
+
+                            foreach ($schedule->getMultiBlok() as $block) {
+                                $date = strtotime(date('Y-m-d', strtotime($block->start) - 18000));
+
+                                $dates[$date][] = '
+                                <tr row-class>
+                                    <td>' . e($activity->navn) . '</td>
+                                    <td>' . ($plads->type == 'spilleder' ? 'Spilleder' : '') . '</td>
+                                    <td>' . danishDayNames(date('D H:i', strtotime($block->start))) . ' - ' . danishDayNames(date('D H:i', strtotime($block->slut))) . '</td>
+                                    <td>' . e($block->getLokale()) . ($plads->type == 'spilleder' ? ' Spillelokale: ' . e($plads->getHold()->getLokale()->beskrivelse) : '') . '</td>
+                                </tr>
+';
+                            }
+
+                            endforeach;
+
+                            foreach ($dates as $date => $stuff) :
+                                $date = intval($date) < 100 ? "Hele Con&#39;en" : danishDayNames(date('l', $date));
+                                    ?>
+                                    <tr class="heading">
+                                        <td colspan="4" class='align-center heading'><em><?= $date;?></em></td>
+                                    </tr>
+                                <?php $i = 1;
+                                foreach ($stuff as $row) :
+                                    echo str_replace('row-class', $i++ % 2 ? 'class="alternate"' : '', $row);
+                                endforeach;
+                            endforeach;?>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+<!-- GDS -->
+                <?php if ($vagter = $d->getGDSVagter()) :?>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>GDS tjanser:</caption>
+                        <?php $date = false;
+                            $i = 0;
+                            foreach ($vagter as $vagt) :
+                                if ($date != danishDayNames('l', strtotime($vagt->start) - 18000)) :
+                                    $date = danishDayNames(date('l', strtotime($vagt->start) - 18000));
+                                    ?>
+                                    <tr>
+                                        <td class='align-center heading' colspan='3'><em><?php echo $date;?></em></td>
+                                    </tr>
+                                <?php $i = 0;
+                                endif;?>
+                                <tr <?php echo $i++ % 2 ? "class='alternate'" : "";?>>
+                                    <td><?php echo e($vagt->getGDSName());?>:</td>
+                                    <td><?php echo date('H:i', strtotime($vagt->start));?> - <?php echo date('H:i', strtotime($vagt->slut));?></td>
+                                    <td><em><?php echo e($vagt->getGDS()->moedested);?></em></td>
+                                </tr>
+                            <?php endforeach;?>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+<!-- food -->
+                <?php if ($food = $d->getMadtider()) : ?>
+                <tr>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Mad</caption>
+                            <tr>
+                                <td colspan='8' class='align-center'><em>BEMÆRK: Aftensmadsudleveringen er opdelt i RUNDER. Det påtrykte tidspunkt angiver i hvilket tidsrum DU kan hente din aftensmad (se onsite plakat for uddybning)</em></td>
+                            </tr>
+                            <tr>
+                                <td class='label' width="5%">&nbsp;</td>
+                                <td class='label align-center'>Morgenmad</td>
+                                <td class='label align-center'>Frokost</td>
+                                <td class='label align-center'>Aftensmad</td>
+                            </tr>
+                            <?php $day = strtotime($this->con_start);
+                                    $end = strtotime($this->con_end);
+                                    $i = 0;
+
+                            while ($day <= $end) :
+                                $date = date('Y-m-d', $day);
+                                ?>
+                            <tr <?php echo $i++ % 2 ? "class='alternate'" : "";?>>
+                                <td class='label'><?php echo danishDayNames(date('l', $day));?></td>
+                                <?php
+                                    $done = false;
+
+                                foreach ($food as $madtid) :
+                                    if (substr($madtid->dato, 0, 10) == $date && $madtid->isBreakfast()) :?>
+                                        <td class='align-left'>Ja (kl. 8-11)</td>
+                                    <?php
+                                        $done = true;
+                                        break;
+                                    endif;
+                                endforeach;
+
+                                if (!$done) : ?>
+                                    <td >&nbsp;</td>
+                                <?php endif;
+
+                                $done = false;
+
+                                foreach ($food as $madtid) :
+                                    if (substr($madtid->dato, 0, 10) == $date && $madtid->isLunch()) :?>
+                                        <td class='align-left'><?php echo e($madtid->getMad()->kategori);?> (kl. <?php echo $madtid->getHandoutTime($d);?>)</td>
+                                    <?php
+                                        $done = true;
+                                        break;
+                                    endif;
+                                endforeach;
+
+                                if (!$done) : ?>
+                                    <td>&nbsp;</td>
+                                <?php endif;
+
+                                $done = false;
+
+                                foreach ($d->getMadtider() as $madtid) :
+                                    if (substr($madtid->dato, 0, 10) == $date && $madtid->isDinner()) :?>
+                                        <td class='align-left'><?php echo e($madtid->getMad()->kategori);?> (kl. <?php echo $madtid->getHandoutTime($d);?>)</td>
+                                    <?php $done = true;
+                                        break;
+                                    endif;
+                                endforeach;
+
+                                if (!$done) : ?>
+                                    <td>&nbsp;</td>
+                                <?php endif;?>
+                            </tr>
+
+                            <?php
+                                $day = strtotime(date('Y-m-d', $day) . ' + 1 day');
+                            endwhile;?>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+<!-- entrance -->
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Indgang</caption>
+                            <tr>
+                                <td class='label'>Indgang:</td>
+                                <td>
+                                    <?php
+                                    $strings = $other_strings = $sleep_strings = array();
+                                    $party = false;
+
+                                    foreach ($d->getIndgang() as $day) :
+                                        if ($day->isEntrance()) {
+                                            $strings[]= e($day->getShortDescription());
+
+                                        } elseif ($day->isSleepTicket()) {
+                                            $sleep_strings[]= e($day->getShortDescription());
+
+                                        } elseif ($day->isParty()) {
+                                            $party = true;
+
+                                        } elseif (!$day->isAleaMembership()) {
+                                            $other_strings[]= e($day->getDescription());
+
+                                        }
+                                    endforeach;
+                                    echo implode(', ', $strings);?>
+                                </td>
+                                <td class='label'>Overnatning:</td>
+                                <td>
+                                    <?php
+                                    if (!empty($sleep_strings)) {
+                                        echo implode(', ', $strings);
+                                    } else {
+                                        echo "Nej";
+                                    }
+                                    ?>
+                                </td>
+                                <?php if ($party) :?>
+                                    <td class='label'>Jubilæumsfest:</td>
+                                    <td>Søndag kl. 20.00</td>
+                                <?php else:?>
+                                    <td colspan='2'>&nbsp;</td>
+                                <?php endif;?>
+                            </tr>
+                            <?php if ($other_strings) :?>
+                            <tr>
+                                <td class="label">Andet:</td>
+                                <td><?= implode(', ', $other_strings);?></td>
+                            </tr>
+                            <?php endif;?>
+                            <?php if ($vouchers) : ?>
+                            <tr>
+                                <td class='label'>Vouchers:</td>
+                                <td><?= $vouchers;?></td>
+                            </tr>
+                            <?php endif;?>
+                        </table>
+                    </td>
+                </tr>
+<!-- wear -->
+                <?php if ($wear = $d->getWear()) : ?>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Wear:</caption>
+                            <tr>
+                                <td>
+                                    <?php $strings = array();
+                                    foreach ($wear as $wear) :
+                                        $strings[] = "{$wear->antal} stk. {$wear->getWearName()} str. {$wear->size} ({$wear->getWearpris()->getCategory()->navn})";
+                                    endforeach;
+                                    echo implode('<br/>', $strings);
+                                    ?>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+<!-- ticket cost -->
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Betalingsoversigt:</caption>
+                            <tr>
+                                <td class='label' style='width: 35%'>Indgang + overnatning:</td>
+                                <td style='width: 15%' class='align-right'><?php echo $d->calcEntry();?>,-</td>
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <tr class='alternate'>
+                                <td class='label'>Mad</td>
+                                <td class='align-right'><?php echo $d->calcFood();?>,-</td>
+                                <?php if ($d->rig_onkel == 'ja') :?>
+                                <td class='label'>Rig onkel</td>
+                                <td class='align-right'><?php echo ($d->rig_onkel == 'ja' ? '300,-' : '0,-');?></td>
+                                <?php else :?>
+                                <td colspan='2'>&nbsp;</td>
+                                <?php endif;?>
+                            </tr>
+                            <tr>
+                                <td class='label'>Wear</td>
+                                <td class='align-right'><?php echo $d->calcWear();?>,-</td>
+                                <td class='label'>Forudbetalt</td>
+                                <td class='align-right'><?php echo $d->betalt_beloeb;?>,-</td>
+                            </tr>
+                            <tr class='alternate'>
+                                <td class='label'>Aktiviteter</td>
+                                <td class='align-right'><?php echo $d->calcActivities();?>,-</td>
+                                <td class='label'>Aktuel total</td>
+                                <td class='align-right'><?php echo $d->calcRealTotal();?>,-</td>
+                            </tr>
+                            <tr>
+                                <td class='label'>Andet (fest, etc)</td>
+                                <td class='align-right'><?php echo $d->calcOtherStuff();?>,-</td>
+                                <td class='label'>Tilmelding total</td>
+                                <td class='align-right'><?php echo $d->calcSignupTotal();?>,-</td>
+                            </tr>
+                            <tr class='alternate'>
+                                <?php if ($d->calcAlea()) :?>
+                                <td class='label'>Alea</td>
+                                <td class='align-right'><?php echo $d->calcAlea();?>,-</td>
+                                <?php else :?>
+                                <td colspan='2'>&nbsp;</td>
+                                <?php endif;?>
+                                <td class='label'>Difference (<?php echo $d->calcRealTotal();?> - <?php echo $d->betalt_beloeb;?>):</td>
+                                <td class='align-right' style='text-decoration: underline'><?php echo $d->calcRealTotal() - $d->betalt_beloeb;?>,-</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <?php if ($d->beskeder) : ?>
+                <tr>
+                    <td colspan='2'>
+                        <table class='subtable fullwidth' cellspacing="0" cellpadding="0" border="0">
+                            <caption>Beskeder:</caption>
+                            <tr>
+                                <td><?= $d->beskeder;?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <?php endif;?>
+            </tbody>
+        </table>
+        <?php endif;?>
+    </div>
+<?php endforeach;?>

@@ -1,0 +1,51 @@
+<div class='middleboxes'>
+    <div id='aktivitetbox'>
+        <form method='post' action='' id='aktivitet-edit'>
+        <fieldset>
+            <legend>Opret Aktivitet</legend>
+            <table>
+                <tr>
+                    <td colspan='3'><strong>Titel:</strong> <input name='aktivitet[navn]' value='' type='text' /></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><strong>Engelsk titel:</strong> <input name='aktivitet[title_en]' value='' type='text' /></td>
+                </tr>
+                <tr>
+                    <td><strong>WP id:</strong> <input name='aktivitet[wp_link]' type='number' value=''/></td>
+                    <td><strong>Spiltype:</strong> <?php echo $this->genSelect('aktivitet[type]', $this->model->getActivityTypes());?></td>
+                    <td><strong>Varighed:</strong> <input name='aktivitet[varighed_per_afvikling]' type='text' value='' /></td>
+                </tr>
+                <tr>
+                    <td><strong>Min Spillere:</strong> <input name='aktivitet[min_deltagere_per_hold]' type='text' value='' /></td>
+                    <td><strong>Max Spillere:</strong> <input name='aktivitet[max_deltagere_per_hold]' type='text' value='' /></td>
+                    <td><strong>Spilledere:</strong> <input name='aktivitet[spilledere_per_hold]' type='text' value='' /></td>
+                </tr>
+                <tr>
+                    <td><strong>Pris:</strong> <input name='aktivitet[pris]' type='text' value='' /></td>
+                    <td><strong>Kan tilmeldes:</strong> <?php echo $this->genSelect('aktivitet[kan_tilmeldes]', array('ja', 'nej'));?></td>
+                    <td><strong>Fylder lokale:</strong> <?php echo $this->genSelect('aktivitet[lokale_eksklusiv]', array('ja', 'nej'));?></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><strong>Sprog:</strong> <label><input type='radio' name='aktivitet[sprog]' value='dansk' checked='checked'> dansk</label> <label><input type='radio' name='aktivitet[sprog]' value='engelsk'> engelsk</label> <label><input type='radio' name='aktivitet[sprog]' value='dansk+engelsk'> dansk, med mulighed for engelsk</label></td>
+                    <td><strong>Udelukker samtidige aktiviteter:</strong> <?= $this->genSelect('aktivitet[tids_eksklusiv]', array('ja', 'nej'));?></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Aldersbegrænsning:</strong> <label>Min: <input type="number" min="0" max="200" name="min_age" size="4" step="1" value=""/></label> <label>Max: <input type="number" min="0" max="200" size="4" name="max_age" step="1" value=""/></label></td>
+                    <td><b>Max tilmeldinger</b><input type="number" min="0" max="1000" step="1" value="<?= e($this->aktivitet->max_signups);?>" name="aktivitet[max_signups]"/></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><strong>Note:</strong> <textarea name='aktivitet[note]'></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><strong>Foromtale:</strong> <textarea name='aktivitet[foromtale]'></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan='3'><strong>Engelsk foromtale:</strong> <textarea name='aktivitet[description_en]'></textarea></td>
+                </tr>
+            </table>
+            <input type='submit' value='Opret' class='centersubmits' name='create_activity' />
+            <input type='submit' value='Fortryd' class='centersubmits' name='fortryd' />
+        </fieldset>
+        </form>
+    </div>
+</div>

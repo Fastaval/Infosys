@@ -1,0 +1,15 @@
+<?php echo $this->getMessagesHtml();?>
+    <p>Du kan:
+        <ul>
+            <li><a href="<?php echo $this->url('vis_alle_aktiviteter');?>">se alle aktiviteter</a> eller søge på aktiviteter (ved at bruge boksen nedenfor).</li>
+            <li><a href="<?php echo $this->url('activities_graphed',array('day' => 0));?>">se grafisk oversigt</a> over hvad kører hvornår.</li>
+            <li><a href="<?php echo $this->url('opret_aktivitet');?>">oprette en aktivitet</a>.</li>
+            <li>se den <a href="<?php echo $this->url('total_available_playtime');?>">totale mulige spiltid for spillere</a>.</li>
+        </ul>
+    Spilstart: <?php if ($this->nextgamestart) :?><b><a href="<?php echo $this->url('gamestart_details', array('time' => str_replace(' ', '_', $this->nextgamestart)));?>">Næste spilstart</a></b><?php endif;?>
+    <ul>
+        <?php foreach ($this->gamestarts as $gamestart) :?>
+            <li><a href="<?php echo $this->url('gamestart_details', array('time' => str_replace(' ', '_', $gamestart)));?>">Spilstart for <?php echo danishDayNames(date('l - H:i', strtotime($gamestart)));?></a></li>
+        <?php endforeach ;?>
+    </ul>
+    </p>

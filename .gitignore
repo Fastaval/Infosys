@@ -1,0 +1,17 @@
+include/config.ini
+include/logs/*
+public/barcodes/*
+public/.htaccess
+public/audio/*
+public/uploads/*
+public/error_log.txt
+public/vote-barcodes/*
+include/signup-data/*
+include/scripts/*
+include/cache/*
+logs/*
+tags
+index.json
+vendor
+composer.phar
+bin

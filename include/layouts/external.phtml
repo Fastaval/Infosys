@@ -1,0 +1,63 @@
+<?php
+    /**
+     * Copyright (C) 2009  Peter Lind
+     *
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU General Public License as published by
+     * the Free Software Foundation, either version 3 of the License, or
+     * (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU General Public License for more details.
+     *
+     * You should have received a copy of the GNU General Public License
+     * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
+     *
+     * PHP version 5
+     *
+     * @package    MVC
+     * @subpackage Layouts
+     * @author     Peter Lind <peter.e.lind@gmail.com>
+     * @copyright  2009 Peter Lind
+     * @license    http://www.gnu.org/licenses/gpl.html GPL 3
+     * @link       http://www.github.com/Fake51/Infosys
+     */
+
+?>
+<?php echo $this->getDocType(); ?>
+<html<?php echo (($this->getNameSpace()) ? " " .$this->getNameSpace() : '') ?>>
+<head>
+<?php echo $this->encoding; ?>
+<title><?php echo ((isset($this->title)) ? $this->title : "Fastaval " . date('Y')) ?></title>
+<meta name="keywords" content="<?php echo ((isset($this->keywords)) ? $this->keywords : "") ?>" />
+<meta name="description" content="<?php echo ((isset($this->description)) ? $this->description : "") ?>" />
+<?= $this->getEncoding(); ?>
+<?= $this->includeCSS('external.css') ?>
+<?= $this->includeCSS('smoothness/jquery-ui-1.10.1.custom.min.css'); ?>
+<?= $this->includeIECSS('ie.css', 7); ?>
+<?= $this->includeJS('jquery-1.9.1.min.js'); ?>
+<?= $this->includeJS('jquery-ui-1.10.1.custom.min.js'); ?>
+<?= $this->includeJS('jquery-ui-timepicker-addon.js'); ?>
+<?= $this->renderEarlyLoadJS(); ?>
+</head> 
+<body>
+<div id='maincontainer'>
+
+<?php echo $this->content ?>
+</div>
+<script type='text/javascript'>
+window.infosys = (function() {
+    var infosys = window.infosys || {};
+
+    infosys.con_start_date = new Date('<?= date('Y-m-d 00:00', strtotime($this->config->get('con.start')));?>');
+    infosys.con_end_date   = new Date('<?= date('Y-m-d 23:59', strtotime($this->config->get('con.end')));?>');
+
+    return infosys;
+})();
+</script>
+
+<?php $this->renderLateLoadJS(); ?>
+</body>
+</html>

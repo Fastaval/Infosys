@@ -1,0 +1,8 @@
+<?php echo $this->getMessagesHtml();?>
+<h1>Alle tilmeldte</h1>
+<p>I alt: <strong><?php echo count($this->subscribers);?></strong></p>
+<ul>
+<?php foreach ($this->subscribers as $subscriber) : ?>
+    <li><?php echo $subscriber->email;?></li>
+<?php endforeach;?>
+</ul>

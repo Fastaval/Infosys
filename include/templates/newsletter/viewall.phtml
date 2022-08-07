@@ -1,0 +1,22 @@
+<?php echo $this->getMessagesHtml();?>
+<h1>Alle nyhedsbreve</h1>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Emne</th>
+            <th>Oprettet</th>
+            <th>Sendt?</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->messages as $message) :?>
+        <tr>
+            <td><?php echo $message->id;?></td>
+            <td><a href='<?php echo $this->url('newsletters_view', array('id' => $message->id));?>'><?php echo $this->e($message->subject);?></a></td>
+            <td><?php echo $message->created;?></td>
+            <td><?php echo $message->hasBeenSent() ? 'Ja' : 'Nej';?></td>
+        </tr>
+    <?php endforeach;?>
+    </tbody>
+</table>

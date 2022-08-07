@@ -1,0 +1,44 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+.page {
+    width: 210mm;
+    height: 297mm;
+    padding: 0;
+    border: none;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    page-break: after;
+}
+
+.wear-label:nth-child(1),
+.wear-label:nth-child(2) {
+    margin-top: 13.1mm;
+}
+
+.wear-label-logo {
+    height: 37.7mm;
+    width: 37.7mm;
+    margin: 5mm 5mm 0 10mm;
+    float: left;
+    clear: none;
+}
+
+.wear-label-name {
+    display: inline-block;
+    margin: 5mm 0 5mm 0;
+    border-bottom: 1px solid #000;
+}
+
+.wear-label-wear-line {
+    display: block;
+}
+
+.wear-label {
+    width: 99.1mm;
+    height: 67.7mm;
+}

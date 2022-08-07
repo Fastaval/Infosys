@@ -1,0 +1,110 @@
+<?php $this->registerLateLoadJS('gameactivity.js');?>
+<a name='top'></a>
+<div class='day-box'>
+    <h3>Dage</h3>
+    <?php foreach (array_keys($this->afviklinger) as $day) : ?>
+        <p><a href='#<?php echo $day;?>'><?php echo $this->replaceDayNames(date('D Y:m:d', strtotime($day)));?></a></p>
+    <?php endforeach;?>
+</div>
+<div class='day-box' style='clear: right;'>
+    <h3>Farver</h3>
+    <p class='aktivitet-graph-braet'>Brætspil</p>
+    <p class='aktivitet-graph-rolle'>Rollespil</p>
+    <p class='aktivitet-graph-live'>Livespil</p>
+    <p class='aktivitet-graph-figur'>Figurspil</p>
+    <p class='aktivitet-graph-magic'>Magic</p>
+    <p class='aktivitet-graph-dag5'>Workshop</p>
+    <p class='aktivitet-graph-junior'>Junior</p>
+</div>
+
+<p><input type="button" value="Skift stat visning" id="stat-display-switch"/><span class="stat-display-old">Format: Spillere / Spilledere</span><span class="stat-display-new" style="display: none">Format: 1. prioriteter / min. deltagere per hold</span></p>
+<?php foreach ($this->afviklinger as $key => $array) : ?>
+    <a name='<?php echo $key;?>'></a>
+    <table class='aktivitet-graph'>
+        <thead>
+            <tr class='aktivitet-graph-header'>
+                <th colspan='26'><?php echo $this->replaceDayNames(date('D d-m-Y', strtotime($key)));?></th>
+            </tr>
+            <tr class='aktivitet-graph-subheader'>
+                <th>&nbsp;</th>
+                <th>04</th>
+                <th>05</th>
+                <th>06</th>
+                <th>07</th>
+                <th>08</th>
+                <th>09</th>
+                <th>10</th>
+                <th>11</th>
+                <th>12</th>
+                <th>13</th>
+                <th>14</th>
+                <th>15</th>
+                <th>16</th>
+                <th>17</th>
+                <th>18</th>
+                <th>19</th>
+                <th>20</th>
+                <th>21</th>
+                <th>22</th>
+                <th>23</th>
+                <th>00</th>
+                <th>01</th>
+                <th>02</th>
+                <th>03</th>
+                <th>04</th>
+            </tr>
+        </thead>
+        <tbody>
+                <?php $i = 0;
+                foreach ($array as $skey => $afv) :
+                    $time = strtotime($key) + 4 * 3600;
+                    $akt = $this->model->findEntity("Aktiviteter", $skey);
+                ?>
+                    <tr>
+                        <td class='aktivitet-graph-type'>
+                            <a href="<?= $this->url('visaktivitet', array('id' => $skey));?>"><?= e($akt->navn);?></a>
+                        </td>
+                        <?php foreach ($afv as $afvikling) :
+                        $starthour = strtotime($afvikling->start);
+                        $endhour   = strtotime($afvikling->slut);
+
+                        if (($starthour - $time) > 0) :
+                        ?>
+                            <td <?= ($i % 2 ? "class='aktivitet-graph-alt'" : "");?> colspan="<?= floor(($starthour - $time) / 3600);?>">&nbsp;</td>
+                        <?php endif;?>
+                        <td <?= ($i % 2 ? "class='aktivitet-graph-alt'" : "");?> colspan="<?= ceil(($endhour - $starthour) / 3600);?>"><p class='aktivitet-graph-in-use aktivitet-graph-<?= e($akt->type);?>' id="p-<?= $afvikling->id . '-' . $starthour;?>">T: <?= $afvikling->getSignupCount();?> (<span class="stat-display-old">S: <?= count($afvikling->getSignupGamers());?> / SL: <?= $afvikling->getSignupGmCount();?></span><span class="stat-display-new" style="display:none;">1.: <?= count($afvikling->getPrioritySignups());?> / <?= $afvikling->getAktivitet()->min_deltagere_per_hold;?></span>)
+                                    <span id='span-<?= $afvikling->id . '-' . $starthour;?>' class='pop-up'>
+                                    <?php foreach ($afvikling->getHold() as $hold) :
+                                        $needs_gamers   = $hold->needsGamers();
+                                        $can_use_gamers = $hold->canUseGamers();
+                                        $needs_gms      = $hold->needsGMs();
+                                    ?>
+                                        <a href="<?= $this->url('vis_hold', array('id'=> $hold->id));?>">Hold <?= e($hold->holdnummer);?></a>,
+                                        <a href="<?= $this->url('vis_lokale', array('id' => $hold->lokale_id));?>"><?= e($hold->getLokale()->beskrivelse);?></a>,
+                                        S: <span class='<?php if ($needs_gamers) : ?>needs<?php elseif ($can_use_gamers) :?>open<?php endif;?>'><?= count($hold->getGamers());?></span> /
+                                        SL: <?php if ($needs_gms) : ?><span class='needs'><?php endif;?><?= count($hold->getGMs());?><?php if ($needs_gms) : ?></span><?php endif;?>
+                                        <br/>
+                                    <?php endforeach;
+                                    if (count($afvikling->getHold()) == 0) :?>
+                                        0 hold oprettet
+                                    <?php endif;?>
+                                    </span>
+                                    </p>
+                                </td>
+                            <?php $time = $endhour;
+                            endforeach;
+                            $endtime = strtotime($key) + 29 * 3600 - $time;
+                            if ($endtime > 0) :
+                        ?>
+                        <td <?php echo ($i % 2 ? "class='aktivitet-graph-alt'" : "");?> colspan="<?php echo ceil($endtime / 3600);?>">&nbsp;</td>
+                        <td colspan="<?php echo $endtime / 3600;?>">&nbsp;</td>
+                        <?php endif;?>
+                </tr>
+            <?php $i++;
+            endforeach;?>
+        </tbody>
+    </table>
+    <a href='#top'>Tilbage til toppen</a>
+    <br />
+    <br />
+<?php endforeach;?>

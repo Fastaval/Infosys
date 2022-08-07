@@ -1,0 +1,6 @@
+<h2>Emails:</h2>
+<p>
+<?= implode(', ', array_map(function ($x) {
+    return e($x->fornavn . ' ' . $x->efternavn . ' <' . $x->email . '>');
+}, $this->receivers));?>
+</p>
