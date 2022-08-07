@@ -5,7 +5,7 @@
         $deltager = $ord->getDeltager();
     ?>
         <div class='deltager-wearorder'>
-            <p class='deltager-wearorder-deltager'>ID: <b><?php echo $deltager->id;?></b> &mdash; Navn: <a href='<?php echo $this->url('visdeltager', array('id' => $deltager->id));?>'><b><?php echo $deltager->getName();?></b></a> &mdash; <?php echo $deltager->getBrugerKategori()->navn;?></p>
+	<p class='deltager-wearorder-deltager'>ID: <b><?php echo $deltager->id;?></b> &mdash; Navn: <a href='<?php echo $this->url('visdeltager', array('id' => $deltager->id));?>'><b><?php echo $deltager->getName();?></b></a> &mdash; <?php echo $deltager->getBrugerKategori()->navn;?> &mdash; <?= $deltager->betalt_beloeb > 0 ? 'Betalt' : '<span style="background-color: red; color: white">Ikke betalt</span>';?></p>
             <table class='deltager-wearorder-order'>
                 <tbody>
                     <?php foreach ($ord->getDeltagerWearBestillinger($deltager) as $order) : ?>

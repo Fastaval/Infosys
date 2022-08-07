@@ -227,7 +227,7 @@ class IdTemplateRenderer
         $y_offset = 0;
 
         do {
-            $bounding_box = imagettfbbox(self::FONT_SIZE, $item['rotation'] * -1, PUBLIC_PATH . 'fonts/Alice_in_Wonderland_3.ttf', $string);
+            $bounding_box = imagettfbbox(self::FONT_SIZE, $item['rotation'] * -1, PUBLIC_PATH . 'fonts/CaesarDressing-Regular.ttf', $string);
             $width        = abs($bounding_box[4] - $bounding_box[0]);
 
             if ($width <= $item['width']) {
@@ -242,13 +242,13 @@ class IdTemplateRenderer
                 $rendered_string = array_shift($strings);
                 $string = trim(implode(' ', $strings));
 
-                $bounding_box = imagettfbbox(self::FONT_SIZE, $item['rotation'] * -1, PUBLIC_PATH . 'fonts/Alice_in_Wonderland_3.ttf', $rendered_string);
+                $bounding_box = imagettfbbox(self::FONT_SIZE, $item['rotation'] * -1, PUBLIC_PATH . 'fonts/CaesarDressing-Regular.ttf', $rendered_string);
                 $width        = abs($bounding_box[4] - $bounding_box[0]);
                 $x_offset     = ($item['width'] / 2) - ($width / 2);
 
             }
 
-            imagettftext($image, self::FONT_SIZE, $item['rotation'] * -1, $item['x'] + $x_offset, $item['y'] + $y_offset, imagecolorallocate($image, 0, 0, 0), PUBLIC_PATH . 'fonts/Alice_in_Wonderland_3.ttf', $rendered_string);
+            imagettftext($image, self::FONT_SIZE, $item['rotation'] * -1, $item['x'] + $x_offset, $item['y'] + $y_offset, imagecolorallocate($image, 0, 0, 0), PUBLIC_PATH . 'fonts/CaesarDressing-Regular.ttf', $rendered_string);
 
             $y_offset    += 35;
 

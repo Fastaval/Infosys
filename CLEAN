@@ -1,0 +1,27 @@
+Sensitive data:
+UPDATE deltagere set deltager_note = '', beskeder = '', medical_note = '';
+
+
+Anonymise data:
+UPDATE deltagere SET
+    fornavn = CONCAT('fornavn ', id),
+    efternavn = CONCAT('efternavn ', id),
+    alder = 99,
+    email = CONCAT('email_', id, '@example.com'),
+    tlf = '12345678',
+    mobiltlf = '12345678',
+    adresse1 = CONCAT('gade ', id),
+    adresse2 = '',
+    postnummer = '0000',
+    `by` = 'by',
+    land = 'land',
+    deltager_note = '',
+    admin_note = '',
+    beskeder = '',
+    arbejdsomraade = '',
+    scenarie = '',
+    ungdomsskole = '',
+    medical_note = '',
+    gcm_id = '',
+    skills = '';
+

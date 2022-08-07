@@ -486,7 +486,11 @@ ORDER BY
         foreach ($this->createEntity('Mad')->findAll() as $food) {
             foreach ($food->getMadtider() as $madtid) {
                 if ($madtid->isDinner()) {
-                    $usage[$madtid->dato] = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
+		    if ($madtid->dato === '2019-04-21 17:00:00') {
+		        $usage[$madtid->dato] = array(1 => 0, 2 => 0, 3 => 0);
+                    } else {
+		        $usage[$madtid->dato] = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
+                    }
 
                 } elseif ($madtid->isLunch()) {
                     $usage[$madtid->dato] = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);

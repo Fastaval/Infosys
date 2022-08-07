@@ -187,7 +187,7 @@
 
                                 foreach ($food as $madtid) :
                                     if (substr($madtid->dato, 0, 10) == $date && $madtid->isBreakfast()) :?>
-                                        <td class='align-left'>Yes (8:00 - 11:00)</td>
+                                        <td class='align-left'>Yes (8:00 - 10:30)</td>
                                     <?php $done = true;
                                         break;
                                     endif;
@@ -552,7 +552,7 @@
 
                                 foreach ($food as $madtid) :
                                     if (substr($madtid->dato, 0, 10) == $date && $madtid->isBreakfast()) :?>
-                                        <td class='align-left'>Ja (kl. 8-11)</td>
+                                        <td class='align-left'>Ja (kl. 8-10.30)</td>
                                     <?php
                                         $done = true;
                                         break;
