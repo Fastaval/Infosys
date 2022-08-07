@@ -1876,4 +1876,81 @@ exit;
     {
         $this->page->double_booked_participants = $this->model->findDoubleBookedParticipants();
     }
+
+    public function anonymizeParticipants() {
+die ("This page has to be enabled by someone with access to the server code");
+
+        if($this->page->request->isPost()) {
+            $this->page->post = true;
+            $keep = array_keys($this->page->request->post->getRequestVarArray());
+            $this->page->result = $this->model->anonymizeParticipants($keep);
+
+            // Deleting files related to participants
+            $cache = CACHE_FOLDER;
+            // $badges = glob($cache."/<something>");
+            
+            $signup = INCLUDE_PATH."signup-data/";
+            $sessions = glob($signup."session*");
+            $parsed = glob($signup."parse*");
+
+            $uploads = PUBLIC_PATH."uploads/";
+            $photos = glob($uploads."photo*");
+
+            $deleted = [];
+            $skipped = [];
+            $files = array_merge($sessions, $parsed, $photos);
+            foreach($files as $file){ // iterate files
+                if(is_file($file) && unlink($file)) { // delete file
+                    $deleted[] = $file;
+                } else {
+                    $skipped[] = $file;
+                }
+            }
+            $this->page->result->files = $deleted;
+            if (!empty($skipped)) {
+                $this->page->result->success = false;
+                $this->page->result->errors[] = [
+                    'id' => 'files',
+                    'desc' => 'There was an error deleting files',
+                    $data => $skipped,
+                ];
+            }
+
+            return;
+        }
+
+        $con_end = new DateTime($this->config->get("con.end"));
+        $difference = $con_end->diff(new DateTime('now'));
+
+        // Always keep these as default
+        $keep = [
+            'postnummer',
+            'by',
+            'birthdate',
+            'land',
+        ];
+
+        // Keep these for membership database
+        if ($difference->y < 6 ) {
+            $keep = array_merge($keep, [
+                'fornavn',
+                'efternavn',
+                'email',
+                'adresse1',
+                'adresse2',
+            ]);
+        }
+
+        // Keep these for the last con
+        if ($difference->y < 1 ) {
+            $keep = array_merge($keep, [
+                'skills',
+                'arrangoer_naeste_aar',
+            ]);
+        }
+        
+        $this->page->default_keep = $keep;
+        $this->page->fields = $this->model->getDeltagerFieldsWithNames();
+    }
+
 }
