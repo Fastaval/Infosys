@@ -514,6 +514,20 @@ class DBObject
         return $DB->exec($query, $blob);
     }
 
+    public function updateAll($fields) {
+        foreach ($fields as $field => $value) {
+            if ($this->checkIfPrimaryField($field) || ($value === null && !$this->isFieldNullable($field))) {
+                continue;
+            }
+
+            $data[] = " {$this->quoteTable($field)} = ?";
+            $args[] = $value;
+        }
+
+        $query = "UPDATE {$this->quoteTable($this->tablename)} SET " . implode(',',$data);
+        return $this->getDB()->exec($query, $args);
+    }
+
     /**
      * inserts a new object
      *
