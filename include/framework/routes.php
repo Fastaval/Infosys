@@ -151,7 +151,9 @@ class Routes
 
         $this->routes['participant_reset_password']                 = array('url' => 'participant/reset-password/:hash:', 'controller' => 'Participant', 'method' => 'resetParticipantPassword');
 
-        // photo stuff
+        $this->routes['anonymize_participants']                     = array('url' => 'participant/anonymize', 'controller' => 'Participant', 'method' => 'anonymizeParticipants');
+
+         // photo stuff
         $this->routes['photo_upload_form']                          = ['url' => 'photo/form/:identifier:', 'controller' => 'Photo', 'method' => 'showUploadForm'];
         $this->routes['photo_upload_original']                      = ['url' => 'photo/upload/original/:identifier:', 'controller' => 'Photo', 'method' => 'storeOriginal'];
         $this->routes['photo_upload_cropped']                       = ['url' => 'photo/upload/cropped/:identifier:', 'controller' => 'Photo', 'method' => 'storeCropped'];
