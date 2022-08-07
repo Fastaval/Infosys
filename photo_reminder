@@ -1,0 +1,3 @@
+
+0 7 * * * www-data /var/www/infosys_2020/include/scripts/photo-upload-reminder.sh
+
