@@ -3488,4 +3488,69 @@ WHERE (
         $select->setWhere('id', 'in', $ids);
         return $this->createEntity('Deltagere')->findBySelectMany($select);
     }
+
+    public function anonymizeParticipants($keep) {
+        // Always keep id
+        if (!in_array('id', $keep)) $keep[] = 'id';
+
+        $fields = [];
+        $unknown = [];
+        $deltager = $this->createEntity('Deltagere');
+        $columns = $deltager->getColumnInfo();
+        foreach($columns as $name => $type ) {
+            switch(true) {
+                case in_array($name, $keep):
+                    break;
+                case $deltager->isFieldNullable($name):
+                    $fields[$name] = null;
+                    break;
+                case $name == "brugerkategori_id": // Avoid error on foreign key constraint 
+                    $fields[$name] = 1;
+                    break;
+                case preg_match("/int\(\d+\)/", $type) || $type == "float":
+                    $fields[$name] = 0;
+                    break;
+                case $type == "enum('ja','nej')":
+                    $fields[$name] = 'nej';
+                    break;
+                case str_contains($type, "set(") || str_contains($type, "char(") || $type == "text":
+                    $fields[$name] = '';
+                    break;
+                case $type == "datetime";
+                    $fields[$name] = '0000-00-00 00:00:00';
+                    break;
+                default:
+                    $unknown[$name] = $type;
+                    $this->dic->get('Log')->logToFile(
+                        "Error in anonymizeParticipants()\n".
+                        "Unknown data type for field $name : $type"
+                    );
+            }
+        }
+
+        $errors = [];
+
+        if (!empty($unknown)) {
+            $errors[] = [
+                'id' => 'unknown',
+                'desc' => "There are fields with unknown datatypes that we don't know how to reset",
+                'data' => $unknown
+            ];
+        }
+
+        if(!$deltager->updateAll($fields)){
+            $errors[] = [
+                'id' => 'db',
+                'desc' => "Failed to execute the update query",
+            ];
+        }
+
+        $res = (object)[
+            'success' => empty($errors),
+            'fields' => $fields,
+            'errors' => $errors,
+        ];
+
+        return $res;
+    }
 }

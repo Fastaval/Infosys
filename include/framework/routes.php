@@ -155,6 +155,8 @@ class Routes
 
         $this->routes['participant_reset_password']                 = array('url' => 'participant/reset-password/:hash:', 'controller' => 'Participant', 'method' => 'resetParticipantPassword');
 
+        $this->routes['anonymize_participants']                     = array('url' => 'participant/anonymize', 'controller' => 'Participant', 'method' => 'anonymizeParticipants');
+
         // Misc mail
         $this->routes['send_welcome_mail']                          = array('url' => 'participant/sendwelcomemail', 'controller' => 'Participant', 'method' => 'sendWelcomeMail');
         $this->routes['send_review_mail']                           = array('url' => 'participant/sendreviewmail', 'controller' => 'Participant', 'method' => 'sendReviewMail');
