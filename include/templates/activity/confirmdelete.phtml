@@ -1,0 +1,10 @@
+<div>
+    <fieldset>
+        <legend>Slet aktivitet?</legend>
+        <p>Er du sikker på du vil slette <i><?php echo e($this->aktivitet->navn);?></i>?</p>
+        <form action="<?php echo $this->url('slet_aktivitet', array('id' => $this->aktivitet->id ));?>" method='post'>
+            <input type='submit' value='Slet' name='slet_aktivitet' />
+            <input type='submit' value='Fortryd' />
+        </form>
+    </fieldset>
+</div>

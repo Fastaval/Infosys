@@ -1,0 +1,21 @@
+<div class='middleboxes'>
+    <div class='aktivitetbox'>
+        <form method='post' action='' id='afvikling-edit'>
+        <fieldset>
+            <legend>Ret/slet Afvikling for <i><?php echo e($this->afvikling->getAktivitet()->navn);?></i> (ID: <?php echo $this->afvikling->id;?>)</legend>
+            <label for='start'>Start: </label> <input type="text" class="datetimepicker" name="start" id="start" value="<?= date('Y-m-d H:i', strtotime($this->afvikling->start));?>"/>
+            <label for='stop'>Slut: </label> <input type="text" class="datetimepicker" name="end" id="stop" value="<?= date('Y-m-d H:i', strtotime($this->afvikling->slut));?>"/>
+            <label for='lokale_id'>Mødelokale:</label>
+            <select name='lokale_id' id='lokale_id'>
+                <?php foreach ($this->lokaler as $lokale) : ?>
+                    <option value='<?php echo $lokale->id;?>' <?php echo ($lokale->id == $this->afvikling->lokale_id ? "selected='selected'" : "");?>><?php echo e($lokale->beskrivelse);?></option>
+                <?php endforeach;?>
+            </select>
+            <div class='clearit'></div>
+            <input type='submit' value='Opdater' class='centersubmits' name='update_schedule' />
+            <input type='submit' value='Fortryd' class='centersubmits' name='fortryd' />
+            <input type='submit' value='Slet' class='centersubmits' name='delete_schedule' />
+        </fieldset>
+        </form>
+    </div>
+</div>

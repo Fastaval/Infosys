@@ -1,0 +1,46 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='group-boxes'>
+    <fieldset class='group-box'>
+        <legend>Hold - <a href="<?php echo $this->url('edit_hold', array('id' => $this->hold->id));?>"><i>Ret/slet</i></a></legend>
+        <div>
+            <span class='label'>Id:</span> <span class='detail'><?php echo e($this->hold->id);?></span> 
+        </div>
+        <div>
+            <span class='label'>Holdnummer:</span> <span class='detail'><?php echo e($this->hold->holdnummer);?></span> 
+        </div>
+        <div>
+            <span class='label'>Aktivitet:</span> <span class='detail'><a href="<?php echo $this->url('visaktivitet', array('id' => $this->hold->getAktivitet()->id));?>"><?php echo e($this->hold->getAktivitet()->navn);?></a></span> 
+        </div>
+        <div>
+            <span class='label'>Tid:</span>
+            <span class='detail'><?php echo $this->replaceDayNames(date('D H:i', strtotime($this->hold->getAfvikling()->start)));?>-<?php echo $this->replaceDayNames(date('H:i', strtotime($this->hold->getAfvikling()->slut)));?></span> 
+        </div>
+        <div>
+            <span class='label'>Lokale:</span> <span class='detail'><a href="<?php echo $this->url('vis_lokale', array('id' => $this->hold->getLokale()->id));?>"><?php echo e($this->hold->getLokale()->beskrivelse);?></a></span> 
+        </div>
+        <div>
+            <span class='label'>Mangler:</span> <span class='detail'><?php if ($this->hold->needsGMs()) :?><span style="background-color: #ff0000;">Mangler GM(s)</span><?php else : ?>Har GM(s)<?php endif;?> / <?php if ($this->hold->needsGamers()):?><span style="background-color: #ff0000;">Mangler spiller(e)</span><?php elseif ($this->hold->canUseGamers()) : ?><span style="background-color: #ffff00;">Kan bruge spiller(e)</span><?php else : ?>Fyldt<?php endif;?>
+        </div>
+    </fieldset>
+    <fieldset class='group-box'>
+        <legend>Holdets deltagere - <a href="<?php echo $this->url('list_group_participants',array('hold_id' => $this->hold->id));?>">Deltager liste</a></legend>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Navn</th>
+                <th>Karma</th>
+                <th>S / SL</th>
+            </tr>
+            <?php foreach ($this->hold->getPladser() as $plads) :
+                $deltager = $plads->getDeltager();
+            ?>
+                <tr>
+                    <td><a href="<?php echo $this->url('visdeltager', array('id' => $plads->deltager_id));?>"><?php echo $plads->deltager_id;?></a></td>
+                    <td><?php echo e($deltager->fornavn);?> <?php echo e($deltager->efternavn);?></td>
+                    <td><?= isset($this->karma_stats[$deltager->id]) ? e($this->karma_stats[$deltager->id]) : 0 ;?></td>
+                    <td><?php echo e($plads->type);?></td>
+                </tr>
+            <?php endforeach;?>
+        </table>
+    </fieldset>
+</div>

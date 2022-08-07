@@ -1,0 +1,110 @@
+<div class='edit_details'>
+    <fieldset id='edit_pages'>
+        <legend>Rediger indgang, mad og wear</legend>
+        <form method='post' action=''>
+            <table>
+                <tr><th colspan='2'>Indgang</th></tr>
+                <tr>
+                    <td>
+                        <select id='indgangselect'>
+                            <?php foreach ($this->model->getAllIndgang() as $indgang) :?>
+                            <option value='<?php echo $indgang->id;?>'><?php echo e($indgang->type) . ' (' . date('D', strtotime($indgang->start)) . ')';?></option>
+                            <?php endforeach;?>
+                        </select>
+                        <br/>
+                        <input type='button' id='indgang_tilfoej' value='Tilføj' />
+                    </td>
+                    <td>
+                        <table id='indgang_edit'>
+                            <tbody>
+                                <?php if (!empty($this->deltager_info['indgang'])) :
+                                    foreach ($this->deltager_info['indgang'] as $indgang) :?>
+                                    <tr>
+                                        <td class='choice'><input type='hidden' name='indgang[]' value='<?php echo $indgang->id;?>'/><?php echo e($indgang->type) . ' (' . date('D', strtotime($indgang->start)) . ')';?></td>
+                                        <td><input type='button' value='Slet'/></td>
+                                    </tr>
+                                    <?php endforeach;
+                                endif;?>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <hr/>
+            <table>
+                <tr><th colspan='2'>Mad</th></tr>
+                <tr>
+                    <td>
+                        <select id='madselect_top'>
+                            <option value=''>Vælg</option>
+                            <?php foreach ($this->model->getAllMad() as $food) :?>
+                                <option value='<?php echo $food->id;?>'><?php echo e($food->kategori);?></option>
+                            <?php endforeach;?>
+                        </select>
+                        <select id='madselect_bottom'></select>
+                        <br/>
+                        <input type='button' id='mad_tilfoej' value='Tilføj' />
+                    </td>
+                    <td>
+                        <table id='mad_edit'>
+                            <tbody>
+                                <?php if (!empty($this->deltager_info['mad'])) :
+                                    foreach ($this->deltager_info['mad'] as $madtid) :?>
+                                    <tr>
+                                        <td class='choice'><?php echo $madtid->getMad()->kategori;?> <?php echo e($this->replaceDayNames(date('D', strtotime($madtid->dato))));?><input type='hidden' name='madtider[]' value='<?php echo $madtid->id;?>'/></td>
+                                        <td><input type='button' value='Slet' /></td>
+                                    </tr>
+                                    <?php endforeach;
+                                endif;?>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <hr/>
+            <table>
+                <tr><th colspan='2'>Wear</th></tr>
+                <tr>
+                    <td>
+                        <select id='wearselect_top'>
+                            <option value=''>Vælg</option>
+                            <?php foreach ($this->model->getAllWear() as $wear) :?>
+                            <option value='<?php echo $wear->id;?>'><?php echo e($wear->navn);?></option>
+                            <?php endforeach;?>
+                        </select>
+                        <select id='wearselect_middle'>
+                        </select>
+                        <select id='wearselect_bottom'>
+                        </select><br/>
+                        <input type='text' name='wear_antal' id='wear_antal' value='0' /><br/>
+                        <br/><input type='button' id='wear_tilfoej' value='Tilføj' />
+                    </td>
+                    <td>
+                        <table id='wear_edit'>
+                            <tbody>
+                                <?php if (!empty($this->deltager_info['wear'])) :
+                                    foreach ($this->deltager_info['wear'] as $wearpris) :?>
+                                    <tr>
+                                        <td class='choice'><?php echo e($wearpris->antal);?> stk. <?php echo e($wearpris->getWearpris()->getWear()->navn);?> str. <?php echo e($wearpris->size);?> &mdash; (<?php echo e($wearpris->getWearpris()->getCategory()->navn);?> -  <?php echo e($wearpris->getWearpris()->pris);?>,-)<input type='hidden' name='wearpriser[]' value='<?php echo $wearpris->wearpris_id;?>'/><input type='hidden' name='wearantal[]' value='<?php echo e($wearpris->antal);?>' /><input type='hidden' name='wearsize[]' value='<?php echo e($wearpris->size);?>' /></td>
+                                        <td><input type='button' value='Slet' /></td>
+                                    </tr>
+                                    <?php endforeach;
+                                endif;?>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <input type='submit' class='centersubmits' value='Opdater' name='update_imw' />
+        </form>
+    </fieldset>
+</div>
+<script src="<?php echo $this->JSLink('imwedit.js');?>" type='text/javascript'></script>
+<script type='text/javascript'>
+madwearedit.public_uri = '<?php echo $this->public_uri;?>';
+madwearedit.wearSizes  = <?= json_encode($this->wear_sizes);?>;
+madwearedit.setupIndgang();
+madwearedit.setupMad();
+madwearedit.setupWear();
+</script>

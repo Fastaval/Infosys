@@ -1,0 +1,78 @@
+<table>
+    <tbody>
+        <tr>
+            <th colspan="4">Normale deltagere</th>
+            <th colspan="2">Rabat</th>
+            <th colspan="3">Indgang</th>
+            <th colspan="4">Wear, mad and stuffs</th>
+        </tr>
+        <tr>
+            <th>Id</th>
+            <th>Navn</th>
+            <th>Kategori</th>
+            <th>Forudbetalt</th>
+            <th>Indgang</th>
+            <th>Overnatning</th>
+            <th>Wear</th>
+            <th>Mad</th>
+            <th>Aktiviteter</th>
+            <th>Onkel</th>
+        </tr>
+        <?php $i = 0;
+        foreach ($this->participants as $p) :
+            if ($p->udeblevet == 'nej') :?>
+                <tr <?php echo ($i++ % 2 ? '' : "style='background-color: #c0c0c0'");?>>
+                    <td><?php echo $p->id;?></td>
+                    <td><?php echo $p->getName();?></td>
+                    <td><?php echo $p->getBrugerkategori()->navn;?></td>
+                    <td><?php echo $p->betalt_beloeb;?></td>
+                    <td><?php echo $p->calcEntranceTickets();?></td>
+                    <td><?php echo $p->calcSleepTickets();?></td>
+                    <td><?php echo $p->calcWear();?></td>
+                    <td><?php echo $p->calcFood();?></td>
+                    <td><?php echo $p->calcActivities();?></td>
+                    <td><?php echo $p->calcRichBastard();?></td>
+                </tr>
+            <?php endif;
+            endforeach;?>
+    </tbody>
+    <tbody>
+        <tr>
+            <th colspan="4">Udeblevne deltagere</th>
+            <th colspan="2">Rabat</th>
+            <th colspan="3">Indgang</th>
+            <th colspan="4">Wear, mad and stuffs</th>
+        </tr>
+        <tr>
+            <th>Id</th>
+            <th>Navn</th>
+            <th>Kategori</th>
+            <th>Forudbetalt</th>
+            <th>Arrangørrabat</th>
+            <th>Indgang</th>
+            <th>Overnatning</th>
+            <th>Wear</th>
+            <th>Mad</th>
+            <th>Aktiviteter</th>
+            <th>Onkel</th>
+        </tr>
+        <?php $i = 0;
+        foreach ($this->participants as $p) :
+            if ($p->udeblevet == 'ja') :?>
+                <tr <?php echo ($i++ % 2 ? '' : "style='background-color: #c0c0c0'");?>>
+                    <td><?php echo $p->id;?></td>
+                    <td><?php echo $p->getName();?></td>
+                    <td><?php echo $p->getBrugerkategori()->navn;?></td>
+                    <td><?php echo $p->betalt_beloeb;?></td>
+                    <td><?php echo $p->calcSave();?></td>
+                    <td><?php echo $p->calcEntranceTickets();?></td>
+                    <td><?php echo $p->calcSleepTickets();?></td>
+                    <td><?php echo $p->calcWear();?></td>
+                    <td><?php echo $p->calcFood();?></td>
+                    <td><?php echo $p->calcActivities();?></td>
+                    <td><?php echo $p->calcRichBastard();?></td>
+                </tr>
+            <?php endif;
+            endforeach;?>
+    </tbody>
+</table>

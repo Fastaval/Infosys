@@ -1,0 +1,13 @@
+<?php foreach ($this->gamestart_details as $detail) :?>
+    <h2 class="vote-heading"><?= e($detail['activity']->navn);?></h2>
+    <div>
+    <?php foreach ($detail['run']->createVotes($this) as $vote) : ?>
+        <div class="vote">
+            <span class="vote-activity">Vote for <?= e($detail['activity']->navn);?> / <?= e($detail['activity']->title_en);?> here:</span>
+            <span class="vote-address">infosys.fastaval.dk/vote</span>
+            <span class="vote-code">Use code: <strong><?= e($vote['code']);?></strong></span>
+            <img src="/vote-barcodes/<?= e($vote['id']);?>.png" class="vote-barcode" alt=""/>
+        </div>
+    <?php endforeach;?>
+    </div>
+<?php endforeach;?>

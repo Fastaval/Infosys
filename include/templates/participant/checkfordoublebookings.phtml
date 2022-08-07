@@ -1,0 +1,11 @@
+<h1>Dobbelt bookede deltagere</h1>
+<?php if (empty($this->double_booked_participants)) : ?>
+<h2>Ingen fundet</h2>
+<?php else : ?>
+<h2>Deltagere:</h2>
+<ul>
+    <?php foreach ($this->double_booked_participants as $participant) : ?>
+    <li><a href="<?= $this->url('visdeltager', ['id' => $participant->id]);?>"><?= e($participant->getName());?></a></li>
+    <?php endforeach;?>
+</ul>
+<?php endif; ?>

@@ -1,0 +1,60 @@
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+table td {
+    border-bottom: 1px solid black;
+    padding-left: 5px;
+}
+
+table tr.alterngrey {
+    background-color: #f0f0f0;
+}
+
+div.deltager-wearorder {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+div.deltager-wearorder table td {
+    border: none;
+}
+
+.print_link {
+    display: none;
+}
+
+.print-hidden {
+    display:none;
+}
+
+.vote {
+    float: left;
+    text-align: center;
+    padding: 0.5em 1em;
+    border: 1px solid #000;
+    width: 10em;
+    font-size: 0.8em;
+    page-break-inside: avoid;
+}
+
+.vote-heading {
+    clear: both;
+    margin: 2em;
+}
+
+.vote-address,
+.vote-code,
+.vote-activity {
+    display: block;
+    margin: 0 auto;
+}
+
+.vote-code {
+    font-family: "Lucida Console", Monaco, "Courier New", "Nimbus Mono L", monospace;
+}
+
+.vote-address {
+    text-decoration: underline;
+}

@@ -1,0 +1,74 @@
+<?php
+/**
+ * Copyright (C) 2009-2012 Peter Lind
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
+ *
+ * PHP version 5
+ *
+ * @package    MVC
+ * @subpackage Layouts
+ * @author     Peter Lind <peter.e.lind@gmail.com>
+ * @copyright  2009-2012 Peter Lind
+ * @license    http://www.gnu.org/licenses/gpl.html GPL 3
+ * @link       http://www.github.com/Fake51/Infosys
+ */
+
+?>
+<?= $this->getDocType(); ?>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<title><?= isset($this->title) ? $this->title . " - " : "";?>Fastaval InfoSys</title>
+<?= $this->renderIncludedCSS();?>
+<?= $this->renderEarlyLoadJS(); ?>
+</head> 
+<body>
+<div class='maincontainer'>
+    <div class="header">
+        <div class='logo'>
+            <a href="<?= $this->url('home'); ?>">InfoSys</a>
+        </div>
+        <?= $this->generateMenu();?>
+        <?php if ($this->user) :?>
+        <form action="<?= $this->url('home'); ?>" method="get" class='search'>
+            <input type="text" name="wildcardsearch" class='wildcardsearch' /><input type="submit" value="Søg" />
+        </form>
+        <div class='logoutlink'><a href="<?= $this->url('logout_page'); ?>">Log out</a></div>
+        <?php endif;?>
+        <div class='clearit'></div>
+    </div>
+    <?php if ($this->user) :?>
+        <span class='user-footprint'><em>Du er logget ind som:</em> <strong><?= $this->user->user;?></strong></span>
+        <div class='clearit'></div>
+    <?php endif;?>
+
+    <div class='content-container'>
+        <?= $this->content ?>
+    </div>
+</div>
+<script type='text/javascript'>
+window.infosys = (function() {
+    var infosys = window.infosys || {};
+
+    infosys.con_start_date = new Date('<?= date('Y-m-d 00:00', strtotime($this->config->get('con.start')));?>');
+    infosys.con_end_date   = new Date('<?= date('Y-m-d 23:59', strtotime($this->config->get('con.end')));?>');
+
+    return infosys;
+})();
+</script>
+
+<?= $this->renderLateLoadJS();?>
+</body>
+</html>

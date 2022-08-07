@@ -1,0 +1,12 @@
+<?php echo $this->getMessagesHtml();?>
+<div class="infobox login">
+    <h2>Reset password</h2>
+    <form method='post' action='<?= $this->url('forgotten_pass_submit');?>'>
+        <label for='username'>Email:</label><input id='username' type='text' name='user' />
+        <div class='clearit'></div>
+        <button type='submit'>Reset</button>
+    </form>
+</div>
+<script type='text/javascript'>
+    document.getElementById('username').focus();
+</script>

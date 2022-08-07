@@ -1,0 +1,45 @@
+<div id='food-handout-container'>
+    <h1>Mad udlevering</h1>
+    <div>
+        <?php if (empty($this->food_items)) : ?>
+            <p>Der kan ikke udleveres mad i øjeblikket, da næste mad periode er for langt væk.</p>
+            <?php if (!empty($this->next_food_time)) : ?>
+                <p>Næste mad-udleverings periode er: <?php echo $this->next_food_time;?> - om <?php echo makeSensibleTimeperiod(strtotime($this->next_food_time) - time());?></p>
+            <?php endif;?>
+        <?php else : ?>
+            <p>Madudlevering for <strong><?php echo danishDayNames(date('D, d H:i', strtotime($this->current_food_time)));?></strong>:</p>
+            <ul>
+                <?php foreach ($this->food_items as $item) : ?>
+                <li><strong><input type='hidden' class='fooditem_id' value='<?php echo $item->id;?>'/><?php echo $item->getMad()->kategori;?></strong></li>
+                <?php endforeach;?>
+            </ul>
+            <div>
+                <p>Indtast/scan deltager id</p>
+                <input type='text' id='user-id'/> <input type='button' value='Marker udleveret' id='mark-done'/>
+                <div id='registration-container' class='hidden'>
+                    <fieldset>
+                        <legend>Resultat</legend>
+                        <div id='registration-result'>
+                        </div>
+                        <div class='hidden' id='undo-container'>
+                            <input type='button' value='Undo'/>
+                        </div>
+                    </fieldset>
+                </div>
+                <fieldset id='stats-fieldset'>
+                    <legend>Stats</legend>
+                    <div id='stats-container'>
+                        Opdaterer stats ...
+                    </div>
+                </fieldset>
+            </div>
+        <?php endif;?>
+    </div>
+</div>
+<audio preload="auto" src="/audio/oh-no.mp3" id="oh-no"/>
+<audio preload="auto" src="/audio/wait-for-it.mp3" id="wait"/>
+<script type='text/javascript' src="<?php echo $this->JSLink('food_handout.js');?>"></script>
+<script type='text/javascript'>
+var ajax_uri = '<?php echo $this->url('food_handout_ajax');?>';
+food_handout.setup();
+</script>

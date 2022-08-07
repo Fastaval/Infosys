@@ -1,0 +1,10 @@
+<div>
+    <fieldset>
+        <legend>Slet deltager?</legend>
+        <p>Er du sikker på du vil slette deltager <?php echo e($this->deltager->getName());?> (#<?php echo $this->deltager->id;?>)?</p>
+        <form action="<?php echo $this->url('delete_deltager', array('id' => $this->deltager->id ));?>" method='post'>
+            <input type='submit' value='Slet for pokker' name='delete_deltager' />
+            <input type='submit' value='Nej, live and let live' />
+        </form>
+    </fieldset>
+</div>

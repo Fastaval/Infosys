@@ -1,0 +1,182 @@
+<?php
+$this->includeCss('jQuery-File-Upload-9.9.3/css/jquery.fileupload.css');
+$this->includeCss('jQuery-File-Upload-9.9.3/css/jquery.fileupload-ui.css');
+echo $this->getMessagesHtml();
+?>
+<div>
+    <fieldset>
+        <legend>Lokale - <a href="<?php echo $this->url('edit_lokale', array('id' => $this->lokale->id));?>"><i>Ret/slet</i></a></legend>
+        <div>
+            <span class='label'>Id:</span> <span class='detail'><?php echo $this->lokale->id;?></span> 
+        </div>
+        <div>
+            <span class='label'>Navn:</span> <span class='detail'><?php echo e($this->lokale->beskrivelse);?></span> 
+        </div>
+        <div>
+            <span class='label'>Område:</span> <span class='detail'><?php echo e($this->lokale->omraade);?></span> 
+        </div>
+        <div>
+            <span class='label'>Skole:</span> <span class='detail'><?php echo e($this->lokale->skole);?></span> 
+        </div>
+        <div>
+            <span class='label'>Kan bookes:</span> <span class='detail'><?php echo e($this->lokale->kan_bookes);?></span> 
+        </div>
+        <div>
+            <span class="label">Sove kapacitet:</span> <span class="detail"><?= intval($this->lokale->sovekapacitet);?></span>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Lokalebilleder</legend>
+        <form id="fileupload" action="<?= $this->url('image_upload', array('id' => $this->lokale->id));?>" method="POST" enctype="multipart/form-data">
+            <!-- Redirect browsers with JavaScript disabled to the origin page -->
+            <noscript><input type="hidden" name="redirect" value="set redirect here"></noscript>
+            <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+            <div class="row fileupload-buttonbar">
+                <div class="col-lg-7">
+                    <!-- The fileinput-button span is used to style the file input field as button -->
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Add files...</span>
+                        <input type="file" name="files[]" multiple>
+                    </span>
+                    <button type="submit" class="btn btn-primary start">
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>Start upload</span>
+                    </button>
+                    <button type="reset" class="btn btn-warning cancel">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Cancel upload</span>
+                    </button>
+                    <!-- The global file processing state -->
+                    <span class="fileupload-process"></span>
+                </div>
+                <!-- The global progress state -->
+                <div class="col-lg-5 fileupload-progress fade">
+                    <!-- The global progress bar -->
+                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                    </div>
+                    <!-- The extended global progress state -->
+                    <div class="progress-extended">&nbsp;</div>
+                </div>
+            </div>
+            <!-- The table listing the files available for upload/download -->
+            <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>Afviklinger i lokalet</legend>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan='2'>Start</th>
+                    <th> </th>
+                    <th>Slut</th>
+                    <th>Aktivitet</th>
+                    <th>Hold</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->lokale_afviklinger as $afv) : ?>
+                <tr>
+                    <td><?php echo danishDayNames(date('D', strtotime($afv->start)));?></td>
+                    <td><?php echo date('H:i', strtotime($afv->start));?></td>
+                    <td>&mdash;</td>
+                    <td><?php echo date('H:i', strtotime($afv->slut));?></td>
+                    <td><a href="<?php echo $this->url('visaktivitet',array('id' => $afv->getAktivitet()->id));?>"><?php echo e($afv->getAktivitet()->navn);?></a></td>
+                    <?php foreach ($afv->getHold() as $hold) :
+                        if ($hold->lokale_id == $this->lokale->id) : ?>
+                        <td><a href="<?php echo $this->url('vis_hold',array('id' => $hold->id));?>">Hold <?php echo e($hold->holdnummer);?></a></td>
+                        <?php endif;
+                    endforeach;?>
+                </tr>
+                <?php endforeach;?>
+            </tbody>
+        </table>
+    </fieldset>
+</div>
+
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start" disabled>
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                {% if (file.url) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                {% } else { %}
+                    <span>{%=file.name%}</span>
+                {% } %}
+            </p>
+            {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.deleteUrl) { %}
+            {% } else { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+<?php
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/vendor/jquery.ui.widget.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/tmpl.min.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/load-image.all.min.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/canvas-to-blob.min.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/bootstrap.min.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/jquery.iframe-transport.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/jquery.fileupload.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/jquery.fileupload-process.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/jquery.fileupload-image.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/jquery.fileupload-audio.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/jquery.fileupload-video.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/jquery.fileupload-validate.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/jquery.fileupload-ui.js');
+$this->registerLateLoadJs('jQuery-File-Upload-9.9.3/main.js');

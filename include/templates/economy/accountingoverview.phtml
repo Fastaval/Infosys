@@ -1,0 +1,46 @@
+<?php
+$total_cost = 0;
+?>
+<table class="accounting">
+    <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Antal</th>
+            <th>Pris</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <?php foreach ($this->accounting_data as $header => $group) :
+        $temp_cost = 0;
+    ?>
+    <tbody>
+        <tr>
+            <th colspan="4"><?= e($header);?></th>
+        </tr>
+        <?php foreach ($group as $row) :
+            $temp_cost += intval($row['cost']);
+        ?>
+        <tr>
+            <td><?= e($row['name']);?></td>
+            <td><?= e($row['amount']);?></td>
+            <td><?= e($row['price']);?></td>
+            <td><?= e($row['cost']);?></td>
+        </tr>
+        <?php endforeach;?>
+        <tr>
+            <td><strong>Subtotal</strong></td>
+            <td colspan="2"></td>
+            <td><strong><?= $temp_cost;?></strong></td>
+        </tr>
+    </tbody>
+    <?php
+        $total_cost += $temp_cost;
+    endforeach;?>
+    <tfoot>
+        <tr>
+            <td><strong>Total</strong></td>
+            <td colspan="2"></td>
+            <td><strong><?= $total_cost;?></strong></td>
+        </tr>
+    </tfoot>
+</table>

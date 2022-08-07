@@ -1,0 +1,23 @@
+<?php $this->registerLateLoadJS('jquery.markitup.js');
+$this->registerLateLoadJS('markdown/set.js');
+$this->includeCSS('markitup/style.css');
+$this->includeCSS('markitup/markdown/style.css');
+echo $this->getMessagesHtml();?>
+<fieldset>
+    <legend>Lav nyhedsbrev</legend>
+    <form action='<?php echo $this->url('newsletters_edit', array('id' => $this->newsletter->id));?>' method='post'>
+        <label for='subject'>Emne</label>
+        <input type='text' name='subject' id='subject' value='<?php echo $this->newsletter->subject;?>'/>
+        <label for='content'>Indhold</label>
+        <textarea id='content' name='content'><?php echo $this->newsletter->content;?></textarea>
+        <input type='submit' value='Opdater'/>
+    </form>
+</fieldset>
+<script type='text/javascript'>
+//<![CDATA[
+var $ = jQuery;
+jQuery(function(){
+    jQuery('#content').markItUp(mySettings);
+});
+//]]>
+</script>

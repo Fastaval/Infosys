@@ -1,0 +1,95 @@
+<?php $this->registerLateLoadJS('participant.js');
+?>
+<div class='edit_details'>
+    <form name='opret_deltager' action='' method='post'>
+        <fieldset>
+            <legend><b>Opret deltager</b></legend>
+            <table>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><b>Køn:</b> <?php echo $this->genSelect('deltager[gender]', array('Mand' => 'm', 'Kvinde' => 'k', 'Andet' => 'a'));?></td>
+                    <td><b>Fødselsdato:</b> <input type='text' value='' class="datepicker" name='deltager[birthdate]' /></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Kategori:</b>
+                        <select name="deltager[brugerkategori_id]" class="doubleinput">
+                            <?php foreach ($this->model->getAllBrugerkategorier() as $b) :?>
+                            <option value="<?php echo $b->id;?>"><?php echo e($b->navn);?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </td>
+                    <td><b>Forudbetalt:</b> <input type='text' value='' name='deltager[betalt_beloeb]' /></td>
+                </tr>
+                <tr>
+                    <td><b>Fornavn:</b> <input type='text' value='' name='deltager[fornavn]' /></td>
+                    <td><b>Efternavn:</b> <input type='text' value='' name='deltager[efternavn]' /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Email:</b> <input class='doubleinput' type='text' value='' name='deltager[email]' /></td>
+                    <td><b>International:</b> <?php echo $this->genSelect('deltager[international]',array('nej','ja'));?></td>
+                </tr>
+                <tr>
+                    <td><b>Adresse1:</b> <input type='text' value='' name='deltager[adresse1]' /></td>
+                    <td><b>Adresse2:</b> <input type='text' value='' name='deltager[adresse2]' /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><b>Postnr:</b> <input type='text' value='' name='deltager[postnummer]' /></td>
+                    <td><b>By:</b> <input type='text' value='' name='deltager[by]' /></td>
+                    <td><b>Land:</b> <input type='text' value='' name='deltager[land]' /></td>
+                </tr>
+                <tr>
+                    <td><b>Nødtlf:</b> <input type='text' value='' name='deltager[tlf]' /></td>
+                    <td><b>Mobil:</b> <input type='text' value='' name='deltager[mobiltlf]' /></td>
+                    <td><b>Mobil med:</b> <?php echo $this->genSelect('deltager[medbringer_mobil]', array('nej','ja'));?></td>
+                </tr>
+
+                <tr>
+                    <!--<td><b>Scen. konk.:</b> <?php echo $this->genSelect('deltager[tilmeld_scenarieskrivning]', array('nej', 'ja'));?></td>-->
+                    <td colspan='2'><b>Sprog:</b>
+                        <?php foreach ($this->model->getAvailableSprog() as $sprog) :?>
+                            <label for='lang_<?php echo $sprog;?>'><?php echo substr($sprog, 0,3);?>.</label><input class='langbox' type='checkbox' name='deltager[lang][<?php echo $sprog;?>]' value='<?php echo $sprog;?>' id='lang_<?php echo $sprog;?>'/>
+                        <?php endforeach;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>SuperGDS:</b> <?php echo $this->genSelect('deltager[supergds]',array('nej','ja'));?></td>
+                    <td><b>Flere GDSVagter:</b> <?php echo $this->genSelect('deltager[flere_gdsvagter]',array('nej','ja'));?></td>
+                    <td><b>Pakkeløsning:</b> <?php echo $this->genSelect('deltager[package_gds]',array('Nej' => '0', 'Ja' => '1'), $this->deltager->package_gds);?></td>
+                </tr>
+
+                <tr>
+                    <td><b>Arr. sovesal:</b> <?php echo $this->genSelect('deltager[sovesal]',array('nej','ja'));?></td>
+                    <td><b>Arrangør igen:</b> <?php echo $this->genSelect('deltager[arrangoer_naeste_aar]',array('nej','ja'));?></td>
+                    <td><b>Må kontaktes:</b> <?php echo $this->genSelect('deltager[may_contact]', array('nej', 'ja'));?></td>
+                </tr>
+                <tr>
+                    <td><b>Forfatter:</b> <?php echo $this->genSelect('deltager[forfatter]',array('nej','ja'));?></td>
+                    <td><b>Rig onkel:</b> <?php echo $this->genSelect('deltager[rig_onkel]',array('nej', 'ja'));?></td>
+                    <td><b>Hemmelig onkel:</b> <?php echo $this->genSelect('deltager[hemmelig_onkel]',array('nej', 'ja'));?></td>
+                </tr>
+                <tr>
+                    <td><b>Oprydningshjælper:</b> <?php echo $this->genSelect('deltager[oprydning_tirsdag]', array('nej', 'ja'));?></td>
+                    <td><b>Opstart mandag:</b> <?php echo $this->genSelect('deltager[ready_mandag]', array('nej', 'ja'));?></td>
+                    <td><b>Opstart tirsdag:</b> <?php echo $this->genSelect('deltager[ready_tirsdag]', array('nej', 'ja'));?></td>
+                </tr>
+                <tr>
+                    <td><b>Ønsket antal aktiviteter:</b> <input type='number' min='0' max='10' step='1' value='' name='deltager[desired_activities]'/></td>
+                    <!--<td><b>Game reallocation project:</b> <?php echo $this->genSelect('deltager[game_reallocation_participant]', array('ja', 'nej'), 'nej');?></td>-->
+                    <td><strong>Simultantolk:</strong> <?= $this->genSelect('deltager[interpreter]', array('nej', 'ja'));?></td>
+                </tr>
+                <tr>
+                    <td><b>Udeblevet:</b> <?php echo $this->genSelect('deltager[udeblevet]',array('nej','ja'));?></td>
+                    <td><b>SuperGM:</b> <?php echo $this->genSelect('deltager[supergm]', array('nej','ja'));?></td>
+                </tr>
+                <tr><td colspan='3'><b>Ungdomsskole:</b> <input class='tripleinput' type='text' value='' name='deltager[ungdomsskole]' /></td></tr>
+                <tr><td colspan='3'><b>Arrangørområde:</b> <input class='tripleinput' type='text' value='' name='deltager[arbejdsomraade]' /></td></tr>
+                <tr><td colspan='3'><b>Scenarie:</b> <input class='tripleinput' type='text' value='' name='deltager[scenarie]' /></td></tr>
+                <tr><td colspan='3'><b>Skills:</b> <input class='tripleinput' type='text' value='' name='deltager[skills]' /></td></tr>
+            </table>
+        </fieldset>
+        <input type='submit' value='Opret deltager' name='create_deltager' class='centersubmits' />
+        <input type='submit' value='Fortryd' class='centersubmits' />
+    </form>
+</div>

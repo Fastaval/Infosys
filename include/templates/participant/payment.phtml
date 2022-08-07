@@ -1,0 +1,11 @@
+<?php echo $this->getMessagesHtml();
+$this->registerLateLoadJS('payment.js');?>
+<fieldset id='payment'>
+    <legend>Betalings-registrering</legend>
+    <div id='input-container'>
+        <input type='text' id='search'/> <input type='button' value='Søg'/>
+    </div>
+    <div id='result-container'>
+        <p><em>Indtast ID eller navn for at søge efter deltagere</em></p>
+    </div>
+</fieldset>

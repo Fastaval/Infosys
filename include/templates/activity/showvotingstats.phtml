@@ -1,0 +1,19 @@
+<table class="votingStats">
+    <thead>
+        <tr>
+            <th class="votingStats-votes">Stemmer</th>
+            <th class="votingStats-potential">Mulige stemmer</th>
+        </tr>
+    </thead>
+    <tbody>
+<?php foreach ($this->stats as $name => $details) : ?>
+        <tr>
+            <th colspan="2" class="votingStats-title"><?= e($name);?></th>
+        </tr>
+        <tr class="votingStats-stats">
+            <td><?= e($details['cast']);?> (<?= round($details['cast'] / $details['potential'] * 100);?>%)</td>
+            <td><?= e($details['potential']);?></td>
+        </tr>
+<?php endforeach;?>
+    </tbody>
+</table>

@@ -1,0 +1,236 @@
+<h1>Tak for din tilmelding!</h1>
+<p>
+Din tilmelding er nu registreret - med deltagernummer <?= $this->participant->id;?>. Nedenfor er vedlagt de oplysninger vi har registret på dig.
+</p>
+<?php if ($this->participant->betalt_beloeb < $this->prices['total']) : ?>
+<h2>Betaling</h2>
+<p>
+    <?php if ($this->participant->betalt_beloeb == 0) : ?>
+Din tilmelding beløber sig til <?= $this->prices['total'];?>kr. der bedes betales senest d. <?= $this->payment_day;?>.
+    <?php else : ?>
+Du har allerede betalt <?= $this->participant->betalt_beloeb;?>kr men det ser ud til at du stadig skylder <?= ($this->prices['total'] - $this->participant->betalt_beloeb);?>kr.
+Du kan betale nu via online-betalingen eller bankoverførsel, eller når du ankommer til Fastaval.
+    <?php endif;?>
+</p>
+<p>
+Du kan betale online via betalingsløsningen hos fritid.dk: <a href="<?= $this->payment_url;?>"><?= $this->payment_url;?></a>.
+</p>
+<p>
+Alternativt kan du betale via indbetalingskort eller bankoverførsel - bemærk at der er et gebyr på bankoverførsel på 10 kr (og betalingen bliver derfor <?= ($this->prices['total'] - $this->participant->betalt_beloeb + 10);?> kr.)<br/>
+* Ved indbetaling på indbetalingskort: Kortart: +73 / Kreditornr.: 84520098<br/>
+* Ved bankoverførsel til vores bankkonto: Reg.: 9314 / Kontonr.: 4573884464<br/>
+* Ved indbetaling fra en bank UDENFOR Danmark så kontakt venligst bunker@fastaval.dk<br/>
+* deadline for indbetaling er her ligeledes <?= $this->payment_day;?>
+</p>
+<p>
+Ved alle muligheder skal du huske at anføre dit navn og deltagernummer (<?= $this->participant->id;?>)
+</p>
+<?php endif;?>
+<?php if ($this->participant_photo_upload_link) : ?>
+<p>Som arrangør/forfatter/designer får du et <strong>Fastaval ID kort</strong>. Brug venligst dette link til at <strong>uploade et billede</strong> til det: <a href="<?= $this->participant_photo_upload_link;?>"><?= $this->participant_photo_upload_link;?></a>
+</p>
+<?php endif;?>
+<p>
+<strong>Læg mærke til</strong> at du via tilmeldingen på www.fastaval.dk kan loade og ændre din tilmelding, helt frem til <?= $this->end_signup_changes_date;?>. Du skal bare bruge din email og denne kode: <?= $this->participant->password;?>
+</p>
+<p>
+<b>Vi ses på Fastaval <?= $this->con_year;?>!</b>
+</p>
+<div>
+<table style="float: left; max-width: 49%;"><tbody>
+<tr><td colspan="2">====== PERSONLIGE OPLYSNINGER ======</td></tr>
+<tr><td>Navn:                                  </td><td><?= $this->participant->fornavn . ' ' . $this->participant->efternavn;?></td></tr>
+<?php if ($this->participant->adresse1) : ?>
+<tr><td>Adresse:                               </td><td><?= $this->participant->adresse1 . ' ' . $this->participant->adresse2;?></td></tr>
+<tr><td>Postnr.:                               </td><td><?= $this->participant->postnummer;?></td></tr>
+<tr><td>By:                                    </td><td><?= $this->participant->by;?></td></tr>
+<?php endif;?>
+<tr><td>Land:                                  </td><td><?= $this->participant->land;?></td></tr>
+<?php if ($this->participant->mobiltlf) : ?>
+<tr><td>Mobil (SMS-service under Fastaval):    </td><td><?= $this->participant->mobiltlf;?> (<?= $this->participant->medbringer_mobil === 'ja' ? 'Ja' : 'Nej';?>)</td></tr>
+<?php endif;?>
+<?php if ($this->participant->tlf) : ?>
+<tr><td>Alternativt telefonnummer:             </td><td><?= $this->participant->tlf;?></td></tr>
+<?php endif;?>
+<tr><td>Køn:                                   </td><td><?php
+switch ($this->participant->gender) {
+case 'm':
+    echo 'Mand';
+    break;
+
+case 'k':
+    echo 'Kvinde';
+    break;
+
+case 'a':
+    echo 'Andet';
+    break;
+
+}
+?></td></tr>
+<tr><td>Fødselsdato                            </td><td><?= date('d/m-Y', strtotime($this->participant->birthdate));?></td></tr>
+<tr><td>Email:                                 </td><td><?= $this->participant->email;?></td></tr>
+<tr><td>Password:                              </td><td><?= $this->participant->password;?></td></tr>
+<tr><td colspan="2">ALEA:</td></tr>
+<tr><td>Vil gerne meldes ind i Alea (75kr):    </td><td><?= !empty($this->entrance['alea-membership']) ? 'Ja' : 'Nej';?></td></tr>
+<tr><td colspan="2">ANDET:</td></tr>
+<tr><td>Arrangør:                              </td><td><?= $this->participant->isArrangoer() ? 'Ja' : 'Nej';?></td></tr>
+<?php if ($this->participant->arbejdsomraade) : ?>
+<tr><td>Mit arbejdsområde:                     </td><td><?= $this->participant->arbejdsomraade;?></td></tr>
+<?php endif;?>
+<?php if ($this->participant->scenarie) : ?>
+<tr><td>Scenarie:                              </td><td><?= $this->participant->scenarie;?></td></tr>
+<?php endif;?>
+<?php if ($this->participant->ungdomsskole) : ?>
+<tr><td>Ungdomsskole/gruppe:                   </td><td><?= $this->participant->ungdomsskole;?></td></tr>
+<?php endif;?>
+</tbody></table>
+<table style="float: left; max-width: 49%; border-left: 1px solid #777; margin-left: 2em; padding-left: 2em;"><tbody>
+<tr><td colspan="2">====== PRAKTISK ======</td></tr>
+<tr><td colspan="2"><strong>INDGANG:</strong></td></tr>
+<?php if (!empty($this->entrance['entrance-partout'])) : ?>
+<tr><td colspan="2">Partout indgang (alle dage)</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-partout'])) : ?>
+<tr><td colspan="2">Overnatning (alle dage)</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-01'])) : ?>
+<tr><td colspan="2">Indgang onsdag 1/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-01'])) : ?>
+<tr><td colspan="2">Overnatning onsdag 1/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-02'])) : ?>
+<tr><td colspan="2">Indgang torsdag 2/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-02'])) : ?>
+<tr><td colspan="2">Overnatning torsdag 2/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-03'])) : ?>
+<tr><td colspan="2">Indgang fredag 3/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-03'])) : ?>
+<tr><td colspan="2">Overnatning fredag 3/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-04'])) : ?>
+<tr><td colspan="2">Indgang lørdag 4/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-04'])) : ?>
+<tr><td colspan="2">Overnatning lørdag 4/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['entrance-05'])) : ?>
+<tr><td colspan="2">Indgang søndag 5/4</td></tr>
+<?php endif;?>
+<?php if (!empty($this->entrance['sleeping-05'])) : ?>
+<tr><td colspan="2">Overnatning søndag 5/4</td></tr>
+<?php endif;?>
+
+<?php foreach ($this->entrance as $key => $item) : ?>
+    <?php if (substr($key, 8) === 'entrance' || substr($key, 8) === 'sleeping') : ?>
+    <?php endif;?>
+<?php endforeach ;?>
+<?php if (!empty($this->food)) : ?>
+<tr><td colspan="2"><strong>MAD:</strong></td></tr>
+    <?php foreach ($this->food as $fooditem) : ?>
+        <?php $food = $fooditem->getMad();?>
+<tr><td colspan="2"><?= $food->kategori;?> - d.<?= date('d/m', strtotime($fooditem->dato));?> (<?= $food->pris;?>kr)</td></tr>
+    <?php endforeach;?>
+<?php endif;?>
+<?php if (!empty($this->entrance['otto'])) : ?>
+<tr><td colspan="2"><strong>OTTOFESTEN:</strong></td></tr>
+    <?php if (!empty($this->entrance['ottofest'])) : ?>
+<tr><td colspan="2">Jeg kommer til Ottofesten (90 kr)</td></tr>
+    <?php endif; ?>
+    <?php if (!empty($this->entrance['Ottofest - Champagne'])) : ?>
+<tr><td colspan="2">Jeg vil gerne have bobler (110 kr)</td></tr>
+    <?php endif;?>
+    <?php if (!empty($this->entrance['Ottofest - rødvin'])) : ?>
+<tr><td colspan="2">Jeg vil gerne have rødvin (80 kr)</td></tr>
+    <?php endif;?>
+    <?php if (!empty($this->entrance['Ottofest - hvidvin'])) : ?>
+<tr><td colspan="2">Jeg vil gerne have hvidvin (80 kr)</td></tr>
+    <?php endif;?>
+<?php endif;?>
+<?php if (!empty($this->entrance['Leje af madras'])) : ?>
+<tr><td colspan="2"><strong>ANDET:</strong></td></tr>
+<tr><td colspan="2">Leje af madras (100 kr)</td></tr>
+<?php endif;?>
+</tbody></table>
+<div style="clear: both"></div>
+</div>
+
+<?php if (!empty($this->wear)) : ?>
+
+<table style="margin-top: 2em"><tbody>
+<tr><td>===== WEAR =====</td></tr>
+    <?php foreach ($this->wear as $order) : ?>
+        <?php $price = $order->getWearpris();
+      $name  = $order->getWearname();?>
+<tr><td><?= $order->antal;?> <?= $name;?>, str. <?= $order->size;?> (<?= $price->pris;?>kr.)</td></tr>
+    <?php endforeach;?>
+</tbody></table>
+<?php endif;?>
+
+<?php if (!empty($this->gds)) : ?>
+
+<table style="margin-top: 2em"><tbody>
+<tr><td>===== GDS Tilmeldinger =====</td></tr>
+    <?php foreach ($this->gds as $gds_signup) : ?>
+<tr><td><?= $gds_signup->getGDSCategory()->name_da;?> <?= $gds_signup->getTextDescription('da');?> - d.<?= date('d/m', strtotime($gds_signup->getDate()));?></td></tr>
+    <?php endforeach;?>
+</tbody></table>
+<?php endif;?>
+
+<?php if (!empty($this->activities)) : ?>
+
+<table style="margin-top: 2em"><tbody>
+<tr><td>===== Aktivitets Tilmeldinger =====</td></tr>
+    <?php foreach ($this->activities as $activity_signup) : ?>
+        <?php $activity = $activity_signup->getActivity();
+              $schedule = $activity_signup->getAfvikling();?>
+<tr><td><?= $activity->navn;?>  d.<?= date('d/m, H:i', strtotime($schedule->start));?> - <?= $activity_signup->tilmeldingstype === 'spiller' ? $activity_signup->prioritet . '.prioritet' : 'Spilleder';?></td></tr>
+    <?php endforeach;?>
+</tbody></table>
+<?php endif;?>
+
+<table style="margin-top: 2em;"></tbody>
+<tr><td colspan="2">===== Ekstra info =====</td></tr>
+<tr><td>Maksimum antal scenarier jeg vil spille (0 er ingen grænse):  </td><td><?= $this->participant->desired_activities;?></td></tr>
+<tr><td>Jeg er super GM:                                              </td><td><?= $this->participant->supergm === 'ja' ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Jeg er super GDS:                                             </td><td><?= $this->participant->supergds === 'ja' ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Jeg kan tage mere end 1 GDS vagt:                             </td><td><?= $this->participant->flere_gdsvagter === 'ja' ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Jeg vil spille på dansk:                                      </td><td><?= strpos($this->participant->sprog, 'dansk') !== false ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Jeg vil spille på engelsk:                                    </td><td><?= strpos($this->participant->sprog, 'engelsk') !== false ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Jeg vil spille på skandinavisk:                               </td><td><?= strpos($this->participant->sprog, 'skandinavisk') !== false ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Vil gerne med-arrangere Fastaval <?= $this->next_year;?>:                        </td><td><?= $this->participant->arrangoer_naeste_aar === 'ja' ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Klargøre skolen fra mandag:                                   </td><td><?= $this->participant->ready_mandag === 'ja' ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Klargøre skolen fra tirsdag:                                  </td><td><?= $this->participant->ready_tirsdag === 'ja' ? 'Ja' : 'Nej';?></td></tr>
+<tr><td>Jeg vil være simultantolk:                                    </td><td><?= $this->participant->interpreter === 'ja' ? 'Ja' : 'Nej';?></td></tr>
+<?php if ($this->participant->sovesal === 'ja') : ?>
+<tr><td>Jeg vil gerne have en plads i arrangørsovesalen:              </td><td>Ja</td></tr>
+<?php endif;?>
+<?php if ($this->participant->skills) : ?>
+<tr><td>Evner/skills du kan og vil hjælpe med:                        </td><td><?= e($this->participant->skills);?></td></tr>
+<?php endif;?>
+<?php if ($this->participant->deltager_note) : ?>
+<tr><td>Andre kommentarer:                                            </td><td><?= e($this->participant->deltager_note);?></td></tr>
+<?php endif;?>
+<?php if ($this->participant->rig_onkel === 'ja') : ?>
+<tr><td>Rig onkel (støtter Fastaval med 300kr.)                       </td><td>Ja</td></tr>
+<?php endif;?>
+<?php if ($this->participant->hemmelig_onkel === 'ja') : ?>
+<tr><td>Hemmelig onkel (støtter Fastaval anonymt med 300kr.)          </td><td>Ja</td></tr>
+<?php endif;?>
+</tbody></table>
+
+<table style="margin-top: 2em;"></tbody>
+<tr><td colspan="2">===== Pris =====</td></tr>
+<tr><td>Entré                                  </td><td><?= $this->prices['entrance'];?>kr.</td></tr>
+<tr><td>Overnatning                            </td><td><?= $this->prices['sleeping'];?>kr.</td></tr>
+<tr><td>Alea indmeldelse                       </td><td><?= $this->prices['alea'];?>kr.</td></tr>
+<tr><td>Mad &amp; fest                         </td><td><?= $this->prices['food'];?>kr.</td></tr>
+<tr><td>Aktiviteter                            </td><td><?= $this->prices['activities'];?>kr.</td></tr>
+<tr><td>Wear                                   </td><td><?= $this->prices['wear'];?>kr.</td></tr>
+<tr><td>Andet                                  </td><td><?= $this->prices['other-stuff'];?>kr.</td></tr>
+<tr><td>Billetgebyr                            </td><td><?= e($this->prices['fees']);?>kr.</td></tr>
+<tr><td>I alt                                  </td><td><?= $this->prices['total'];?>kr.</td></tr>

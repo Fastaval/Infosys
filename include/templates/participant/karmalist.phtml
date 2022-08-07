@@ -1,0 +1,33 @@
+<table class="karmaList">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Navn</th>
+            <th>Karma</th>
+        </tr>
+    </thead>
+    <tbody>
+<?php foreach ($this->data as $row) : ?>
+        <tr>
+            <td><a href="<?= $this->url('visdeltager', ['id' => $row['id']]);?>"><?= e($row['id']);?></a></td>
+            <td><a href="<?= $this->url('visdeltager', ['id' => $row['id']]);?>"><?= e($row['name']);?></a></td>
+            <td><?= e($row['karma']);?></td>
+        </tr>
+<?php endforeach;?>
+    </tbody>
+</table>
+
+<?php
+$this->registerLateLoadJS('jquery.dataTables.min.js', 'js');
+$this->includeCSS('jquery.dataTables.min.css');
+?>
+<script type="text/javascript">
+(function ($) {
+    $(function () {
+        $('.karmaList').DataTable({
+            pageLength: 25,
+            order: [[2, 'desc']]
+        });
+    });
+})(jQuery);
+</script>

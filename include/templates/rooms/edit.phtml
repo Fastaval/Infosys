@@ -1,0 +1,26 @@
+<div>
+    <form action='' method='post' id='lokale-edit'>
+        <fieldset>
+            <legend>Ret lokale</legend>
+            <div class='input_container'>
+                <label for='beskrivelse'>Navn:</label> <input id='beskrivelse' type='text' name='lokale[beskrivelse]' value='<?php echo e($this->lokale->beskrivelse);?>'/>
+            </div>
+            <div>
+                <label for='omraade'>Område:</label> <input id='omraade' type='text' name='lokale[omraade]' value='<?php echo e($this->lokale->omraade);?>' />
+            </div>
+            <div>
+                <label for='skole'>Skole:</label> <input id='skole' type='text' name='lokale[skole]' value='<?php echo e($this->lokale->skole);?>' />
+            </div>
+            <div>
+                <label for='skole'>Kan bookes:</label> <?php echo $this->genSelect('lokale[kan_bookes]', array('ja','nej'), $this->lokale->kan_bookes);?>
+            </div>
+            <div>
+                <label for='sovekapacitet'>Sove kapacitet:</label> <input id="sovekapacitet" type="number" name="lokale[sovekapacitet]" value="<?= intval($this->lokale->sovekapacitet);?>"/>
+            </div>
+            <div class='clearit'></div>
+            <input name='lokale_edit' value='Ret' type='submit' />
+            <input value='Fortryd' type='submit' />
+            <input name='lokale_slet' value='Slet' type='submit' />
+        </fieldset>
+    </form>
+</div>

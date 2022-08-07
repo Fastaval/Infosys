@@ -1,0 +1,93 @@
+<?= $this->getMessagesHtml();?>
+<div class='edit_details'>
+    <form name='edit_deltager' action="<?php echo $this->url('update_deltager', array('id' => $this->deltager->id));?>" method='post'>
+        <fieldset>
+            <legend><b>Ret/slet deltager info</b></legend>
+            <table>
+                <tr>
+                    <td><b>ID:</b> <i style='margin-left: 10px; font-weight: bold'><?php echo $this->deltager->id;?></i></td>
+                    <td><b>Køn:</b> <?php echo $this->genSelect('deltager[gender]',array('Mand' => 'm', 'Kvinde' => 'k', 'Andet' => 'a'), $this->deltager->gender);?></td>
+                    <td><b>Fødselsdato:</b> <input type='text' value='<?= e(date('d-m-Y', strtotime($this->deltager->birthdate)));?>' name='deltager[birthdate]' /></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Kategori:</b> 
+                        <select class="doubleinput" name="deltager[brugerkategori_id]">
+                            <?php foreach ($this->model->getAllBrugerKategorier() as $b) :?>
+                            <option value="<?php echo $b->id;?>" <?php echo ($this->deltager->brugerkategori_id == $b->id ? "selected='selected'" : '');?>><?php echo $b->navn;?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </td>
+                    <td><b>Forudbetalt:</b> <input type='text' value='<?php echo e($this->deltager->betalt_beloeb);?>' name='deltager[betalt_beloeb]' /></td>
+                </tr>
+                <tr>
+                    <td><b>Fornavn:</b> <input type='text' value='<?php echo e($this->deltager->fornavn);?>' name='deltager[fornavn]' /></td>
+                    <td><b>Efternavn:</b> <input type='text' value='<?php echo e($this->deltager->efternavn);?>' name='deltager[efternavn]' /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Email:</b> <input class='doubleinput' type='text' value='<?php echo e($this->deltager->email);?>' name='deltager[email]' /></td>
+                    <td><b>International:</b> <?php echo $this->genSelect('deltager[international]', array('nej','ja'), $this->deltager->international);?></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Adresse:</b> <input class='doubleinput' type='text' value='<?php echo e($this->deltager->adresse1);?> <?php echo e($this->deltager->adresse2);?>' name='deltager[adresse]' /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><b>Postnr:</b> <input type='text' value='<?php echo e($this->deltager->postnummer);?>' name='deltager[postnummer]' /></td>
+                    <td><b>By:</b> <input type='text' value='<?php echo e($this->deltager->by);?>' name='deltager[by]' /></td>
+                    <td><b>Land:</b> <input type='text' value='<?php echo e($this->deltager->land);?>' name='deltager[land]' /></td>
+                </tr>
+                <tr>
+                    <td><b>Nødtlf:</b> <input type='text' value='<?php echo e($this->deltager->tlf);?>' name='deltager[tlf]' /></td>
+                    <td><b>Mobil:</b> <input type='text' value='<?php echo e($this->deltager->mobiltlf);?>' name='deltager[mobiltlf]' /></td>
+                    <td><b>Mobil med:</b> <?php echo $this->genSelect('deltager[medbringer_mobil]',array('nej','ja'), $this->deltager->medbringer_mobil);?></td>
+                </tr>
+                <tr>
+                    <!--<td><b>Scen. konk.:</b> <?php echo $this->genSelect('deltager[tilmeld_scenarieskrivning]',array('nej','ja'), $this->deltager->tilmeld_scenarieskrivning);?></td>-->
+                    <td colspan='2'><b>Sprog:</b>
+                        <?php foreach ($this->deltager->getAvailableSprog() as $sprog) :?>
+                            <label for='lang_<?php echo $sprog;?>'><?php echo substr($sprog, 0, 3);?>.</label><input class='langbox' type='checkbox' name='deltager[lang][<?php echo $sprog;?>]' value='<?php echo $sprog;?>' id='lang_<?php echo $sprog;?>' <?php echo (in_array($sprog, $this->deltager->getSprog()) ? "checked='checked'" : '');?>/>
+                        <?php endforeach;?>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><b>SuperGDS:</b> <?php echo $this->genSelect('deltager[supergds]',array('nej','ja'), $this->deltager->supergds);?></td>
+                    <td><b>Flere GDSVagter:</b> <?php echo $this->genSelect('deltager[flere_gdsvagter]',array('nej','ja'), $this->deltager->flere_gdsvagter);?></td>
+                    <td><b>Pakkeløsning:</b> <?php echo $this->genSelect('deltager[package_gds]',array('Nej' => '0', 'Ja' => '1'), $this->deltager->package_gds);?></td>
+                </tr>
+                <tr>
+                    <td><b>Arr. sovesal:</b> <?php echo $this->genSelect('deltager[sovesal]',array('nej','ja'), $this->deltager->sovesal);?></td>
+                    <td><b>Arrangør igen:</b> <?php echo $this->genSelect('deltager[arrangoer_naeste_aar]', array('nej', 'ja'), $this->deltager->arrangoer_naeste_aar);?></td>
+                    <td><b>Må kontaktes:</b> <i><?php echo $this->genSelect('deltager[may_contact]', array('nej', 'ja'), $this->deltager->may_contact);?></i></td>
+                </tr>
+                <tr>
+                    <td><b>Forfatter:</b> <?php echo $this->genSelect('deltager[forfatter]',array('nej', 'ja'), $this->deltager->forfatter);?></td>
+                    <td><b>Rig onkel:</b> <?php echo $this->genSelect('deltager[rig_onkel]',array('nej', 'ja'), $this->deltager->rig_onkel);?></td>
+                    <td><b>Hemmelig onkel:</b> <?php echo $this->genSelect('deltager[hemmelig_onkel]',array('nej', 'ja'), $this->deltager->hemmelig_onkel);?></td>
+                </tr>
+                <tr>
+                    <td><b>Opr. hjælper:</b> <i><?php echo $this->genSelect('deltager[oprydning_tirsdag]', array('nej', 'ja'), $this->deltager->oprydning_tirsdag);?></i></td>
+                    <td><b>Hjælper mandag:</b> <i><?php echo $this->genSelect('deltager[ready_mandag]', array('nej', 'ja'), $this->deltager->ready_mandag);?></i></td>
+                    <td><b>Hjælper tirsdag:</b> <i><?php echo $this->genSelect('deltager[ready_tirsdag]', array('nej', 'ja'), $this->deltager->ready_tirsdag);?></i></td>
+                </tr>
+                <tr>
+                    <td><b>Ønsket antal aktiviteter:</b> <input type='number' min='0' max='10' step='1' value='<?= e($this->deltager->desired_activities);?>' name='deltager[desired_activities]'/></td>
+                    <td><strong>Simultantolk:</strong> <?= $this->genSelect('deltager[interpreter]', array('nej', 'ja'), $this->deltager->dancing_with_the_clans);?></td>
+                    <!--<td><b>Game reallocation project:</b> <?php echo $this->genSelect('deltager[game_reallocation_participant]', array('ja', 'nej'), $this->deltager->game_reallocation_participant);?></td>-->
+                </tr>
+                <tr>
+                    <td><b>Udeblevet:</b> <?php echo $this->genSelect('deltager[udeblevet]',array('nej','ja'), $this->deltager->udeblevet);?></td>
+                    <td><b>Annulleret:</b> <?php echo $this->genSelect('deltager[annulled]',array('nej','ja'), $this->deltager->annulled);?></td>
+                    <td><b>SuperGM:</b> <?php echo $this->genSelect('deltager[supergm]',array('nej','ja'), $this->deltager->supergm);?></td>
+                </tr>
+                <tr><td colspan='3'><b>Ungdomsskole:</b> <input class='tripleinput' type='text' value='<?php echo e($this->deltager->ungdomsskole);?>' name='deltager[ungdomsskole]' /></td></tr>
+                <tr><td colspan='3'><b>Arrangørområde:</b> <input class='tripleinput' type='text' value='<?php echo e($this->deltager->arbejdsomraade);?>' name='deltager[arbejdsomraade]' /></td></tr>
+                <tr><td colspan='3'><b>Scenarie:</b> <input class='tripleinput' type='text' value='<?php echo e($this->deltager->scenarie);?>' name='deltager[scenarie]' /></td></tr>
+                <tr><td colspan='3'><b>Skills:</b> <input class='tripleinput' type='text' value='<?php echo e($this->deltager->skills);?>' name='deltager[skills]' /></td></tr>
+            </table>
+        </fieldset>
+        <input type='submit' value='Opdater deltager' name='edit_deltager' class='centersubmits' />
+        <input type='submit' value='Slet deltager' name='delete_deltager' class='centersubmits' />
+    </form>
+</div>

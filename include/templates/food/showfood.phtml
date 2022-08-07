@@ -1,0 +1,26 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='wear-details'>
+    <fieldset>
+        <legend>Mad: <?php echo $this->mad->kategori;?> - <a href="<?php echo $this->url('edit_food', array('id' => $this->mad->id));?>">ret/slet</a></legend>
+        <span class='label'>Id:</span> <span class='detail'><?php echo $this->mad->id;?></span><br class='clearit'/>
+        <span class='label'>Kategori:</span> <span class='detail'><?php echo $this->mad->kategori;?></span><br class='clearit'/>
+        <span class='label'>Pris:</span> <span class='detail'><?php echo $this->mad->pris;?></span><br class='clearit'/>
+        <hr/>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Dato</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($this->tider) : foreach ($this->tider as $tid) : ?>
+                    <tr>
+                        <td><?php echo $tid->id;?></td>
+                        <td><?php echo $this->replaceDayNames(date('D, d/m', strtotime($tid->dato)));?></td>
+                    </tr>
+                <?php endforeach; endif;?>
+            </tbody>
+        </table>
+    </fieldset>
+</div>

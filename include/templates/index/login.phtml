@@ -1,0 +1,14 @@
+<?php echo $this->getMessagesHtml();?>
+<div class="infobox login">
+    <h2>Log ind</h2>
+    <form method='post' action='<?= $this->url('login_page');?>'>
+        <label for='username'>Email:</label><input id='username' type='email' name='user' />
+        <label for='password'>Kode:</label><input type='password' name='pass' id="password"/>
+        <div class='clearit'></div>
+        <button type='submit'>Log ind</button>
+        <a href="<?= $this->url('forgotten_pass');?>" class="reset-password">Glemt password</a>
+    </form>
+</div>
+<script type='text/javascript'>
+    document.getElementById('username').focus();
+</script>

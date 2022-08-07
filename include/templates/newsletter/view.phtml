@@ -1,0 +1,49 @@
+<?php $this->registerLateLoadJS('newsletter.js');
+echo $this->getMessagesHtml();?>
+<div id='newsletter-view'>
+    <fieldset class='float-left half'>
+        <legend>Nyhedsbrev: <strong><?php echo $this->newsletter->subject;?></strong></legend>
+        <div id='content'>
+        <?php echo $this->viewhelper->markdown($this->newsletter->content);?>
+        </div>
+        <?php if (!$this->already_sent) :?>
+        <p>
+            <input type='button' value='Rediger nyhedsbrevet' id='edit'/>
+            <input type='hidden' value='<?php echo $this->url('newsletters_edit', array('id' => $this->newsletter->id));?>' id='edit-url'/>
+        </p>
+        <?php else :?>
+        <p>
+            Nyhedsbrevet blev sendt: <?php echo $this->newsletter->getSentTime();?>
+        </p>
+        <?php endif;?>
+    </fieldset>
+    <?php if (!$this->already_sent) :?>
+    <fieldset class='float-right half'>
+        <legend>Send test</legend>
+        <p><label for='address'>Email adresse:</label> <input type='text' id='address' value='Adresse til test email' class='default'/></p>
+        <p><input type='hidden' id='send-test-url' value='<?php echo $this->url('newsletters_send_test', array('id' => $this->newsletter->id));?>'/><input type='button' id='send-test' value='Send test email'/><img src='/img/spinner.gif' alt='' class='hidden spinner'/></p>
+    </fieldset>
+    <fieldset class='float-right half'>
+        <legend>Send nyhedsbrev</legend>
+        <?php if ($this->warn_about_time) :?>
+        <p style='border: 1px solid #a00; padding: 3px;'>Sidste nyhedsbrev blev sendt <?php echo $this->last_send;?> - der bør gå noget tid inden næste nyhedsbrev.</p>
+        <?php endif;?>
+        <p><input type='hidden' value='<?php echo $this->url('newsletters_send', array('id' => $this->newsletter->id));?>'/><input type='button' id='send' value='Send nyhedsbrev'/><span class='hidden'>Sender nyhedsbrev <img src='/img/spinner.gif' alt=''/></span></p>
+        <p>Modtagere: (<?php echo count($this->recipients);?>)</p>
+        <ul>
+            <?php foreach ($this->recipients as $recipient) :?>
+            <li><?php echo $recipient->email;?></li>
+            <?php endforeach;?>
+        </ul>
+    </fieldset>
+    <?php else : ?>
+    <fieldset>
+        <legend>Modtagere</legend>
+        <ul>
+            <?php foreach ($this->newsletter->getRecipients() as $recipient) :?>
+            <li><?php echo $recipient->email;?></li>
+            <?php endforeach;?>
+        </ul>
+    </fieldset>
+    <?php endif;?>
+</div>

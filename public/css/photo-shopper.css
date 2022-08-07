@@ -1,0 +1,115 @@
+/* Translucent background image */
+.cropit-preview-background {
+  opacity: .2;
+}
+
+.container-tools, .container-main {
+    display: flex;
+    justify-content: center;
+}
+
+.container-tools {
+    margin-top: 1rem;
+}
+
+.action-buttons, .cropit-preview {
+    margin: 0 1rem;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.action-buttons div {
+    width: 10rem;
+    height: 1rem;
+    padding: 0.5rem 0;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.2rem;
+    font-weight: bold;
+}
+
+.select-image-btn {
+    background-color: cadetblue;
+    margin-bottom: 1rem;
+}
+
+.upload-image-btn {
+    background-color: chocolate;
+}
+
+/*
+ * If the slider or anything else is covered by the background image,
+ * use relative or absolute position on it
+ */
+input.cropit-image-zoom-input {
+  position: relative;
+}
+
+.zoom {
+    display: flex;
+    align-items: center;
+}
+
+/* Limit the background image by adding overflow: hidden */
+#image-cropper {
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.upload-image-btn {
+    position: relative;
+}
+
+.upload-success,
+.upload-failure {
+    display: none;
+    background-color: #ccc;
+    padding: 1rem;
+}
+
+.cropit-image-input {
+    display: none;
+}
+
+.cropit-rotate-buttons {
+    width: 4rem;
+    float: left;
+    clear: both;
+}
+
+.smaller {
+    font-size: 0.75rem;
+    margin-right: 1rem;
+}
+
+.larger {
+    font-size: 1.25rem;
+    margin-left: 1rem;
+}
+
+.fv-logo {
+    background: url('http://www.fastaval.dk/wp-content/uploads/2015/09/logo2.jpg') transparent no-repeat 50% 0;
+    height: 10rem;
+    margin-bottom: 3rem;
+}
+
+.content {
+    background: #eee;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+h1 {
+    position: relative;
+    background-color: #ccc;
+}
+
+h1 span {
+    position: relative;
+    top: 0.8rem;
+    left: 2rem;
+}

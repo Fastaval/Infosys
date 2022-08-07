@@ -1,0 +1,23 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='entry_table'>
+    <table>
+        <thead>
+            <tr>
+                <th style='border-right: 1px solid black;'>Id</th>
+                <th>Type</th>
+                <th>Pris</th>
+                <th>Antal solgt</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->entry_types as $type) : ?>
+                <tr>
+                    <td class='first'><a href="<?php echo $this->url('show_entry', array('id' => $type->id));?>"><?php echo $type->id;?></a></td>
+                    <td><a href="<?php echo $this->url('show_entry', array('id' => $type->id));?>"><?= e($type->type);?> - <?= date('D d/m', strtotime($type->start));?></a></td>
+                    <td class='count'><?php echo $type->pris;?></td>
+                    <td class='count'><?php echo $type->solgt;?></td>
+                </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table>
+</div>

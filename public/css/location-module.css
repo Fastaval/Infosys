@@ -1,0 +1,14 @@
+.location-link-icon {
+    background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABK0lEQVQ4T5XSvSuGURzG8Q9KKUQYSAkzSjITq1LKIJQyyEDxB3iZmWSwKRmUsti87SQj2cgkpGxeSqfOU7f7uZ+7nOmc33X1Pb/fOVeZv6sS/WjGBy7xlvL8OZYlTlPYRFOi9oUdLOMzC1QAjOMgGnZxinYsoR77mCwFKMcDWrGC9YSxB9eoQF/cF40QhKtYbciY+RyDERwuKAKM4TBWG/Ga8lxgAHuYzgIMxZmDtobVhKk3/kQYYQsLWYAqPKM6iuHBTtCJRdTG+giOswChto35nP9+RAd+SgHacI8QpKw1F/NQpCWDtBEDkzbdohvfeUEKWg3u0JIyDuOs1HjJDoJnFEcJc0jlTM7bSAOCN/zCBJ7Qhff/Aupwg9m81gvQrA6CFhL5kndzQfsFm+YxEal47RAAAAAASUVORK5CYII=') 0 0 no-repeat;
+    position: absolute;
+    top: 0;
+    left: 120%;
+    z-index: 2;
+    cursor: pointer;
+	height: 16px;
+	width: 16px;
+}
+
+.location-link {
+    position: relative;
+}

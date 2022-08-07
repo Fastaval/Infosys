@@ -1,0 +1,27 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='lokale_oversigt'>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Navn</th>
+                <th>Område</th>
+                <th>Skole</th>
+                <th>Sove kapacitet</th>
+                <th>Kort</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->lokaler as $lokale) : ?>
+            <tr>
+                <td><a href="<?php echo $this->url('vis_lokale', array('id' => $lokale->id));?>"><?php echo $lokale->id;?></a></td>
+                <td><a href="<?php echo $this->url('vis_lokale', array('id' => $lokale->id));?>"><?php echo e($lokale->beskrivelse);?></a></td>
+                <td><?php echo e($lokale->omraade);?></td>
+                <td><?php echo e($lokale->skole);?></td>
+                <td><?= intval($lokale->sovekapacitet);?></td>
+                <td  data-location-id="<?= e($lokale->id);?>" class="location-link"></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

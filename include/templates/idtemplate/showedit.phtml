@@ -1,0 +1,96 @@
+<div class="row-fluid idTemplate">
+    <div class="idTemplate_edit span8">
+        <div class="row-fluid">
+            <div class="idTemplate_edit_templateName span12">
+                <div class="idTemplate_edit_container hidden">
+                    <input type="text" class="idTemplate_edit_templateName_input"/>
+                    <span class="idTemplate_edit_templateName_renderSize"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="idTemplate_edit_preview span10">
+                <div class="idTemplate_edit_container hidden">
+                    <canvas class="idTemplate_edit_preview_image" width="0" height="0"></canvas>
+                    <svg class="idTemplate_edit_preview_svg" width="0" height="0"></svg>
+                </div>
+            </div>
+            <div class="idTemplate_edit_controls span2">
+                <div class="idTemplate_edit_container hidden">
+                    <div class="row-fluid hidden idTemplate_edit_controls_type">
+                        <span class="span12">Type: <span class="idTemplate_edit_controls_type_name"></span></span>
+                    </div>
+                    <div class="row-fluid hidden idTemplate_edit_controls_position">
+                        <div class="span6">X: <input type="number" data-content="x"/></div>
+                        <div class="span6">Y: <input type="number" data-content="y"/></div>
+                    </div>
+                    <div class="row-fluid hidden idTemplate_edit_controls_position">
+                        <div class="span6">W: <input type="number" data-content="width"/></div>
+                        <div class="span6">H: <input type="number" data-content="height"/></div>
+                    </div>
+                    <div class="row-fluid hidden idTemplate_edit_controls_position">
+                        <div class="span12">Rotation: <input type="number" data-content="angle"/></div>
+                    </div>
+                    <div class="row-fluid hidden idTemplate_edit_controls_dataSource">
+                        <div class="span12">
+                            <select>
+                                <option value="id">ID</option>
+                                <option value="name">Navn</option>
+                                <option value="doctorname">Dr. + Navn</option>
+                                <option value="workarea">Arbejdsområde</option>
+                                <option value="scenario">Scenarie</option>
+                                <option value="group">Ungdomsskole</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row-fluid hidden idTemplate_edit_controls_remove">
+                        <div class="span12"><span class="idTemplate_edit_controls_removeItem"><i class="icon-minus-circled"></i> Slet element</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="idTemplate_edit_container hidden">
+                    <button class="idTemplate_edit_addPhoto" data-group="add-item" disabled><i class="icon-plus-circled"></i> Foto</button>
+                    <button class="idTemplate_edit_addBarcode" data-group="add-item" disabled><i class="icon-plus-circled"></i> Stregkode</button>
+                    <button class="idTemplate_edit_addText" data-group="add-item" disabled><i class="icon-plus-circled"></i> Tekst</button>
+                    <input type="file" class="idTemplate_edit_setTemplate"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="idTemplate_itemsList span2"></ul>
+
+    <div class="span2">
+        <p>Skabeloner</p>
+        <ul class="idTemplate_templatesList">
+            <li class="idTemplate_templatesList_addTemplate"><input type="text" class="idTemplate_templatesList_name"/><i class="icon-plus-circled idTemplate_templatesList_addTemplate_button"></i></li>
+        </ul>
+        <p>Kategori-skabeloner</p>
+        <ul class="idTemplate_categoryTemplates">
+<?php foreach ($this->category_data as $category) : ?>
+            <li data-id="<?= e($category['id']);?>"><?= e($category['name']);?>
+            <select>
+                <option value=""></option>
+            <?php foreach ($this->template_data as $template) : ?>
+                <option value="<?= e($template['id']);?>"<?= $category['template_id'] === $template['id'] ? ' selected' : '';?>><?= e($template['name']);?></option>
+            <?php endforeach;?>
+            </select>
+            </li>
+<?php endforeach;?>
+        </ul>
+    </div>
+
+    <script>
+    var infosysCreateTemplateUrl = '<?= $this->url('create_template');?>',
+        infosysDeleteTemplateUrl = '<?= $this->url('delete_template');?>',
+        infosysUpdateTemplateUrl = '<?= $this->url('update_template');?>',
+        infosysUpdateCategoryTemplate = '<?= $this->url('update_category_template');?>',
+        infosysTemplateData = <?= json_encode($this->template_data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);?>;
+    </script>
+
+    <script type="text/template" id="idTemplate_templateItem">
+        <li class="idTemplate_templatesList_item" data-id=":id:"><i class="icon-minus-circled idTemplate_templatesList_removeTemplate_button"></i><span class="idTemplate_templatesList_templateName">:name:</span><i class="icon-docs idTemplate_templatesList_copyTemplate_button"></i></li>
+    </script>
+</div>

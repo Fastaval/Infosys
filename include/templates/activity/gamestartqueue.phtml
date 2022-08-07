@@ -1,0 +1,34 @@
+<?php $this->registerLateLoadJS('gamestartqueue.js');?>
+<h2>Reservekø / Game queue / Aftrap</h2>
+<hr/>
+<ul id="queue-container">
+
+</ul>
+<script type="text/template" id="game-template">
+<li data-id=":activity-id:" data-sort=":activity-name-danish:" data-need=":gamers_needed:">
+    <div class="right-side">
+        <div class="danish">
+        :activity-name-danish:
+        </div>
+        <div class="english">
+        :activity-name-english:
+        </div>
+        <div class="extras">
+            <div class="writer">
+            Af / By / Van: :writer:
+            </div>
+            <div class="type">
+            :type:
+            </div>
+            <div class="clear-all">
+            </div>
+        </div>
+    </div>
+    <div class="count">
+        <span class="circle">:gamers_needed:</span>
+    </div>
+</li>
+</script>
+<script type="text/javascript">
+window.gsq_ajax_url = "<?= $this->url('gamestart_queue_ajax');?>";
+</script>

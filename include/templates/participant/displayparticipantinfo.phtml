@@ -1,0 +1,135 @@
+<div id='participant-info'>
+    <h2 style='border: 1px solid #bb3333; padding: 5px;'>Vær opmærksom på, at dette ikke er den endelige fordeling! Tildelte aktiviteter og vagter kan ændre sig helt frem til Fastavals start.</h2>
+    <fieldset>
+        <legend><b>Tilmeldings-detaljer</b></legend>
+        <table id='signup-details'>
+            <tbody>
+                <tr>
+                    <td class='label'>Id:</td>
+                    <td><?php echo e($this->deltager->id);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Navn:</td>
+                    <td><?php echo e($this->deltager->fornavn);?> <?php echo e($this->deltager->efternavn);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Email:</td>
+                    <td><?php echo e($this->deltager->email);?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Dato tilmeldt:</td>
+                    <td><?php echo $this->replaceDayNames(date('Y-m-d', strtotime($this->deltager->created)));?></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><hr/></td>
+                </tr>
+                <tr>
+                    <td class='label'>Rig onkel:</td>
+                    <td><?php echo $this->deltager->rig_onkel;?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Hemmelig onkel:</td>
+                    <td><?php echo $this->deltager->hemmelig_onkel;?></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><hr/></td>
+                </tr>
+                <tr>
+                    <td class='label'>Hjælper mandag:</td>
+                    <td><?php echo $this->deltager->ready_mandag;?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Hjælper tirsdag:</td>
+                    <td><?php echo $this->deltager->ready_tirsdag;?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Hjælper med oprydning:</td>
+                    <td><?php echo $this->deltager->oprydning_tirsdag;?></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><hr/></td>
+                </tr>
+                <tr>
+                    <td class='label'>SuperGM:</td>
+                    <td><?php echo $this->deltager->supergm;?></td>
+                </tr>
+                <tr>
+                    <td class='label'>SuperGDS:</td>
+                    <td><?php echo $this->deltager->supergds;?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Flere GDS-vagter:</td>
+                    <td><?php echo $this->deltager->flere_gdsvagter;?></td>
+                </tr>
+                <tr>
+                    <td class='label'>Arrangør næste år:</td>
+                    <td><?php echo $this->deltager->arrangoer_naeste_aar;?></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><hr/></td>
+                </tr>
+                <?php if ($this->deltager->tilmeld_scenarieskrivning == 'ja') : ?>
+                <tr>
+                    <td class='label'>Tilmeldt scenarieskrivningskonkurrencen:</td>
+                    <td><?php echo $this->deltager->tilmeld_scenarieskrivning;?></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><hr/></td>
+                </tr>
+                <?php endif;?>
+                <?php if (!empty($this->deltager->ungdomsskole)) : ?>
+                <tr>
+                    <td class='label'>Ungdomsskole/klub:</td>
+                    <td><?php echo e($this->deltager->ungdomsskole);?></td>
+                </tr>
+                <?php endif;?>
+                <?php if (!empty($this->deltager->arbejdsomraade)) : ?>
+                <tr>
+                    <td class='label'>Arrangør-område:</td>
+                    <td><?php echo e($this->deltager->arbejdsomraade);?></td>
+                </tr>
+                <?php endif;?>
+                <?php if (!empty($this->deltager->scenarie)) : ?>
+                <tr>
+                    <td class='label'>Scenarie:</td>
+                    <td><?php echo e($this->deltager->scenarie);?></td>
+                </tr>
+                <?php endif;?>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend><b>Tildelte aktiviteter</b></legend>
+        <table>
+            <?php
+            $date = false;
+            foreach ($this->deltager->getPladser() as $plads) :
+                if ($date != date('Y-m-d', strtotime($plads->getAfvikling()->start))) :
+                    $date = date('Y-m-d', strtotime($plads->getAfvikling()->start));?>
+                <tr>
+                    <td align='center'><b><?php echo $this->replaceDayNames(date('D', strtotime($plads->getAfvikling()->start)));?></b></td>
+                </tr>
+                <?php endif; ?>
+                <tr>
+                    <td><b><?php echo e($plads->getAktivitet()->navn);?></b> &mdash; <i><?php echo $plads->type;?></i>. <?php echo $this->replaceDayNames(date('D H:i', strtotime($plads->getAfvikling()->start)));?> - <?php echo $this->replaceDayNames(date('D H:i', strtotime($plads->getAfvikling()->slut)));?></td></tr>
+            <?php endforeach;?>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend><b>Tildelte GDS-vagter</b></legend>
+        <table>
+            <?php
+            $date = false;
+            foreach ($this->deltager->getGDSVagter() as $vagt) :
+                if ($date != date('Y-m-d', strtotime($vagt->getAfvikling()->start))) :
+                    $date = date('Y-m-d', strtotime($vagt->getAfvikling()->start));?>
+                <tr tal:condition="php:date != date('Y-m-d',strtotime(vagt.start))">
+                    <td align='center'><b><?php echo $this->replaceDayNames(date('D', strtotime($vagt->start)));?></b></td>
+                </tr>
+                <?php endif;?>
+                <tr>
+                    <td><b><?php echo e($vagt->getGDS()->navn);?>.</b> <?php echo $this->replaceDayNames(date('D H:i', strtotime($vagt->start)));?> - <?php echo $this->replaceDayNames(date('D H:i', strtotime($vagt->slut)));?></td></tr>
+            <?php endforeach;?>
+        </table>
+    </fieldset>
+</div>

@@ -1,0 +1,23 @@
+<div>
+    <form action='' method='post' id='lokale-edit'>
+        <fieldset>
+            <legend>Opret lokale</legend>
+            <div class='input_container'>
+                <label for='beskrivelse'>Navn:</label> <input id='beskrivelse' type='text' name='beskrivelse' />
+            </div>
+            <div>
+                <label for='omraade'>Område:</label> <input id='omraade' type='text' name='omraade' />
+            </div>
+            <div>
+                <label for='skole'>Skole:</label> <input id='skole' type='text' name='skole' />
+            </div>
+            <div>
+                <label for='kan_bookes'>Kan bookes:</label> <?php echo $this->genSelect('kan_bookes', array('ja','nej'));?>
+            </div>
+            <div>
+                <label for='sovekapacitet'>Sove kapacitet:</label> <input id="sovekapacitet" type="number" name="sovekapacitet"/>
+            </div>
+            <input name='lokale_opret' value='Opret' type='submit' />
+        </fieldset>
+    </form>
+</div>

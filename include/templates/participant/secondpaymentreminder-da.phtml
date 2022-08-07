@@ -1,0 +1,38 @@
+<h2>Påmindelse om betaling til Fastaval 2017</h2>
+<p> </p>
+<p>Hej <?= e($this->participant->fornavn);?> <?= e($this->participant->efternavn);?>,</p>
+<p> </p>
+<p>Vi skriver til dig, fordi vi stadig ikke kan se din betaling for Fastaval 2017. Derfor tillader vi os at sende denne påmindelse.</p>
+
+<p>Har du allerede betalt må du meget gerne kontakte os på <a href="mailto:info@fastaval.dk">info@fastaval.dk</a>, så vi kan få styr på betalingen.</p>
+
+<p>Har du ikke betalt, så husk at deadline for din betaling er <strong><?= $this->payment_day;?></strong> (dvs. i overmorgen). Hvis du ikke betaler senest denne dato, <strong>vil din tilmelding blive annulleret</strong>. Du kan betale ved at klikke på dette link:</p>
+
+<p><a href="<?= $this->payment_url;?>"><?= $this->payment_url;?></a></p>
+
+<p>Det udestående beløb er på <?= e($this->payment_remainder);?>kr, og betalingen foregår via fritid.dk.</p>
+
+<h4>Betaling via bankoverførsel</h4>
+<p> </p>
+<p>Har du ikke mulighed for at betale online, så kan du også gøre det via bankoverførsel. Det er dog noget dyrere, fordi det involverer mere arbejde. Derfor lægger tager vi et gebyr på <?= e($this->banking_fee);?>,- for betaling via bankoverførsel.</p>
+<p>For at betale via bankoverførsel skal du benytte dig af informationerne herunder:</p>
+<ul>
+    <li>Du skal overføre <?= e($this->payment_remainder + floatval($this->banking_fee));?>kr. (<?= e($this->payment_remainder);?>kr + <?= e($this->banking_fee);?>kr i gebyr) enten via indbetalingskort eller direkte overførsel
+    <li>Ved indbetaling på indbetalingskort: Kortart: +73 / Kreditornr.: 84520098</li>
+    <li>Ved bankoverførsel til vores bankkonto: Reg.: 9314 / Kontonr.: 4573884464</li>
+    <li>Ved indbetaling fra en bank UDENFOR Danmark, skal du bruge disse detaljer:
+        <ul>
+           <li>Spar Nord Bank A/S</li>
+           <li>International Division</li>
+           <li>Skelagervej 15, Postbox 162</li>
+           <li>DK-9100 Aalborg</li>
+           <li>BIC SPNODK2</li>
+           <li>IBAN DK6693144573884464</li>
+        </ul>
+    </li>
+    <li>Anfør ALTID navn og deltager ID så vi ved hvem betalingen var fra</li>
+    <li>Kontakt <a href="mailto:info@fastaval.dk">info@fastaval.dk</a> og lad os vide at betalingen er på vej, så vi ikke ved uheld for annulleret din tilmelding</li>
+</ul>
+<p> </p>
+<p><strong>Vi glæder os til at se dig på Fastaval 2017!</strong></p>
+<p>Mvh Fastaval</p>

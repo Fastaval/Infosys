@@ -1,0 +1,26 @@
+<h2>Soveplads statistik</h2>
+<table class="sleepingStats">
+    <thead>
+        <tr>
+            <th>Sted</th>
+            <th>Max</th>
+<?php foreach ($this->nights as $night) : ?>
+            <th><?= date('l, j/n', strtotime($night));?></th>
+<?php endforeach;?>
+        </tr>
+    </thead>
+    <tbody>
+<?php foreach ($this->statistics as $room) :
+    foreach ($room as $description => $max_data) : ?>
+        <tr>
+            <td><?= e($description);?></td>
+        <?php foreach ($max_data as $max => $dates) : ?>
+            <td><?= e($max)?>
+            <?php foreach ($this->nights as $date) : ?>
+            <td><?= isset($dates[$date]) ? (intval($max) - intval($dates[$date])) . ' (' . intval($dates[$date]) . ')' : 0;?></td>
+            <?php endforeach;?>
+        <?php endforeach;?>
+    <?php endforeach;?>
+<?php endforeach;?>
+    </tbody>
+</table>

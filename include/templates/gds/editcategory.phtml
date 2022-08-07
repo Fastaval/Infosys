@@ -1,0 +1,59 @@
+<div id='gds-details'>
+    <fieldset>
+        <legend>Redigér GDS kategori</legend>
+        <form action='' method='post' id="edit-gds">
+            <span class='label'>Navn (da):</span> <span class='detail'><input type='text' name='name' required value='<?= e($this->diy->navn);?>'/></span><br/>
+            <span class='label'>Navn (en):</span> <span class='detail'><input type='text' name='title_en' required value='<?= e($this->diy->title_en);?>'/></span><br/>
+
+            <table>
+                <tbody>
+            <?php foreach ($this->diy->getShifts(true) as $shift) :?>
+                    <tr>
+                        <td>
+                            <input class="datetimepicker" type="datetime" name="gds_shifts[<?= e($shift->id);?>][start]" value="<?= date('Y-m-d H:i', strtotime($shift->start));?>"/>
+                        </td>
+                        <td> &#10137; </td>
+                        <td>
+                            <input class="datetimepicker" type="datetime" name="gds_shifts[<?= e($shift->id);?>][slut]" value="<?= date('Y-m-d H:i', strtotime($shift->slut));?>"/>
+                        </td>
+                        <td style="padding: 0 1em 0 3em;">Antal</td>
+                        <td>
+                            <input type="datetime" name="gds_shifts[<?= e($shift->id);?>][antal_personer]" value="<?= e($shift->antal_personer);?>"/></label>
+                        </td>
+                        <td>
+                            <button class="remove" type="button">Fjern</button>
+                        </td>
+                    </tr>
+            <?php endforeach;?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6"><hr/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="datetimepicker" type="datetime" name="gds_shifts[0][start]" value=""/>
+                        </td>
+                        <td> &#10137; </td>
+                        <td>
+                            <input class="datetimepicker" type="datetime" name="gds_shifts[0][slut]" value=""/>
+                        </td>
+                        <td style="padding: 0 1em 0 3em;">Antal</td>
+                        <td>
+                            <input type="datetime" name="gds_shifts[0][antal_personer]" value=""/></label>
+                        </td>
+                        <td>
+                            <button class="add" type="button">Tilføj</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <input type='submit' value='Opdater' name='update_entry' class='centersubmits'/>
+            <input type='submit' value='Fortryd' class='centersubmits'/>
+            <input type='hidden' name='id' value='<?= e($this->diy->id);?>'/>
+            <input type='submit' value='Slet' name='delete_entry' class='centersubmits'/>
+        </form>
+    </fieldset>
+</div>
+<?php $this->registerLateLoadJS('edit-diy.js');?>

@@ -1,0 +1,43 @@
+<?php
+$this->registerLateLoadJS('participant_sleeparea.js');
+?>
+<div class="manageSleeping">
+    <div class="manageSleeping-option">
+        <input type="radio" name="optiontype" id="nosleep" class="manageSleeping-chooseBox" checked/> <label for="nosleep" class="manageSleeping-chooseBoxLabel">Deltageren sover ikke på Fastaval</label>
+        <form class="manageSleeping-settings" method="POST" action="<?= $this->url('update_participant_sleeping_post', ['id' => $this->participant_id]);?>">
+        </form>
+    </div>
+    <div class="manageSleeping-option">
+        <input type="radio" name="optiontype" id="allsame" class="manageSleeping-chooseBox"/> <label for="allsame" class="manageSleeping-chooseBoxLabel">Deltageren sover samme sted hele Fastaval</label>
+        <form class="manageSleeping-settings" method="POST" action="<?= $this->url('update_participant_sleeping_post', ['id' => $this->participant_id]);?>">
+            <input type="hidden" name="data[<?= $this->starts;?>][starts]" value="<?= $this->starts;?>"/>
+            <input type="hidden" name="data[<?= $this->starts;?>][ends]" value="<?= $this->ends;?>"/>
+            <select name="data[<?= $this->starts;?>][room_id]">
+<?php foreach ($this->sleeping_rooms['allthrough'] as $room) : ?>
+                <option value="<?= $room->id;?>"><?= e($room->beskrivelse);?></option>
+<?php endforeach;?>
+            </select>
+        </form>
+    </div>
+    <div class="manageSleeping-option">
+        <input type="radio" name="optiontype" id="individual" class="manageSleeping-chooseBox"/> <label for="individual" class="manageSleeping-chooseBoxLabel">Deltageren sover forskellige steder under Fastaval</label>
+        <form class="manageSleeping-settings" method="POST" action="<?= $this->url('update_participant_sleeping_post', ['id' => $this->participant_id]);?>">
+<?php foreach ($this->sleeping_rooms as $start => $rooms) :
+    if ($start === 'allthrough') {
+        continue;
+    }
+?>
+                <input type="hidden" name="data[<?= $start;?>][starts]" value="<?= $start;?>"/>
+                <input type="hidden" name="data[<?= $start;?>][ends]" value="<?= date('Y-m-d 10:00:00', strtotime($start) + 86400);?>"/>
+                <label><?= date('Y-m-d', strtotime($start));?>: <select name="data[<?= $start;?>][room_id]">
+                    <option value="">Sover ikke  på Fastaval her</option>
+    <?php foreach ($rooms as $room) : ?>
+                    <option value="<?= $room->id;?>"><?= e($room->beskrivelse);?></option>
+    <?php endforeach;?>
+                </select></label>
+<?php endforeach;?>
+        </form>
+    </div>
+    <button class="manageSleeping-update btn-warning">Opdater</button>
+    <button class="manageSleeping-cancel btn-danger">Annuller</button>
+</div>

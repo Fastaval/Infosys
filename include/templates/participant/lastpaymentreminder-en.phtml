@@ -1,0 +1,38 @@
+<h2>Reminder of payment for Fastaval 2017</h2>
+<p> </p>
+<p>Hi <?= e($this->participant->fornavn);?> <?= e($this->participant->efternavn);?>,</p>
+<p> </p>
+<p>We&#39;re writing to you because we cannot see a payment from you for Fastaval 2017.</p>
+
+<p>If you already paid, please contact us at <a href="mailto:info@fastaval.dk">info@fastaval.dk</a>, so we can clear up the payment.</p>
+
+<p>If you haven&#39;t paid yet, this is your last chance for payment, before <strong>your signup is canceled</strong>. You can pay here:</p>
+
+<p><a href="<?= $this->payment_url;?>"><?= $this->payment_url;?></a></p>
+
+<p>The amount is <?= e($this->payment_remainder);?>DKK, and payment takes place through fritid.dk.</p>
+
+<h4>Payment by banktransfer</h4>
+<p> </p>
+<p>If you cannot pay online, it is also possible to pay through banktransfer. It is however a bit more expensive, as it involves more work. Because of that, there is a fee of <?= e($this->banking_fee);?>DKK on banktransfers.</p>
+<p>To pay by banktransfer, use the information below:</p>
+<ul>
+    <li>Payment due is <?= e($this->payment_remainder + floatval($this->banking_fee));?>DKK (<?= e($this->payment_remainder);?>DKK + <?= e($this->banking_fee);?>DKK fee)</li>
+    <li>From a Danish bank: Reg.: 9314 / Account: 4573884464</li>
+    <li>Paying from a bank outside of Denmark, you should use these details:
+        <ul>
+           <li>Spar Nord Bank A/S</li>
+           <li>International Division</li>
+           <li>Skelagervej 15, Postbox 162</li>
+           <li>DK-9100 Aalborg</li>
+           <li>BIC SPNODK2</li>
+           <li>IBAN DK6693144573884464</li>
+        </ul>
+    </li>
+    <li>ALWAYS make sure to add your name and participant ID as message so we know who the payment was from</li>
+    <li>Contact <a href="mailto:info@fastaval.dk">info@fastaval.dk</a> to let us know that your payment is on its way, so we don&#39;t cancel your signup by mistake</li>
+</ul>
+<p> </p>
+<p><strong>We look forward to seeing you at Fastaval 2017!</strong></p>
+<p>Best,</p>
+<p>Fastaval</p>

@@ -1,0 +1,17 @@
+{
+    "require-dev": {
+        "phpunit/phpunit": "^4.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "authors": [
+        {
+            "name": "Peter Lind",
+            "email": "peter.e.lind@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.2"
+    }
+}

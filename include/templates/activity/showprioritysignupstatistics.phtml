@@ -1,0 +1,16 @@
+<h1>Tilmeldings-statistik</h1>
+<div style="display: flex; flex-wrap: wrap">
+<?php foreach ($this->activity_data as $type => $activities) : ?>
+    <section>
+        <h2><?= e($type);?></h2>
+        <dl>
+        <?php foreach ($activities as $activity) : ?>
+            <dt><?= e($activity['name']);?></dt>
+            <dd>
+            <?= implode(' &bull; ', array_map(function ($x) {return $x['distinct'] . ' (' . $x['signed_up'] . ')';}, $activity['data']));?> =&gt; <?= e($activity['distinct']);?>
+            </dd>
+        <?php endforeach ;?>
+        </dl>
+    </section>
+<?php endforeach ;?>
+</div>

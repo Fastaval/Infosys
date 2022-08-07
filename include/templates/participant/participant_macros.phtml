@@ -1,0 +1,162 @@
+<tal:block metal:define-macro="multi_select_fields">
+    <div id='multifields_box'>
+        <input id='multifields_switch' type='button' value='Vælg felter' />
+        <div id='multifields_select' style='display: none'>
+            <select name='multideltagerfields[]' multiple='multiple' style='height: 200px'>
+                <option value='id' tal:attributes="selected php:in_array('id', columns) ? 'selected' : null">id</option>
+                <option value='navn' tal:attributes="selected php:in_array('navn', columns) ? 'selected' : null">navn</option>
+                <tal:block tal:repeat="field fields">
+                    <option tal:condition="not:php:in_array(field, array('id', 'navn'))" value="${field}" tal:content="field" tal:attributes="selected php:in_array(field, columns) ? 'selected' : null"/>
+                </tal:block>
+            </select>
+            <br />
+            <input type='submit' value='Opdater' name='refresh_fields'/>
+        </div>
+    </div>
+    <tal:block tal:define="global search_js php:true"/>
+    <script type='text/javascript' src="${php:view.JSLink('search.js')}"></script>
+    <script type='text/javascript'>
+    common.buttonExpander('multifields_switch', 'multifields_select');
+    </script>
+</tal:block>
+
+<tal:block metal:define-macro="sort_order">
+    <div id='sortorder_box' tal:define="columns sort_vars">
+        <input id='sortorder_switch' type='button' value='Orden' />
+        <div id='sortorder_select' style='display: none'>
+            <tal:block tal:repeat="column columns">
+                <span tal:condition="php:repeat.column.key != 'brugerkategori'" class='sort_input'><a href='#' class='move_up' title='Ryk op'><img src="${php:view.imgLink('up.png')}" alt='Ryk op'/></a><a href='#' class='move_down' title='Ryk op'><img src="${php:view.imgLink('down.png')}" alt='Ryk ned'/></a><input type='hidden' value='${repeat/column/key}' name='sort_order[]'/>${repeat/column/key} - <select name='sort_direction[]'><option tal:attributes="selected php:column == 'asc' ? 'selected' : null" value='asc'>A-&gt;Z</option><option tal:attributes="selected php:column == 'desc' ? 'selected' : null" value='desc'>Z-&gt;A</option></select></span>
+            </tal:block>
+            <br />
+            <input type='submit' value='Sorter' name='refresh_fields'/>
+        </div>
+    </div>
+    <script tal:condition="not:exists:search_js" type='text/javascript' src="${php:view.JSLink('search.js')}"></script>
+    <script type='text/javascript'>
+    sortorder_display.setup();
+    </script>
+    <div class='clearit'></div>
+</tal:block>
+
+<tal:block metal:define-macro="deltager_searchbox">
+    <div class="deltager-search-box ${php:display ? 'edit_details' : ''}">
+        <input tal:condition="display" id='search_switch' type='button' value='Søgebox' />
+        <div tal:omit-tag="not:display" id='deltager-search-box-html' class='edit_details' style='display:none'>
+            <fieldset>
+                <legend><b>Deltager søgning</b></legend>
+                <table id='search-participant'>
+                    <tr>
+                        <td><b>ID:</b> <input type='text' name='deltager_search[id]' value="${search_vars/deltager_search/id}"/></td>
+                        <td><b>Køn:</b> ${structure php:view.genSelect('deltager_search[gender]',array('', 'Mand' => 'm', 'Kvinde' => 'k', 'Andet' => 'a'),search_vars['deltager_search']['gender'])}</td>
+                        <td><b>Alder:</b> <input type='text'  name='deltager_search[alder]' value="${search_vars/deltager_search/alder}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'><b>Kategori:</b>
+                            <select name='deltager_search[brugerkategori_id]' class='doubleinput'>
+                                <option value=""></option>
+                                <option tal:repeat="cat view/model/getAllBrugerKategorier" value="${cat/id}" tal:attributes="selected php:search_vars['deltager_search']['brugerkategori_id'] == cat.id">${cat/navn}</option>
+                            </select>
+                        </td>
+                        <td><b>Forudbetalt:</b> <input type='text'  name='deltager_search[betalt_beloeb]' value="${search_vars/deltager_search/betalt_beloeb}"/></td>
+                    </tr>
+                    <tr>
+                        <td><b>Fornavn:</b> <input type='text'  name='deltager_search[fornavn]' value="${search_vars/deltager_search/fornavn}"/></td>
+                        <td><b>Efternavn:</b> <input type='text'  name='deltager_search[efternavn]' value="${search_vars/deltager_search/efternavn}"/></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'><b>Email:</b> <input class='doubleinput' type='text'  name='deltager_search[email]' value="${search_vars/deltager_search/email}"/></td>
+                        <td><b>International:</b> ${structure php:view.genSelect('deltager_search[international]',array('','nej','ja'),search_vars['deltager_search']['international'])}</td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'><b>Adresse:</b> <input class='doubleinput' type='text'  name='deltager_search[adresse]' value="${search_vars/deltager_search/adresse}"/></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><b>Postnr:</b> <input type='text'  name='deltager_search[postnummer]' value="${search_vars/deltager_search/postnummer}"/></td>
+                        <td><b>By:</b> <input type='text'  name='deltager_search[by]' value="${search_vars/deltager_search/by}"/></td>
+                        <td><b>Land:</b> <input type='text'  name='deltager_search[land]' value="${search_vars/deltager_search/land}"/></td>
+                    </tr>
+                    <tr>
+                        <td><b>Alt.Tlf:</b> <input type='text'  name='deltager_search[tlf]' value="${search_vars/deltager_search/tlf}"/></td>
+                        <td><b>Mobil:</b> <input type='text'  name='deltager_search[mobiltlf]' value="${search_vars/deltager_search/mobiltlf}"/></td>
+                        <td><b>Mobil med:</b> ${structure php:view.genSelect('deltager_search[medbringer_mobil]',array('','nej','ja'), search_vars['deltager_search']['medbringer_mobil'])}</td>
+                    </tr>
+                    <tr>
+                        <td><b>SuperGM:</b> ${structure php:view.genSelect('deltager_search[supergm]',array('','nej','ja'), search_vars['deltager_search']['supergm'])}</td>
+                        <td><b>Sprog:</b>
+                            <tal:block tal:repeat="sprog php:array('dansk','engelsk','skandinavisk')">
+                                <label for='lang_${sprog}'>${php:substr(sprog, 0,3)}</label><input class='langbox' type='checkbox' name='deltager_search[lang][${sprog}]' value='${sprog}' id='lang_${sprog}' tal:attributes="checked php:!empty(search_vars['deltager_search']['lang'][sprog]) ? 'checked' : ''"/>
+                            </tal:block>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>K-punkt stip.:</b> ${structure php:view.genSelect('deltager_search[knutepunkt]',array('','nej','ja'), search_vars['deltager_search']['knutepunkt'])}</td>
+                        <td><b>GeekBookDrive:</b> ${structure php:view.genSelect('deltager_search[geekbookdrive]',array('','nej','ja'), search_vars['deltager_search']['geekbookdrive'])}</td>
+                        <td><b>Arrangør igen:</b> ${structure php:view.genSelect('deltager_search[arrangoer_naeste_aar]',array('','nej','ja'), search_vars['deltager_search']['arrangoer_naeste_aar'])}</td>
+                    </tr>
+                    <tr>
+                        <td><b># Fastavaller:</b> <input type='text'  name='deltager_search[deltaget_i_fastaval]' value="${search_vars/deltager_search/deltaget_i_fastaval}"/></td>
+                        <td><b>SuperGDS:</b> ${structure php:view.genSelect('deltager_search[supergds]',array('','nej','ja'), search_vars['deltager_search']['supergds'])}</td>
+                        <td><b>Flere GDSVagter:</b> ${structure php:view.genSelect('deltager_search[flere_gdsvagter]',array('','nej','ja'), search_vars['deltager_search']['flere_gdsvagter'])}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Arr. sovesal:</b> ${structure php:view.genSelect('deltager_search[sovesal]',array('','nej','ja'), search_vars['deltager_search']['sovesal'])}</td>
+                        <td><b>Udeblevet:</b> ${structure php:view.genSelect('deltager_search[udeblevet]',array('','nej','ja'), search_vars['deltager_search']['udeblevet'])}</td>
+                        <td><b>Rabat:</b> ${structure php:view.genSelect('deltager_search[rabat]',array('','nej','ja'), search_vars['deltager_search']['rabat'])}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Bil til K-punkt:</b> ${structure php:view.genSelect('deltager_search[knutepunkt_bil]',array('','ja','nej'), search_vars['deltager_search']['knutepunkt_bil'])}</td>
+                        <td><b>Forfatter:</b> ${structure php:view.genSelect('deltager_search[forfatter]',array('','ja','nej'), search_vars['deltager_search']['forfatter'])}</td>
+                        <td><b>Rig onkel:</b> ${structure php:view.genSelect('deltager_search[rig_onkel]',array('','ja','nej'), search_vars['deltager_search']['rig_onkel'])}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Ungdomsskole:</b> <input  type='text'  name='deltager_search[ungdomsskole]' value="${search_vars/deltager_search/ungdomsskole}"/></td>
+                        <td><b>Arrangørområde:</b> <input type='text'  name='deltager_search[arbejdsomraade]' value="${search_vars/deltager_search/arbejdsomraade}"/></td>
+                        <td><b>Scenarie:</b> <input type='text'  name='deltager_search[scenarie]' value="${search_vars/deltager_search/scenarie}"/></td>
+                    </tr>
+                    <tr>
+                        <td><b>Admin noter:</b> <input type='text'  name='deltager_search[admin_note]' value="${search_vars/deltager_search/admin_note}"/></td>
+                        <td><b>Deltager noter:</b> <input type='text'  name='deltager_search[deltager_note]' value="${search_vars/deltager_search/deltager_note}"/></td>
+                        <td><b>Deltager beskeder:</b> <input type='text'  name='deltager_search[beskeder]' value="${search_vars/deltager_search/beskeder}"/></td>
+                    </tr>
+                </table>
+                <hr/>
+                <table id='search-indgang'>
+                    <tbody>
+                        <tr tal:repeat="ind model/getAllIndgang">
+                            <td>${ind/type}</td>
+                            <td>${structure php:view.genSelect("indgang_search[ind_" . ind.id . "]", array('','ja','nej'))}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id='search-food' tal:define="fooddays model/getAllFoodDays">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th tal:repeat="day fooddays" tal:content="php:view.replaceDayNames(date('D', strtotime(day)))"/>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tal:block tal:repeat="mad model/getAllMad">
+                            <tr tal:define="madtider mad/getMadTider" tal:condition="madtider">
+                                <td>${mad/kategori}</td>
+                                <tal:block tal:repeat="day fooddays">
+                                    <td>&nbsp;</td>
+                                    <tal:block tal:repeat="mt madtider">
+                                        <td tal:condition="php:strtotime(day) == strtotime(mt.dato)">${structure php:view.genSelect("mad_search[mt_" . mt.id . "]", array('','ja','nej'))}</td>
+                                    </tal:block>
+                                </tal:block>
+                            </tr>
+                        </tal:block>
+                    </tbody>
+                </table>
+            </fieldset>
+            <label for='logic'>Søgelogik:</label> <select name='logic'><option value='and'>And</option><option value='or'>Or</option></select><br/><label for='incremental'>Begræns søgning til tidligere resultat:</label><input id='incremental' type='checkbox' name='incremental' tal:attributes="checked php:!empty(search_vars['incremental']) ? 'checked' : ''"/><br /><input type='submit' value='Søg' name='search' class='centersubmits' /><input type='button' id='reset_search' value='Reset'/>
+        </div>
+    </div>
+    <script type='text/javascript' tal:condition="display">
+    common.buttonExpander('search_switch', 'deltager-search-box-html');
+    $('reset_search').observe('click',search_display.emptyForm);
+    </script>
+</tal:block>

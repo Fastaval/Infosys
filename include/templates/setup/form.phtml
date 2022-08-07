@@ -1,0 +1,99 @@
+<!doctype html>
+<html charset="UTF-8">
+<head>
+    <title>Infosys setup</title>
+    <link type="text/css" rel="stylesheet" href="css/setup.css"/>
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/setup.js"></script>
+</head>
+<body>
+    <h1>Setup</h1>
+    <form action="?ajax=true" method="post">
+        <fieldset data-group="basic-properties">
+            <legend>1. Basic properties</legend>
+            <dl>
+                <dt>Url of install</dt>
+                <dd><input name="app.public_uri" id="app_public_uri" value="<?= $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];?>" required/></dd>
+                <dt>Name of site</dt>
+                <dd><input name="app.sitename" id="app_sitename" value="Infosys" required/></dd>
+                <dt>Name of log file</dt>
+                <dd><input name="app.log_file" id="app_log_file" value="error.log" required/></dd>
+            </dl>
+            <button class="next">Next</button>
+        </fieldset>
+        <fieldset>
+            <legend>2. Database properties</legend>
+            <dl>
+                <dt>Database type</dt>
+                <dd><select name="db.type" id="db-type">
+                <?php foreach ($tester->getDbTypes() as $value => $type) : ?>
+                <option value="<?= $value;?>"><?= $type;?></option>
+                <?php endforeach;?>
+                </select></dd>
+                <?php foreach ($tester->getSetupData() as $data) : ?>
+                <dt class="db-property <?= $data['class'];?>"><?= $data['description'];?></dt>
+                <dd class="db-property <?= $data['class'];?>"><input name="<?= $data['config-name'];?>" id="<?= $data['class'];?>-<?= str_replace('.', '-', $data['config-name']);?>" <?= $data['required'] ? 'required' : '';?> value="<?= $data['default'];?>"/></dd>
+                <?php endforeach;?>
+            </dl>
+            <button class="previous">Previous</button>
+            <button class="next">Next</button>
+        </fieldset>
+        <fieldset>
+            <legend>3. Convention properties</legend>
+            <dl>
+                <dt>Convention start</dt>
+                <dd><input type="date" name="con.start" id="con_start"/>
+                <dt>Convention end</dt>
+                <dd><input type="date" name="con.end" id="con_end"/>
+                <dt>Signup start</dt>
+                <dd><input type="date" name="con.signupstart" id="con_signupstart"/>
+                <dt>Signup end</dt>
+                <dd><input type="date" name="con.signupend" id="con_signupend"/>
+            </dl>
+            <button class="previous">Previous</button>
+            <button class="next">Next</button>
+        </fieldset>
+        <fieldset id="sms-module">
+            <legend>4. SMS-module</legend>
+            <dl>
+                <dt><SMS service</dt>
+                <dd><select name="sms.service" id="sms.service"><option>None</option><option value="justworks">JustWorks</option></select></dd>
+                <dt class="justworks">Sender name</dt>
+                <dd class="justworks"><input name="sms.sender" id="sms.sender"/></dd>
+                <dt class="justworks">Secret key</dt>
+                <dd class="justworks"><input name="sms.secret" id="sms.secret"/></dd>
+            </dl>
+            <button class="previous">Previous</button>
+            <button class="next">Next</button>
+        </fieldset>
+        <fieldset id="payment-module">
+            <legend>5. Payment-module</legend>
+            <dl>
+                <dt><Payment service</dt>
+                <dd><select name="payment.service" id="payment.service"><option>None</option><option value="rollespil.dk">Rollespil.dk</option></select></dd>
+                <dt class="rollespil.dk">Freehash</dt>
+                <dd class="rollespil.dk"><input name="payment.freehash" id="payment.freehash"/></dd>
+                <dt class="rollespil.dk">SIC</dt>
+                <dd class="rollespil.dk"><input name="payment.sic" id="payment.sic"/></dd>
+                <dt class="rollespil.dk">Event ID</dt>
+                <dd class="rollespil.dk"><input name="payment.event_id" id="payment.event_id"/></dd>
+                <dt class="rollespil.dk">Ticket URL</dt>
+                <dd class="rollespil.dk"><input name="payment.ticket_url" id="payment.ticket_url"/></dd>
+                <dt class="rollespil.dk">Pay URL</dt>
+                <dd class="rollespil.dk"><input name="payment.pay_url" id="payment.pay_url"/></dd>
+            </dl>
+            <button class="previous">Previous</button>
+            <button class="next">Next</button>
+        </fieldset>
+        <fieldset id="gcm-module">
+            <legend>6. Google Cloud Messaging</legend>
+            <dl>
+                <dt>Server API key</dt>
+                <dd><input name="gcm.server_api_key" id="gcm.server_api_key"/></dd>
+            </dl>
+            <button class="previous">Previous</button>
+            <button class="finish">Finish</button>
+        </fieldset>
+    </form>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<div class='edit_details'>
+    <form action='' method='post'>
+    <fieldset id='edit_pages'>
+        <legend>Opdater GDS</legend>
+        <table>
+            <tr>
+                <td>
+                    <select id='gds_navn'>
+                        <option value=''>Vælg</option>
+                        <?php foreach ($this->gds as $g) : ?>
+                            <option value='<?php echo e($g->id);?>'><?php echo e($g->navn);?></option>
+                        <?php endforeach?>
+                    </select>
+                    <select id='gds_tid'>
+                    </select><br />
+                    <input type='button' id='gds_tilfoej' value='Tilføj GDSVagt'/>
+                </td>
+                <td>
+                    <table id='gds_edit'>
+                        <tbody>
+                            <?php foreach ($this->deltager->getGDSVagter() as $vagt) : ?>
+                                <tr>
+                                    <td><input type='hidden' name='gdsvagter[]' value='<?php echo $vagt->id;?>'/><?php echo e($vagt->getGDSName());?> <?php echo $this->replaceDayNames(date('D H:i', strtotime($vagt->start)) . '-' . date('H:i', strtotime($vagt->slut)));?></td>
+                                    <td><input type='button' class="delete" value='Slet'/></td>
+                                </tr>
+                            <?php endforeach;?>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <hr/>
+        <input type='submit' class='centersubmits' value='Opdater' name='update_gds' /><input type='submit' class='centersubmits' value='Fortryd'/>
+    </fieldset>
+    </form>
+    <script src="<?php echo $this->JSLink('imwedit.js');?>" type='text/javascript'></script>
+    <script type='text/javascript'>
+madwearedit.deltager_id = <?php echo $this->deltager->id;?>;
+madwearedit.public_uri = '<?php echo $this->public_uri;?>';
+madwearedit.setupGDS();
+    </script>
+</div>

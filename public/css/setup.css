@@ -1,0 +1,7 @@
+fieldset {
+    display: none;
+}
+
+fieldset.active {
+    display: block;
+}

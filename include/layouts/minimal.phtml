@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<?= $this->includeJS('jquery-1.9.1.min.js'); ?>
+<?= $this->includeJS('jquery-ui-1.10.1.custom.min.js'); ?>
+<?= $this->includeJS('jquery-ui-timepicker-addon.js'); ?>
+<?= $this->includeJS('modernizr.custom.09365.js'); ?>
+<?= $this->renderIncludedCSS();?>
+<?= $this->renderEarlyLoadJS(); ?>
+</head>
+<body class="minimal">
+<?= $this->content;?>
+<script type='text/javascript'>
+window.infosys = (function() {
+    var infosys = window.infosys || {};
+
+    infosys.con_start_date = new Date('<?= date('Y-m-d 00:00', strtotime($this->config->get('con.start')));?>');
+    infosys.con_end_date   = new Date('<?= date('Y-m-d 23:59', strtotime($this->config->get('con.end')));?>');
+
+    return infosys;
+})();
+</script>
+
+<?= $this->renderLateLoadJS();?>
+</body>
+</html>

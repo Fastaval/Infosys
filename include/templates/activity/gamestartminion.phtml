@@ -1,0 +1,62 @@
+<?php
+$this->includeCSS('bootstrap.min.css');
+$this->includeCSS('bootstrap-responsive.min.css');
+$this->includeCSS('main.css');
+$this->registerLateLoadJS('ajax.js');
+$this->registerLateLoadJS('gamestart_minion.js');
+$i = 0;
+$gm_status = $this->gamestart_schedule->getGMStatus();
+?>
+<div class="gamestart-app">
+    <h1>Spilstart for <?= e($this->activity->navn);?><?= $this->activity->author ? ' af ' . e($this->activity->author) : '' ;?></h1>
+    <?php if ($this->groups_lacking_gms) :?>
+    <p class="text-error">Der mangler <?= e($this->groups_lacking_gms);?> spilleder(e)!</p>
+    <?php endif;?>
+    <p class="half"><?= count($this->teams);?> hold, min. <?= e($this->activity->min_deltagere_per_hold);?> deltagere, max. <?= e($this->activity->max_deltagere_per_hold);?> deltagere per hold.</p>
+    <p class="half"><?= e($this->assigned_players);?> spillere sat på aktiviteten.</p>
+    <p class="half"><?= e($this->schedule->getLokale());?>.</p>
+    <div class="half gms float-left">
+        <?php foreach ($this->teams as $team) :
+            foreach ($team->getGMs() as $spot) :
+                $gm    = $spot->getDeltager();
+                $class = !empty($gm_status[$gm->id]['state']) ? 'show' : 'noshow';
+            ?>
+                <div class="gm <?= $class;?>" data-participant_id="<?= e($gm->id);?>"><?= e($gm->getName());?><br/><?= e($gm->mobiltlf);?></div>
+            <?php endforeach;
+        endforeach;?>
+        <?php if (!empty($this->activity->note)) : ?>
+            <div class="clearit"></div>
+            <p>Note:</p>
+            <p><?= e($this->activity->note);?></p>
+        <?php endif;?>
+        <p class="gs-rooms">Lokaler:</p>
+        <ul>
+        <?php foreach ($this->teams as $team) :?>
+            <li><?= e($team->getLokale()->beskrivelse);?></li>
+        <?php endforeach;?>
+        </ul>
+    </div>
+    <div class="half float-right">
+        <p>Reserver:</p>
+        <div class="reserves">
+        </div>
+        <div class="clearit"></div>
+        <p>Manglende spillere:</p>
+        <div class="gamers">
+            <?php for ($i = 1; $i <= $this->assigned_players; $i++) :
+                $class = $i <= ($this->assigned_players - $this->gamers_on_team) ? 'show' : 'noshow';
+            ?>
+                <div class="gamer <?= $class;?>" data-number="<?= $i;?>"><?= $i;?></div>
+            <?php endfor;?>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(function() {
+    minion.init({
+        change_url: '<?= $this->url('gamestart_minion_change', array('id' => $this->schedule->id));?>',
+        info_url: '<?= $this->url('gamestart_ajax_info', array('id' => $this->gamestart->id));?>',
+        schedule_id: '<?= e($this->schedule->id);?>'
+    });
+});
+</script>

@@ -1,0 +1,33 @@
+<?php
+$this->includeCss('lightbox.css');
+$this->registerLateLoadJs('lightbox.min.js');
+$this->registerLateLoadJs('rooms-imageoverview.js');
+?>
+<h2>Lokalebilleder</h2>
+<table id="image-overview">
+    <thead>
+        <tr>
+            <th>Lokale</th>
+            <th>Billeder</th>
+        </tr>
+    </thead>
+    <tbody>
+<?php foreach ($this->room_images as $name => $room) : ?>
+        <tr data-id="<?= e($room['room']->id);?>" class="parent">
+            <td><?= e($room['room']->beskrivelse);?></td>
+            <td><?= count($room['images']);?></td>
+        </tr>
+        <tr data-parent="<?= e($room['room']->id);?>" class="child">
+            <td></td>
+            <td>
+<?php foreach ($room['images'] as $image) :
+    $image_path = e($this->public_uri . 'uploads/rooms/' . $room['room']->id . '/' . $image);
+    $thumb_path = e($this->public_uri . 'uploads/rooms/' . $room['room']->id . '/thumbnail/' . $image);
+?>
+<a href="<?= $image_path;?>" data-lightbox="room-'<?= $room['room']->id;?>"><img src="<?= $thumb_path;?>"/></a>
+<?php endforeach;?>
+            </td>
+        </tr>
+<?php endforeach; ?>
+    </tbody>
+</table>

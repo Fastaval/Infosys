@@ -1,0 +1,12 @@
+<?php echo $this->getMessagesHtml();?>
+<h1>Food stats</h1>
+<?php foreach ($this->stats as $type => $stats) :?>
+    <h2><?php echo $type;?></h2>
+    <p>Alle dage, sammenlagt: <?php echo $stats['total'];?></p>
+    <ul>
+    <?php foreach ($stats as $day => $counts) :
+        if (!($time = strtotime($day))) continue; ?>
+        <li><?php echo DanishDayNames(date('D, j', $time));?> &mdash; <strong><?php echo $counts['total'];?><?php if (isset($counts['udleveret'])) :?> - heraf <?php echo $counts['udleveret'];?> udleveret (<?= round($counts['udleveret'] / $counts['total'] * 100, 1);?>%)<?php endif;?></strong></li>
+    <?php endforeach;?>
+    </ul>
+<?php endforeach;?>

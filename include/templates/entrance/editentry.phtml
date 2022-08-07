@@ -1,0 +1,25 @@
+<?php $this->registerLateLoadJS('entrance.js');
+;?>
+<div id='wear-details'>
+    <fieldset>
+        <legend><?php echo (isset($this->indgang) ? 'Opdater' : 'Opret');?> indgang</legend>
+        <form action='' method='post'>
+            <span class='label'>Type:</span> <span class='detail'><input type='text' name='type' value='<?= (isset($this->indgang) ? $this->indgang->type : '');?>'/></span><br/>
+            <span class='label'>Pris:</span> <span class='detail'><input type='text' name='pris' value='<?= (isset($this->indgang) ? $this->indgang->pris : '');?>'/></span><br/>
+            <span class='label'>Start:</span> <span class='detail'><input class="datepicker" type='text' name='start' value='<?= (isset($this->indgang) ? $this->indgang->start : '');?>'/></span><br/>
+            <?php if (isset($this->indgang)) : ?>
+                <input type='submit' value='Opdater' name='update_entry' class='centersubmits'/>
+                <input type='submit' value='Fortryd' class='centersubmits'/>
+                <input type='hidden' name='id' value='<?php echo (isset($this->indgang) ? $this->indgang->id : '');?>'/>
+                <input type='submit' value='Slet' name='delete_entry' class='centersubmits'/>
+            <?php else : ?>
+                <input type='submit' value='Opret' name='create_entry'/>
+            <?php endif;?>
+        </form>
+    </fieldset>
+</div>
+<script type="text/javascript">
+var infosys = infosys || {};
+infosys.con_start = '<?= $this->con_start;?>';
+infosys.con_end   = '<?= $this->con_end;?>';
+</script>

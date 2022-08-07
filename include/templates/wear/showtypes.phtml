@@ -1,0 +1,23 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='wear_table'>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Navn</th>
+                <th>Str.</th>
+                <th>Beskrivelse</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->wear_types as $type) : ?>
+            <tr>
+                <td><a href="<?php echo $this->url('vis_wear', array('id' => $type->id));?>"><?php echo $type->id;?></a></td>
+                <td><a href="<?php echo $this->url('vis_wear', array('id' => $type->id));?>"><?php echo $type->navn;?></a></td>
+                <td><?php echo $type->size_range;?></td>
+                <td><?php echo $type->beskrivelse;?></td>
+            </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table>
+</div>

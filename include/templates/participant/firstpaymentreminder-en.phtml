@@ -1,0 +1,36 @@
+<h2>Reminder of payment for Fastaval 2017</h2>
+<p> </p>
+<p>Hi <?= e($this->participant->fornavn);?> <?= e($this->participant->efternavn);?>,</p>
+<p> </p>
+<p>We&#39;re writing to you because we haven&#39;t registered a payment from you for Fastaval 2017, and so we thought we&#39;d take the opportunity to remind you.</p>
+
+<p>If you already paid, just ignore this email - we are just lagging a bit behind getting our information up-to-date.</p>
+
+<p>If you haven&#39;t already paid, remember that your deadline for paying is <?= $this->payment_day;?>. If you don&#39;t pay by this date your sign up will be canceled. You can pay here:</p>
+
+<p><a href="<?= $this->payment_url;?>"><?= $this->payment_url;?></a></p>
+
+<p>The amount is <?= e($this->payment_remainder);?>DKK, and payment takes place through fritid.dk.</p>
+
+<h4>Payment by banktransfer</h4>
+<p>If you cannot pay online, it is also possible to pay through banktransfer. This is a bit more expensive, however, as it involves more work. Because of that, there is a fee of <?= e($this->banking_fee);?>DKK on bank transfers.</p>
+<p>To pay by banktransfer, use the information below:</p>
+<ul>
+    <li>Payment due is <?= e($this->payment_remainder + floatval($this->banking_fee));?>DKK (<?= e($this->payment_remainder);?>DKK + <?= e($this->banking_fee);?>DKK fee)</li>
+    <li>From a Danish bank: Reg.: 9314 / Account: 4573884464</li>
+    <li>Paying from a bank outside of Denmark, you should use these details:
+        <ul>
+           <li>Spar Nord Bank A/S</li>
+           <li>International Division</li>
+           <li>Skelagervej 15, Postbox 162</li>
+           <li>DK-9100 Aalborg</li>
+           <li>BIC SPNODK2</li>
+           <li>IBAN DK6693144573884464</li>
+        </ul>
+    </li>
+    <li>ALWAYS make sure to add your name and participant ID as message so we know who the payment was from</li>
+</ul>
+<p> </p>
+<p><strong>We look forward to seeing you at Fastaval 2017!</strong></p>
+<p>Best,</p>
+<p>Fastaval</p>

@@ -1,0 +1,242 @@
+<?php echo $this->getMessagesHtml();?>
+<div id='personal_info'>
+    <fieldset>
+        <legend>Personal info</legend>
+    <table id='signup-details'>
+        <tbody>
+            <tr>
+                <td class='label'>Id:</td>
+                <td><?= $this->deltager->id;?></td>
+                <td rowspan='4'><p style='margin: 5px; padding: 5px; background-color: #bb3333; color: #ffffff;'>Keep in mind that nothing is fully settled until we reach the opening of Fastaval. The information presented here <strong>is liable to change until then</strong> - among other things, DIY details are almost certain to change.</p><p style='margin: 5px; padding: 5px; background-color: #bb3333; color: #ffffff;'>
+If you have any questions regarding the details here, you can e-mail us at <a style='color: #000000;' href='mailto:info@fastaval.dk'>info@fastaval.dk</a>.</p>
+</td>
+            </tr>
+            <tr>
+                <td class='label'>Name:</td>
+                <td><?= e($this->deltager->fornavn);?> <?= e($this->deltager->efternavn);?></td>
+            </tr>
+            <tr>
+                <td class='label'>E-mail:</td>
+                <td><?= e($this->deltager->email);?></td>
+            </tr>
+            <tr>
+                <td class='label'>Date of signup:</td>
+                <td><?= $this->replaceDayNames(date('Y-m-d', strtotime($this->deltager->signed_up)));?></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <table class="misc-details">
+        <tbody>
+            <tr>
+                <td class='label'>Rich uncle:</td>
+                <td><?= $this->deltager->rig_onkel == 'ja' ? 'Yes' : 'No';?></td>
+                <td class='label'>Secret aunt:</td>
+                <td><?= $this->deltager->hemmelig_onkel == 'ja' ? 'Yes' : 'No';?></td>
+            </tr>
+            <tr>
+                <td colspan='6'><hr/></td>
+            </tr>
+            <tr>
+                <td class='label'>Helping out Monday:</td>
+                <td><?= $this->deltager->ready_mandag == 'ja' ? 'Yes' : 'No';?></td>
+                <td class='label'>Helping out Tuesday:</td>
+                <td><?= $this->deltager->ready_tirsdag == 'ja' ? 'Yes' : 'No';?></td>
+            </tr>
+            <tr>
+                <td colspan='6'><hr/></td>
+            </tr>
+            <tr>
+                <td class='label'>SuperGM:</td>
+                <td><?= $this->deltager->supergm == 'ja' ? 'Yes' : 'No';?></td>
+                <td class='label'>SuperDIY:</td>
+                <td><?= $this->deltager->supergds == 'ja' ? 'Yes' : 'No';?></td>
+                <td class='label'>Several DIY-shifts:</td>
+                <td><?= $this->deltager->flere_gdsvagter == 'ja' ? 'Yes' : 'No';?></td>
+            </tr>
+            <tr>
+                <td class='label'>Volunteering next year:</td>
+                <td><?= $this->deltager->arrangoer_naeste_aar == 'ja' ? 'Yes' : 'No';?></td>
+                <td class='label'>Desired number of activities:</td>
+                <td><?= ($this->deltager->desired_activities ? e($this->deltager->desired_activities) : 'Not specified');?></td>
+            </tr>
+            <tr>
+                <td colspan='6'><hr/></td>
+            </tr>
+            <?php if (!empty($this->deltager->ungdomsskole)) : ?>
+            <tr>
+                <td class='label'>Club/organisation:</td>
+                <td colspan="5"><?= e($this->deltager->ungdomsskole);?></td>
+            </tr>
+            <?php endif;?>
+            <?php if (!empty($this->deltager->arbejdsomraade)) : ?>
+            <tr>
+                <td class='label'>Volunteer-area:</td>
+                <td colspan="5"><?= e($this->deltager->arbejdsomraade);?></td>
+            </tr>
+            <?php endif;?>
+            <?php if (!empty($this->deltager->scenarie)) : ?>
+            <tr>
+                <td class='label'>Scenario:</td>
+                <td colspan="5"><?= e($this->deltager->scenarie);?></td>
+            </tr>
+            <?php endif;?>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Activities for Fastaval</legend>
+        <table>
+        <?php
+        $dates = $helcon = array();
+
+        foreach ($this->deltager->getPladser() as $plads) {
+            $schedule = $plads->getAfvikling();
+            $date     = date('Y-m-d', strtotime($schedule->start));
+            $activity = $plads->getAktivitet();
+
+            if ((strtotime($schedule->slut) - strtotime($schedule->start)) > 86400) {
+                $helcon[] = '
+            <tr>
+                <td><strong>' . ($activity->wp_link ? '<a href="http://www.fastaval.dk/?p=' . $activity->wp_link . '">' : '') . e($activity->title_en) . ($activity->wp_link ? '</a>' : '') . '</strong> &mdash; <em>' . ($plads->type == 'spilleder' ? 'Gamemaster' : 'Gamer') . '</em></td>
+            </tr>
+';
+                continue;
+            }
+
+
+            if ($activity->hidden === 'ja') {
+                continue;
+            }
+
+            $dates[$date][] = '
+            <tr>
+                <td><strong>' . ($activity->wp_link ? '<a href="http://www.fastaval.dk/?p=' . $activity->wp_link . '">' : '') . e($activity->title_en) . ($activity->wp_link ? '</a>' : '') . '</strong> &mdash; <em>' . ($plads->type == 'spilleder' ? 'Gamemaster' : 'Gamer') . '</em>. ' . date('D H:i', strtotime($schedule->start)) . ' - ' . date('D H:i', strtotime($schedule->slut)) . '</td></tr>
+';
+
+            foreach ($schedule->getMultiBlok() as $block) {
+                $date = date('Y-m-d', strtotime($block->start));
+
+                $dates[$date][] = '
+                <tr>
+                    <td><strong>' . e($activity->title_en) . '</strong> &mdash; <em>' . ($plads->type == 'spilleder' ? 'Gamemaster' : 'Gamer') . '</em>. ' . date('D H:i', strtotime($block->start)) . ' - ' . date('D H:i', strtotime($block->slut)) . '</td></tr>
+    ';
+            }
+
+        }
+
+        if ($helcon) {
+?>
+            <tr>
+                <td class="header" align='center'><b>Entire convention</b></td>
+            </tr>
+<?php
+            foreach ($helcon as $event) {
+                echo $event;
+            }
+        }
+
+        foreach ($dates as $date => $stuff) : ?>
+            <tr>
+                <td class="header" align='center'><b><?= date('D', strtotime($date));?></b></td>
+            </tr>
+            <?php foreach ($stuff as $activity) {
+                echo $activity;
+            }
+        endforeach ;?>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>DIY shifts</legend>
+        <table>
+            <?php
+            $date = false;
+            foreach ($this->deltager->getGDSVagter() as $vagt) :
+                if ($date != date('Y-m-d', strtotime($vagt->start))) :
+                    $date = date('Y-m-d', strtotime($vagt->start));?>
+                <tr tal:condition="php:date != date('Y-m-d',strtotime(vagt.start))">
+                    <td align='center'><strong><?= date('D', strtotime($vagt->start));?></strong></td>
+                </tr>
+                <?php endif;?>
+                <tr>
+                    <td><strong><?= e($vagt->getGDS()->title_en);?>.</strong> <?= date('D H:i', strtotime($vagt->start));?> - <?= date('D H:i', strtotime($vagt->slut));?></td></tr>
+            <?php endforeach;?>
+        </table>
+    </fieldset>
+
+    <fieldset class="float-left w33">
+        <legend>Entrance</legend>
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan='2'><b>Entrance:</b> <em>
+                        <?php if (!empty($this->deltager_info['indgang'])) :
+                            $strings = array();
+                            foreach ($this->deltager_info['indgang'] as $day) :
+                                if ($day->isEntrance()) :
+                                    $strings[]= $day->getShortDescription(true);
+                                endif;
+                            endforeach;
+                            echo implode(', ', $strings);
+                        endif;?>
+                    </em></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Sleeping arrangements:</b> <em>
+                        <?php if (!empty($this->deltager_info['indgang'])) :
+                            $strings = array();
+                            foreach ($this->deltager_info['indgang'] as $day) :
+                                if ($day->isSleepTicket()) :
+                                    $strings[]= $day->getShortDescription(true);
+                                endif;
+                            endforeach;
+                            echo implode(', ', $strings);
+                        endif;?>
+                    </em></td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Misc:</b> <em>
+                        <?php if (!empty($this->deltager_info['indgang'])) :
+                            $strings = array();
+                            foreach ($this->deltager_info['indgang'] as $day) :
+                                if (!$day->isSleepTicket() && !$day->isEntrance()) :
+                                    $strings[]= $day->getDescription(true);
+                                endif;
+                            endforeach;
+                            echo implode(', ', $strings);
+                        endif;?>
+                    </em></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset class="float-left w33">
+        <legend>Food</legend>
+        <table>
+            <tbody>
+                <?php if (!empty($this->deltager_info['mad'])) :
+                    foreach ($this->deltager_info['mad'] as $madtid) : ?>
+                        <tr>
+                            <td class="label"><?= date('D', strtotime($madtid->dato));?></td>
+                            <td><?= e($madtid->getMad()->title_en);?></td>
+                        </tr>
+                    <?php endforeach;
+                endif;?>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset class="float-right w33">
+        <legend>Wear</legend>
+        <table>
+            <tbody>
+                <?php if (!empty($this->deltager_info['wear'])) :
+                    foreach ($this->deltager_info['wear'] as $wear) :?>
+                        <tr>
+                            <td class="label"><?= e($wear->antal);?> <?= e($wear->getWear()->getName(true));?>, size <?= e($wear->size);?></td>
+                        </tr>
+                    <?php endforeach;
+                endif;?>
+            </tbody>
+        </table>
+    </fieldset>
+</div>

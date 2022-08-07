@@ -1,0 +1,153 @@
+@import url('http://fonts.googleapis.com/css?family=Chelsea+Market');
+
+body {
+    -webkit-print-color-adjust:exact;
+    -moz-print-color-adjust:exact;
+    -ms-print-color-adjust:exact;
+    -o-print-color-adjust:exact;
+    print-color-adjust:exact;
+}
+
+div, p, table, tr, td, th, span {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: 'Chelsea Market';
+}
+
+img {
+    border: none;
+    margin-bottom: -5px;
+}
+
+div.deltager-container {
+    width: auto;
+    position: relative;
+}
+
+table {
+    padding: 0px;
+    margin: 0px;
+}
+
+table caption {
+    background-color: #000;
+    color: #fff;
+}
+
+div.deltager-container table.sheet-table {
+    width: 1000px;
+}
+
+
+div.deltager-container table.sheet-table table.subtable {
+    width: 100%;
+    margin-top: 1em;
+}
+
+div.deltager-container table.sheet-table table.subtable.activities {
+    margin-top: 0;
+}
+
+div.deltager-container table.sheet-table .fullwidth {
+    border-top: 1px solid black;
+    padding: 10px 0 0 0;
+}
+
+div.deltager-container table.sheet-table table.subtable td.heading {
+    border-bottom: 1px solid #a0a0a0;
+}
+
+div.deltager-container table.sheet-table table.subtable tr.alternate td {
+    background-color: #eee;
+}
+
+div.deltager-container table.sheet-table table.subtable tr.alternate {
+    background-color: #eee;
+}
+
+
+div.deltager-container table.info-container {
+    width: 1000px;
+    height: 100%;
+    z-index: 5;
+}
+
+
+table.info-container td.info-table-left {
+/*    border-top: 1px solid black;
+    border-left: 1px solid black; */
+    border-right: 0px;
+    width: 50%;
+}
+
+table.info-container td.info-table-right {
+/*    border-top: 1px solid black;
+    border-right: 1px solid black;
+ */
+    border-left: 1px solid black;
+}
+
+table.info-container td.info-table-full {
+    border-top: 1px solid black;
+/*    border-left: 1px solid black;
+    border-right: 1px solid black; */
+}
+
+div.deltager-container table.info-container table {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+div.deltager-container table td {
+    padding: 0px 10px 0px 10px;
+    vertical-align: top;
+}
+
+div.deltager-container table td.priser {
+    text-align: right;
+}
+
+td.info-table-half {
+    width: 50%;
+}
+
+table.info-imw-table td.info-label {
+    width: 5em;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.border-top {
+    border-top: solid 1px black;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+table.activities td:nth-of-type(3) {
+    width: 20%;
+}
+
+table tr.heading td {
+    padding: 10px 0 5px;
+}
+
