@@ -1124,6 +1124,27 @@ class ParticipantModel extends Model
     }
 
     /**
+     * returns an array of the fields in the deltagere table
+     *
+     * @access public
+     * @return array
+     */
+    public function getDeltagerFieldsWithNames()
+    {
+        $deltager = $this->createEntity('Deltagere');
+        $field_keys = $deltager->getColumns();
+        $field_names = $deltager->getHumanReadableFieldNames();
+
+        $fields = [];
+        foreach($field_keys as $key) {
+            $name = $field_names[$key] ?? $key;
+            $fields[$key] = $name;
+        }
+        return $fields;
+    }
+
+    
+    /**
      * returns an array with all the GMs (signed up + assigned) for all the activities
      *
      * @access public
