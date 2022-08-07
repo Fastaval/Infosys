@@ -1,66 +1,67 @@
 <?php
-  if ($this->post) {
-    ?>
-      <div class="container">
-        <?php if ($this->result->success) { ?>
-          <h1>Deltagerdata er blevet anonymiseret</h1>
-          <p><strong>
-            Reminder!! der er ikke lavet nogen glob til cache mappen, så husk at checke om der er filer i den der skal slettes.<br>
-            Husk også at rette participant_controller.php hvis du finder filer der skal slettes.
-          </strong></p>
-          <p>Følgende felter blev nulstillet</p>
-          <table>
-            <tbody>
-              <?php foreach ($this->result->fields as $name => $value) { 
-                $value = $value === null ? 'Null' : $value ?>
-                <tr><td><?=$name?></td><td><?=$value?></td></tr>
-              <?php } ?>
-            </tbody>
-          </table>
-          <?php if (!empty($this->result->files)) { ?>
-            <p>Følgende filer blev slettet</p>
-            <?php foreach ($this->result->files as $file) { ?>
-              <?=$file?></br>
+
+if ($this->post) {
+  ?>
+    <div class="container">
+      <?php if ($this->result->success) { ?>
+        <h1>Deltagerdata er blevet anonymiseret</h1>
+        <p><strong>
+          Reminder!! der er ikke lavet nogen glob til cache mappen, så husk at checke om der er filer i den der skal slettes.<br>
+          Husk også at rette participant_controller.php hvis du finder filer der skal slettes.
+        </strong></p>
+        <p>Følgende felter blev nulstillet</p>
+        <table>
+          <tbody>
+            <?php foreach ($this->result->fields as $name => $value) { 
+              $value = $value === null ? 'Null' : $value ?>
+              <tr><td><?=$name?></td><td><?=$value?></td></tr>
             <?php } ?>
-          <?php } else { ?>
-            <p><strong>Der blev ikke slettet nogen filer</strong></p>
+          </tbody>
+        </table>
+        <?php if (!empty($this->result->files)) { ?>
+          <p>Følgende filer blev slettet</p>
+          <?php foreach ($this->result->files as $file) { ?>
+            <?=$file?></br>
           <?php } ?>
         <?php } else { ?>
-          <h1>Der skete en fejl under anonymisering af deltagerdata</h1>
-          <?php foreach ($this->result->errors as $error) { ?>
-            <p><?=$error['desc']?></p>
-          <?php } ?>
+          <p><strong>Der blev ikke slettet nogen filer</strong></p>
         <?php } ?>
-      </div>
-    <?php
-  } else {
-    $fields = $this->fields;
-    ?>
-      <div class="container">
-        <h1>Anonymisering af Data</h1>
-        <p>Vælg de felter der stadig skal gemmes</p>
-        <p>Alle felter der ikke er valgt vil blive slettet for hver deltager</p>
-        <p>Alt der ligger under <em>signup-data</em>, <em>cache</em> og fotos der ligger under <em>uploads</em> vil også blive slettet</p>
-        <p>Det er en go' idé lige at lave et dump af databasen (som slettes hvis alt går vel) inden denne operation</p>
+      <?php } else { ?>
+        <h1>Der skete en fejl under anonymisering af deltagerdata</h1>
+        <?php foreach ($this->result->errors as $error) { ?>
+          <p><?=$error['desc']?></p>
+        <?php } ?>
+      <?php } ?>
+    </div>
+  <?php
+} else {
+  $fields = $this->fields;
+  ?>
+    <div class="container">
+      <h1>Anonymisering af Data</h1>
+      <p>Vælg de felter der stadig skal gemmes</p>
+      <p>Alle felter der ikke er valgt vil blive slettet for hver deltager</p>
+      <p>Alt der ligger under <em>signup-data</em>, <em>cache</em> og fotos der ligger under <em>uploads</em> vil også blive slettet</p>
+      <p>Det er en go' idé lige at lave et dump af databasen (som slettes hvis alt går vel) inden denne operation</p>
 
-        <form id="anonym" class="form-inline" method="post">
-          <input type="submit" value="Udfør" name="submit">
-          <p>Følgende felter skal normalt <strong>gemmes</strong> på nuværende tidspunkt</p>
-          <?php foreach ($this->default_keep as $key) { ?>
-            <input type="checkbox" id="<?=$key?>" name="<?=$key?>" checked="true">
-            <label for="<?=$key?>"><?=$this->fields[$key]?></label>
-            <br>
-            <?php unset($fields[$key]) ?>
-          <?php }  ?>
+      <form id="anonym" class="form-inline" method="post">
+        <input type="submit" value="Udfør" name="submit">
+        <p>Følgende felter skal normalt <strong>gemmes</strong> på nuværende tidspunkt</p>
+        <?php foreach ($this->default_keep as $key) { ?>
+          <input type="checkbox" id="<?=$key?>" name="<?=$key?>" checked="true">
+          <label for="<?=$key?>"><?=$this->fields[$key]?></label>
+          <br>
+          <?php unset($fields[$key]) ?>
+        <?php }  ?>
 
-          <p>Følgende felter skal normalt <strong>slettes</strong> på nuværende tidspunkt</p>
-          <?php foreach ($fields as $key => $name) { ?>
-            <?php if ($key == "id") continue; ?>
-            <input type="checkbox" id="<?=$key?>" name="<?=$key?>">
-            <label for="<?=$key?>"><?=$name?></label>
-            <br>
-          <?php }  ?>
-        </form>
-      <div>
-    <?php
-  }
+        <p>Følgende felter skal normalt <strong>slettes</strong> på nuværende tidspunkt</p>
+        <?php foreach ($fields as $key => $name) { ?>
+          <?php if ($key == "id") continue; ?>
+          <input type="checkbox" id="<?=$key?>" name="<?=$key?>">
+          <label for="<?=$key?>"><?=$name?></label>
+          <br>
+        <?php }  ?>
+      </form>
+    <div>
+  <?php
+}
