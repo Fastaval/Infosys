@@ -1,0 +1,16 @@
+<html>
+<style>
+body { padding: 2rem; background-color: #d4d1d1 }
+</style>
+</html>
+<body>
+    <img src="https://www.fastaval.dk/wp-content/uploads/2021/01/Hjemmeside-header.jpg" alt="Fastaval 2021 logo"/>
+    <p>Here is the link to voting for <strong><?= e($this->title);?></strong>.</p>
+
+    <p>Link: <a href="<?= $this->url('activity_specific_vote', ['code' => $this->vote['code']]);?>"><?= $this->url('activity_specific_vote', ['code' => $this->vote['code']]);?></a></p>
+
+    <p>Please vote no later than Sunday at 18.00 CEST. Thank you for helping Fastaval.</p>
+
+    <p>Thank you!</p>
+    <p>Fastaval 2021</p>
+</body>
