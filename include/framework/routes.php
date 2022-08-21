@@ -433,6 +433,12 @@ class Routes
         $this->routes['loans_parse']            = array('url' => 'loans/parse', 'controller' => 'Loans', 'method' => 'parseSpreadsheet');
         $this->routes['loans_update_note']      = array('url' => 'loans/update-note', 'controller' => 'Loans', 'method' => 'updateNote');
 
+        $this->routes['signup_admin']           = array('url' => 'signup/admin', 'controller' => 'Signup', 'method' => 'signupAdmin');
+
+        $this->routes['signup_api_get_page_list']   = array('url' => 'signup/api/getpagelist', 'controller' => 'SignupApi', 'method' => 'getPageList');
+        $this->routes['signup_api_get_page']   = array('url' => 'signup/api/getpage/:page_id:', 'controller' => 'SignupApi', 'method' => 'getPage');
+
+
     }
 
     /**

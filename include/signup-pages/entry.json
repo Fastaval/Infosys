@@ -1,0 +1,11 @@
+{
+    "order" : 3,
+    "slug": {
+        "en" : "Entry",
+        "da" : "Indgang"
+    },
+    "title" : {
+        "en" : "Entrance days",
+        "da" : "Indgang dage"
+    }
+}

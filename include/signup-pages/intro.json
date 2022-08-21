@@ -1,0 +1,11 @@
+{
+    "order" : 1,
+    "slug": {
+        "en" : "Intro",
+        "da" : "Intro"
+    },
+    "title" : {
+        "en" : "Introduction & GDPR",
+        "da" : "Introduktion og GDPR"
+    }
+}
