@@ -1,0 +1,20 @@
+<div id='admin-container'>
+  <legend>Administration af tilmeldingssider</legend>
+    <?php foreach($this->signup_pages as $page) { ?>
+      <div id="<?=$page->file?>" class="signup-page">
+        <h2><?=$page->title->da?>:<?=$page->order?></h2>
+        <?php foreach($page->sections as $skey => $section) { ?>
+          <fieldset id="<?=$page->file?>-section-<?=$skey?>" class="signup-page-section">
+            <legend><?=$section->headline->da?></legend>
+            <?php foreach($section->items as $ikey => $item) { ?>
+              <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>" class="signup-page-item">
+                <legend><?=$item->type?></legend>
+                <div><i class="icon-dk"></i><p><?=$item->text->da?></p></div>
+                <div><i class="icon-uk"></i><p><?=$item->text->en?></p></div>
+              </fieldset>
+            <?php } ?>
+          </fieldset>
+        <?php } ?>
+      </div>
+    <?php } ?>
+</div>

@@ -592,6 +592,12 @@ HTML;
             <li><a href='{$this->url('admin_reset_signup_confirm')}'>Reset signup</a></li>
         </ul>
     </li>
+    <li class='topmenu-item'>
+        Tilmelding
+        <ul class='submenu'>
+            <li><a href='{$this->url('signup_pages')}'>Tilpads sider</a></li>
+        </ul>
+    </li>
 HTML;
         }
 
