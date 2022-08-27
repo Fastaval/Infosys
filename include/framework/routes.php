@@ -425,16 +425,17 @@ class Routes
         $this->routes['boardgames_reporting']        = array('url' => 'boardgames/reporting', 'controller' => 'Boardgames', 'method' => 'showReporting');
 
         // loans
-        $this->routes['loans_overview']         = array('url' => 'loans', 'controller' => 'Loans', 'method' => 'overview');
-        $this->routes['loans_data']             = array('url' => 'loans/data', 'controller' => 'Loans', 'method' => 'fetchData');
-        $this->routes['loans_create']           = array('url' => 'loans/create', 'controller' => 'Loans', 'method' => 'createItem');
-        $this->routes['loans_update']           = array('url' => 'loans/update', 'controller' => 'Loans', 'method' => 'updateItem');
-        $this->routes['loans_edit']             = array('url' => 'loans/edit', 'controller' => 'Loans', 'method' => 'editItem');
-        $this->routes['loans_parse']            = array('url' => 'loans/parse', 'controller' => 'Loans', 'method' => 'parseSpreadsheet');
-        $this->routes['loans_update_note']      = array('url' => 'loans/update-note', 'controller' => 'Loans', 'method' => 'updateNote');
+        $this->routes['loans_overview']             = array('url' => 'loans', 'controller' => 'Loans', 'method' => 'overview');
+        $this->routes['loans_data']                 = array('url' => 'loans/data', 'controller' => 'Loans', 'method' => 'fetchData');
+        $this->routes['loans_create']               = array('url' => 'loans/create', 'controller' => 'Loans', 'method' => 'createItem');
+        $this->routes['loans_update']               = array('url' => 'loans/update', 'controller' => 'Loans', 'method' => 'updateItem');
+        $this->routes['loans_edit']                 = array('url' => 'loans/edit', 'controller' => 'Loans', 'method' => 'editItem');
+        $this->routes['loans_parse']                = array('url' => 'loans/parse', 'controller' => 'Loans', 'method' => 'parseSpreadsheet');
+        $this->routes['loans_update_note']          = array('url' => 'loans/update-note', 'controller' => 'Loans', 'method' => 'updateNote');
 
         // Signup Admin
-        $this->routes['signup_pages']        = array('url' => 'signup/pages', 'controller' => 'Signup', 'method' => 'signupPages');
+        $this->routes['signup_pages']               = array('url' => 'signup/pages', 'controller' => 'Signup', 'method' => 'signupPages');
+        $this->routes['signup_pages_add_element']   = array('url' => 'signup/pages/add-element', 'controller' => 'Signup', 'method' => 'addPageElement');
 
         // Signup API
         $this->routes['api_signup_page_list']       = array('url' => 'api/signup/pagelist', 'controller' => 'SignupApi', 'method' => 'getPageList');
