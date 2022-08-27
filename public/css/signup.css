@@ -1,0 +1,25 @@
+.selected {
+  background-color: rgba(0,0,255,.5);
+}
+
+div#contextmenu {
+  background-color: ghostwhite;
+  border: 1px black solid;
+}
+
+div#contextmenu.closed {
+  display: none;
+}
+
+div#contextmenu.open {
+  display: block;
+  position: fixed;
+}
+
+div#contextmenu div{
+  padding: 2px 5px;
+}
+
+div#contextmenu div:hover{
+  background-color: lightgray;
+}

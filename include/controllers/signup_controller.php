@@ -14,6 +14,7 @@ class SignupController extends Controller {
     }
     ksort($pages);
     $this->page->signup_pages = $pages;
+    $this->page->includeCSS('signup.css');
     $this->page->includeCss('fontello-ebe72605/css/idtemplate.css');
     $this->page->registerEarlyLoadJS('signup/page_admin.js');
   }    

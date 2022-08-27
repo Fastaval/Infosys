@@ -1,20 +1,30 @@
-<div id='admin-container'>
+<?php
+  $icon_name = [
+    'da' => 'dk',
+    'en' => 'uk',
+  ];
+?>
+<div id='page-admin-container'>
   <legend>Administration af tilmeldingssider</legend>
-    <?php foreach($this->signup_pages as $page) { ?>
-      <div id="<?=$page->file?>" class="signup-page">
-        <h2><?=$page->title->da?>:<?=$page->order?></h2>
-        <?php foreach($page->sections as $skey => $section) { ?>
-          <fieldset id="<?=$page->file?>-section-<?=$skey?>" class="signup-page-section">
-            <legend><?=$section->headline->da?></legend>
-            <?php foreach($section->items as $ikey => $item) { ?>
-              <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>" class="signup-page-item">
-                <legend><?=$item->type?></legend>
-                <div><i class="icon-dk"></i><p><?=$item->text->da?></p></div>
-                <div><i class="icon-uk"></i><p><?=$item->text->en?></p></div>
-              </fieldset>
-            <?php } ?>
-          </fieldset>
-        <?php } ?>
-      </div>
-    <?php } ?>
+  <?php foreach($this->signup_pages as $page) { // Signup Pages ?>
+    <fieldset id="<?=$page->file?>" class="signup-page">
+      <legend><?=$page->title->da?> : <?=$page->order?></legend>
+      <?php foreach($page->sections as $skey => $section) { // Page Secions ?>
+        <fieldset id="<?=$page->file?>-section-<?=$skey?>" class="signup-page-section">
+          <legend><?=$section->headline->da?></legend>
+          <?php foreach($section->items as $ikey => $item) { // Section Items ?>
+            <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>" class="signup-page-item">
+              <legend><?=$item->type?></legend>
+              <?php foreach($item->text as $lang => $text) { // Item Texts in each language ?>
+                <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>-<?=$lang?>" class="signup-page-item-text">
+                  <legend><i class="icon-<?=$icon_name[$lang]?>"></i></legend>
+                  <p><?=$item->text->$lang?></p>
+                </fieldset>
+              <?php } // Texts ?>
+            </fieldset>
+          <?php } // Items ?>
+        </fieldset>
+      <?php } // Sections ?>
+    </fieldset>
+  <?php } // Pages ?>
 </div>
