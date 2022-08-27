@@ -8,7 +8,7 @@
   <legend>Administration af tilmeldingssider</legend>
   <?php foreach($this->signup_pages as $page) { // Signup Pages ?>
     <fieldset id="<?=$page->file?>" class="signup-page">
-      <legend><?=$page->title->da?> : <?=$page->order?></legend>
+      <legend class="page-title"><?=$page->title->da?><i class="icon-minus-circled"></i></legend>
       <?php foreach($page->sections as $skey => $section) { // Page Secions ?>
         <fieldset id="<?=$page->file?>-section-<?=$skey?>" class="signup-page-section">
           <legend><?=$section->headline->da?></legend>

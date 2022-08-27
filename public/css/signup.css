@@ -1,3 +1,15 @@
+div#page-admin-container {
+  margin: 2rem;
+}
+
+fieldset.signup-page.closed {
+  opacity: .5;
+}
+
+legend.page-title i {
+  float: right;
+}
+
 .selected {
   background-color: rgba(0,0,255,.5);
 }

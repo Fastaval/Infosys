@@ -20,6 +20,27 @@ class SignupPageAdmin {
       SignupPageAdmin.setSelection(event.target)
     })
 
+    // Page open/close
+    jQuery('legend.page-title i').click(function(event){
+      let button = jQuery(event.target);
+      let page = button.closest('fieldset.signup-page');
+      let sections = page.children('fieldset.signup-page-section');
+
+      if (button.hasClass('icon-minus-circled')) {
+        sections.hide();
+        button.removeClass('icon-minus-circled');
+        button.addClass('icon-plus-circled');
+        page.addClass('closed');
+      } else {
+        sections.show();
+        button.removeClass('icon-plus-circled');
+        button.addClass('icon-minus-circled');
+        page.removeClass('closed');
+      }
+
+    });
+
+    // Context menu
     let context_menu = jQuery('<div id="contextmenu" class="closed"></div>');
     for(const [id, text] of Object.entries(this.context_menu_items)){
       let menuitem = jQuery('<div class="menu-item"><div>');
