@@ -435,9 +435,9 @@ class Routes
 
         $this->routes['signup_admin']           = array('url' => 'signup/admin', 'controller' => 'Signup', 'method' => 'signupAdmin');
 
-        $this->routes['signup_api_get_page_list']   = array('url' => 'signup/api/getpagelist', 'controller' => 'SignupApi', 'method' => 'getPageList');
-        $this->routes['signup_api_get_page']   = array('url' => 'signup/api/getpage/:page_id:', 'controller' => 'SignupApi', 'method' => 'getPage');
-
+        // Signup API
+        $this->routes['api_signup_page_list']       = array('url' => 'api/signup/pagelist', 'controller' => 'SignupApi', 'method' => 'getPageList');
+        $this->routes['api_signup_page']            = array('url' => 'api/signup/page/:page_id:', 'controller' => 'SignupApi', 'method' => 'getPage');
 
     }
 

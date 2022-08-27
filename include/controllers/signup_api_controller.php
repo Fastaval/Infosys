@@ -36,7 +36,6 @@ class SignupApiController extends Controller {
     exit;
   }
 
-
   public function getPageList() {
     $response = (object) [];
 
@@ -65,6 +64,4 @@ class SignupApiController extends Controller {
   echo $page;
   exit;
  }
-
-  
 }
