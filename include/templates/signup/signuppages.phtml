@@ -4,27 +4,41 @@
     'en' => 'uk',
   ];
 ?>
+<div id='page-admin-toolbar'>
+  <select id='lang'>
+    <option value='both'>Vis Begge</option>
+    <option value='da'>Vis Dansk</option>
+    <option value='en'>Vis Engelsk</option>
+  </select>
+</div>
 <div id='page-admin-container'>
   <legend>Administration af tilmeldingssider</legend>
   <?php foreach($this->signup_pages as $page) { // Signup Pages ?>
-    <fieldset id="<?=$page->file?>" class="signup-page">
-      <legend class="page-title"><?=$page->title->da?><i class="icon-minus-circled"></i></legend>
-      <?php foreach($page->sections as $skey => $section) { // Page Secions ?>
-        <fieldset id="<?=$page->file?>-section-<?=$skey?>" class="signup-page-section">
-          <legend><?=$section->headline->da?></legend>
-          <?php foreach($section->items as $ikey => $item) { // Section Items ?>
-            <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>" class="signup-page-item">
-              <legend><?=$item->type?></legend>
-              <?php foreach($item->text as $lang => $text) { // Item Texts in each language ?>
-                <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>-<?=$lang?>" class="signup-page-item-text">
-                  <legend><i class="icon-<?=$icon_name[$lang]?>"></i></legend>
-                  <p><?=$item->text->$lang?></p>
-                </fieldset>
-              <?php } // Texts ?>
-            </fieldset>
-          <?php } // Items ?>
-        </fieldset>
-      <?php } // Sections ?>
-    </fieldset>
+    <div class="page-wrapper" id="wrapper-<?=$page->file?>">
+      <i class="fold-button icon-"></i>
+      <fieldset id="<?=$page->file?>" class="signup-page">
+        <?php foreach($page->title as $lang => $title) { // Page Title for each language?>
+          <legend class="page-title lang-<?=$lang?> selectable"><i class="icon-<?=$icon_name[$lang]?>"></i><?=$title?></legend>
+        <?php } // Title ?>
+        <?php foreach($page->sections as $skey => $section) { // Page Secions ?>
+          <fieldset id="<?=$page->file?>-section-<?=$skey?>" class="signup-page-section">
+            <?php foreach($section->headline as $lang => $headline) { // Headline texts in each language ?>
+              <legend class="selectable lang-<?=$lang?>"><i class="icon-<?=$icon_name[$lang]?>"></i><?=$headline?></legend>
+            <?php } // Headline ?>
+            <?php foreach($section->items as $ikey => $item) { // Section Items ?>
+              <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>" class="signup-page-item">
+                <legend><?=$item->type?></legend>
+                <?php foreach($item->text as $lang => $text) { // Item Texts in each language ?>
+                  <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>-<?=$lang?>" class="signup-page-item-text lang-<?=$lang?>">
+                    <legend class="lang-<?=$lang?>"><i class="icon-<?=$icon_name[$lang]?>"></i></legend>
+                    <p class="lang-<?=$lang?>"><?=$item->text->$lang?></p>
+                  </fieldset>
+                <?php } // Texts ?>
+              </fieldset>
+            <?php } // Items ?>
+          </fieldset>
+        <?php } // Sections ?>
+      </fieldset>
+    </div>
   <?php } // Pages ?>
 </div>

@@ -7,6 +7,7 @@ jQuery(function() {
 
 class SignupPageAdmin {
   static current_selection = null;
+  static current_hover = null;
 
   static context_menu_items = {
     add_section:      "Tilføj Sektion",
@@ -16,28 +17,43 @@ class SignupPageAdmin {
   }
   
   static init() {
-    jQuery('#page-admin-container').click(function(event) {
-      SignupPageAdmin.setSelection(event.target)
+    let selectables = jQuery('fieldset, legend.selectable')
+
+    // Selection
+    selectables.click(function(event) {
+      SignupPageAdmin.setSelection(event.target);
     })
 
-    // Page open/close
-    jQuery('legend.page-title i').click(function(event){
-      let button = jQuery(event.target);
-      let page = button.closest('fieldset.signup-page');
-      let sections = page.children('fieldset.signup-page-section');
+    //Hover
+    selectables.mouseenter(function(event){
+      SignupPageAdmin.setSelection(event.target, 'hovering', 'current_hover');
+    });
+    selectables.mouseleave(function(event){
+      SignupPageAdmin.setSelection(null, 'hovering', 'current_hover');
+      jQuery(event.relatedTarget).trigger('mouseenter');
+    });
 
-      if (button.hasClass('icon-minus-circled')) {
-        sections.hide();
-        button.removeClass('icon-minus-circled');
-        button.addClass('icon-plus-circled');
-        page.addClass('closed');
-      } else {
-        sections.show();
-        button.removeClass('icon-plus-circled');
-        button.addClass('icon-minus-circled');
-        page.removeClass('closed');
+    //Language selection
+    jQuery("select#lang").change(function(event){
+      switch (event.target.value) {
+        case "da":
+          jQuery(".lang-en").hide();
+          jQuery(".lang-da").show();
+          break;
+        case "en":
+          jQuery(".lang-da").hide();
+          jQuery(".lang-en").show();
+          break;
+        case "both":
+          jQuery(".lang-da").show();
+          jQuery(".lang-en").show();
+          break;
       }
+    });
 
+    // Page open/close
+    jQuery('.fold-button').click(function(event){
+      jQuery(event.target).closest('div.page-wrapper').toggleClass('closed');
     });
 
     // Context menu
@@ -72,11 +88,20 @@ class SignupPageAdmin {
     })
   }
 
-  static setSelection(element) {
-    this.current_selection && this.current_selection.removeClass('selected');
-    this.current_selection = jQuery(element).closest('fieldset');
-    this.current_selection.addClass('selected');
-    this.current_selection.context = document;
+  static setSelection(element, css_class = 'selected', storage = 'current_selection') {
+    if (this[storage]) {
+      this[storage].removeClass(css_class);
+      storage == 'current_selection' && this[storage].find('p').attr('contentEditable', null);
+    }
+    if (!element) { // We are just unsetting the selection
+      this[storage] == null;  
+      return;
+    }
+    this[storage] = jQuery(element).closest('fieldset, legend.selectable');
+    this[storage].addClass(css_class);
+    this[storage].context = document;
+
+    storage == 'current_selection' && this[storage].find('p').attr('contentEditable', true);
   }
 
   static add_section(event) {
