@@ -17,7 +17,7 @@ class SignupApiController extends Controller {
     header('Access-Control-Allow-Origin: *');
   }
 
-    /**
+  /**
    * outputs json data and sets headers accordingly
    *
    * @param string $data        Data to output

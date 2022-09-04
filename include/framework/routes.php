@@ -434,8 +434,9 @@ class Routes
         $this->routes['loans_update_note']          = array('url' => 'loans/update-note', 'controller' => 'Loans', 'method' => 'updateNote');
 
         // Signup Admin
-        $this->routes['signup_pages']               = array('url' => 'signup/pages', 'controller' => 'Signup', 'method' => 'signupPages');
-        $this->routes['signup_pages_add_element']   = array('url' => 'signup/pages/add-element', 'controller' => 'Signup', 'method' => 'addPageElement');
+        $this->routes['signup_pages']               = array('url' => 'signup/pages', 'controller' => 'SignupAdmin', 'method' => 'signupPages');
+        $this->routes['signup_pages_add_element']   = array('url' => 'signup/pages/add-element', 'controller' => 'SignupAdmin', 'method' => 'addPageElement');
+        $this->routes['signup_pages_edit_text']     = array('url' => 'signup/pages/edit-text', 'controller' => 'SignupAdmin', 'method' => 'editText');
 
         // Signup API
         $this->routes['api_signup_page_list']       = array('url' => 'api/signup/pagelist', 'controller' => 'SignupApi', 'method' => 'getPageList');

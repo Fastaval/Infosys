@@ -9,6 +9,20 @@ div#page-admin-container {
 /*---------------------------------------------------------
 Main section
 ---------------------------------------------------------*/
+div#page-admin-toolbar {
+  position: sticky;
+  top: 0px;
+  border: 1px black solid;
+  border-radius: 3px;
+  z-index: 1;
+  padding: 5px;
+  background-color: white;
+}
+
+div#page-admin-toolbar > * {
+  margin: 0px;
+}
+
 div#page-admin-container {
   margin: 2rem;
 }
@@ -21,9 +35,20 @@ div#page-admin-container legend {
     box-sizing: border-box;
 }
 
-div#page-admin-container legend i,
-div#page-admin-container legend i::before {
+div#page-admin-container .title-wrapper,
+div#page-admin-container .headline-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+div#page-admin-container i,
+div#page-admin-container i::before {
     width: unset;
+}
+
+.changed {
+  border: 1px red solid;
 }
 /*---------------------------------------------------------
 Selection
@@ -57,19 +82,23 @@ legend.selected::before,
 legend.selected::before {
   height: 100%;
 }
+
+div#page-admin-container .editable {
+  cursor: text;
+}
+div#page-admin-container .editable:hover {
+  background-color: unset;
+}
 /*---------------------------------------------------------
 Folding sections
 ---------------------------------------------------------*/
-div.page-wrapper.closed {
-  opacity: .5;
-}
-
 div.page-wrapper.closed  .signup-page-section{
   display: none;
 }
 
 .fold-button {
   float: right;
+  transform: scale(2);
 }
 
 i.fold-button::before{
@@ -87,6 +116,7 @@ Context Menu
 div#contextmenu {
   background-color: ghostwhite;
   border: 1px black solid;
+  cursor: default;
 }
 
 div#contextmenu.closed {

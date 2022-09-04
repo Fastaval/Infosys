@@ -1,11 +1,19 @@
 {
-    "order" : 3,
+    "order": 3,
     "slug": {
-        "en" : "Entry",
-        "da" : "Indgang"
+        "en": "Entry",
+        "da": "Indgang"
     },
-    "title" : {
-        "en" : "Entrance days",
-        "da" : "Indgang dage"
-    }
+    "title": {
+        "en": "Entrance days",
+        "da": "Indgang dage"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "New section",
+                "da": "Ny sektion"
+            }
+        }
+    ]
 }

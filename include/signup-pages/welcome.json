@@ -1,11 +1,49 @@
 {
-    "order" : 2,
+    "order": 2,
     "slug": {
-        "en" : "Welcome",
-        "da" : "Velkommen"
+        "en": "Welcome",
+        "da": "Velkommen"
     },
-    "title" : {
-        "en" : "Fundamental info",
-        "da" : "Basisoplysninger"
-    }
+    "title": {
+        "en": "Fundamental info",
+        "da": "Basisoplysninger"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "Contact information",
+                "da": "Kontaktoplysninger"
+            },
+            "items": [
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "First name",
+                        "da": "Fornavn"
+                    },
+                    "infosys_id": "fornavn"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Last name",
+                        "da": "Efternavn"
+                    },
+                    "infosys_id": "efternavn"
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Choose visitor type",
+                "da": "V\u00e6lg deltagertype"
+            }
+        },
+        {
+            "headline": {
+                "en": "Your health",
+                "da": "Sygdomme & helbred"
+            }
+        }
+    ]
 }

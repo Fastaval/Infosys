@@ -202,6 +202,10 @@ common.KeyboardShortcuts.prototype.checkKeyPress = function(event) {
         return this;
     }
 
+    if (event.target.hasAttribute('contentEditable')) {
+        return this;
+    }
+
     event.preventDefault();
     event.stopPropagation();
 

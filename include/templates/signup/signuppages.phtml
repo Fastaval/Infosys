@@ -14,25 +14,33 @@
 <div id='page-admin-container'>
   <legend>Administration af tilmeldingssider</legend>
   <?php foreach($this->signup_pages as $page) { // Signup Pages ?>
-    <div class="page-wrapper" id="wrapper-<?=$page->file?>">
+    <div class="page-wrapper closed" id="wrapper-<?=$page->file?>">
       <i class="fold-button icon-"></i>
-      <fieldset id="<?=$page->file?>" class="signup-page">
+      <fieldset id="page:<?=$page->file?>" class="signup-page">
+        <legend>Page : <?=$page->file?> </legend>
         <?php foreach($page->title as $lang => $title) { // Page Title for each language?>
-          <legend class="page-title lang-<?=$lang?> selectable"><i class="icon-<?=$icon_name[$lang]?>"></i><?=$title?></legend>
+          <div class="title-wrapper selectable">
+            <i class="icon-<?=$icon_name[$lang]?>"></i>
+            <h1 class="page-title lang-<?=$lang?> editable"><?=$title?></h1>
+          </div>
         <?php } // Title ?>
         <?php foreach($page->sections as $skey => $section) { // Page Secions ?>
-          <fieldset id="<?=$page->file?>-section-<?=$skey?>" class="signup-page-section">
+          <fieldset id="page:<?=$page->file?>--section:<?=$skey?>" class="signup-page-section">
+            <legend>Section : <?=$skey?></legend>
             <?php foreach($section->headline as $lang => $headline) { // Headline texts in each language ?>
-              <legend class="selectable lang-<?=$lang?>"><i class="icon-<?=$icon_name[$lang]?>"></i><?=$headline?></legend>
+              <div class="headline-wrapper selectable">
+                <i class="icon-<?=$icon_name[$lang]?>"></i>
+                <h2 class="section-headline lang-<?=$lang?> editable"><?=$headline?></h2>
+              </div>
             <?php } // Headline ?>
             <?php foreach($section->items as $ikey => $item) { // Section Items ?>
-              <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>" class="signup-page-item">
-                <legend><?=$item->type?></legend>
+              <fieldset id="page:<?=$page->file?>--section:<?=$skey?>--item:<?=$ikey?>" class="signup-page-item">
+                <legend><?=$item->type?><?=isset($item->infosys_id) ? ' : <span class="infosys-id editable">'.$item->infosys_id.'<span>' : ''?></legend>
                 <?php foreach($item->text as $lang => $text) { // Item Texts in each language ?>
-                  <fieldset id="<?=$page->file?>-section-<?=$skey?>-item-<?=$ikey?>-<?=$lang?>" class="signup-page-item-text lang-<?=$lang?>">
-                    <legend class="lang-<?=$lang?>"><i class="icon-<?=$icon_name[$lang]?>"></i></legend>
-                    <p class="lang-<?=$lang?>"><?=$item->text->$lang?></p>
-                  </fieldset>
+                  <div class="item-wrapper selectable">
+                    <i class="icon-<?=$icon_name[$lang]?>"></i>
+                    <p class="item lang-<?=$lang?> editable"><?=$item->text->$lang?></p>
+                  </div>
                 <?php } // Texts ?>
               </fieldset>
             <?php } // Items ?>
