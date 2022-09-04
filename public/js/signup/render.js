@@ -37,7 +37,7 @@ class InfosysSignupRender {
   static render_text_input(text, id) {
     return `
       <div class="input-wrapper">
-        <label for="${id}">${text}</label>
+        <label for="${id}">${text}:</label>
         <input type="text" id="${id}">
       </div>
     `;

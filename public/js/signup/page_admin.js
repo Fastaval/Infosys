@@ -284,11 +284,11 @@ class SignupPageAdmin {
     let headline_en = 'New Section';
     let headline_da = 'Ny Sektion';
     new_section.append(`
-      <div class="headline-wrapper selectable">
+      <div class="headline-wrapper selectable lang-en">
         <i class="icon-uk"></i>
         <h2 class="section-headline lang-en editable">${headline_en}</h2>
       </div>
-      <div class="headline-wrapper selectable">
+      <div class="headline-wrapper selectable lang-dk">
         <i class="icon-dk"></i>
         <h2 class="section-headline lang-da editable">${headline_da}</h2>
       </div>
@@ -353,11 +353,11 @@ class SignupPageAdmin {
     let text_en = 'New Text Input';
     let text_da = 'Nyt Tekstindput';
     new_item.append(`
-      <div class="item-wrapper selectable">
+      <div class="item-wrapper selectable lang-en">
         <i class="icon-uk"></i>
         <p class="item lang-en editable">${text_en}</p>
       </div>
-      <div class="item-wrapper selectable">
+      <div class="item-wrapper selectable lang-dk">
         <i class="icon-dk"></i>
         <p class="item lang-da editable">${text_da}</p>
       </div>

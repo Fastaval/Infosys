@@ -30,6 +30,14 @@
                         "da": "Efternavn"
                     },
                     "infosys_id": "efternavn"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Nickname",
+                        "da": "Kaldenavn"
+                    },
+                    "infosys_id": "nickname"
                 }
             ]
         },

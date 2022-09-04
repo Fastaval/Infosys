@@ -5,9 +5,8 @@ div#page-admin-container {
   --selection-color: rgba(0,0,255,.5);
   --hover-color: rgba(0,0,255,.2);
 }
-
 /*---------------------------------------------------------
-Main section
+Toolbar
 ---------------------------------------------------------*/
 div#page-admin-toolbar {
   position: sticky;
@@ -22,7 +21,9 @@ div#page-admin-toolbar {
 div#page-admin-toolbar > * {
   margin: 0px;
 }
-
+/*---------------------------------------------------------
+Main section
+---------------------------------------------------------*/
 div#page-admin-container {
   margin: 2rem;
 }
@@ -36,15 +37,20 @@ div#page-admin-container legend {
 }
 
 div#page-admin-container .title-wrapper,
-div#page-admin-container .headline-wrapper {
+div#page-admin-container .headline-wrapper,
+div#page-admin-container .item-wrapper.item-type-text_input {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+div#page-admin-container .item-wrapper.item-type-text_input p {
+  margin: 2px 0px;
+}
+
 div#page-admin-container i,
 div#page-admin-container i::before {
-    width: unset;
+    width: 34px;
 }
 
 .changed {
