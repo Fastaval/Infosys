@@ -34,13 +34,24 @@
               </div>
             <?php } // Headline ?>
             <?php foreach($section->items as $ikey => $item) { // Section Items ?>
-              <fieldset id="page:<?=$page->file?>--section:<?=$skey?>--item:<?=$ikey?>" class="signup-page-item">
+              <fieldset id="page:<?=$page->file?>--section:<?=$skey?>--item:<?=$ikey?>" class="signup-page-item" item-type="<?=$item->type?>">
                 <legend><?=$item->type?><?=isset($item->infosys_id) ? ' : <span class="infosys-id editable">'.$item->infosys_id.'<span>' : ''?></legend>
                 <?php foreach($item->text as $lang => $text) { // Item Texts in each language ?>
                   <div class="item-wrapper selectable lang-<?=$lang?> item-type-<?=$item->type?>">
                     <i class="icon-<?=$icon_name[$lang]?>"></i>
-                    <p class="item lang-<?=$lang?> editable"><?=$item->text->$lang?></p>
+                    <p class="item lang-<?=$lang?> editable"><?=str_replace("\n", "<br>", $item->text->$lang)?></p>
                   </div>
+                <?php } // Texts ?>
+                <?php if (isset($item->options)) foreach($item->options as $okey => $option) {?>
+                  <fieldset id="page:<?=$page->file?>--section:<?=$skey?>--item:<?=$ikey?>--option:<?=$okey?>" class="signup-page-option">
+                  <legend>option : <span class="option-value editable"><?=$option->value?><span></legend>
+                  <?php foreach($item->text as $lang => $text) { // Item Texts in each language ?>
+                    <div class="option-wrapper selectable lang-<?=$lang?>">
+                      <i class="icon-<?=$icon_name[$lang]?>"></i>
+                      <p class="option lang-<?=$lang?> editable"><?=str_replace("\n", "<br>", $option->text->$lang)?></p>
+                    </div>
+                  <?php } // Texts ?>
+                  </fieldset>
                 <?php } // Texts ?>
               </fieldset>
             <?php } // Items ?>

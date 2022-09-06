@@ -73,22 +73,38 @@ class SignupAdminController extends Controller {
         }
         $page->sections[$post->section_id] = $section;
         break;
-      case 'text_input': // Text input
+      case 'paragraph':   // Paragraph
+      case 'text_input':  // Text Input
+      case 'text_area':   // Text Area
+      case 'checkbox':    // Checkbox
+      case 'date':        // Date
+      case 'telephone':   // Telephone
+      case 'email':       // Email
+      case 'radio':       // Radio
+        // Check section exists
         if(!isset($page->sections[$post->section_id])){
           $this->jsonOutput([
             'error' => "No section with id:$post->section_id on page:$post->page_id",
           ], '400');
           exit;
-        } 
+        }
         $section = $page->sections[$post->section_id];
+        // Create item array if not already there
         if(!isset($section->items)){
           $section->items = [];
-        } 
+        }
+        // Set item values
         $item = [
-          'type' => 'text_input',
+          'type' => $post->type,
           'text' => $post->text,
-          'infosys_id' => $post->infosys_id,
         ];
+        if(isset($post->infosys_id)){
+          $item['infosys_id'] = $post->infosys_id;
+        }
+        if($post->type == 'radio' && isset($post->options)) {
+          $item['options'] = $post->options;
+        }
+        // Insert item into section
         if(isset($section->items[$post->item_id])) {
           array_splice($section->items, $post->item_id, 0, [$item]);  
         } else {
@@ -97,9 +113,50 @@ class SignupAdminController extends Controller {
         $page->sections[$post->section_id] = $section;
         break;
 
+      case 'option': // Radio/Select Option
+        // Check section exists
+        if(!isset($page->sections[$post->section_id])){
+          $this->jsonOutput([
+            'error' => "No section with id:$post->section_id on page:$post->page_id",
+          ], '400');
+          exit;
+        }
+        // Check Item exists
+        if(!isset($page->sections[$post->section_id]->items[$post->item_id])) {
+          $this->jsonOutput([
+            'error' => "No item with id:$post->item_id in section:$post->section_id on page:$post->page_id",
+          ], '400');
+          exit;
+        }
+        $item = $page->sections[$post->section_id]->items[$post->item_id];
+        // Check item is a type that has options
+        if ($item->type != 'radio' && $item->type != 'select') {
+          $this->jsonOutput([
+            'error' => "Item of type:$item->type does not have options",
+          ], '400');
+          exit;
+        }
+        // Create option array if not already there
+        if(!isset($item->options)){
+          $item->options = [];
+        }
+        // Set option values
+        $option = [
+          'value' => $post->value,
+          'text' => $post->text,
+        ];
+        // Insert option into item
+        if(isset($item->options[$post->option_id])) {
+          array_splice($item->options, $post->option_id, 0, [$option]);  
+        } else {
+          $item->options[$post->option_id] = $option;
+        }
+        $page->sections[$post->section_id]->items[$post->item_id] = $item;
+        break;
+
       default:
         $this->jsonOutput([
-          'error' => 'Unknown element type',
+          'error' => "Unknown element type: $post->type",
         ], '404');
         exit;
     }
@@ -124,18 +181,11 @@ class SignupAdminController extends Controller {
       exit;
     } 
 
-    if(!isset($post->lang)) {
-      $this->jsonOutput([
-        'error' => 'Language not set',
-      ], '400');
-      exit;
-    }
-  
     $page_file = file_get_contents($page_file_path);
     $page = json_decode($page_file);
 
     // Check IDs - Section
-    if (in_array($post->type, ['infosys_id','item','headline'])){
+    if (in_array($post->type, ['infosys_id','item','headline', 'option', 'value'])){
       if(!isset($post->section_id)) {
         $this->jsonOutput([
           'error' => 'No Section ID',
@@ -151,7 +201,7 @@ class SignupAdminController extends Controller {
     }
 
     // Check IDs - Item
-    if (in_array($post->type, ['infosys_id','item'])){
+    if (in_array($post->type, ['infosys_id','item', 'option', 'value'])){
       if(!isset($post->item_id)) {
         $this->jsonOutput([
           'error' => 'No Item ID',
@@ -166,8 +216,24 @@ class SignupAdminController extends Controller {
       }
     }
 
+    // Check IDs - Option
+    if (in_array($post->type, ['option', 'value'])){
+      if(!isset($post->option_id)) {
+        $this->jsonOutput([
+          'error' => 'No Option ID',
+        ], '400');
+        exit;
+      }
+      if(!isset($page->sections[$post->section_id]->items[$post->item_id]->options[$post->option_id])) {
+        $this->jsonOutput([
+          'error' => "Page:$post->page_id Section:$post->section_id Item:$post->item_id Option:$post->option_id doesn't exist",
+        ], '400');
+        exit;
+      }
+    }
+
     // Check Language
-    if (in_array($post->type, ['item', 'headline', 'title'])){
+    if (in_array($post->type, ['item', 'headline', 'title', 'option'])){
       if(!isset($post->lang)) {
         $this->jsonOutput([
           'error' => 'No Language(lang) Value',
@@ -195,10 +261,16 @@ class SignupAdminController extends Controller {
       case 'infosys_id':
         $page->sections[$post->section_id]->items[$post->item_id]->infosys_id = $post->text;
         break;
-
+      case 'option':
+        $page->sections[$post->section_id]->items[$post->item_id]->options[$post->option_id]->text->{$post->lang} = $post->text;
+        break;
+      case 'value':
+        $page->sections[$post->section_id]->items[$post->item_id]->options[$post->option_id]->value = $post->text;
+        break;
+        
       default:
         $this->jsonOutput([
-          'error' => 'Unknown element type',
+          'error' => "Unknown element type: $post->type",
         ], '400');
         exit;
     }

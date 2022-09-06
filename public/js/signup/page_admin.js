@@ -13,40 +13,51 @@ class SignupPageAdmin {
   static editables_history = [];
 
   static context_menu_items = {
-    add_section: {
+    add$section: {
       text: "Tilføj Sektion",
       need: 'page',
     },
-    add_p: {
+    add$paragraph: {
       text: "Tilføj Tekstelement",
       need: 'section',
     },
-    add_input_text: {
+    add$text_input: {
       text: "Tilføj Tekst input",
       need: 'section',
     },
-    add_checkbox: {
+    add$text_area: {
+      text: "Tilføj Stort Tekstfelt",
+      need: 'section',
+    },
+    add$checkbox: {
       text: "Tilføj Checkboks",
       need: 'section',
+    },
+    add$date: {
+      text: "Tilføj Dato",
+      need: 'section',
+    },
+    add$telephone: {
+      text: "Tilføj Telefonnummer",
+      need: 'section',
+    },
+    add$email: {
+      text: "Tilføj Email",
+      need: 'section',
+    },
+    add$radio: {
+      text: "Tilføj Radioknapper",
+      need: 'section',
+    },
+    add$radio_option: {
+      text: "Tilføj Valgmulighed",
+      need: 'item:radio',
     },
   }
   
   static init() {
-    let selectables = jQuery(SignupPageAdmin.selection_string)
-
     // Selection
-    selectables.click(function(event) {
-      SignupPageAdmin.setSelection(event.target);
-    })
-
-    // Hover
-    selectables.mouseenter(function(event){
-      SignupPageAdmin.setSelection(event.target, 'hovering', 'current_hover');
-    });
-    selectables.mouseleave(function(event){
-      SignupPageAdmin.setSelection(null, 'hovering', 'current_hover');
-      jQuery(event.relatedTarget).trigger('mouseenter');
-    });
+    SignupPageAdmin.initSelectables(jQuery(':root'));
 
     // Editables
     this.initEditables(jQuery(':root'));
@@ -73,8 +84,14 @@ class SignupPageAdmin {
     jQuery('.fold-button').click(function(event){
       jQuery(event.target).closest('div.page-wrapper').toggleClass('closed');
     });
+    jQuery('.page-wrapper').dblclick(function(event){
+      jQuery(event.delegateTarget).toggleClass('closed');
+    });
 
+    //---------------------------------------------------------------------------------
     // Context menu
+    //---------------------------------------------------------------------------------
+    // Create context menu
     let context_menu = jQuery('<div id="contextmenu" class="closed"></div>');
     for(const [id, def] of Object.entries(this.context_menu_items)){
       let menuitem = jQuery('<div class="menu-item"><div>');
@@ -85,6 +102,7 @@ class SignupPageAdmin {
     }
     jQuery('body').append(context_menu);
 
+    // Opening context menu
     jQuery('#page-admin-container').contextmenu(function(event) {
       if(jQuery(event.target).hasClass('editable')) return true;
 
@@ -94,31 +112,69 @@ class SignupPageAdmin {
       });
       context_menu.removeClass('closed').addClass('open');
       let selection = SignupPageAdmin.current_selection;
-      let sected_id = selection ? selection.closest('fieldset').attr('id') : "";
+      let selected_id = selection ? selection.closest('fieldset').attr('id') : "";
+      let selected_type = selection ? selection.closest('fieldset.signup-page-item').attr('item-type') : "";
       context_menu.find('.menu-item').each(function (){
         let element = jQuery(this)
         let need = element.attr('need');
         if (need) {
-          sected_id.includes(need) ? element.show() : element.hide();
+          let [item, type] = need.split(":")
+          if (selected_id.includes(item) && (!type || type == selected_type)) {
+            element.show();
+          } else {
+            element.hide();
+          }
         }
       })
       //SignupPageAdmin.setSelection(event.target);
       return false;
     })
 
+    // Close context menu when clicking anywhere
     jQuery('html').click(function() {
       context_menu.removeClass('open').addClass('closed');
     });
 
+    // Clicking a context menu item
     jQuery('.menu-item').click(function (event){
-      let func = jQuery(event.target).attr('id');
-      if(typeof SignupPageAdmin[func] === 'function') {
-        SignupPageAdmin[func](event);
+      let [action, type] = jQuery(event.target).attr('id').split("$", 2);
+      if (action == 'add' && type == 'section') {
+        SignupPageAdmin.add_section();
+        return;
       }
+      if (action == 'add' && type == 'radio_option') {
+        SignupPageAdmin.add_option();
+        return;
+      }
+      if (action == 'add') {
+        SignupPageAdmin.insert_item(type);
+      } 
     })
   }
 
   // Selection
+  static initSelectables(element) {
+    // Finde selectables in element (including the element itself)
+    let selectables = element.find(this.selection_string)
+    if (element.is(this.selection_string)) {
+      selectables.add(element);
+    }
+
+    // Select item when clicked
+    selectables.click(function(event) {
+      SignupPageAdmin.setSelection(event.target);
+    })
+
+    // Highlight selectables when hovered 
+    selectables.mouseenter(function(event){
+      SignupPageAdmin.setSelection(event.target, 'hovering', 'current_hover');
+    });
+    selectables.mouseleave(function(event){
+      SignupPageAdmin.setSelection(null, 'hovering', 'current_hover');
+      jQuery(event.relatedTarget).trigger('mouseenter');
+    });
+  }
+
   static setSelection(element, css_class = 'selected', storage = 'current_selection') {
     this[storage] && this[storage].removeClass(css_class);
     if (!element) { // We are just unsetting the selection
@@ -138,7 +194,7 @@ class SignupPageAdmin {
       let history = SignupPageAdmin.editables_history;
       let ref = "" + history.length;
       element.attr('edit-ref', ref);
-      history[ref] = [element.text()];
+      history[ref] = [SignupPageAdmin.getText(element)];
     });
     editables.on('input', function(event) {
       SignupPageAdmin.element_change(event.target);
@@ -156,7 +212,16 @@ class SignupPageAdmin {
     });
     editables.on('paste', function(event) {
       event.preventDefault();
-      let plain_data = event.originalEvent.clipboardData.getData("text/plain");
+      let plain_data = "";
+      let html_data = event.originalEvent.clipboardData.getData("text/html")
+      if (html_data != "") {
+        let match = html_data.match(/<!--StartFragment-->(.+)<!--EndFragment-->/s);
+        match && (html_data = '<div>'+match[1]+'</div>');
+        plain_data = jQuery(html_data).text().replaceAll("\n","<br>");
+      } else {
+        plain_data = event.originalEvent.clipboardData.getData("text/plain");
+      }
+     
       let selection = window.getSelection().getRangeAt(0);
       let selection_node = selection.commonAncestorContainer;
       if (selection_node.nodeName == '#text') {
@@ -169,13 +234,24 @@ class SignupPageAdmin {
       }
       SignupPageAdmin.element_change(event.target);
     });
+    editables.dblclick(function(event){
+      event.stopPropagation() // prevent page from closing when double clicking editable text to seelect word etc.
+    });
+
+  }
+
+  // helper function to get text but preserve line breaks
+  static getText(element) {
+    let html = element.html();
+    html = html.replaceAll("<br>", "\n");
+    return jQuery('<div>'+html+'</div>').text();
   }
 
   // Element has changed
   static element_change(ele) {
     let element = jQuery(ele);
 
-    if (element.text() != this.editables_history[element.attr('edit-ref')][0]) {
+    if (this.getText(element) != this.editables_history[element.attr('edit-ref')][0]) {
       element.addClass('changed');
       if (!element.next().is('button')) {
         let button = jQuery('<button class="text-submit">Gem</button>');
@@ -202,6 +278,7 @@ class SignupPageAdmin {
 
   // Helper method for posting to infosys
   static post(slug, data, success) {
+    console.log(data);
     jQuery.ajax({
       type: "POST",
       url: "/signup/pages/"+slug,
@@ -216,7 +293,7 @@ class SignupPageAdmin {
   // Submit text update
   static text_submit(element) {
     !(element instanceof jQuery) && (element = jQuery(element)); // Make sure we have a jQuery element
-    if (element.text() == this.editables_history[element.attr('edit-ref')][0]) return; // Don't do anything if element hasn't changed
+    if (this.getText(element) == this.editables_history[element.attr('edit-ref')][0]) return; // Don't do anything if element hasn't changed
 
     let match = element.attr('class').match(/lang-(\w{2})/)
     let lang = match ? match[1] : 'none';
@@ -236,7 +313,13 @@ class SignupPageAdmin {
       case element.hasClass('infosys-id'):
         type = 'infosys_id'
         break;
-            
+      case element.hasClass('option'):
+        type = 'option'
+        break;
+      case element.hasClass('option-value'):
+        type = 'value'
+        break;
+                
       default:
         type = 'unknown';
         break;
@@ -252,14 +335,15 @@ class SignupPageAdmin {
     index.page    && (data.page_id = index.page);
     index.section && (data.section_id = index.section);
     index.item    && (data.item_id = index.item);
+    index.option  && (data.option_id = index.option);
 
     data.lang = lang;
     data.type = type;
-    data.text = element.text();
+    data.text = this.getText(element);
 
     this.post('edit-text', data, function() {
       let ref = element.attr('edit-ref');
-      SignupPageAdmin.editables_history[ref] = [element.text()];
+      SignupPageAdmin.editables_history[ref] = [SignupPageAdmin.getText(element)];
       element.removeClass('changed');
       element.next('button').remove();
     });
@@ -288,7 +372,7 @@ class SignupPageAdmin {
         <i class="icon-uk"></i>
         <h2 class="section-headline lang-en editable">${headline_en}</h2>
       </div>
-      <div class="headline-wrapper selectable lang-dk">
+      <div class="headline-wrapper selectable lang-da">
         <i class="icon-dk"></i>
         <h2 class="section-headline lang-da editable">${headline_da}</h2>
       </div>
@@ -303,6 +387,7 @@ class SignupPageAdmin {
       index = isNaN(match) ? 0 : match + 1;
       insert = function () {
         new_section.insertAfter(placement_section);
+        // Update id of all following sections
         let current = new_section
         while ((current = current.next()).length > 0) {
           index++;
@@ -330,11 +415,11 @@ class SignupPageAdmin {
     this.post('add-element', data, function() {
         insert();
         SignupPageAdmin.initEditables(new_section);
+        SignupPageAdmin.initSelectables(new_section);
     });
   }
-
-  // Input Text
-  static add_input_text() {
+  // Insert Item
+  static insert_item(type) {
     if (!this.current_selection) return;
 
     let section = this.current_selection.closest('fieldset.signup-page-section');
@@ -342,22 +427,27 @@ class SignupPageAdmin {
     let page_id = section.attr('id').match(/page:(\w+)/)[1];
     let section_id = section.attr('id').match(/section:(\w+)/)[1];
     let item_id = 0;
-    let type = 'text_input';
     let infosys_id = 'unknown';
+    
+    // Special behavior for paragraph
+    if (type == 'paragraph') infosys_id = undefined;
 
-    let new_item = jQuery('<fieldset class="signup-page-item"></fieldset>');
+    let new_item = jQuery('<fieldset class="signup-page-item" item-type="'+type+'"></fieldset>');
     let legend = jQuery('<legend></legend>');
-    legend.append(type + ' : <span class="infosys-id editable">'+infosys_id+'<span>');
+    legend.append(type);
+    if (infosys_id != undefined) {
+      legend.append(' : <span class="infosys-id editable">'+infosys_id+'<span>');
+    }
     new_item.append(legend);
 
-    let text_en = 'New Text Input';
-    let text_da = 'Nyt Tekstindput';
+    let text_en = 'New Item';
+    let text_da = 'Nyt Element';
     new_item.append(`
       <div class="item-wrapper selectable lang-en">
         <i class="icon-uk"></i>
         <p class="item lang-en editable">${text_en}</p>
       </div>
-      <div class="item-wrapper selectable lang-dk">
+      <div class="item-wrapper selectable lang-da">
         <i class="icon-dk"></i>
         <p class="item lang-da editable">${text_da}</p>
       </div>
@@ -371,11 +461,12 @@ class SignupPageAdmin {
       item_id = isNaN(match) ? 0 : match + 1;
       insert = function () {
         new_item.insertAfter(placement_item);
+        // Update all following item's IDs
         let current = new_item
         let index = item_id;
         while ((current = current.next()).length > 0) {
           index++;
-          current.attr('id', 'page:'+page_id+'--section:'+section_id+'--item:'+index);
+          new_item.attr('id', 'page:'+page_id+'--section:'+section_id+'--item:'+index);
         }
       };
     } else {
@@ -394,12 +485,87 @@ class SignupPageAdmin {
         en: text_en,
         da: text_da,
       },
-      infosys_id: infosys_id,
+    }
+    if (infosys_id != undefined) {
+      data.infosys_id = infosys_id;
     }
 
     this.post('add-element', data, function() {
         insert();
         SignupPageAdmin.initEditables(new_item);
+    });
+  }
+
+  // Add option
+  static add_option () {
+    if (!this.current_selection) return;
+
+    let item = this.current_selection.closest('fieldset.signup-page-item');
+    if (!item) return;
+    let page_id = item.attr('id').match(/page:(\w+)/)[1];
+    let section_id = item.attr('id').match(/section:(\d+)/)[1];
+    let item_id = item.attr('id').match(/item:(\d+)/)[1];
+    let option_id = 0;
+    let value = 'unknown';
+    
+    let new_option = jQuery('<fieldset class="signup-page-option"></fieldset>');
+    let legend = jQuery('<legend>option : </legend>');
+    legend.append('<span class="option-value editable">'+value+'<span>');
+
+    new_option.append(legend);
+
+    let text_en = 'New Option';
+    let text_da = 'Ny Mulighed';
+    new_option.append(`
+      <div class="option-wrapper selectable lang-en">
+        <i class="icon-uk"></i>
+        <p class="option lang-en editable">${text_en}</p>
+      </div>
+      <div class="option-wrapper selectable lang-da">
+        <i class="icon-dk"></i>
+        <p class="option lang-da editable">${text_da}</p>
+      </div>
+    `);
+
+    let insert = null
+    let placement_option = this.current_selection.closest('fieldset.signup-page-option');
+    if (placement_option.length) { // Do we have an option selected (or anything inside)
+      let id = placement_option.attr('id');
+      let match = parseInt(id.match(/page:[\w\-]+--section:\d+--item:\d+--option:(\d+)/)[1]);
+      option_id = isNaN(match) ? 0 : match + 1;
+      insert = function () {
+        new_option.insertAfter(placement_option);
+        // Update all following option's IDs
+        let current = new_option
+        let index = option_id;
+        while ((current = current.next()).length > 0) {
+          index++;
+          current.attr('id', 'page:'+page_id+'--section:'+section_id+'--item:'+option_id+'--option:'+index);
+        }
+      };
+    } else {
+      option_id = item.children('fieldset').length;
+      insert = function () {item.append(new_option);};
+    }
+
+    new_option.attr('id', item.attr('id')+'--option:'+option_id);
+
+    let data = {
+      type: 'option',
+      page_id: page_id,
+      section_id: section_id,
+      item_id: item_id,
+      option_id: option_id,
+      value: value,
+      text: {
+        en: text_en,
+        da: text_da,
+      },
+    }
+
+    this.post('add-element', data, function() {
+        insert();
+        SignupPageAdmin.initEditables(new_option);
     });
   }
 }

@@ -13,21 +13,21 @@
             "headline": null,
             "items": [
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "The sign up for activities and wear is closed, but you can sign up for food until March 21 2022. After the 21st of March and until the end of Fastaval you can still sign up for entry and accommodation, but you can no longer sign up for activities & order food or wear.\nDuring your registration, you will sign up as either a participant or an organizer if you are helping out at Fastaval.\nYou can always return to previous parts of the registration, if you have any changes. You can also finish your registration and later log in to make changes.\nAll changes in activities, food and wear need to be made before March 11th. ",
                         "da": "Tilmeldingen for aktiviteter og wear er lukket, men du kan tilmelde dig mad frem til d. 21. Marts. Efter den 21. marts og til Fastaval slutter, kan du stadig tilmelde dig Fastaval, men ikke aktiviteter, bestille mad eller wear.\nUndervejs i tilmeldingen skal du tilmelde dig som deltager eller arrang\u00f8r, hvis du arrangerer.\nDu kan g\u00e5 tilbage i tilmeldingen for at lave \u00e6ndringer undervejs. Du kan ogs\u00e5 f\u00e6rdigg\u00f8re din tilmelding og s\u00e5 lave \u00e6ndringer, eksempelvis i aktiviteter efterf\u00f8lgende ved at logge ind igen.\nAlle rettelser til aktiviteter og wear skal v\u00e6re foretaget inden 11. marts."
                     }
                 },
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "Last day of payment is also March 11th or right after sign-up.\nYour payment will be transferred back to you, in the unfortunate case that Fastaval gets cancelled or postponed.",
                         "da": "Betalingen skal ogs\u00e5 ske senest 11. marts eller straks efter tilmelding.\nHvis Fastaval, mod alle forventninger, skulle blive aflyst eller omgjort til et online arrangement, vil din betaling blive krediteret."
                     }
                 },
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "You can always write us at [email]info@fastaval.dk[\/email]!",
                         "da": "L\u00f8ber du ind i problemer i l\u00f8bet af tilmeldingen kan du altid skrive til [email]info@fastaval.dk[\/email]!"
@@ -42,14 +42,14 @@
             },
             "items": [
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "You are not registered as a participant of Fastaval 2022, until you receive your confirmation email. If you do NOT receive the confirmation email from us, please E-mail us at [email]info@fastaval.dk[\/email], so that we can resend it to you or figure out where the error might be.",
                         "da": "Du er f\u00f8rst registreret som deltager p\u00e5 Fastaval 2022, n\u00e5r du modtager din registreringsmail. Hvis du IKKE modtager en registreringsmail fra os, s\u00e5 skriv til os p\u00e5 [email]info@fastaval.dk[\/email], s\u00e5 kan vi eftersende den, eller finde ud af hvad fejlen kan v\u00e6re."
                     }
                 },
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "It is important to keep an eye on any mails from Fastaval, as updates, participant sheet etc. will be send on mail before Fastaval.",
                         "da": "Det er ogs\u00e5 vigtigt at holde et v\u00e5gent \u00f8je med mails fra os, hvor vi sender opdateringer, deltagerseddel og anden information ud op til Fastaval."
@@ -64,49 +64,49 @@
             },
             "items": [
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "When you sign up for Fastaval, or you sign up your child, you agree to: All information you give us in the following sign up can be accessed by the following persons:",
                         "da": "N\u00e5r du tilmelder dig eller dit barn Fastaval, tilkendegiver du at v\u00e6re indforst\u00e5et med: "
                     }
                 },
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "The chairman and treasurer of Alea, the Bunker of Fastaval 2022 and the Infonauts on Fastaval 2022. Furthermore necessary information can be passed on to other relevant Fastaval-organizers (e.g. group-planners and scenario managers). Only information relevant to the organizers\u2019 work regarding Fastaval will be passed on to them.",
                         "da": "Samtlige af de informationer du giver os i tilmeldingen vil kunne tilg\u00e5s af f\u00f8lgende: Aleas formand og kasserer, Fastavals Bunker 2022 og Fastavals Information. Derudover kan n\u00f8dvendige informationer videregives til \u00f8vrige relevante Fastaval-arrang\u00f8rer (eks. holdl\u00e6ggerne og spillederansvarlige). Kun information der er n\u00f8dvendig for arrang\u00f8rernes arbejde i forbindelse med Fastaval videresgives til disse."
                     }
                 },
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "Your private information will be stored by Alea in a secured online database. Name, address and contact information will be stored, even after Fastaval, because Alea\u2019s membership of Bifrost requires that these things can be provided for each member, regarding Bifrost\u2019s collection of membership funds and insurance.",
                         "da": "Dine private oplysninger opbevares af Alea i en sikret online database. Navn, adresse og kontaktoplysninger opbevares, ogs\u00e5 efter Fastaval, fordi Aleas medlemskab af Bifrost kr\u00e6ver, at dette kan oplyses for hvert medlem i forbindelse med Bifrosts indhentning af medlemsst\u00f8tte samt i forsikrings\u00f8jemed."
                     }
                 },
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "Information about your health will be deleted immediately after Fastaval 2022. We ask you to please only provide essential information about your health.",
                         "da": "Dine helbredsinformationer slettes umiddelbart efter afvikling af Fastaval 2022. Du bedes om kun at oplyse absolut n\u00f8dvendige helbredsoplysninger."
                     }
                 },
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "Because of economic law regulations, Alea will store your information up to five years (except information about health). After this, all information will be anonymized and hereafter only data for statistics will be stored; as a minimum, names, addresses and contact information will be deleted. Alea is responsible for managing your information correctly.",
                         "da": "Af regnskabsm\u00e6ssige \u00e5rsager opbevarer Alea dine informationer i op til fem \u00e5r (undtagen helbredsoplysninger). Herefter anonymiseres samtlige informationer og der gemmes derefter kun data som kan bruges til statistik; som minimum slettes navne, adresser og kontaktoplysninger. Alea er ansvarlige for, at dine oplysninger behandles korrekt."
                     }
                 },
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "If you sign up you child you also consent to you being the last caretaker of the preservation and handling of your child\u2019s information. If you are 17 or younger your parent have to authorize your sign up.",
                         "da": "Tilmelder du dit barn tilkendegiver du, at v\u00e6re sidste ansvarshavende for korrekt opbevaring og h\u00e5ndtering af informationerne givet i tilmeldingen. Er du under 18 skal din for\u00e6ldremyndighedshaver eller v\u00e6rge godkende din tilmelding."
                     }
                 },
                 {
-                    "type": "p",
+                    "type": "paragraph",
                     "text": {
                         "en": "If you wish to get your data deleted, you can always contact Alea at [email]alea@fastaval.dk[\/email]",
                         "da": "\u00d8nsker du data slettet, kan du altid rette henvendelse til Alea p\u00e5 [email]alea@fastaval.dk[\/email]"

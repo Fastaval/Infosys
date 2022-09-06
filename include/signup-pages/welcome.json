@@ -38,6 +38,109 @@
                         "da": "Kaldenavn"
                     },
                     "infosys_id": "nickname"
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "The deadline for name-tags has been exceeded and the Nickname is therefore no longer in use.",
+                        "da": "Deadline for navneskilte er overskredet og kaldenavn-feltet er derfor ikke l\u00e6ngere i brug."
+                    }
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Address",
+                        "da": "Adresse"
+                    },
+                    "infosys_id": "adresse1"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "",
+                        "da": ""
+                    },
+                    "infosys_id": "adresse2"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Post code",
+                        "da": "Postnr."
+                    },
+                    "infosys_id": "postnummer"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "City",
+                        "da": "By"
+                    },
+                    "infosys_id": "by"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Country",
+                        "da": "Land"
+                    },
+                    "infosys_id": "land"
+                },
+                {
+                    "type": "telephone",
+                    "text": {
+                        "en": "Mobile",
+                        "da": "Mobil"
+                    },
+                    "infosys_id": "mobiltlf"
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I will bring a cell phone to Fastaval and can\nbe contacted by phone\n(unfortunately Fastaval SMS-alerts do not work with non-Danish phones) ",
+                        "da": "Jeg medbringer mobil p\u00e5 Fastaval og vil gerne have updates ang. spil og\nanden info, samt p\u00e5mindelser om spilstart\n(Bem\u00e6rk at sms-funktionen kun fungerer med danske telefonnumre)."
+                    },
+                    "infosys_id": "medbringer_mobil"
+                },
+                {
+                    "type": "date",
+                    "text": {
+                        "en": "Birthdate",
+                        "da": "F\u00f8dselsdato"
+                    },
+                    "infosys_id": "birthdate"
+                },
+                {
+                    "type": "email",
+                    "text": {
+                        "en": "Email",
+                        "da": "Email"
+                    },
+                    "infosys_id": "email"
+                },
+                {
+                    "type": "email",
+                    "text": {
+                        "en": "Email (repeat)",
+                        "da": "Email (gentag)"
+                    },
+                    "infosys_id": "email-confirm"
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I am at Fastaval with my club\/school\t\t\t",
+                        "da": "Jeg er p\u00e5 Fastaval med min klub\/ungdomsskole\t\t\t"
+                    },
+                    "infosys_id": "with_club"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Name of club\/school",
+                        "da": "Navn p\u00e5 klub\/ungdomsskole\t\t\t"
+                    },
+                    "infosys_id": "ungdomsskole"
                 }
             ]
         },
@@ -45,13 +148,64 @@
             "headline": {
                 "en": "Choose visitor type",
                 "da": "V\u00e6lg deltagertype"
-            }
+            },
+            "items": [
+                {
+                    "type": "radio",
+                    "text": {
+                        "en": "Which participant type are you?",
+                        "da": "Hvilken deltagertype er du? "
+                    },
+                    "infosys_id": "participant",
+                    "options": [
+                        {
+                            "value": "deltager",
+                            "text": {
+                                "en": "I am a participant",
+                                "da": "Jeg er deltager"
+                            }
+                        },
+                        {
+                            "value": "digital",
+                            "text": {
+                                "en": "I participate online (Read more on next page)",
+                                "da": "Jeg deltager digitalt (L\u00e6s mere p\u00e5 n\u00e6ste side)"
+                            }
+                        },
+                        {
+                            "value": "organizer",
+                            "text": {
+                                "en": "I am an organizer, writer or board game designer etc.",
+                                "da": "Jeg er arrang\u00f8r, forfatter eller br\u00e6tspilsdesigner m.m."
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         {
             "headline": {
                 "en": "Your health",
                 "da": "Sygdomme & helbred"
-            }
+            },
+            "items": [
+                {
+                    "type": "telephone",
+                    "text": {
+                        "en": "Emergency phone number\n(which we can contact if e.g. you're hurt)",
+                        "da": "N\u00f8dkontakt telefonnummer\n(som vi kan kontakte hvis du f.eks. er kommet til skade)"
+                    },
+                    "infosys_id": "emergency"
+                },
+                {
+                    "type": "text_area",
+                    "text": {
+                        "en": "Please provide any necessary information about your health that you deem relevant for us to know about\t\t\t",
+                        "da": "Angiv venligst informationer om dit helbred, som kan v\u00e6re vigtige i tilf\u00e6lde af uheld, eller sygdom"
+                    },
+                    "infosys_id": "health_note"
+                }
+            ]
         }
     ]
 }

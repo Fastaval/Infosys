@@ -3,7 +3,7 @@ Settings
 ---------------------------------------------------------*/
 div#page-admin-container {
   --selection-color: rgba(0,0,255,.5);
-  --hover-color: rgba(0,0,255,.2);
+  --hover-color: rgba(0,0,255,.1);
 }
 /*---------------------------------------------------------
 Toolbar
