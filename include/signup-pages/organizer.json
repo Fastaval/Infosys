@@ -1,0 +1,192 @@
+{
+    "order": 3,
+    "slug": {
+        "en": "Organizer",
+        "da": "Arrang\u00f8r"
+    },
+    "title": {
+        "en": "Special information for organizers, writers and designers",
+        "da": "Specielt for arrang\u00f8rer, forfattere og designere"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "\n",
+                "da": "\n"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "On behalf of the participants: Thank you so much for your hard work at Fastaval 2022!",
+                        "da": "P\u00e5 vegne af alle deltagerne: Tusind tak for dit engagement i Fastaval 2022!"
+                    }
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "What is your organizational area at Fastaval?",
+                        "da": "Hvad er dit arrang\u00f8romr\u00e5de?\t\t\t"
+                    },
+                    "infosys_id": "arbejdsomraade"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "If you are a writer\/board game designer, what is the title of your scenario\/game?",
+                        "da": "Hvis du er forfatter\/br\u00e6tspilsdesigner, hvad er titlen p\u00e5 dit scenarie\/spil"
+                    },
+                    "infosys_id": "scenarie"
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Work Category\n",
+                "da": "Arbejdskategori\n"
+            },
+            "items": [
+                {
+                    "type": "radio",
+                    "text": {
+                        "en": "What kind of work are you contributing to Fastaval with?\n",
+                        "da": "Hvilken slags arbejde udf\u00f8rer du for Fastaval\n"
+                    },
+                    "infosys_id": "organizercategory",
+                    "options": [
+                        {
+                            "value": "2",
+                            "text": {
+                                "en": "I am an organizer\n",
+                                "da": "Jeg er arrang\u00f8r\n"
+                            }
+                        },
+                        {
+                            "value": "4",
+                            "text": {
+                                "en": "I am a writer or board game designer\n",
+                                "da": "Jeg er forfatter eller br\u00e6tspilsdesigner\n"
+                            }
+                        },
+                        {
+                            "value": "3",
+                            "text": {
+                                "en": "I am an infonaut\n",
+                                "da": "Jeg er infonaut\n"
+                            }
+                        },
+                        {
+                            "value": "6",
+                            "text": {
+                                "en": "I am a dirtbuster\n",
+                                "da": "Jeg er dirtbuster\n"
+                            }
+                        },
+                        {
+                            "value": "9",
+                            "text": {
+                                "en": "I work in the kiosk\n",
+                                "da": "Jeg arbejder i kiosken\n"
+                            }
+                        },
+                        {
+                            "value": "11",
+                            "text": {
+                                "en": "I work at Otto's Coffee House\n",
+                                "da": "Jeg arbejder i kaffekroen\n"
+                            }
+                        },
+                        {
+                            "value": "13",
+                            "text": {
+                                "en": "I work at the bar\n",
+                                "da": "Jeg st\u00e5r i baren\n"
+                            }
+                        },
+                        {
+                            "value": "14",
+                            "text": {
+                                "en": "I work at the Oasis\n",
+                                "da": "Jeg arbejder i Oasen\n"
+                            }
+                        },
+                        {
+                            "value": "12",
+                            "text": {
+                                "en": "I am a Fastaval Junior organizer\n",
+                                "da": "Jeg er Fastaval Junior arrang\u00f8r"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "About discounts",
+                "da": "Om rabatterne\n"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "Fastaval is forever grateful for the great amount of work done by our many writers, designers and organizers. Therefore we offer some discount to our lovely organizers.\n Organizers under 18 receive both the youth and organizer discount on entrance.",
+                        "da": "Fastaval er dybt taknemlige for det arbejde du l\u00e6gger i at f\u00e5 vores alle sammen Val p\u00e5 benene igen! Derfor tilbyder vi ogs\u00e5 lidt rabat til vores dejlige arrang\u00f8rer.\n Arrang\u00f8rer under 18 f\u00e5r b\u00e5de arrang\u00f8r- og ungdomsrabat p\u00e5 partout."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "[b]In addition, organizers and writers who work more than 48 hours before\/after Fastaval and \/or 24 hours during Fastaval will receive:[\/b]\n",
+                        "da": "[b]Arrang\u00f8rer og forfattere\/designere der arbejder mere end 48 timer f\u00f8r\/efter Fastaval og\/eller 24 timer p\u00e5 Fastaval modtager derudover:[\/b]\n"
+                    }
+                },
+                {
+                    "type": "list",
+                    "text": {
+                        "en": "Discount on entrance and accommodation\nDiscount on t-shirts and at sales venues                    ",
+                        "da": "Rabat p\u00e5 indgang og overnatning\nRabat p\u00e5 t-shirts og ved salgssteder"
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "One game, multiple writers?",
+                "da": "Et scenarie\/br\u00e6tspil, flere forfattere\/designere?"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "All co-writers have the same discounts, as written above.",
+                        "da": "Alle medforfattere og designere f\u00e5r samme rabatmuligheder, som angivet ovenfor."
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Dormitory for the organizers",
+                "da": "Arrang\u00f8rsovesalen"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "This year, you can get a spot in the organizer dormitory (organizers with shifts during Fastaval will be prioritized, in case there is a lack of spots)",
+                        "da": "I \u00e5r tilbydes en soveplads i arrang\u00f8rsovesalen (arrang\u00f8rer med j\u00e6vnlige vagter under Fastaval prioriteres, hvis der er mangel p\u00e5 pladser) "
+                    }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I would like a spot in the organizer dormitory\t\t\t",
+                        "da": "Jeg vil gerne have en plads i arrang\u00f8rsovesalen\t\t\t"
+                    },
+                    "infosys_id": "sovesal"
+                }
+            ]
+        }
+    ]
+}

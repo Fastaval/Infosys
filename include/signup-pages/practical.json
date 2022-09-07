@@ -1,0 +1,19 @@
+{
+    "order": 4,
+    "slug": {
+        "en": "Practical",
+        "da": "Praktisk"
+    },
+    "title": {
+        "en": "Practical stuff",
+        "da": "Praktisk"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "Entry (which days will you participate at Fastaval)",
+                "da": "Entré (hvilke dage deltager du på Fastaval)"
+            }
+        }
+    ]
+}

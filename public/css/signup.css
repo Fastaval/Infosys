@@ -16,10 +16,25 @@ div#page-admin-toolbar {
   z-index: 1;
   padding: 5px;
   background-color: white;
+  display: flex;
+  gap: 5px;
 }
 
 div#page-admin-toolbar > * {
   margin: 0px;
+}
+
+div#page-admin-toolbar button{
+  background-color: #fff;
+  border: 1px solid #ccc;
+  height: 30px;
+  border-radius: 4px;
+  font-size: 1.2em;
+  padding: 0px .5em;
+}
+
+div#page-admin-toolbar button#bold{
+  font-weight: bold;
 }
 /*---------------------------------------------------------
 Main section
@@ -91,6 +106,7 @@ legend.selected::before {
 
 div#page-admin-container .editable {
   cursor: text;
+  min-width: 1em;
 }
 div#page-admin-container .editable:hover {
   background-color: unset;

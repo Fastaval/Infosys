@@ -1,11 +1,11 @@
 "using strict";
 
 jQuery(function() {
-  SignupPageAdmin.init();
+  SignupAdminPages.init();
 });
 
 
-class SignupPageAdmin {
+class SignupAdminPages {
   static selection_string = "fieldset, .selectable";
   
   static current_selection = null;
@@ -53,32 +53,16 @@ class SignupPageAdmin {
       text: "Tilføj Valgmulighed",
       need: 'item:radio',
     },
+    add$list: {
+      text: "Tilføj liste",
+      need: 'section',
+    },
   }
   
   static init() {
     // Selection
-    SignupPageAdmin.initSelectables(jQuery(':root'));
-
-    // Editables
+    this.initSelectables(jQuery(':root'));
     this.initEditables(jQuery(':root'));
-
-    // Language selection
-    jQuery("select#lang").change(function(event){
-      switch (event.target.value) {
-        case "da":
-          jQuery(".lang-en").hide();
-          jQuery(".lang-da").show();
-          break;
-        case "en":
-          jQuery(".lang-da").hide();
-          jQuery(".lang-en").show();
-          break;
-        case "both":
-          jQuery(".lang-da").show();
-          jQuery(".lang-en").show();
-          break;
-      }
-    });
 
     // Page open/close
     jQuery('.fold-button').click(function(event){
@@ -111,7 +95,7 @@ class SignupPageAdmin {
         top: event.clientY
       });
       context_menu.removeClass('closed').addClass('open');
-      let selection = SignupPageAdmin.current_selection;
+      let selection = SignupAdminPages.current_selection;
       let selected_id = selection ? selection.closest('fieldset').attr('id') : "";
       let selected_type = selection ? selection.closest('fieldset.signup-page-item').attr('item-type') : "";
       context_menu.find('.menu-item').each(function (){
@@ -139,15 +123,15 @@ class SignupPageAdmin {
     jQuery('.menu-item').click(function (event){
       let [action, type] = jQuery(event.target).attr('id').split("$", 2);
       if (action == 'add' && type == 'section') {
-        SignupPageAdmin.add_section();
+        SignupAdminPages.add_section();
         return;
       }
       if (action == 'add' && type == 'radio_option') {
-        SignupPageAdmin.add_option();
+        SignupAdminPages.add_option();
         return;
       }
       if (action == 'add') {
-        SignupPageAdmin.insert_item(type);
+        SignupAdminPages.insert_item(type);
       } 
     })
   }
@@ -162,15 +146,15 @@ class SignupPageAdmin {
 
     // Select item when clicked
     selectables.click(function(event) {
-      SignupPageAdmin.setSelection(event.target);
+      SignupAdminPages.setSelection(event.target);
     })
 
     // Highlight selectables when hovered 
     selectables.mouseenter(function(event){
-      SignupPageAdmin.setSelection(event.target, 'hovering', 'current_hover');
+      SignupAdminPages.setSelection(event.target, 'hovering', 'current_hover');
     });
     selectables.mouseleave(function(event){
-      SignupPageAdmin.setSelection(null, 'hovering', 'current_hover');
+      SignupAdminPages.setSelection(null, 'hovering', 'current_hover');
       jQuery(event.relatedTarget).trigger('mouseenter');
     });
   }
@@ -181,7 +165,7 @@ class SignupPageAdmin {
       this[storage] == null;  
       return;
     }
-    this[storage] = jQuery(element).closest(SignupPageAdmin.selection_string);
+    this[storage] = jQuery(element).closest(SignupAdminPages.selection_string);
     this[storage].addClass(css_class);
     this[storage].context = document;
   }
@@ -191,22 +175,22 @@ class SignupPageAdmin {
     let editables = element.find('.editable').attr('contentEditable', true);
     editables.each(function() {
       let element = jQuery(this);
-      let history = SignupPageAdmin.editables_history;
+      let history = SignupAdminPages.editables_history;
       let ref = "" + history.length;
       element.attr('edit-ref', ref);
-      history[ref] = [SignupPageAdmin.getText(element)];
+      history[ref] = [SignupAdminPages.getText(element)];
     });
     editables.on('input', function(event) {
-      SignupPageAdmin.element_change(event.target);
+      SignupAdminPages.element_change(event.target);
     });
     editables.keydown(function(event) {
       //event.stopPropagation();
       if (event.key == "Enter" && (event.ctrlKey == true || jQuery(event.target).is('h1, h2, span'))) {
-        SignupPageAdmin.text_submit(event.target)
+        SignupAdminPages.text_submit(event.target)
         event.preventDefault();
       }
       if (event.key == "Escape") {
-        SignupPageAdmin.element_reset(event.target);
+        SignupAdminPages.element_reset(event.target);
         jQuery(event.target).blur();
       }
     });
@@ -215,6 +199,7 @@ class SignupPageAdmin {
       let plain_data = "";
       let html_data = event.originalEvent.clipboardData.getData("text/html")
       if (html_data != "") {
+        html_data = html_data.replaceAll("\n", "").replaceAll("<br>", "\n");
         let match = html_data.match(/<!--StartFragment-->(.+)<!--EndFragment-->/s);
         match && (html_data = '<div>'+match[1]+'</div>');
         plain_data = jQuery(html_data).text().replaceAll("\n","<br>");
@@ -222,23 +207,75 @@ class SignupPageAdmin {
         plain_data = event.originalEvent.clipboardData.getData("text/plain");
       }
      
-      let selection = window.getSelection().getRangeAt(0);
-      let selection_node = selection.commonAncestorContainer;
-      if (selection_node.nodeName == '#text') {
-        let text = selection_node.data;
-        let start = selection.startOffset;
-        let end = selection.endOffset;
-        selection_node.data = text.substring(0,start) + plain_data + text.substring(end);
-      } else {
-        selection_node.innerHTML = plain_data;
-      }
-      SignupPageAdmin.element_change(event.target);
+      SignupAdminPages.replace_selection(plain_data);
+      SignupAdminPages.element_change(event.target);
     });
     editables.dblclick(function(event){
       event.stopPropagation() // prevent page from closing when double clicking editable text to seelect word etc.
     });
-
   }
+
+  static replace_selection (replacement) {
+    let selection = window.getSelection().getRangeAt(0);
+    let selection_node = selection.commonAncestorContainer;
+    if (selection_node.nodeName == '#text' && jQuery(selection_node).closest('.editable').length == 1) {
+      let text = selection_node.data;
+      let start = selection.startOffset;
+      let end = selection.endOffset;
+      selection_node.data = text.substring(0,start) + replacement + text.substring(end);
+      selection_node = jQuery(selection_node).closest('.editable');
+    } else if(jQuery(selection_node).hasClass('editable')) {
+      // Get the start of selection
+      let start_node = selection.startContainer;
+      let start_index;
+      if (start_node == selection_node) {
+        start_index = selection.startOffset;
+      } else {
+        start_index = Array.from(selection_node.childNodes).indexOf(start_node) + 1;
+        start_node.data = start_node.data.substring(0, selection.startOffset);
+      }
+      // Get the end of selection
+      let end_node = selection.endContainer;
+      let end_index;
+      if (end_node == selection_node) {
+        end_index = selection.endOffset;
+      } else {
+        end_index = Array.from(selection_node.childNodes).indexOf(end_node);
+        end_node.data = end_node.data.substring(selection.endOffset);
+      }
+
+      // Remove any nodes completely inside selection
+      for(let i = start_index; i < end_index; i++) {
+        selection_node.removeChild(selection_node.childNodes[start_index]);
+      }
+
+      let fragment = new DocumentFragment();
+      let replacement_sections = replacement.split('<br>');
+      fragment.append(replacement_sections[0]);
+      for(let i = 1; i < replacement_sections.length; i++) {
+        fragment.append(document.createElement('br'));
+        fragment.append(replacement_sections[i]);
+      }
+      
+      // Insert replacement
+      if (selection_node.childNodes.length > start_index) {
+        selection_node.insertBefore(fragment, selection_node.childNodes[start_index]);
+      } else {
+        selection_node.append(fragment);
+      }
+    } else {
+      selection_node = SignupAdminPages.current_selection;
+      if (!selection_node) return;
+      if (selection_node.is('.editable')) {
+        selection_node.html(replacement);
+      } else {
+        selection_node = selection_node.find('.editable');
+        if (selection_node.length != 1) return;
+        selection_node.html(replacement);
+      }
+    }
+    SignupAdminPages.element_change(selection_node);
+  } 
 
   // helper function to get text but preserve line breaks
   static getText(element) {
@@ -257,7 +294,7 @@ class SignupPageAdmin {
         let button = jQuery('<button class="text-submit">Gem</button>');
         element.after(button);
         button.click(function() {
-          SignupPageAdmin.text_submit(jQuery(this).prev());
+          SignupAdminPages.text_submit(jQuery(this).prev());
         });
       }
     } else {
@@ -271,7 +308,7 @@ class SignupPageAdmin {
     element = jQuery(element);
     let ref = element.attr('edit-ref');
     let history = this.editables_history[ref][0];
-    element.text(history);
+    element.html(history.replaceAll('\n', '<br>'));
     element.removeClass('changed');
     element.next('button').remove();
   }
@@ -343,7 +380,7 @@ class SignupPageAdmin {
 
     this.post('edit-text', data, function() {
       let ref = element.attr('edit-ref');
-      SignupPageAdmin.editables_history[ref] = [SignupPageAdmin.getText(element)];
+      SignupAdminPages.editables_history[ref] = [SignupAdminPages.getText(element)];
       element.removeClass('changed');
       element.next('button').remove();
     });
@@ -414,8 +451,8 @@ class SignupPageAdmin {
 
     this.post('add-element', data, function() {
         insert();
-        SignupPageAdmin.initEditables(new_section);
-        SignupPageAdmin.initSelectables(new_section);
+        SignupAdminPages.initEditables(new_section);
+        SignupAdminPages.initSelectables(new_section);
     });
   }
   // Insert Item
@@ -429,8 +466,8 @@ class SignupPageAdmin {
     let item_id = 0;
     let infosys_id = 'unknown';
     
-    // Special behavior for paragraph
-    if (type == 'paragraph') infosys_id = undefined;
+    // Special behavior for paragraph and list
+    if (type == 'paragraph' || type == 'list') infosys_id = undefined;
 
     let new_item = jQuery('<fieldset class="signup-page-item" item-type="'+type+'"></fieldset>');
     let legend = jQuery('<legend></legend>');
@@ -492,7 +529,7 @@ class SignupPageAdmin {
 
     this.post('add-element', data, function() {
         insert();
-        SignupPageAdmin.initEditables(new_item);
+        SignupAdminPages.initEditables(new_item);
     });
   }
 
@@ -565,7 +602,7 @@ class SignupPageAdmin {
 
     this.post('add-element', data, function() {
         insert();
-        SignupPageAdmin.initEditables(new_option);
+        SignupAdminPages.initEditables(new_option);
     });
   }
 }

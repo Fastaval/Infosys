@@ -1,6 +1,11 @@
 <?php
 
 class SignupAdminController extends Controller {
+
+  protected $prerun_hooks = array(
+    array('method' => 'checkUser', 'exclusive' => true, 'methodlist' => []),
+  );
+
   /**
    * outputs json data and sets headers accordingly
    *
@@ -36,9 +41,12 @@ class SignupAdminController extends Controller {
     }
     ksort($pages);
     $this->page->signup_pages = $pages;
+
     $this->page->includeCSS('signup.css');
     $this->page->includeCss('fontello-ebe72605/css/idtemplate.css');
-    $this->page->registerEarlyLoadJS('signup/page_admin.js');
+
+    $this->page->registerEarlyLoadJS('signup/admin_pages.js');
+    $this->page->registerEarlyLoadJS('signup/admin_toolbar.js');
   }
 
   /**
@@ -81,6 +89,7 @@ class SignupAdminController extends Controller {
       case 'telephone':   // Telephone
       case 'email':       // Email
       case 'radio':       // Radio
+      case 'list':        // List
         // Check section exists
         if(!isset($page->sections[$post->section_id])){
           $this->jsonOutput([

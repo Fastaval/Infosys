@@ -3,7 +3,7 @@
 class InfosysSignupRender {
   static render_element(element, lang) {
     let html = "";
-    let text = this.process_text(element.text[lang]);
+    let text = InfosysTextPreprocessor.process_text(element.text[lang]);
     
     if(typeof this['render_'+element.type] === 'function') {
       let item = { 
@@ -90,7 +90,7 @@ class InfosysSignupRender {
   }
 
   static render_radio_option(id, index, element, lang) {
-    let text = this.process_text(element.text[lang])
+    let text = InfosysTextPreprocessor.process_text(element.text[lang])
     let checked = element.default ? "checked" : "";
     return `
       <div class="input-wrapper input-type-radio-option">
@@ -110,23 +110,13 @@ class InfosysSignupRender {
     `;
   }
 
-  // Preprocess text
-  static process_text(text) {
-    text = jQuery('<div>'+text+'</div>').text(); //strip any HTML
-    for (let match of text.matchAll(/\[(\w+)\](.+?)\[\/\1\]/g)) {
-      switch (match[1]) {
-        case "email":
-          text = text.replace(match[0], '<a href="mailto:'+match[2]+'">'+match[2]+'</a>');
-          break;
-      
-        default:
-          console.log("Unknown token", match);
-          break;
-      }
-    }
-    text = text.replaceAll("\n", "<br>");
-    
-    return text;
+  static render_list(item) {
+    let html = '<ul>';
+    let lines = item.text.split("<br>");
+    lines.forEach(function(line) {
+      line != '' && (html += '<li>' + line + '</li>');
+    })
+    html += '</ul>';
+    return html;
   }
-
 }
