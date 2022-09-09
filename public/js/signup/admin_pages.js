@@ -90,10 +90,12 @@ class SignupAdminPages {
     jQuery('#page-admin-container').contextmenu(function(event) {
       if(jQuery(event.target).hasClass('editable')) return true;
 
+      let ypos = Math.min(event.clientY, window.innerHeight - context_menu.height() - 1);
       context_menu.css({
         left: event.clientX,
-        top: event.clientY
+        top: ypos
       });
+
       context_menu.removeClass('closed').addClass('open');
       let selection = SignupAdminPages.current_selection;
       let selected_id = selection ? selection.closest('fieldset').attr('id') : "";
@@ -185,7 +187,8 @@ class SignupAdminPages {
     });
     editables.keydown(function(event) {
       //event.stopPropagation();
-      if (event.key == "Enter" && (event.ctrlKey == true || jQuery(event.target).is('h1, h2, span'))) {
+      if ((event.key == "Enter" && (event.ctrlKey == true || jQuery(event.target).is('h1, h2, span')))
+          || (event.key == "s" && event.ctrlKey == true)) {
         SignupAdminPages.text_submit(event.target)
         event.preventDefault();
       }

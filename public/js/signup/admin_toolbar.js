@@ -26,12 +26,16 @@ class SignupAdminTools {
     });
     this.toolbar.append(this.bold);
 
-    // List button
-    // this.list = jQuery('<button id="list">List</button>');
-    // this.list.click(function() {
-    //   SignupAdminTools.list_click();
-    // });
-    // this.toolbar.append(this.list);
+    // Keyboard shortcuts
+    jQuery(document).keydown(function(event) {
+      //event.stopPropagation();
+      if (event.key == "b" && event.ctrlKey == true ) {
+        event.preventDefault();
+        SignupAdminTools.bold_click();
+      }
+    });
+
+
 
     jQuery('div.content-container').prepend(this.toolbar);
   }
@@ -58,34 +62,39 @@ class SignupAdminTools {
     let selection = window.getSelection().getRangeAt(0);
     let selection_node = selection.commonAncestorContainer;
 
-    // Get the start of selection
-    let start_node = selection.startContainer;
-    let start_index;
-    if (start_node == selection_node) {
-      start_index = selection.startOffset;
+    if (selection_node.nodeName == '#text') {
+      text = selection_node.data.substring(selection.startOffset, selection.endOffset);
     } else {
-      start_index = Array.from(selection_node.childNodes).indexOf(start_node) + 1;
-      text += start_node.data.substring(selection.startOffset);
+      // Get the start of selection
+      let start_node = selection.startContainer;
+      let start_index;
+      if (start_node == selection_node) {
+        start_index = selection.startOffset;
+      } else {
+        start_index = Array.from(selection_node.childNodes).indexOf(start_node) + 1;
+        text += start_node.data.substring(selection.startOffset);
+      }
+
+      // Get the end of selection
+      let end_node = selection.endContainer;
+      let end_index;
+      let end_text = '';
+      if (end_node == selection_node) {
+        end_index = selection.endOffset;
+      } else {
+        end_index = Array.from(selection_node.childNodes).indexOf(end_node);
+        end_text = end_node.data.substring(0, selection.endOffset);
+      }
+
+      // Add any nodes completely inside selection
+      for(let i = start_index; i < end_index; i++) {
+        let child = selection_node.childNodes[i];
+        text += child.outerHTML ? child.outerHTML : child.data;
+      }
+
+      text += end_text;
     }
 
-    // Get the end of selection
-    let end_node = selection.endContainer;
-    let end_index;
-    let end_text = '';
-    if (end_node == selection_node) {
-      end_index = selection.endOffset;
-    } else {
-      end_index = Array.from(selection_node.childNodes).indexOf(end_node);
-      end_text = end_node.data.substring(0, selection.endOffset);
-    }
-
-    // Remove any nodes completely inside selection
-    for(let i = start_index; i < end_index; i++) {
-      let child = selection_node.childNodes[i];
-      text += child.outerHTML ? child.outerHTML : child.data;
-    }
-
-    text += end_text;
 
     SignupAdminPages.replace_selection(before+text+after);
   }
