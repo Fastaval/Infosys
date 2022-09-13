@@ -1,0 +1,89 @@
+{
+    "order": 5,
+    "slug": {
+        "en": "Food",
+        "da": "Mad"
+    },
+    "title": {
+        "en": "Food",
+        "da": "Mad"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "\n",
+                "da": "\n"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "In 2022, Fastaval will have the evening meal delivered from [url=https:\/\/mosmadhus.dk\/DK.aspx]MOS Madhus[\/url] and will have the food delivery in the common area. The food will be served in the following time span:\n\nBreakfast: 8-10:30 AM \nDinner: 5-7 PM (sunday 4:30-6:30 PM)\nDinner will be served in rounds. You get your time slot on your participant sheet closer to Fastaval.\n\nBreakfast will be a breakfast buffet with hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr.",
+                        "da": "Fastaval f\u00e5r i 2022 aftensmaden leveret fra [url=https:\/\/mosmadhus.dk\/DK.aspx]MOS Madhus[\/url] og kommer til at have mad-udlevering i f\u00e6llesomr\u00e5det.\n Maden udleveres i f\u00f8lgende tidsrum:\n\nMorgenmaden: kl. 8-10:30 \nAftensmaden: kl. 17-19:30 (s\u00f8ndag kl. 16:30-18:30)\nAftensmad udleveres i runder. Du f\u00e5r dit tidsrum p\u00e5 din deltagerseddel n\u00e5r vi n\u00e6rmer os Fastaval.\n\nMorgenmaden bliver en morgenmadsbuffet med groft br\u00f8d, p\u00e5l\u00e6g, kogte \u00e6g, frugt og gr\u00f8nt, samt morgenmadsprodukter med yoghurt, m\u00e6lk eller skyr."
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Financial support",
+                "da": "\u00d8konomisk st\u00f8tte\n"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "This year, the extra support from rich uncles and aunts, will go to funding people who would like to receive financial support* in the form of two paid dinners at Fastaval. In order to receive this support, please click the box \u201cI wish to receive financial support\u201d below and add a minimum on one (1) dinner. You will afterwards be refunded the amount, depending on how many who apply for a subsidized meal. If there is a greater number of applicants than there are funds, then the distribution will be decided by a lottery.\n \u2003 * including, but not limited to, students, unemployed, pensioners and other people on benefits. We will not require proof for your financial position.",
+                        "da": "I \u00e5r g\u00e5r st\u00f8tten fra rige onkler og tanter til et tilskud til folk, der har behov for et \u00f8konomisk bidrag* i form af to betalte aftensm\u00e5ltider under Fastaval. For at f\u00e5 denne \u00f8konomiske st\u00f8tte skal du krydse \u201cJeg \u00f8nsker at f\u00e5 \u00f8konomisk st\u00f8tte\u201d af herunder og tilf\u00f8je minimum \u00e9t aftensmadsm\u00e5ltid. Du vil efterf\u00f8lgende blive refunderet bel\u00f8bet alt efter, hvor mange, der s\u00f8ger puljen. Hvis flere s\u00f8ger puljen, en der er penge til, vil fordelingen af st\u00f8tten blive afgjort ved lodtr\u00e6kning.\n \u2003* blandt andet, men ikke begr\u00e6nset til, studerende, arbejdsl\u00f8se, pensionister og andre p\u00e5 offentlige ydelser. Vi kr\u00e6ver ikke bevis for din \u00f8konomiske situation."
+                    }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I wish to receive financial support\t\t\t",
+                        "da": "Jeg \u00f8nsker at f\u00e5 \u00f8konomisk st\u00f8tte\t\t\t"
+                    },
+                    "infosys_id": "financial_struggle"
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Beneath you can order breakfast and dinner:",
+                "da": "Herunder kan du bestille morgenmad og aftensmad:"
+            },
+            "module": "food"
+        },
+        {
+            "headline": {
+                "en": "The Otto party",
+                "da": "Ottofesten"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "The Otto party takes place Sunday evening - this is where we congratulate each other, and spend the last energy while we party. The golden penguins will be handed out, and there will be dancing!\n\nThe show takes place sunday 7:30PM on the sportscenter. No food will be serves at the party.\n\nIt's possible to order a bottle of sparkling wine for an additional 99 kr.\n",
+                        "da": "En god Fastaval afsluttes bedst med et brag af en fest! Ottofesten holdes s\u00f8ndag aften - det er her vi hylder hinanden, det er her vi fyrer den sidste energi af og det er her Ottoerne uddeles.\n\nAfholdes s\u00f8ndag kl 19.30 p\u00e5 Idr\u00e6tscentret. Der serveres ikke mad til Ottofesten.\n\nDer er mulighed for at bestille en flaske mousserende vin til festen (+99 kr.)"
+                    }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I would like sparkling wine at the party\n",
+                        "da": "Jeg vil gerne have mousserende vin til festen\n"
+                    },
+                    "infosys_id": "unknown"
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I would like to attend the Otto party\n",
+                        "da": "Jeg vil gerne med til Ottofesten\n"
+                    },
+                    "infosys_id": "unknown"
+                }
+            ]
+        }
+    ]
+}
