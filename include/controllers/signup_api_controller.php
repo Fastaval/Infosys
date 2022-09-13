@@ -52,16 +52,21 @@ class SignupApiController extends Controller {
     $this->jsonOutput($response);
   }
 
- public function getPage() {
-  $page_id = $this->vars['page_id'];
-  $page_file = INCLUDE_PATH."signup-pages/$page_id.json";
-  if(!is_file($page_file)) die("Signup page not found");
+  public function getPage() {
+    $page_id = $this->vars['page_id'];
+    $page_file = INCLUDE_PATH."signup-pages/$page_id.json";
+    if(!is_file($page_file)) die("Signup page not found");
 
-  $page = file_get_contents($page_file);
-  header('Status: 200');
-  header('Content-Type: text/plain; charset=UTF-8');
-  header('Content-Length: ' . strlen($page));
-  echo $page;
-  exit;
- }
+    $page = file_get_contents($page_file);
+    header('Status: 200');
+    header('Content-Type: text/plain; charset=UTF-8');
+    header('Content-Length: ' . strlen($page));
+    echo $page;
+    exit;
+  }
+
+  public function getFood() {
+    $food = $this->model->getFood();
+    $this->jsonOutput($food);
+  }
 }
