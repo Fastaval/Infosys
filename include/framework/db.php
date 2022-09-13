@@ -317,7 +317,12 @@ class DB
             }
         } catch (PDOException $e) {
             error_log("Issuing prepared statement failed - {$query}\n".$e->getMessage()."\n");
-            throw new DBException("Issuing prepared statement failed - {$query}");
+            $info = $statement->errorInfo();
+            $message = "Issuing prepared statement failed\n";
+            $message .= "Error Code:$info[0] Message:$info[2]\n";
+            $message .= "Query:{$query}\n";
+            $message .= "Args:".print_r($args, true);
+            throw new DBException($message);
         }
     }
 
