@@ -1,26 +1,28 @@
 <?php echo $this->getMessagesHtml();?>
-<div id='wear-details'>
-    <fieldset>
-        <legend>Mad: <?php echo $this->mad->kategori;?> - <a href="<?php echo $this->url('edit_food', array('id' => $this->mad->id));?>">ret/slet</a></legend>
-        <span class='label'>Id:</span> <span class='detail'><?php echo $this->mad->id;?></span><br class='clearit'/>
-        <span class='label'>Kategori:</span> <span class='detail'><?php echo $this->mad->kategori;?></span><br class='clearit'/>
-        <span class='label'>Pris:</span> <span class='detail'><?php echo $this->mad->pris;?></span><br class='clearit'/>
-        <hr/>
-        <table>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Dato</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($this->tider) : foreach ($this->tider as $tid) : ?>
-                    <tr>
-                        <td><?php echo $tid->id;?></td>
-                        <td><?php echo $this->replaceDayNames(date('D, d/m', strtotime($tid->dato)));?></td>
-                    </tr>
-                <?php endforeach; endif;?>
-            </tbody>
-        </table>
-    </fieldset>
+<div id='food-details'>
+  <fieldset>
+    <legend>Mad: <?php echo $this->mad->kategori;?> - <a href="<?php echo $this->url('edit_food', array('id' => $this->mad->id));?>">ret/slet</a></legend>
+    <span class='label'>Id:</span> <span class='detail'><?php echo $this->mad->id;?></span><br class='clearit'/>
+    <span class='label'>Kategori:</span> <span class='detail'><?php echo $this->mad->kategori;?></span><br class='clearit'/>
+    <span class='label'>Pris:</span> <span class='detail'><?php echo $this->mad->pris;?></span><br class='clearit'/>
+    <hr/>
+    <?php if ($this->tider) : foreach ($this->tider as $tid) : ?>
+    <table>
+      <tbody>
+        <tr>
+          <td><span class='label'>Dag:</span></td>
+          <td><?=$this->replaceDayNames(date('D H:i', strtotime($tid->dato)))?></td>
+        </tr>
+        <tr>
+          <td><span class='label'>Beskrivelse:</span></td>
+          <td><?=$tid->description_da?></td>
+        </tr>
+        <tr>
+          <td><span class='label'>Engelsk:</span></td>
+          <td><?=$tid->description_en?></td>
+        </tr>
+      </tbody>
+    </table>
+    <?php endforeach; endif;?>
+  </fieldset>
 </div>

@@ -154,6 +154,8 @@ class FoodModel extends Model
                     }
                     $foodtime = $this->findEntity('Madtider', $id);
                     $foodtime->dato = $post->foodtime_date[$i];
+                    $foodtime->description_da = $post->foodtime_desc_da[$i];
+                    $foodtime->description_en = $post->foodtime_desc_en[$i];
                     $foodtime->update();
                     $i++;
                     continue;
@@ -166,6 +168,8 @@ class FoodModel extends Model
                 $new_foodtime = $this->createEntity('Madtider');
                 $new_foodtime->mad_id = $food->id;
                 $new_foodtime->dato = $post->foodtime_date[$i];
+                $new_foodtime->description_da = $post->foodtime_desc_da[$i];
+                $new_foodtime->description_en = $post->foodtime_desc_en[$i];
                 if (!$new_foodtime->insert())
                 {
                     $success = false;

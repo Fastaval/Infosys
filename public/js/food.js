@@ -26,8 +26,8 @@
 var food_object = {
     setup: function () {
         var that = this;
-        $('#foodtimes').on('click', 'input.remove-foodtime', function () {
-            $(this).closest('tr').remove();
+        $('#food-details').on('click', 'input.remove-foodtime', function () {
+            $(this).closest('table').remove();
         });
 
         $('#add-foodtime').click(function () {
@@ -36,31 +36,32 @@ var food_object = {
     },
 
     addDate: function (self) {
-        var row = self.closest('tr')[0],
-            dato = $('#foodtime').val(),
-            cell1 = document.createElement('td'),
-            cell2 = document.createElement('td'),
-            input1 = document.createElement('input'),
-            input2 = document.createElement('input'),
-            input5 = document.createElement('input'),
-            new_row = document.createElement('tr');
+        let table = jQuery('<table></table>');
+        let tbody = jQuery('<tbody></tbody>');
+        table.append(tbody);
 
-        input1.name = 'foodtime_id[]';
-        input1.type = 'hidden';
-        input1.value = '0';
-        input2.name = 'foodtime_date[]';
-        input2.type = 'text';
-        input2.value = dato;
-        input5.type = 'button';
-        input5.value = 'Slet';
-        input5.className = 'remove-foodtime';
-        cell1.appendChild(input1);
-        cell1.appendChild(input2);
-        cell2.appendChild(input5);
-        new_row.appendChild(cell1);
-        new_row.appendChild(cell2);
-        row.parentNode.insertBefore(new_row, row);
-        $('#foodtime').val('');
+        tbody.append(`
+        <tr>
+            <td><span class='label'>Dato:</span></td>
+            <td>
+                <input name='foodtime_id[]' value='' type='hidden'/>
+                <input type='text' value='' placeholder='YYYY-MM-DD HH:MM:SS' name='foodtime_date[]'/>
+            </td>
+        </tr>
+        <tr>
+            <td><span class='label'>Beskrivelse:</span></td>
+            <td><input type='text' value='' name='foodtime_desc_da[]'/></td>
+        </tr>
+        <tr>
+            <td><span class='label'>Engelsk:</span></td>
+            <td><input type='text' value='' name='foodtime_desc_en[]'/></td>
+        </tr>
+        <tr>
+            <td><input type='button' value='Slet' class='remove-foodtime' /></td>
+        </tr>
+        `)
+
+        self.before(table);
     },
 
 };
