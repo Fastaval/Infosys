@@ -194,7 +194,7 @@ class SignupAdminController extends Controller {
     $page = json_decode($page_file);
 
     // Check IDs - Section
-    if (in_array($post->type, ['infosys_id','item','headline', 'option', 'value'])){
+    if (in_array($post->type, ['infosys_id','item','headline', 'option', 'value', 'module_id'])){
       if(!isset($post->section_id)) {
         $this->jsonOutput([
           'error' => 'No Section ID',
@@ -275,6 +275,9 @@ class SignupAdminController extends Controller {
         break;
       case 'value':
         $page->sections[$post->section_id]->items[$post->item_id]->options[$post->option_id]->value = $post->text;
+        break;
+      case 'module_id':
+        $page->sections[$post->section_id]->module = $post->text;
         break;
         
       default:

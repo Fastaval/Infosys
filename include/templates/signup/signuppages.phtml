@@ -19,7 +19,7 @@
         <?php } // Title ?>
         <?php foreach($page->sections as $skey => $section) { // Page Secions ?>
           <fieldset id="page:<?=$page->file?>--section:<?=$skey?>" class="signup-page-section">
-            <legend>Section : <?=$skey?></legend>
+            <legend><?=isset($section->module) ? 'Module : <span class="module-id editable">'.$section->module.'<span>' : "Section : $skey"?></legend>
             <?php foreach($section->headline as $lang => $headline) { // Headline texts in each language ?>
               <div class="headline-wrapper selectable lang-<?=$lang?>">
                 <i class="icon-<?=$icon_name[$lang]?>"></i>

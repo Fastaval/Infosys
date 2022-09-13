@@ -362,6 +362,9 @@ class SignupAdminPages {
       case element.hasClass('option-value'):
         type = 'value'
         break;
+      case element.hasClass('module-id'):
+        type = 'module_id'
+        break;
                 
       default:
         type = 'unknown';
