@@ -19,6 +19,13 @@ class InfosysTextPreprocessor {
           text = text.replace(match[0], '<a href="'+url+'">'+match[3]+'</a>');
           break;
 
+        case "color":
+          let [bgcolor, color] = match[2].replaceAll(/[^\w#,]/g, "").split(",",2) ;
+          bgcolor = bgcolor ?? "white";
+          color = color ?? "black";
+          text = text.replace(match[0], '<span style="background-color:'+bgcolor+';color:'+color+';">'+match[3]+'</span>');
+          break;
+
         default:
           console.log("Unknown token", match);
           break;
