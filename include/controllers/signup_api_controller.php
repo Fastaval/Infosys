@@ -69,4 +69,9 @@ class SignupApiController extends Controller {
     $food = $this->model->getFood();
     $this->jsonOutput($food);
   }
+
+  public function getActivities() {
+    $activities = $this->model->getActivities();
+    $this->jsonOutput($activities);
+  }
 }

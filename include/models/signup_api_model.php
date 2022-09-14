@@ -39,4 +39,10 @@ class SignupApiModel extends Model {
     }
     return $result;
   }
+
+  public function getActivities() {
+    $result = (object)[];
+
+    return $result;
+  }
 }
