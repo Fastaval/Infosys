@@ -1,0 +1,102 @@
+{
+    "order": 6,
+    "slug": {
+        "en": "Activities",
+        "da": "Aktiviteter"
+    },
+    "title": {
+        "en": "Activities",
+        "da": "Aktiviteter"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "\n",
+                "da": "\n"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "This is where the fun begins! Here you can choose and prioritize what activities you would like to participate in.",
+                        "da": "Nu bliver det sjovt! Her kan du v\u00e6lge og prioritere de aktiviteter du gerne vil deltage i."
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "How to prioritize",
+                "da": "S\u00e5dan prioriterer du"
+            },
+            "items": [
+                {
+                    "type": "list",
+                    "text": {
+                        "en": "Click on the individual activity for a short description\nYou prioritize a given activity by clicking on the column next to it\nPriorities run from 1-4 (1 is highest, 4 lowest).\nYou can choose one 1st and 2nd priority in each time slot\nYou can choose as many 3rd and 4th priorities you'd like\nWould you like to choose everything, but prefer not to end up with too much, put a limit on it after this overview (See further down).",
+                        "da": "Klik p\u00e5 de enkelte aktivitetsnavne for at se en foromtale\/beskrivelse\nDu prioriterer ved at klikke p\u00e5 s\u00f8jlen ud for hver aktivitet\n1-4 indikerer din prioritering (1 er h\u00f8jest, 4 lavest).\nFor hver blok kan du v\u00e6lge \u00e9n 1. og 2. prioritet, men du kan v\u00e6lge s\u00e5 mange 3.\/4. prioriteter du har lyst til\nVil du gerne tilmelde dig det hele, men helst kun ende med et begr\u00e6nset antal spil? Efter oversigten kan du s\u00e6tte et max antal p\u00e5 (se l\u00e6ngere nede)."
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Are you considering being a gamemaster?",
+                "da": "T\u00e6nker du p\u00e5 at v\u00e6re spilleder?"
+            },
+            "items": [
+                {
+                    "type": "list",
+                    "text": {
+                        "en": "'GM' means you would like to gamemaster the activity. 'GM\/1.priority means, you would like to be a player if you can't be a GM.'\nAs a gamemaster you receive 1 voucher pr. game (some food or drink).\nYou can choose to be gamemaster as many times as you would like. We love Gamemasters and always need more. But we ask you to consider how many scenarios you can run and still give the players a good experience. Are you in doubt about which scenario to gamemaster? You can always write to the organizers responsible for gamemasters at [email]spilleder@fastaval.dk[\/email], and they will gladly help you.",
+                        "da": "'SL \/ RF' betyder at du gerne vil v\u00e6re spilleder p\u00e5 et rollespil eller regelformidler p\u00e5 et br\u00e6tspil, l\u00e6s mere om reglformidlerrollen nedenfor. 'SL \/ RF - 1. prioritet' betyder, at du gerne vil v\u00e6re spiller, hvis du ikke kan blive spilleder eller regelformidler p\u00e5 det.\nSom spilleder modtager du ved tjek-ind 1 voucher pr. spil (lidt mad eller drikke).\nDer er heller ingen begr\u00e6nsning p\u00e5, hvor mange gange du v\u00e6lger at v\u00e6re spilleder p\u00e5 en dag. Vi elsker spilledere, og i er altid en mangelvare, men vi beder dig overveje hvor mange scenarier du kan k\u00f8re, og stadig give folk en god oplevelse.  Er du i tvivl om hvilket scenarie du skal k\u00f8re? Du kan altid skrive til [email]spilleder@fastaval.dk[\/email] og f\u00e5 hj\u00e6lp til at v\u00e6lge."
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Would you like to be a Rule Guide for the designer board games?",
+                "da": "Kunne du t\u00e6nkte dig at v\u00e6re regelformidler til designer br\u00e6tspilene?"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "As a new feature this year, we are introducing a Rule Guide-role for this year\u2019s designer board games. The Rule Guide is a player like everyone else but with the extra responsibility of explaining the rules for your co-players. You will receive the rules for the games in advance and you will have the possibility of arriving 15 minutes before game start to ask questions to the designer about rule clarification. The designer is as always available during the game if there are further questions.\n The Rule Guide-role is chosen the same way as the Gamemaster-role by choosing \u201cSL \/ RF\u201d or \u201cSL \/ RF - 1. prio\u201d\n Having a Rule Guide-role counts as a GDS-task and you will not get a voucher.",
+                        "da": "Som noget nyt indf\u00f8res i \u00e5r en regelformidler rolle, til \u00e5rets designer br\u00e6tspil. Regelformidleren er en spiller som alle andre men med det ekstra ansvar at forklare reglerne for dine med-spillere. Du f\u00e5r reglerne til spillet p\u00e5 forh\u00e5nd og muligheden for at m\u00f8de op 15 minutter f\u00f8r spillet starter og stille sp\u00f8rgsm\u00e5l til designeren omkring reglerne, hvis der er noget der er uklart. Designeren er som altid tilg\u00e6ngelig under spillet hvis der er yderlige sp\u00f8rgsm\u00e5l. \n Regelformidler rollen v\u00e6lges p\u00e5 samme m\u00e5de som spilleder ved at v\u00e6lge \"SL \/ RF\" eller \"SL \/ RF - 1. prioritet\" \n At v\u00e6re regelformidler t\u00e6ller som en GDS-tjans og f\u00e5r IKKE vouchers."
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Types of activities",
+                "da": "Typer af aktiviteter"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "Each activity on the chart has a color code:",
+                        "da": "Hver aktivitet p\u00e5 oversigten har en farvekode:"
+                    }
+                },
+                {
+                    "type": "list",
+                    "text": {
+                        "en": "  [color=lightgreen]Green [\/color]: Roleplaying\n[color=lightblue]Blue [\/color]: Board games\n[color=yellow]Yellow [\/color]: Events & workshops\n[color=mediumpurple]Purple [\/color]: Live Role Playing\n[color=darkgreen,white]Dark green [\/color]: Magic",
+                        "da": " [color=lightgreen]Gr\u00f8n [\/color]: Rollespil\n[color=lightblue]Bl\u00e5 [\/color]: Br\u00e6tspil\n[color=yellow]Gul [\/color]: Events & Workshops\n[color=mediumpurple]Lilla [\/color]: Live Rollespil\n[color=darkgreen,white]M\u00f8rkegr\u00f8n [\/color]: Magic"
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "\n",
+                "da": "\n"
+            },
+            "module": "activities"
+        }
+    ]
+}
