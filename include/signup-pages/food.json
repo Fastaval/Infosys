@@ -70,16 +70,16 @@
                 {
                     "type": "checkbox",
                     "text": {
-                        "en": "I would like sparkling wine at the party\n",
-                        "da": "Jeg vil gerne have mousserende vin til festen\n"
+                        "en": "I would like to attend the Otto party\n",
+                        "da": "Jeg vil gerne med til Ottofesten\n"
                     },
                     "infosys_id": "unknown"
                 },
                 {
                     "type": "checkbox",
                     "text": {
-                        "en": "I would like to attend the Otto party\n",
-                        "da": "Jeg vil gerne med til Ottofesten\n"
+                        "en": "I would like sparkling wine at the party\n",
+                        "da": "Jeg vil gerne have mousserende vin til festen\n"
                     },
                     "infosys_id": "unknown"
                 }
