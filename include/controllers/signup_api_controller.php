@@ -36,6 +36,11 @@ class SignupApiController extends Controller {
     exit;
   }
 
+  public function getConfig() {
+    $config = $this->model->getConfig();
+    $this->jsonOutput($config);
+  }
+
   public function getPageList() {
     $response = (object) [];
 
