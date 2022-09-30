@@ -1,0 +1,42 @@
+{
+    "order": 8,
+    "slug": {
+        "en": "Wear",
+        "da": "Wear"
+    },
+    "title": {
+        "en": "Fasta Wear",
+        "da": "Fasta Wear"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "\n",
+                "da": "\n"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "Read more information about Fasta Wear on [url=https:\/\/www.fastaval.dk\/praktisk\/praktiske-informationer#wear]Fastaval's website[\/url]\n",
+                        "da": "L\u00e6s mere information om Fasta Wear p\u00e5 [url=https:\/\/www.fastaval.dk\/praktisk\/praktiske-informationer#wear]Fastavals hjemmeside[\/url]\n"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "\n",
+                        "da": "[b]Sildesalat[\/b] er kun til nu- eller forhenv\u00e6rende arrang\u00f8rer. I \u00e5r skal du g\u00f8re 2 ting: Tilmelde dig her (for s\u00e5 betaler Fastaval) og udfylde det regneark du kan finde i arrang\u00f8r-gruppen p\u00e5 Facebook.\n"
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "\n",
+                "da": "\n"
+            },
+            "module" : "wear"
+        }
+    ]
+}
