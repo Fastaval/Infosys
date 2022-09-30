@@ -130,7 +130,21 @@ class Wear extends DBObject
         $select->setField('wearpriser.pris');
         $organizer_prices = $this->createEntity('WearPriser')->findBySelectMany($select);
 
+        // Check if we can combine all organizer prices into one
+        $combine_organizer = false;
         if (count($organizer_cats) == count($organizer_prices)){
+            $combine_organizer = true;
+            $price = $organizer_prices[0]->pris;
+            for($i = 1; $i < count($organizer_prices); $i++) {
+                if ($price != $organizer_prices[$i]->pris) {
+                    $combine_organizer = false;
+                    break;
+                }
+            }
+        }
+        
+        // If all organizer prices are the same, add a single price for organizers and return
+        if ($combine_organizer) {
             $organizer_price = (object) [
                 'id' => 0,
                 'brugerkategori_id' => 0,
@@ -140,6 +154,8 @@ class Wear extends DBObject
             $participant_prices[] = $organizer_price;
             return $participant_prices;
         }
+
+        // Return array with all individual prices
         return array_merge($participant_prices,$organizer_prices);
     }
 
