@@ -16,7 +16,7 @@ class InfosysTextPreprocessor {
 
         case "url":
           let url = match[2].replaceAll('"','\\"');
-          text = text.replace(match[0], '<a href="'+url+'">'+match[3]+'</a>');
+          text = text.replace(match[0], '<a href="'+url+'" target="_blank">'+match[3]+'</a>');
           break;
 
         case "color":
