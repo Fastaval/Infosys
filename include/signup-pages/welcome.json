@@ -173,6 +173,13 @@
                             }
                         },
                         {
+                            "value": "junior",
+                            "text": {
+                                "en": "Fastaval Junior (175 kr.) for b\u00f8rn fra 6 til 14 \u00e5r. LUKKE",
+                                "da": "Fastaval Junior (175 kr.) for b\u00f8rn fra 6 til 14 \u00e5r. LUKKE"
+                            }
+                        },
+                        {
                             "value": "organizer",
                             "text": {
                                 "en": "I am an organizer, writer or board game designer etc.",
