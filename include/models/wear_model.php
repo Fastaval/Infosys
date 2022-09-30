@@ -203,6 +203,10 @@ class WearModel extends Model
         $wear->title_en       = ((!empty($post->title_en)) ? $post->title_en : '');
         $wear->description_en = ((!empty($post->description_en)) ? $post->description_en : '');
 
+        $query = 'SELECT MAX(wear_order) as omax FROM wear;';
+        $max_order = $this->db->query($query)[0]['omax'];
+        $wear->wear_order = $max_order + 1;
+
         if (!$wear->insert() || !$this->updatePrices($wear, $post)) {
             return false;
         }
