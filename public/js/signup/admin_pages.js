@@ -4,6 +4,7 @@ jQuery(function() {
   SignupAdminPages.init();
 });
 
+// TODO set default
 
 class SignupAdminPages {
   static selection_string = "fieldset, .selectable";
@@ -344,7 +345,7 @@ class SignupAdminPages {
 
     let type = '';
     switch (true) {
-      case element.hasClass('page-header'):
+      case element.hasClass('page-title'):
         type = 'title'
         break;
       case element.hasClass('section-headline'):
