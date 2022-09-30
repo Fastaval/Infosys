@@ -444,6 +444,7 @@ class Routes
         $this->routes['api_signup_page']            = array('url' => 'api/signup/page/:page_id:', 'controller' => 'SignupApi', 'method' => 'getPage');
         $this->routes['api_signup_food']            = array('url' => 'api/signup/food', 'controller' => 'SignupApi', 'method' => 'getFood');
         $this->routes['api_signup_activities']      = array('url' => 'api/signup/activities', 'controller' => 'SignupApi', 'method' => 'getActivities');
+        $this->routes['api_signup_wear']            = array('url' => 'api/signup/wear', 'controller' => 'SignupApi', 'method' => 'getWear');
 
     }
 

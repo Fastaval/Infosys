@@ -5,6 +5,9 @@ class SignupApiModel extends Model {
   public function getConfig() {
     $config = (object)[];
     $config->con_start = $this->config->get('con.start');
+    $config->birth = 'birthdate';
+    $config->participant = 'participant';
+    $config->organizer = 'organizercategory';
     return $config;
   }
 
@@ -48,6 +51,8 @@ class SignupApiModel extends Model {
   }
 
   public function getActivities() {
+    // TODO Multiblock
+    // TODO Signup Maximum
     $result = (object)[];
 
     // TODO make this a setting
@@ -179,6 +184,53 @@ class SignupApiModel extends Model {
       });
     }
 
+
+    return $result;
+  }
+
+  public function getWear() {
+    $result = (object) [];
+    $result->wear = [];
+
+    $wear = $this->createEntity('Wear');
+    $wear_list = $wear->findAll();
+    foreach($wear_list as $item) {
+      $result_item = [
+        'id' => $item->id,
+        'name' => [
+          'en' => $item->title_en,
+          'da' => $item->navn,
+        ],
+        'desc' => [
+          'en' => $item->description_en,
+          'da' => $item->beskrivelse,
+        ],
+        'min_size' => $item->min_size,
+        'max_size' => $item->max_size,
+        'order' => $item->wear_order,
+        'prices' => [],
+      ];
+      $prices = $item->getWearpriserSquashed();
+      foreach($prices as $price) {
+        $result_item['prices'][] = [
+          'user_category' => $price->brugerkategori_id,
+          'price' => $price->pris,
+        ];
+      }
+      $result->wear[] = $result_item;
+    }
+
+    $result->sizes = [];
+    $sizes = $wear->getWearSizes();
+    foreach($sizes as $size) {
+      $result->sizes[$size['size_id']] = [
+        'order' => $size['size_order'],
+        'name' => [
+          'en' => $size['size_name_en'],
+          'da' => $size['size_name_da'],
+        ]
+      ];
+    }
 
     return $result;
   }
