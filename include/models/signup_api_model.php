@@ -179,7 +179,7 @@ class SignupApiModel extends Model {
     }
     
     foreach($result->runs as $day => $runs) {
-      usort($result->runs[$day], function(&$a, $b) {
+      usort($result->runs[$day], function($a, $b) {
         return $a->start['stamp'] - $b->start['stamp'];
       });
     }
