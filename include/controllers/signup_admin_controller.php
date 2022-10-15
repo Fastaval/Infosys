@@ -45,7 +45,7 @@ class SignupAdminController extends Controller {
     $this->page->includeCSS('signup.css');
     $this->page->includeCss('fontello-ebe72605/css/idtemplate.css');
 
-    $this->page->registerEarlyLoadJS('signup/admin/pages.js');
+    $this->page->registerEarlyLoadJS('signup/admin/controls.js');
     $this->page->registerEarlyLoadJS('signup/admin/toolbar.js');
   }
 

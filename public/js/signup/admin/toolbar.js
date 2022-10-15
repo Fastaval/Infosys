@@ -96,7 +96,7 @@ class SignupAdminTools {
     }
 
 
-    SignupAdminPages.replace_selection(before+text+after);
+    SignupAdminControls.replace_selection(before+text+after);
   }
 
   // static list_click() {
