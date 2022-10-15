@@ -64,6 +64,7 @@ class SignupAdminPages {
     // Selection
     this.initSelectables(jQuery(':root'));
     this.initEditables(jQuery(':root'));
+    this.initSettings(jQuery(':root'));
 
     // Page open/close
     jQuery('.fold-button').click(function(event){
@@ -222,6 +223,14 @@ class SignupAdminPages {
     });
   }
 
+  // Settings
+  static initSettings(element) {
+    let checkboxes = element.find('.item-checkbox');
+    checkboxes.change(function(event) {
+      SignupAdminPages.text_submit(event.target);
+    })
+  }
+
   static replace_selection (replacement) {
     let selection = window.getSelection().getRangeAt(0);
     let selection_node = selection.commonAncestorContainer;
@@ -337,7 +346,7 @@ class SignupAdminPages {
   // Submit text update
   static text_submit(element) {
     !(element instanceof jQuery) && (element = jQuery(element)); // Make sure we have a jQuery element
-    if (this.getText(element) == this.editables_history[element.attr('edit-ref')][0]) return; // Don't do anything if element hasn't changed
+    if (element.attr('type') != 'checkbox' && this.getText(element) == this.editables_history[element.attr('edit-ref')][0]) return; // Don't do anything if element hasn't changed
 
     let match = element.attr('class').match(/lang-(\w{2})/)
     let lang = match ? match[1] : 'none';
@@ -353,6 +362,9 @@ class SignupAdminPages {
         break;
       case element.hasClass('item'):
         type = 'item'
+        break;
+      case element.hasClass('item-checkbox'):
+        type = 'setting'
         break;
       case element.hasClass('infosys-id'):
         type = 'infosys_id'
@@ -387,6 +399,10 @@ class SignupAdminPages {
     data.lang = lang;
     data.type = type;
     data.text = this.getText(element);
+    if (type == 'setting') {
+      data.setting = element.attr('setting');
+      data.text = element.prop('checked') ? 'true' : 'false';
+    }
 
     this.post('edit-text', data, function() {
       let ref = element.attr('edit-ref');

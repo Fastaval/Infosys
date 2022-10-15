@@ -71,6 +71,17 @@ div#page-admin-container i::before {
 .changed {
   border: 1px red solid;
 }
+
+.checkbox-label {
+  float: right;
+  margin-left: 1em;
+  position: relative;
+  z-index: 2;
+}
+
+.item-checkbox {
+  vertical-align: baseline;
+}
 /*---------------------------------------------------------
 Selection
 ---------------------------------------------------------*/

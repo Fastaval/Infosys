@@ -118,7 +118,8 @@
                         "en": "I accept Fastaval will use, handle and store my information. ",
                         "da": "Jeg accepterer Fastavals brug, adgang til og opbevaring af mine oplysninger"
                     },
-                    "infosys_id": "gdpr_accept"
+                    "infosys_id": "gdpr_accept",
+                    "required": "true"
                 }
             ]
         }

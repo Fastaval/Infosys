@@ -28,7 +28,8 @@
                         "en": "What is your organizational area at Fastaval?",
                         "da": "Hvad er dit arrang\u00f8romr\u00e5de?\t\t\t"
                     },
-                    "infosys_id": "arbejdsomraade"
+                    "infosys_id": "arbejdsomraade",
+                    "required": "true"
                 },
                 {
                     "type": "text_input",

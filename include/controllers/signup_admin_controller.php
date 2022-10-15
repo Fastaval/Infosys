@@ -175,6 +175,9 @@ class SignupAdminController extends Controller {
     exit;
   }
 
+  /**
+   * Edit text value
+   */
   public function editText() {
     if (!$this->page->request->isPost()) {
       header('HTTP/1.1 400 Not a POST request');
@@ -194,7 +197,7 @@ class SignupAdminController extends Controller {
     $page = json_decode($page_file);
 
     // Check IDs - Section
-    if (in_array($post->type, ['infosys_id','item','headline', 'option', 'value', 'module_id'])){
+    if (in_array($post->type, ['infosys_id','item','setting','headline', 'option', 'value', 'module_id'])){
       if(!isset($post->section_id)) {
         $this->jsonOutput([
           'error' => 'No Section ID',
@@ -210,7 +213,7 @@ class SignupAdminController extends Controller {
     }
 
     // Check IDs - Item
-    if (in_array($post->type, ['infosys_id','item', 'option', 'value'])){
+    if (in_array($post->type, ['infosys_id', 'item', 'setting', 'option', 'value'])){
       if(!isset($post->item_id)) {
         $this->jsonOutput([
           'error' => 'No Item ID',
@@ -266,6 +269,13 @@ class SignupAdminController extends Controller {
         break;
       case 'item':
         $page->sections[$post->section_id]->items[$post->item_id]->text->{$post->lang} = $post->text;
+        break;
+      case 'setting':
+        if ($post->text == 'false') {
+          unset($page->sections[$post->section_id]->items[$post->item_id]->{$post->setting});  
+        } else {
+          $page->sections[$post->section_id]->items[$post->item_id]->{$post->setting} = $post->text;
+        }
         break;
       case 'infosys_id':
         $page->sections[$post->section_id]->items[$post->item_id]->infosys_id = $post->text;

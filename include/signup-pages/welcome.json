@@ -21,7 +21,8 @@
                         "en": "First name",
                         "da": "Fornavn"
                     },
-                    "infosys_id": "fornavn"
+                    "infosys_id": "fornavn",
+                    "required": "true"
                 },
                 {
                     "type": "text_input",
@@ -29,7 +30,8 @@
                         "en": "Last name",
                         "da": "Efternavn"
                     },
-                    "infosys_id": "efternavn"
+                    "infosys_id": "efternavn",
+                    "required": "true"
                 },
                 {
                     "type": "text_input",
@@ -52,7 +54,8 @@
                         "en": "Address",
                         "da": "Adresse"
                     },
-                    "infosys_id": "adresse1"
+                    "infosys_id": "adresse1",
+                    "required": "true"
                 },
                 {
                     "type": "text_input",
@@ -68,7 +71,8 @@
                         "en": "Post code",
                         "da": "Postnr."
                     },
-                    "infosys_id": "postnummer"
+                    "infosys_id": "postnummer",
+                    "required": "true"
                 },
                 {
                     "type": "text_input",
@@ -76,7 +80,8 @@
                         "en": "City",
                         "da": "By"
                     },
-                    "infosys_id": "by"
+                    "infosys_id": "by",
+                    "required": "true"
                 },
                 {
                     "type": "text_input",
@@ -84,7 +89,8 @@
                         "en": "Country",
                         "da": "Land"
                     },
-                    "infosys_id": "land"
+                    "infosys_id": "land",
+                    "required": "true"
                 },
                 {
                     "type": "telephone",
@@ -108,7 +114,8 @@
                         "en": "Birthdate",
                         "da": "F\u00f8dselsdato"
                     },
-                    "infosys_id": "birthdate"
+                    "infosys_id": "birthdate",
+                    "required": "true"
                 },
                 {
                     "type": "email",
@@ -116,7 +123,8 @@
                         "en": "Email",
                         "da": "Email"
                     },
-                    "infosys_id": "email"
+                    "infosys_id": "email",
+                    "required": "true"
                 },
                 {
                     "type": "email",
@@ -124,7 +132,8 @@
                         "en": "Email (repeat)",
                         "da": "Email (gentag)"
                     },
-                    "infosys_id": "email-confirm"
+                    "infosys_id": "email-confirm",
+                    "required": "true"
                 },
                 {
                     "type": "checkbox",
@@ -163,7 +172,8 @@
                             "text": {
                                 "en": "I am a participant",
                                 "da": "Jeg er deltager"
-                            }
+                            },
+                            "default": true
                         },
                         {
                             "value": "digital",

@@ -17,6 +17,13 @@ class InfosysSignupRender {
     } else {
       html = this.render_unknown(text, element.type)
     }
+    if (element.required) {
+      let parsed = jQuery(jQuery.parseHTML(html.trim()));
+      parsed.addClass('required');
+      parsed.find('input').attr('required', true);
+      html = parsed.prop('outerHTML');
+    }
+    
     return html;
   }
 
@@ -78,15 +85,16 @@ class InfosysSignupRender {
   }
 
   static render_radio(item) {
-    let html = `
-      <div class="input-wrapper input-type-radio">
-        <p>${item.text}</p>
-        <input type="hidden" id="${item.id}">`;
+    let div = jQuery('<div class="input-wrapper input-type-radio"></div>');
+    div.append(`<p>${item.text}</p>`);
+    let hidden = jQuery(`<input type="hidden" id="${item.id}">`);
+
     item.options.forEach(function(element, index)  {
-      html += this.render_radio_option(item.id, index, element, item.lang);
+      div.append(this.render_radio_option(item.id, index, element, item.lang));
+      if (element.default) hidden.val(element.value);
     }, this);
-    html += '</div>';
-    return html;
+    div.append(hidden);
+    return div.prop('outerHTML');
   }
 
   static render_radio_option(id, index, element, lang) {
