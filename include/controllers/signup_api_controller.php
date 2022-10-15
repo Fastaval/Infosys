@@ -1,6 +1,8 @@
 <?php
 class SignupApiController extends Controller {
 
+  const DATA_DIR = INCLUDE_PATH."signup-data/";
+
   protected $prerun_hooks = array(
     ['method' => 'allowCrossSiteAccess', 'exclusive' => true, 'methodlist' => []], 
   );
@@ -83,5 +85,19 @@ class SignupApiController extends Controller {
   public function getWear() {
     $wear = $this->model->getWear();
     $this->jsonOutput($wear);
+  }
+
+  public function submitSignup() {
+    if (!$this->page->request->isPost()) {
+      header('HTTP/1.1 400 Not a POST request');
+      exit;
+    }
+    $post = $this->page->request->post;
+
+    $json = json_encode($post->getRequestVarArray(), JSON_PRETTY_PRINT);
+    $hash = hash('md5', $json);
+    file_put_contents(self::DATA_DIR."$hash.json", $json);
+
+    $this->jsonOutput(['status' => 'OK']);
   }
 }

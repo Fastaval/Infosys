@@ -1,0 +1,20 @@
+{
+    "order": 9,
+    "slug": {
+        "en": "Confirm",
+        "da": "Bekræft"
+    },
+    "title": {
+        "en": "Confirm and Submit your registration",
+        "da": "Bekræft og indsend din tilmelding"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "\n",
+                "da": "\n"
+            },
+            "module" : "submit"
+        }
+    ]
+}
