@@ -354,29 +354,33 @@ class SignupAdminControls {
 
     let type = '';
     switch (true) {
+      case element.hasClass('page-slug'):
+        id = 'page:'+element.closest('.nav-button').attr('page-id');
+        type = 'slug';
+        break;
       case element.hasClass('page-title'):
-        type = 'title'
+        type = 'title';
         break;
       case element.hasClass('section-headline'):
-        type = 'headline'
+        type = 'headline';
         break;
       case element.hasClass('item'):
-        type = 'item'
+        type = 'item';
         break;
       case element.hasClass('item-checkbox'):
-        type = 'setting'
+        type = 'setting';
         break;
       case element.hasClass('infosys-id'):
-        type = 'infosys_id'
+        type = 'infosys_id';
         break;
       case element.hasClass('option'):
-        type = 'option'
+        type = 'option';
         break;
       case element.hasClass('option-value'):
-        type = 'value'
+        type = 'value';
         break;
       case element.hasClass('module-id'):
-        type = 'module_id'
+        type = 'module_id';
         break;
                 
       default:

@@ -245,7 +245,7 @@ class SignupAdminController extends Controller {
     }
 
     // Check Language
-    if (in_array($post->type, ['item', 'headline', 'title', 'option'])){
+    if (in_array($post->type, ['item', 'headline', 'title', 'option', 'slug'])){
       if(!isset($post->lang)) {
         $this->jsonOutput([
           'error' => 'No Language(lang) Value',
@@ -261,6 +261,9 @@ class SignupAdminController extends Controller {
     }
 
     switch ($post->type) {
+      case 'slug':
+        $page->slug->{$post->lang} = $post->text;
+        break;
       case 'title':
         $page->title->{$post->lang} = $post->text;
         break;
