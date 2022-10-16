@@ -34,7 +34,7 @@
                   <?php if(in_array($item->type, ['text_input', 'telephone', 'checkbox', 'date', 'email','radio'])) { // Input checkboxes?>
                     <?php
                       $checked = 'checked="checked"';
-                      $disabled = $item->diabled ? $checked : '';
+                      $disabled = $item->disabled ? $checked : '';
                       $required = $item->required ? $checked : '';
                     ?>
                     <label class="checkbox-label">Påkrævet <input type="checkbox" class="item-checkbox toggle-required" setting="required" <?=$required?>></label>

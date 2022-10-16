@@ -4,6 +4,7 @@ Settings
 div#page-admin-container {
   --selection-color: rgba(0,0,255,.5);
   --hover-color: rgba(0,0,255,.1);
+  --tab-border: 2px;
 }
 /*---------------------------------------------------------
 Toolbar
@@ -37,35 +38,84 @@ div#page-admin-toolbar button#bold{
   font-weight: bold;
 }
 /*---------------------------------------------------------
-Main section
+Main container
 ---------------------------------------------------------*/
 div#page-admin-container {
   margin: 2rem;
 }
 
+div#page-admin-container .title-wrapper h1 {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+}
+
+div#page-admin-container i {
+  margin-right: .5em;
+  width: 29px;
+}
+
+div#page-admin-container i:before {
+  text-align: right;
+  width: 29px;
+  margin: 0;
+}
+
+/*---------------------------------------------------------
+Navigation
+---------------------------------------------------------*/
+div#page-admin-container nav {
+  display: flex;
+  justify-content: center;
+  border-bottom: var(--tab-border) solid black;
+}
+
+div#page-admin-container nav .nav-button {
+  border: var(--tab-border) solid black;
+  padding: .2em 1em;
+  background-color: lightgray;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: calc(-1 * var(--tab-border));
+  cursor: pointer;
+}
+
+div#page-admin-container nav .nav-button.selected {
+  border-bottom: none;
+  background-color: white;
+}
+
+/*---------------------------------------------------------
+Content section
+---------------------------------------------------------*/
 div#page-admin-container legend {
-    border: 0px;
-    margin: 0px;
-    padding: 5px;
-    position: relative;
-    box-sizing: border-box;
+  border: 0px;
+  margin: 0px;
+  padding: 5px;
+  position: relative;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
 }
 
 div#page-admin-container .title-wrapper,
 div#page-admin-container .headline-wrapper,
-div#page-admin-container .item-wrapper.item-type-text_input {
+div#page-admin-container .item-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 
-div#page-admin-container .item-wrapper.item-type-text_input p {
+div#page-admin-container .title-wrapper h1 {
+  font-size: 2rem;
+  line-height: 2rem;
+  margin-bottom: 0;
+}
+
+div#page-admin-container .headline-wrapper h2 {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+div#page-admin-container .item-wrapper p {
   margin: 2px 0px;
-}
-
-div#page-admin-container i,
-div#page-admin-container i::before {
-    width: 34px;
 }
 
 .changed {
@@ -79,8 +129,9 @@ div#page-admin-container i::before {
   z-index: 2;
 }
 
-.item-checkbox {
+div#page-admin-container .item-checkbox {
   vertical-align: baseline;
+  margin-left: .3em;
 }
 /*---------------------------------------------------------
 Selection
@@ -118,6 +169,7 @@ legend.selected::before {
 div#page-admin-container .editable {
   cursor: text;
   min-width: 1em;
+  display: inline-block;
 }
 div#page-admin-container .editable:hover {
   background-color: unset;

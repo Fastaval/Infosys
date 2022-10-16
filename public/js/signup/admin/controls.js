@@ -12,6 +12,7 @@ class SignupAdminControls {
   static current_selection = null;
   static current_hover = null;
   static editables_history = [];
+  static current_page = null;
 
   static context_menu_items = {
     add$section: {
@@ -61,17 +62,8 @@ class SignupAdminControls {
   }
   
   static init() {
-    // Selection
-    this.initSelectables(jQuery(':root'));
-    this.initEditables(jQuery(':root'));
-    this.initSettings(jQuery(':root'));
-
-    // Page open/close
-    jQuery('.fold-button').click(function(event){
-      jQuery(event.target).closest('div.page-wrapper').toggleClass('closed');
-    });
-    jQuery('.page-wrapper').dblclick(function(event){
-      jQuery(event.delegateTarget).toggleClass('closed');
+    jQuery(window).on('popstate', function(evt) {
+      SignupAdminControls.nav_click(evt.originalEvent.state.page);
     });
 
     //---------------------------------------------------------------------------------
@@ -141,6 +133,46 @@ class SignupAdminControls {
         SignupAdminControls.insert_item(type);
       } 
     })
+  }
+
+  static pagelist_ready(pages) {
+    // Get current page from url
+    let match = location.pathname.match(/\/([^/]+)$/);
+    let page = match ? match[1] : null;
+
+    if(pages[page]) this.current_page = page;
+  }
+
+  static init_element(element) {
+    this.initSelectables(element);
+    this.initEditables(element);
+    this.initSettings(element);
+  }
+
+  static nav_click(key) {
+    if (key == this.current_page) return;
+  
+    // Get base url from location
+    let url = location.pathname.replace(this.current_page, "");
+    if (url.lastIndexOf('/') != url.length -1) url += '/';
+  
+    // Save new key
+    this.current_page = key;
+
+    // Update visuals to selected page
+    this.show_page(key);
+    
+    // Set addressbar
+    window.history.pushState({page:key},"", url+key);
+  }
+
+  static show_page(key) {
+    let nav = SignupAdminRender.nav;
+    nav.find('.selected').removeClass('selected');
+    nav.find('[page-id='+key+']').addClass('selected');
+
+    jQuery('.signup-page').hide();
+    jQuery('.signup-page#page\\:'+key).show();
   }
 
   // Selection

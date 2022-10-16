@@ -133,7 +133,8 @@
                         "da": "Email (gentag)"
                     },
                     "infosys_id": "email-confirm",
-                    "required": "true"
+                    "required": "true",
+                    "equals": "email"
                 },
                 {
                     "type": "checkbox",

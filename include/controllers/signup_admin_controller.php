@@ -30,7 +30,7 @@ class SignupAdminController extends Controller {
    * Show page for editing signup pages
    */
   public function signupPages() {
-    $pages = [];
+    /*$pages = [];
 
     $page_files = glob(INCLUDE_PATH."signup-pages/*");
     foreach($page_files as $page_file){ // iterate files
@@ -40,13 +40,16 @@ class SignupAdminController extends Controller {
       $pages[$page->order] = $page;
     }
     ksort($pages);
-    $this->page->signup_pages = $pages;
+    $this->page->signup_pages = $pages;*/
 
     $this->page->includeCSS('signup.css');
     $this->page->includeCss('fontello-ebe72605/css/idtemplate.css');
 
+    $this->page->registerEarlyLoadJS('signup/admin/render.js');
     $this->page->registerEarlyLoadJS('signup/admin/controls.js');
     $this->page->registerEarlyLoadJS('signup/admin/toolbar.js');
+
+    $this->page->setTemplate('');
   }
 
   /**

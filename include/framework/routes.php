@@ -435,6 +435,7 @@ class Routes
 
         // Signup Admin
         $this->routes['signup_pages']               = array('url' => 'signup/pages', 'controller' => 'SignupAdmin', 'method' => 'signupPages');
+        $this->routes['signup_pages_specific']      = array('url' => 'signup/pages/:page:', 'controller' => 'SignupAdmin', 'method' => 'signupPages');
         $this->routes['signup_pages_add_element']   = array('url' => 'signup/pages/add-element', 'controller' => 'SignupAdmin', 'method' => 'addPageElement');
         $this->routes['signup_pages_edit_text']     = array('url' => 'signup/pages/edit-text', 'controller' => 'SignupAdmin', 'method' => 'editText');
 
