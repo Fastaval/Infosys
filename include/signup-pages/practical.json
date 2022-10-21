@@ -21,7 +21,14 @@
                         "en": "5-day pass for all of Fastaval (325 kr.)  + fees ( Under 18 years (225 kr.) \/ Organizers (100 kr. incl. Alea discount) )",
                         "da": "Partout - Alle dage (325 kr.) + gebyr ( Under 18 \u00e5r (225 kr.) \/ Arrang\u00f8rer (100 kr. ink Alea rabat) )"
                     },
-                    "infosys_id": "entry_partout"
+                    "infosys_id": "entry:partout",
+                    "excludes": [
+                        "entry:1",
+                        "entry:2",
+                        "entry:3",
+                        "entry:4",
+                        "entry:5"
+                    ]
                 },
                 {
                     "type": "paragraph",
@@ -36,7 +43,10 @@
                         "en": "Wednesday\n",
                         "da": "Onsdag\n"
                     },
-                    "infosys_id": "entry_wednesday"
+                    "infosys_id": "entry:1",
+                    "excludes": [
+                        "entry:partout"
+                    ]
                 },
                 {
                     "type": "checkbox",
@@ -44,7 +54,10 @@
                         "en": "Thursday",
                         "da": "Torsdag\n"
                     },
-                    "infosys_id": "entry_thursday"
+                    "infosys_id": "entry:2",
+                    "excludes": [
+                        "entry:partout"
+                    ]
                 },
                 {
                     "type": "checkbox",
@@ -52,7 +65,10 @@
                         "en": "Friday",
                         "da": "Fredag"
                     },
-                    "infosys_id": "entry_friday"
+                    "infosys_id": "entry:3",
+                    "excludes": [
+                        "entry:partout"
+                    ]
                 },
                 {
                     "type": "checkbox",
@@ -60,7 +76,10 @@
                         "en": "Saturday",
                         "da": "L\u00f8rdag"
                     },
-                    "infosys_id": "entry_saturday"
+                    "infosys_id": "entry:4",
+                    "excludes": [
+                        "entry:partout"
+                    ]
                 },
                 {
                     "type": "checkbox",
@@ -68,7 +87,10 @@
                         "en": "Sunday",
                         "da": "S\u00f8ndag"
                     },
-                    "infosys_id": "entry_sunday"
+                    "infosys_id": "entry:5",
+                    "excludes": [
+                        "entry:partout"
+                    ]
                 }
             ]
         },
@@ -84,7 +106,14 @@
                         "en": "I will be sleeping at Fastaval all days, Participant (200 kr.) Organizer (50 kr.)\t\t\t",
                         "da": "Jeg overnatter alle dage p\u00e5 Fastaval (200 kr.) Arrang\u00f8rer (50 kr.)\t\t\t"
                     },
-                    "infosys_id": "sleeping_partout"
+                    "infosys_id": "sleeping:partout",
+                    "excludes": [
+                        "sleeping:1",
+                        "sleeping:2",
+                        "sleeping:3",
+                        "sleeping:4",
+                        "sleeping:5"
+                    ]
                 },
                 {
                     "type": "paragraph",
@@ -106,7 +135,10 @@
                         "en": "Sleeping Wednesday to Thursday\n",
                         "da": "Overnatning onsdag til torsdag\n"
                     },
-                    "infosys_id": "sleeping_wednesday"
+                    "infosys_id": "sleeping:1",
+                    "excludes": [
+                        "sleeping:partout"
+                    ]
                 },
                 {
                     "type": "checkbox",
@@ -114,7 +146,10 @@
                         "en": "Sleeping Thursday to Friday\n",
                         "da": "Overnatning torsdag til fredag\n"
                     },
-                    "infosys_id": "sleeping_thursday"
+                    "infosys_id": "sleeping:2",
+                    "excludes": [
+                        "sleeping:partout"
+                    ]
                 },
                 {
                     "type": "checkbox",
@@ -122,7 +157,10 @@
                         "en": "Sleeping Friday to Saturday\n",
                         "da": "Overnatning fredag til l\u00f8rdag\n"
                     },
-                    "infosys_id": "sleeping_friday"
+                    "infosys_id": "sleeping:3",
+                    "excludes": [
+                        "sleeping:partout"
+                    ]
                 },
                 {
                     "type": "checkbox",
@@ -130,7 +168,10 @@
                         "en": "Sleeping Saturday to Sunday\n",
                         "da": "Overnatning l\u00f8rdag til s\u00f8ndag\n"
                     },
-                    "infosys_id": "sleeping_saturday"
+                    "infosys_id": "sleeping:4",
+                    "excludes": [
+                        "sleeping:partout"
+                    ]
                 },
                 {
                     "type": "checkbox",
@@ -138,7 +179,10 @@
                         "en": "Sleeping Sunday to Monday\n",
                         "da": "Overnatning s\u00f8ndag til mandag\n"
                     },
-                    "infosys_id": "sleeping_sunday"
+                    "infosys_id": "sleeping:5",
+                    "excludes": [
+                        "sleeping:partout"
+                    ]
                 },
                 {
                     "type": "paragraph",
@@ -153,7 +197,7 @@
                         "en": "Yes, I would like to rent a matress for 150 kr.\t\t\t",
                         "da": "Ja tak, jeg vil gerne leje en madras for 150 kr.\t\t\t"
                     },
-                    "infosys_id": "mattres"
+                    "infosys_id": "misc:mattres"
                 },
                 {
                     "type": "paragraph",
@@ -198,7 +242,8 @@
                         "en": "I want to attend the Otto party\n",
                         "da": "Jeg vil gerne have billet til Ottofesten\n"
                     },
-                    "infosys_id": "party"
+                    "infosys_id": "misc:party",
+                    "disabled": "true"
                 },
                 {
                     "type": "checkbox",
@@ -206,7 +251,8 @@
                         "en": "I would like some bubblies at the party\n",
                         "da": "Jeg vil gerne have bobler til ottofesten\n"
                     },
-                    "infosys_id": "bubbles"
+                    "infosys_id": "misc:bubbles",
+                    "disabled": "true"
                 }
             ]
         },
@@ -236,7 +282,18 @@
                         "en": "Yes, I would like to join Alea and get a discount on the entry fee (75 kr.)\t\t\t",
                         "da": "Ja tak, jeg vil gerne melde mig ind i Alea og f\u00e5 rabat p\u00e5 partout billet (75 kr.)\t\t\t"
                     },
-                    "infosys_id": "alea"
+                    "infosys_id": "misc:alea",
+                    "errors": {
+                        "required": {
+                            "en": "As organizer you have to be a memeber of Alea",
+                            "da": "Som arrangør skal du være medlem af Alea"
+                        }
+                    },
+                    "required_if": {
+                        "field": "participant",
+                        "logic": "equals",
+                        "value": "organizer"
+                    }
                 }
             ]
         }

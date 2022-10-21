@@ -134,21 +134,27 @@
                     },
                     "infosys_id": "email-confirm",
                     "required": "true",
-                    "equals": "email"
+                    "equals": "email",
+                    "no_submit": "true",
+                    "errors": {
+                        "match": {
+                            "en": "The email adresses are not the same",
+                            "da": "Emailadresserne er ikke ens"
+                        }
+                    }
                 },
                 {
-                    "type": "checkbox",
+                    "type": "paragraph",
                     "text": {
-                        "en": "I am at Fastaval with my club\/school\t\t\t",
-                        "da": "Jeg er p\u00e5 Fastaval med min klub\/ungdomsskole\t\t\t"
-                    },
-                    "infosys_id": "with_club"
+                        "en": "If you're\u00a0 attending Fastaval with\u00a0 your club\/school, fill out the name below\n",
+                        "da": "Hvis du er p\u00e5 Fastaval med din klub\/ungdomsskole, s\u00e5 udfyld navnet nedenfor\n"
+                    }
                 },
                 {
                     "type": "text_input",
                     "text": {
                         "en": "Name of club\/school",
-                        "da": "Navn p\u00e5 klub\/ungdomsskole\t\t\t"
+                        "da": "Navn p\u00e5 klub\/ungdomsskole"
                     },
                     "infosys_id": "ungdomsskole"
                 }
@@ -213,7 +219,7 @@
                         "en": "Emergency phone number\n(which we can contact if e.g. you're hurt)",
                         "da": "N\u00f8dkontakt telefonnummer\n(som vi kan kontakte hvis du f.eks. er kommet til skade)"
                     },
-                    "infosys_id": "emergency"
+                    "infosys_id": "tlf"
                 },
                 {
                     "type": "text_area",
@@ -221,7 +227,7 @@
                         "en": "Please provide any necessary information about your health that you deem relevant for us to know about\t\t\t",
                         "da": "Angiv venligst informationer om dit helbred, som kan v\u00e6re vigtige i tilf\u00e6lde af uheld, eller sygdom"
                     },
-                    "infosys_id": "health_note"
+                    "infosys_id": "medical_note"
                 }
             ]
         }

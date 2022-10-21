@@ -160,6 +160,7 @@ legend.selected::before,
   height: 50%;
   margin: -5px;
   box-sizing: border-box;
+  z-index: -1;
 }
 
 legend.selected::before {

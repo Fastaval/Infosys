@@ -92,12 +92,39 @@ class SignupApiController extends Controller {
       header('HTTP/1.1 400 Not a POST request');
       exit;
     }
-    $post = $this->page->request->post;
+    $data = $this->page->request->post->getRequestVarArray();
 
-    $json = json_encode($post->getRequestVarArray(), JSON_PRETTY_PRINT);
+    $json = json_encode($data['signup'], JSON_PRETTY_PRINT);
     $hash = hash('md5', $json);
     file_put_contents(self::DATA_DIR."$hash.json", $json);
 
-    $this->jsonOutput(['status' => 'OK']);
+    $result = $this->model->submitSignup($data);
+    $status = count($result['errors']) == 0 ? '200' : '400';
+
+    $this->jsonOutput([
+      'result' => $result,
+      'hash' => $hash,
+    ], $status);
+  }
+
+  public function confirmSignup() {
+    if (!$this->page->request->isPost()) {
+      header('HTTP/1.1 400 Not a POST request');
+      exit;
+    }
+    $data = $this->page->request->post->getRequestVarArray();
+
+    $signup_file = self::DATA_DIR."$data[hash].json";
+    if(!is_file($signup_file)) die("Signup with Hash:$data[hash] not found.");
+
+    $signup = json_decode(file_get_contents($signup_file));
+    $data['signup'] = $signup;
+    [$info,$result] = $this->model->confirmSignup($data);
+    $status = count($result['errors']) == 0 ? '200' : '400';
+
+    $this->jsonOutput([
+      'result' => $result,
+      'info' => $info,
+    ], $status);
   }
 }

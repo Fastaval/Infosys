@@ -1,7 +1,7 @@
 "using strict";
 
 class InfosysSignupRender {
-  static render_element(element, lang) {
+  static render_element(element, lang, config) {
     let html = "";
     let text = InfosysTextPreprocessor.process_text(element.text[lang]);
     
@@ -17,12 +17,44 @@ class InfosysSignupRender {
     } else {
       html = this.render_unknown(text, element.type)
     }
-    if (element.required) {
-      let parsed = jQuery(jQuery.parseHTML(html.trim()));
+    
+    // Add extra attributes
+    let parsed = jQuery(jQuery.parseHTML(html.trim()));
+    if(element.required) {
       parsed.addClass('required');
       parsed.find('input').attr('required', true);
-      html = parsed.prop('outerHTML');
+
+      // Add error text when input is empty/not selected
+      if(!element.errors) element.errors = {};
+      if(!element.errors.required) {
+        element.errors.required = config.errors.required;
+      }
     }
+    if(element.excludes) {
+      // Add error text when input is empty/not selected
+      if(!element.errors) element.errors = {};
+      if(!element.errors.excludes) {
+        element.errors.excludes = config.errors.excludes;
+      }
+    }
+    if(element.no_submit) {
+      parsed.find('input').attr('no-submit', true);
+    }
+    if (element.errors) {
+      for(const error in element.errors) {
+        let error_type = error == 'required_if' ? 'required' : error;
+        let error_div = jQuery('<div class="error-text" error-type="'+error_type+'"></div>');
+        error_div.text(element.errors[error_type][lang]);
+        error_div.hide();
+        if(element.type == 'checkbox') {
+          parsed.prepend(error_div);
+        } else {
+          parsed.append(error_div);
+        }
+      }
+    }
+    
+    html = parsed.prop('outerHTML');
     
     return html;
   }

@@ -33,6 +33,8 @@
      */
 class DummyParticipant extends DBObject
 {
+    public $is_dummy = true;
+    
     /**
      * Diy signups
      *

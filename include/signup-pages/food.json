@@ -73,7 +73,7 @@
                         "en": "I would like to attend the Otto party\n",
                         "da": "Jeg vil gerne med til Ottofesten\n"
                     },
-                    "infosys_id": "indgang:ottofest"
+                    "infosys_id": "misc:party"
                 },
                 {
                     "type": "checkbox",
@@ -81,7 +81,7 @@
                         "en": "I would like sparkling wine at the party\n",
                         "da": "Jeg vil gerne have mousserende vin til festen\n"
                     },
-                    "infosys_id": "indgang:bobler"
+                    "infosys_id": "misc:bubbles"
                 }
             ]
         }

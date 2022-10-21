@@ -119,7 +119,13 @@
                         "da": "Jeg accepterer Fastavals brug, adgang til og opbevaring af mine oplysninger"
                     },
                     "infosys_id": "gdpr_accept",
-                    "required": "true"
+                    "required": "true",
+                    "errors": {
+                        "required": {
+                            "en": "We cannot process your registration if we're not allowed to store your information",
+                            "da": "Vi kan ikke behandle din tilmelding, hvis vi ikke må opbevare dine oplysninger"
+                        }
+                    }
                 }
             ]
         }
