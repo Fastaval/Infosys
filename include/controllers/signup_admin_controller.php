@@ -30,18 +30,6 @@ class SignupAdminController extends Controller {
    * Show page for editing signup pages
    */
   public function signupPages() {
-    /*$pages = [];
-
-    $page_files = glob(INCLUDE_PATH."signup-pages/*");
-    foreach($page_files as $page_file){ // iterate files
-      if(!is_file($page_file)) continue;
-      $page = json_decode(file_get_contents($page_file));
-      $page->file = basename($page_file, ".json");
-      $pages[$page->order] = $page;
-    }
-    ksort($pages);
-    $this->page->signup_pages = $pages;*/
-
     $this->page->includeCSS('signup.css');
     $this->page->includeCss('fontello-ebe72605/css/idtemplate.css');
 
@@ -62,7 +50,7 @@ class SignupAdminController extends Controller {
     }
     $post = $this->page->request->post;
 
-    $page_file_path = INCLUDE_PATH."signup-pages/$post->page_id.json";
+    $page_file_path = SIGNUP_FOLDER."pages/$post->page_id.json";
     if(!is_file($page_file_path)) {
       $this->jsonOutput([
         'error' => "No page with id:$post->page_id",
@@ -188,7 +176,7 @@ class SignupAdminController extends Controller {
     }
     $post = $this->page->request->post;
 
-    $page_file_path = INCLUDE_PATH."signup-pages/$post->page_id.json";
+    $page_file_path = SIGNUP_FOLDER."pages/$post->page_id.json";
     if(!is_file($page_file_path)) {
       $this->jsonOutput([
         'error' => 'No page with that id',

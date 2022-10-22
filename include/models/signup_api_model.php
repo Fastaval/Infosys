@@ -351,7 +351,7 @@ class SignupApiModel extends Model {
       $category_total = 0;
       
       // Load file for the category/page
-      $page_file = INCLUDE_PATH."signup-pages/$category.json";
+      $page_file = SIGNUP_FOLDER."pages/$category.json";
       if(!is_file($page_file)) {
         $errors[$category][] = [
           'type' => 'missing_page',

@@ -153,4 +153,5 @@ function bootstrap_setup_path_constants() {
     define('ENTITY_FOLDER', INCLUDE_PATH . 'entities/');
     define('LIB_FOLDER', INCLUDE_PATH . 'lib/');
     define('MIGRATION_FOLDER', INCLUDE_PATH . 'migrations/');
+    define('SIGNUP_FOLDER', INCLUDE_PATH . 'signup/');
 }

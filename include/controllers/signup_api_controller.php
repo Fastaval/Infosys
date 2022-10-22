@@ -46,7 +46,7 @@ class SignupApiController extends Controller {
   public function getPageList() {
     $response = (object) [];
 
-    $page_files = glob(INCLUDE_PATH."signup-pages/*");
+    $page_files = glob(SIGNUP_FOLDER."pages/*");
     foreach($page_files as $page_file){ // iterate files
       if(!is_file($page_file)) continue;
       $name = basename($page_file, ".json");
@@ -61,7 +61,7 @@ class SignupApiController extends Controller {
 
   public function getPage() {
     $page_id = $this->vars['page_id'];
-    $page_file = INCLUDE_PATH."signup-pages/$page_id.json";
+    $page_file = SIGNUP_FOLDER."pages/$page_id.json";
     if(!is_file($page_file)) die("Signup page not found");
 
     $page = file_get_contents($page_file);
