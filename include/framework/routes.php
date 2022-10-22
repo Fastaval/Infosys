@@ -440,7 +440,7 @@ class Routes
         $this->routes['signup_pages_edit_text']     = array('url' => 'signup/pages/edit-text', 'controller' => 'SignupAdmin', 'method' => 'editText');
 
         // Signup API
-        $this->routes['api_signup_config']          = array('url' => 'api/signup/config', 'controller' => 'SignupApi', 'method' => 'getConfig');
+        $this->routes['api_signup_config']          = array('url' => 'api/signup/config/:module:', 'controller' => 'SignupApi', 'method' => 'getConfig');
         $this->routes['api_signup_page_list']       = array('url' => 'api/signup/pagelist', 'controller' => 'SignupApi', 'method' => 'getPageList');
         $this->routes['api_signup_page']            = array('url' => 'api/signup/page/:page_id:', 'controller' => 'SignupApi', 'method' => 'getPage');
         $this->routes['api_signup_food']            = array('url' => 'api/signup/food', 'controller' => 'SignupApi', 'method' => 'getFood');

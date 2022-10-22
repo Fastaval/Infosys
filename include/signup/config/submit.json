@@ -1,0 +1,40 @@
+{
+  "confirmationpage": {
+    "en": "Your registration has been recieved.\nParticipant ID:[id] and payment total:[total]",
+    "da": "Din tilmelding er modtaget.\nDeltagernummer:[id] og pris ialt for tilmelding:[total]"
+  },
+  "submit_text": {
+    "en": "Your registration has been sent. Please wait a moment while we process it.",
+    "da": "Din tilmelding er blevet sendt. Vent venligst et øjeblik mens vi behandler den."
+  },
+  "short_text": {
+    "gdpr_accept": {
+      "en": "I accept the GDPR terms",
+      "da": "Jeg accepterer GDPR betingelserne"
+    },
+    "medbringer_mobil": {
+      "en": "I'm bringing my cell phone",
+      "da": "Jeg medbringer mobil"
+    },
+    "tlf": {
+      "en": "Emergency phone number",
+      "da": "Nødkontakt telefonnummer"
+    },
+    "scenarie": {
+      "en": "The title of your scenario/game",
+      "da": "Titlen på dit scenarie/spil"
+    },
+    "entry:partout": {
+      "en": "5-day pass for all of Fastaval",
+      "da": "Partout - Alle dage"
+    },
+    "sleeping:partout": {
+      "en": "I will be sleeping at Fastaval all days",
+      "da": "Jeg overnatter alle dage på Fastaval"
+    },
+    "misc:alea": {
+      "en": "I would like to join Alea",
+      "da": "Jeg vil gerne melde mig ind i Alea"
+    }
+  }
+}

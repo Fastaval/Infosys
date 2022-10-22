@@ -28,18 +28,21 @@ class SignupApiController extends Controller {
    * @access protected
    * @return void
    */
-  protected function jsonOutput($data, $http_status = '200', $content_type = 'text/plain')
+  protected function jsonOutput($data, $http_status = '200', $content_type = 'text/plain; charset=UTF-8')
   {
-    $string = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+    if (!is_string($data)) {
+      $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+    }
     header('Status: ' . $http_status);
     header('Content-Type: ' . $content_type . '; charset=UTF-8');
-    header('Content-Length: ' . strlen($string));
-    echo $string;
+    header('Content-Length: ' . strlen($data));
+    echo $data;
     exit;
   }
 
   public function getConfig() {
-    $config = $this->model->getConfig();
+    $module = $this->vars['module'];
+    $config = $this->model->getConfig($module);
     $this->jsonOutput($config);
   }
 
@@ -65,11 +68,7 @@ class SignupApiController extends Controller {
     if(!is_file($page_file)) die("Signup page not found");
 
     $page = file_get_contents($page_file);
-    header('Status: 200');
-    header('Content-Type: text/plain; charset=UTF-8');
-    header('Content-Length: ' . strlen($page));
-    echo $page;
-    exit;
+    $this->jsonOutput($page);
   }
 
   public function getFood() {

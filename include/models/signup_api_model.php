@@ -32,7 +32,7 @@ class SignupApiModel extends Model {
   /**
    * Get general configuration related to signup
    */
-  public function getConfig() {
+  public function getConfig($module) {
     $config = (object)[
       'age_young'   => 18,
       'age_kid'     => 13,
@@ -59,8 +59,15 @@ class SignupApiModel extends Model {
         'da' => 'Sub total',
       ],
     ];
-    
-    return $config;
+
+    if ($module == 'main') {
+      return json_encode($config, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+    }
+
+    $config_file = SIGNUP_FOLDER."config/$module.json";
+    if(!is_file($config_file)) die("Config data not found");
+
+    return file_get_contents($config_file);
   }
 
   /**
@@ -442,7 +449,7 @@ class SignupApiModel extends Model {
               $entry = $this->createEntity('Indgang');
               $select = $entry->getSelect();
               if ($key_item == 'partout') {
-                $config = $this->getConfig();
+                $config = json_decode($this->getConfig('main'));
                 $age = $participant->getAge(new DateTime($config->con_start));
                 $select->setWhere('type', 'like', '%Indgang - Partout%');
                 if ($age < $config->age_young) {
