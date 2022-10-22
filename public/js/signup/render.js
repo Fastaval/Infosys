@@ -18,8 +18,13 @@ class InfosysSignupRender {
       html = this.render_unknown(text, element.type)
     }
     
+    // Convert html to jQuery
+    let parsed = html;
+    if(!(html instanceof jQuery)) {
+      parsed = jQuery(jQuery.parseHTML(html.trim()));
+    }
+
     // Add extra attributes
-    let parsed = jQuery(jQuery.parseHTML(html.trim()));
     if(element.required) {
       parsed.addClass('required');
       parsed.find('input').attr('required', true);
@@ -158,5 +163,12 @@ class InfosysSignupRender {
     })
     html += '</ul>';
     return html;
+  }
+
+  static render_hidden(item) {
+    let wrapper = jQuery('<div class="input-wrapper input-type-hidden"></div>');
+    let input = jQuery(`<input type="hidden" id="${item.id}" text="${item.text}" value="on">`);
+    wrapper.append(input);
+    return wrapper;
   }
 }
