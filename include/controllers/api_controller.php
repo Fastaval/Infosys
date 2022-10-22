@@ -177,7 +177,7 @@ class ApiController extends Controller
     public function parseSignup()
     {
         // save signup data
-        file_put_contents(__DIR__ . '/../signup-data/parse-' . date('Y-m-d_H:i:s'), print_r($this->json, true));
+        file_put_contents(SIGNUP_FOLDER.'data/parse-' . date('Y-m-d_H:i:s'), print_r($this->json, true));
 
         list($json_output, $participant) = $this->model->parseSignup($this->json);
 

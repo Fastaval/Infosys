@@ -2378,7 +2378,7 @@ die ("This page has to be enabled by someone with access to the server code");
             $cache = CACHE_FOLDER;
             // $badges = glob($cache."/<something>");
             
-            $signup = INCLUDE_PATH."signup-data/";
+            $signup = SIGNUP_FOLDER."data/";
             $sessions = glob($signup."session*");
             $parsed = glob($signup."parse*");
 

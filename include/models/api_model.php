@@ -1065,7 +1065,7 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
         }
 
         if (isset($data['session'])) {
-            file_put_contents(__DIR__ . '/../signup-data/session-' . $participant->id, $data['session']);
+            file_put_contents(SIGNUP_FOLDER.'data/session-' . $participant->id, $data['session']);
         }
 
         if (empty($data['participant'])) {
@@ -1539,8 +1539,8 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
             'session' => '',
         );
 
-        if (is_file(__DIR__ . '/../signup-data/session-' . $participant->id)) {
-            $return['session'] = file_get_contents(__DIR__ . '/../signup-data/session-' . $participant->id);
+        if (is_file(SIGNUP_FOLDER.'data/session-' . $participant->id)) {
+            $return['session'] = file_get_contents(SIGNUP_FOLDER.'data/session-' . $participant->id);
         }
 
         return $return;

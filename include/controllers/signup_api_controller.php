@@ -1,7 +1,7 @@
 <?php
 class SignupApiController extends Controller {
 
-  const DATA_DIR = INCLUDE_PATH."signup-data/";
+  const DATA_FOLDER = SIGNUP_FOLDER."data/";
 
   protected $prerun_hooks = array(
     ['method' => 'allowCrossSiteAccess', 'exclusive' => true, 'methodlist' => []], 
@@ -96,7 +96,7 @@ class SignupApiController extends Controller {
 
     $json = json_encode($data['signup'], JSON_PRETTY_PRINT);
     $hash = date('Y-m-d-').hash('md5', $json);
-    file_put_contents(self::DATA_DIR."$hash.json", $json);
+    file_put_contents(self::DATA_FOLDER."$hash.json", $json);
 
     $result = $this->model->submitSignup($data);
     $status = count($result['errors']) == 0 ? '200' : '400';
@@ -114,7 +114,7 @@ class SignupApiController extends Controller {
     }
     $data = $this->page->request->post->getRequestVarArray();
 
-    $signup_file = self::DATA_DIR."$data[hash].json";
+    $signup_file = self::DATA_FOLDER."$data[hash].json";
     if(!is_file($signup_file)) die("Signup with Hash:$data[hash] not found.");
 
     $signup = json_decode(file_get_contents($signup_file));
