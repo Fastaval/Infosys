@@ -95,7 +95,7 @@ class SignupApiController extends Controller {
     $data = $this->page->request->post->getRequestVarArray();
 
     $json = json_encode($data['signup'], JSON_PRETTY_PRINT);
-    $hash = hash('md5', $json);
+    $hash = date('Y-m-d-').hash('md5', $json);
     file_put_contents(self::DATA_DIR."$hash.json", $json);
 
     $result = $this->model->submitSignup($data);
