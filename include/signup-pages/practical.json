@@ -16,6 +16,14 @@
             },
             "items": [
                 {
+                    "type": "hidden",
+                    "text": {
+                        "en": "Ticket fee",
+                        "da": "Billetgebyr"
+                    },
+                    "infosys_id": "misc:ticket_fee"
+                },
+                {
                     "type": "checkbox",
                     "text": {
                         "en": "5-day pass for all of Fastaval (325 kr.)  + fees ( Under 18 years (225 kr.) \/ Organizers (100 kr. incl. Alea discount) )",
@@ -286,7 +294,7 @@
                     "errors": {
                         "required": {
                             "en": "As organizer you have to be a memeber of Alea",
-                            "da": "Som arrangør skal du være medlem af Alea"
+                            "da": "Som arrang\u00f8r skal du v\u00e6re medlem af Alea"
                         }
                     },
                     "required_if": {
