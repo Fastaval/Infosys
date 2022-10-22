@@ -34,6 +34,8 @@ class SignupApiModel extends Model {
    */
   public function getConfig() {
     $config = (object)[
+      'age_young'   => 18,
+      'age_kid'     => 13,
       'con_start'   => $this->config->get('con.start'),
       'birth'       => 'birthdate',
       'participant' => 'participant',
@@ -51,7 +53,11 @@ class SignupApiModel extends Model {
           'en' => 'May not be selected at the same time',
           'da' => 'Må ikke vælges samtidig',
         ]
-      ]
+      ],
+      'sub_total' => [
+        'en' => 'Sub total',
+        'da' => 'Sub total',
+      ],
     ];
     
     return $config;
@@ -328,8 +334,9 @@ class SignupApiModel extends Model {
    */
   public function applySignup($data, $participant, $lang) {
     $gdpr_accept = false;
-    $errors = [];
-    $categories = [];
+    $errors = $categories = [];
+    $is_alea = $is_organizer = false;
+    $total = 0;
 
     $participant->signed_up = date('Y-m-d H:i:s');
     // Reset orders
@@ -341,6 +348,7 @@ class SignupApiModel extends Model {
 
     foreach($data as $category => $items) {
       $entries = [];
+      $category_total = 0;
       
       // Load file for the category/page
       $page_file = INCLUDE_PATH."signup-pages/$category.json";
@@ -366,6 +374,9 @@ class SignupApiModel extends Model {
       }
 
       foreach($items as $key => $value) {
+        $price = 0;
+        $extra = [];
+
         if ($lookup[$key]['disabled']) {
           $errors[$category][] = [
             'type' => 'disabled',
@@ -390,6 +401,7 @@ class SignupApiModel extends Model {
                 $bk->findBySelect($sel);
                 $participant->brugerkategori_id = $bk->id;
               } else {
+                $is_organizer = true;
                 if(!isset($participant->brugerkategori_id)) {
                   $participant->brugerkategori_id = $bk->getArrangoer()->id;
                 }
@@ -397,6 +409,7 @@ class SignupApiModel extends Model {
               break;
 
             case 'organizercategory':
+              $is_organizer = true;
               $participant->brugerkategori_id = $value;
               break;
             
@@ -429,8 +442,24 @@ class SignupApiModel extends Model {
               $entry = $this->createEntity('Indgang');
               $select = $entry->getSelect();
               if ($key_item == 'partout') {
-                // TODO find correct entrance price
+                $config = $this->getConfig();
+                $age = $participant->getAge(new DateTime($config->con_start));
                 $select->setWhere('type', 'like', '%Indgang - Partout%');
+                if ($age < $config->age_young) {
+                  if ($age < $config->age_kid) {
+                    $select->setWhere('type', 'like', '%Barn%');  
+                  } else {
+                    $select->setWhere('type', 'like', '%Ung%');
+                  }
+                }
+                // NB! We assume Alea signup is earlier or same page
+                if ($age >= $config->age_kid && ($is_alea || $items->{'misc:alea'})) {
+                  $select->setWhere('type', 'like', '%Alea%');
+                }
+                // NB! We assume organizer setting is before this
+                if ($age >= $config->age_kid && $is_organizer) {
+                  $select->setWhere('type', 'like', '%Arrangør%');
+                }
               } else {
                 $day = intval($key_item) -1;
                 $date = new DateTime($this->config->get('con.start'));
@@ -439,14 +468,29 @@ class SignupApiModel extends Model {
                 $select->setWhere('type', '=', 'Indgang - Enkelt');
               }
               $entry = $entry->findBySelect($select);
+              if (!$entry) {
+                $errors[$category][] = [
+                  'type' => 'no_entry',
+                  'info' => "$key_cat:$key_item $value",
+                  'age'  => $age,
+                  'alea' => ($is_alea || $items->{'misc:alea'}),
+                  'organizer' => $is_organizer,
+                ];
+                continue 2;
+              }
               $participant->setIndgang($entry);
+              $price = $entry->pris;
               break;
 
             case 'sleeping':
               $entry = $this->createEntity('Indgang');
               $select = $entry->getSelect();
               if ($key_item == 'partout') {
-                $select->setWhere('type', '=', 'Overnatning - Partout');
+                $select->setWhere('type', 'like', 'Overnatning - Partout%');
+                // NB! We assume organizer setting is before this
+                if ($age >= $config->age_kid && $is_organizer) {
+                  $select->setWhere('type', 'like', '%Arrangør%');
+                }
               } else {
                 $day = intval($key_item) -1;
                 $date = new DateTime($this->config->get('con.start'));
@@ -455,7 +499,16 @@ class SignupApiModel extends Model {
                 $select->setWhere('type', '=', 'Overnatning - Enkelt');
               }
               $entry = $entry->findBySelect($select);
+              if (!$entry) {
+                $errors[$category][] = [
+                  'type' => 'no_entry',
+                  'info' => "$key_cat:$key_item $value",
+                  'organizer' => $is_organizer,
+                ];
+                continue 2;
+              }
               $participant->setIndgang($entry);
+              $price = $entry->pris;
               break;
 
             case 'misc':
@@ -476,7 +529,12 @@ class SignupApiModel extends Model {
                   break;
 
                 case 'alea':
-                  $select->setWhere('type', 'like', 'Alea%');
+                  $is_alea = true;
+                  $select->setWhere('type', '=', 'Alea medlemskab');
+                  break;
+                
+                case 'ticket_fee':
+                  $select->setWhere('type', '=', 'Billetgebyr');
                   break;
   
                 default:
@@ -489,6 +547,7 @@ class SignupApiModel extends Model {
 
               $entry = $entry->findBySelect($select);
               $participant->setIndgang($entry);
+              $price = $entry->pris;
               break;
 
             case 'food':
@@ -505,6 +564,7 @@ class SignupApiModel extends Model {
                 continue 2;
               }
               $participant->setMad($food);
+              $price = $food->getMad()->pris;
               break;
 
             case 'activity':
@@ -526,6 +586,7 @@ class SignupApiModel extends Model {
                   $participant->setAktivitetTilmelding($run, 1, 'spiller');
                 }
               }
+              $price = $run->getAktivitet()->pris;
               break;
 
             case 'wear':
@@ -554,13 +615,13 @@ class SignupApiModel extends Model {
               preg_match('/amount:(\d+)/', $value, $amount_match);
               preg_match('/size:(\d+)/', $value, $size_match);
               $participant->setWearOrder($wear_prices[0], $size_match[1], $amount_match[1]);
-              $entries[] = [
-                'key' => $key,
+              $extra = [
                 'size' => $size_match[1],
                 'amount' => $amount_match[1],
               ];
-              continue 2;
-  
+              $price = $wear_prices[0]->pris;
+              break;
+
             default:
               $errors[$category][] = [
                 'type' => 'no_field',
@@ -569,14 +630,22 @@ class SignupApiModel extends Model {
               continue 2;
           }
         }
-        $entries[] = [
+        $entries[] = array_merge([
           'key' => $key,
           'value' => $value,
-        ];
+          'price' => $price,
+        ], $extra);
+
+        $category_total += $price;
       }
 
       if (count($entries) > 0) {
+        $entries[] = [
+          'key' => 'sub_total',
+          'value' => $category_total,
+        ];
         $categories[$category] = $entries;
+        $total += $category_total;
       }
     }
 
@@ -587,6 +656,7 @@ class SignupApiModel extends Model {
     return [
       'errors' => $errors,
       'categories' => $categories,
+      'total' => $total,
     ];
   }
 }
