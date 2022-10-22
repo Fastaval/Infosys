@@ -552,27 +552,15 @@ class SignupAdminControls {
       </div>
     `);
 
-    let insert = null
     let placement_item = this.current_selection.closest('fieldset.signup-page-item');
+    item_id = 0;
     if (placement_item.length) { // Do we have an item selected (or anything inside)
       let id = placement_item.attr('id');
       let match = parseInt(id.match(/page:[\w\-]+--section:\d+--item:(\d+)/)[1]);
       item_id = isNaN(match) ? 0 : match + 1;
-      insert = function () {
-        new_item.insertAfter(placement_item);
-        // Update all following item's IDs
-        let current = new_item
-        let index = item_id;
-        while ((current = current.next()).length > 0) {
-          index++;
-          new_item.attr('id', 'page:'+page_id+'--section:'+section_id+'--item:'+index);
-        }
-      };
     } else {
-      item_id = section.children('fieldset').length;
-      insert = function () {section.append(new_item);};
+      placement_item = section.find('.headline-wrapper').last();
     }
-
     new_item.attr('id', section.attr('id')+'--item:'+item_id);
 
     let data = {
@@ -590,7 +578,16 @@ class SignupAdminControls {
     }
 
     this.post('add-element', data, function() {
-        insert();
+        if(placement_item.length) {
+          new_item.insertAfter(placement_item);
+        }
+        // Update all following item's IDs
+        let current = new_item
+        let index = item_id;
+        while ((current = current.next()).length > 0) {
+          index++;
+          new_item.attr('id', 'page:'+page_id+'--section:'+section_id+'--item:'+index);
+        }
         SignupAdminControls.initEditables(new_item);
     });
   }
