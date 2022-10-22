@@ -7,7 +7,7 @@ public/uploads/*
 public/error_log.txt
 public/vote-barcodes/*
 public/sheets/*
-include/signup-data/*
+include/signup/data/*
 include/scripts/*
 include/cache/*
 logs/*
