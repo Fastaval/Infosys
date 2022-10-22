@@ -30,7 +30,7 @@ class SignupAdminController extends Controller {
    * Show page for editing signup pages
    */
   public function signupPages() {
-    $this->page->includeCSS('signup.css');
+    $this->page->includeCSS('signup-admin.css');
     $this->page->includeCss('fontello-ebe72605/css/idtemplate.css');
 
     $this->page->registerEarlyLoadJS('signup/admin/render.js');
