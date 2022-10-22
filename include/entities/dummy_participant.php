@@ -338,4 +338,24 @@ class DummyParticipant extends DBObject
     {
         return stripos($this->sprog, 'dansk') !== false || !$this->sprog;
     }
+
+    /**
+     * returns age as a float
+     *
+     * @access public
+     * @return float
+     */
+    public function getAge(DateTime $at_time = null)
+    {
+        if (!$this->birthdate) {
+            return -1;
+        }
+
+        $now = $at_time ? $at_time : new DateTime();
+
+        $diff = $now->diff(new DateTime($this->birthdate));
+
+        return floor($diff->y);
+    }
+
 }
