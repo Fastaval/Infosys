@@ -11,6 +11,18 @@
     "en": "Confirm",
     "da": "Bekræft"
   },
+  "error_text": {
+    "en": "There are the following issues with your submission",
+    "da": "Der er følgende problemer med din indtastning"
+  },
+  "processing_text": {
+    "en": "Processing your submission",
+    "da": "Behandler din tilmelding"
+  },
+  "waiting_for_pages": {
+    "en": "Waiting for all pages to load",
+    "da": "Venter på at alle sider er hentet"
+  },
   "short_text": {
     "gdpr_accept": {
       "en": "I accept the GDPR terms",

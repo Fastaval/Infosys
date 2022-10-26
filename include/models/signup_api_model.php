@@ -58,6 +58,14 @@ class SignupApiModel extends Model {
         'en' => 'Sub total',
         'da' => 'Sub total',
       ],
+      'pieces' => [
+        'en' => 'pcs.',
+        'da' => 'stk.'
+      ],
+      'dkk' => [
+        'en' => 'DKK',
+        'da' => 'kr.'
+      ]
     ];
 
     if ($module == 'main') {
@@ -647,8 +655,9 @@ class SignupApiModel extends Model {
               $extra = [
                 'size' => $size_match[1],
                 'amount' => $amount_match[1],
+                'single_price' => $wear_prices[0]->pris,
               ];
-              $price = $wear_prices[0]->pris;
+              $price = $wear_prices[0]->pris * $amount_match[1];
               break;
 
             default:

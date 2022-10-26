@@ -110,7 +110,7 @@ class SignupApiController extends Controller {
     $signup_file = self::DATA_FOLDER."$data[hash].json";
     if(!is_file($signup_file)) die("Signup with Hash:$data[hash] not found.");
 
-    $signup = json_decode(file_get_contents($signup_file));
+    $signup = json_decode(file_get_contents($signup_file), true);
     $data['signup'] = $signup;
     [$info,$result] = $this->model->confirmSignup($data);
     $status = count($result['errors']) == 0 ? '200' : '400';
