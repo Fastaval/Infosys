@@ -8,6 +8,16 @@
         "en": "Special information for organizers, writers and designers",
         "da": "Specielt for arrang\u00f8rer, forfattere og designere"
     },
+    "page_logic": {
+      "default"  : "disabled",
+      "enable_if": [
+        {
+            "field": "participant",
+            "compare": "equals",
+            "value": "organizer"
+        }
+      ]
+    },
     "sections": [
         {
             "headline": {

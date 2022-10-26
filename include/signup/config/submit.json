@@ -7,6 +7,10 @@
     "en": "Your registration has been sent. Please wait a moment while we process it.",
     "da": "Din tilmelding er blevet sendt. Vent venligst et øjeblik mens vi behandler den."
   },
+  "button_text": {
+    "en": "Confirm",
+    "da": "Bekræft"
+  },
   "short_text": {
     "gdpr_accept": {
       "en": "I accept the GDPR terms",

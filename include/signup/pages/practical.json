@@ -48,8 +48,8 @@
                 {
                     "type": "checkbox",
                     "text": {
-                        "en": "Wednesday\n",
-                        "da": "Onsdag\n"
+                        "en": "Entry Wednesday\n",
+                        "da": "Indgang Onsdag\n"
                     },
                     "infosys_id": "entry:1",
                     "excludes": [
@@ -59,8 +59,8 @@
                 {
                     "type": "checkbox",
                     "text": {
-                        "en": "Thursday",
-                        "da": "Torsdag\n"
+                        "en": "Entry Thursday",
+                        "da": "Indgang Torsdag\n"
                     },
                     "infosys_id": "entry:2",
                     "excludes": [
@@ -70,8 +70,8 @@
                 {
                     "type": "checkbox",
                     "text": {
-                        "en": "Friday",
-                        "da": "Fredag"
+                        "en": "Entry Friday",
+                        "da": "Indgang Fredag"
                     },
                     "infosys_id": "entry:3",
                     "excludes": [
@@ -81,8 +81,8 @@
                 {
                     "type": "checkbox",
                     "text": {
-                        "en": "Saturday",
-                        "da": "L\u00f8rdag"
+                        "en": "Entry Saturday",
+                        "da": "Indgang L\u00f8rdag"
                     },
                     "infosys_id": "entry:4",
                     "excludes": [
@@ -92,8 +92,8 @@
                 {
                     "type": "checkbox",
                     "text": {
-                        "en": "Sunday",
-                        "da": "S\u00f8ndag"
+                        "en": "Entry Sunday",
+                        "da": "Indgang S\u00f8ndag"
                     },
                     "infosys_id": "entry:5",
                     "excludes": [

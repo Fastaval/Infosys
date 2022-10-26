@@ -47,16 +47,13 @@ class SignupApiController extends Controller {
   }
 
   public function getPageList() {
-    $response = (object) [];
+    $response = [];
 
-    $page_files = glob(SIGNUP_FOLDER."pages/*");
-    foreach($page_files as $page_file){ // iterate files
-      if(!is_file($page_file)) continue;
-      $name = basename($page_file, ".json");
-      $page = json_decode(file_get_contents($page_file));
-      $response->$name = (object) [];
-      $response->$name->slug = $page->slug;
-      $response->$name->order = $page->order;
+    $pages = $this->model->getAllPages();
+    foreach($pages as $name => $page){
+      $response[$name] = [];
+      $response[$name]['slug'] = $page->slug;
+      $response[$name]['order'] = $page->order;
     }
 
     $this->jsonOutput($response);
@@ -64,10 +61,7 @@ class SignupApiController extends Controller {
 
   public function getPage() {
     $page_id = $this->vars['page_id'];
-    $page_file = SIGNUP_FOLDER."pages/$page_id.json";
-    if(!is_file($page_file)) die("Signup page not found");
-
-    $page = file_get_contents($page_file);
+    $page = $this->model->getPage($page_id);
     $this->jsonOutput($page);
   }
 
@@ -121,9 +115,24 @@ class SignupApiController extends Controller {
     [$info,$result] = $this->model->confirmSignup($data);
     $status = count($result['errors']) == 0 ? '200' : '400';
 
+    // TODO send mail
+
     $this->jsonOutput([
       'result' => $result,
       'info' => $info,
     ], $status);
+  }
+
+  public function loadSignup() {
+    if (!$this->page->request->isPost()) {
+      header('HTTP/1.1 400 Not a POST request');
+      exit;
+    }
+    $data = $this->page->request->post->getRequestVarArray();
+
+    $result = $this->model->loadSignup($data['id'], $data['pass']);
+
+    $status = count($result['errors']) == 0 ? '200' : '400';
+    $this->jsonOutput($result, $status);
   }
 }

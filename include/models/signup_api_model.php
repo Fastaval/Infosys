@@ -70,6 +70,27 @@ class SignupApiModel extends Model {
     return file_get_contents($config_file);
   }
 
+  public function getAllPages() {
+    $pages = [];
+
+    $page_files = glob(SIGNUP_FOLDER."pages/*");
+    foreach($page_files as $page_file){ // iterate files
+      if(!is_file($page_file)) continue;
+      $name = basename($page_file, ".json");
+      $pages[$name] = json_decode(file_get_contents($page_file));
+    }
+
+    return $pages;
+  }
+
+  public function getPage($page_id) {
+    $page_file = SIGNUP_FOLDER."pages/$page_id.json";
+    if(!is_file($page_file)) die("Signup page not found");
+
+    return file_get_contents($page_file);
+  }
+
+
   /**
    * Get available food items for signup
    */
@@ -290,15 +311,19 @@ class SignupApiModel extends Model {
       $participant->password = sprintf('%06d', mt_rand(0, 999999));
     } else {
       $participant = $this->createEntity('Deltagere')->findById($data['info']['id']);
-      if ($participant->password != $data['info']['pass']) {
+      if (!$participant || $participant->password != $data['info']['pass']) {
         return [$data['info'],['errors' => ['confirm' => [['type' => 'wrong_info']]]]];
       }
     }
     $result = $this->applySignup($data['signup'], $participant, $data['lang']);
-    if ($participant->isLoaded()) {
-      $res = $participant->update();
-    } else {
-      $res = $participant->insert();
+    
+    if(count($result['errors']) == 0) {
+      // Update/create participant
+      if ($participant->isLoaded()) {
+        $res = $participant->update();
+      } else {
+        $res = $participant->insert();
+      }
     }
 
     if(!$res) {
@@ -322,11 +347,8 @@ class SignupApiModel extends Model {
     foreach($page->sections as $skey => $section) {
       foreach($section->items as $ikey => $item) {
         if (isset($item->infosys_id)) {
-          $section = $page->sections[$skey];
-          $item = $section->$items[$ikey];
           $lookup[$item->infosys_id] = [
-            'section' => $skey,
-            'item' => $ikey,
+            'item' => $item,
             'disabled' => $item->disabled || $section->disabled,
             'required' => $item->required,
           ];
@@ -353,6 +375,8 @@ class SignupApiModel extends Model {
     $participant->removeAllWear();
     $participant->removeDiySignup();
 
+    $column_info = $this->createEntity('Deltagere')->getColumnInfo();
+
     foreach($data as $category => $items) {
       $entries = [];
       $category_total = 0;
@@ -372,6 +396,7 @@ class SignupApiModel extends Model {
       // Check for missing
       foreach($lookup as $key => $value) {
         if ($value['required'] && !$value['disabled'] && !isset($items[$key])) {
+          if ($value['item']->no_submit) continue;
           $errors[$category][] = [
             'type' => 'required',
             'info' => $category." ".$key,
@@ -404,9 +429,7 @@ class SignupApiModel extends Model {
             case 'participant':
               $bk  = $this->createEntity('BrugerKategorier');
               if ($value != 'organizer') {
-                $sel = $bk->getSelect()->setWhere('navn', '=', $value);
-                $bk->findBySelect($sel);
-                $participant->brugerkategori_id = $bk->id;
+                $participant->brugerkategori_id = $bk->findByname($value)->id;
               } else {
                 $is_organizer = true;
                 if(!isset($participant->brugerkategori_id)) {
@@ -421,8 +444,7 @@ class SignupApiModel extends Model {
               break;
             
             default:
-              $columns = $this->createEntity('Deltagere')->getColumnInfo();
-              if (!isset($columns[$key])) {
+              if (!isset($column_info[$key])) {
                 $errors[$category][] = [
                   'type' => 'no_field',
                   'info' => "participant $key",
@@ -664,6 +686,168 @@ class SignupApiModel extends Model {
       'errors' => $errors,
       'categories' => $categories,
       'total' => $total,
+    ];
+  }
+
+  /**
+   * Retrieve participant data in format used by signup plugin
+   */
+  public function loadSignup($id, $pass) {
+    // Find by ID
+    $participant = $this->createEntity('Deltagere')->findById($id);
+    // Find by email instead
+    if(!$participant) {
+      $select = $this->createEntity('Deltagere')->getSelect();
+      $select->setWhere('email', '=', $id);
+      $select->setWhere('password', '=', $pass);
+
+      $participant = $this->createEntity('Deltagere')->findBySelect($select);
+    }
+    if (!$participant || $participant->password != $pass) {
+      return ['signup' => [],'errors' => [['type' => 'wrong_info']]];
+    }
+
+    $column_info = $participant->getColumnInfo();
+    $signup = $errors = [];
+
+    $pages = $this->getAllPages();
+    foreach($pages as $page_id => $page_data) {
+      $lookup = $this->createLookup($page_data);
+      // Collect simple properties
+      foreach($lookup as $key => $info) {
+        $value = '';
+        $key_parts = explode(":", $key, 2);
+        if (count($key_parts) == 1) {
+          switch($key) {
+            case 'gdpr_accept':
+              //TODO add to database
+              break;
+
+            case 'participant':
+              $bid = $participant->brugerkategori_id;
+              $bk  = $this->createEntity('BrugerKategorier')->findById($bid);
+              if ($bk->isArrangoer()) {
+                $value = 'organizer';
+              } else {
+                $value = $bk->navn;
+              }
+              break;
+
+            case 'organizercategory':
+              $bid = $participant->brugerkategori_id;
+              $bk  = $this->createEntity('BrugerKategorier')->findById($bid);
+              if ($bk->isArrangoer()) {
+                $value = $participant->brugerkategori_id;
+              }
+              break;
+            
+            case 'birthdate':
+              $value = substr($participant->birthdate, 0, 10);
+              break;
+
+            default:
+              if (!isset($column_info[$key])) {
+                if($equals = $lookup[$key]['item']->equals) {
+                  $value = $participant->$equals;
+                  break;
+                }
+                if($lookup[$key]['item']->no_submit) break;
+                $errors[] = [
+                  'type' => 'no_field',
+                  'info' => "participant $key",
+                  'item' => $info['item'],
+                ];
+                continue 2;
+              }
+
+              $value = $participant->$key;
+              if ($value == 'ja') $value = 'on';
+          }
+        }
+        $signup[$key] = $value;
+      }
+    }
+
+    // Collect entrance items
+    $entrances = $participant->getIndgang();
+    foreach($entrances as $entrance) {
+      switch(true) {
+        case $entrance->isPartout():
+          if ($entrance->isEntrance()) {
+            $signup['entry:partout'] = 'on';
+          } else {
+            $signup['sleeping:partout'] = 'on';
+          }
+          break;
+
+        case  $entrance->isDayTicket() || $entrance->isSleepTicket():
+          $type = $entrance->isDayTicket() ? 'entry' : 'sleeping';
+          $start = new DateTime($entrance->start);
+          $day = intval($start->format('d')) -2;
+          $signup["$type:$day"] = 'on';
+          break;
+
+        case $entrance->type == 'Leje af madras':
+          $signup['misc:mattres'] = 'on';
+          break;
+
+        case $entrance->type == 'Ottofest':
+          $signup['misc:party'] = 'on';
+          break;
+
+        case $entrance->type == 'Ottofest - Champagne':
+          $signup['misc:bubbles'] = 'on';
+          break;
+
+        case $entrance->type == 'Alea medlemskab':
+          $signup['misc:alea'] = 'on';
+          break;
+
+        case $entrance->type == 'Billetgebyr':
+          $signup['misc:ticket_fee'] = 'on';
+          break;
+
+        default:
+          $errors[] = [
+            'type' => 'unknown_entry',
+            'info' => $entrance->type,
+          ];
+      }
+    }
+
+    // Collect food order
+    $foods = $participant->getMadtider();
+    foreach($foods as $food) {
+      $signup['food:'.$food->id] = $food->id;
+    }
+
+    // Collect activity signup
+    $run_signups = $participant->getTilmeldinger();
+    foreach ($run_signups as $run_signup) {
+      $run_id = $run_signup->afvikling_id;
+      $prio = $run_signup->prioritet;
+      $type = $run_signup->tilmeldingstype;
+      if ($type == 'spilleder') {
+        $prio = count(self::ACTIVITY_CHOICES['prio']['en']) +1;
+      }
+      if (isset($signup["activity:$run_id"])) {
+        // We have a combination of player and GM signup
+        $signup["activity:$run_id"] += $prio;
+      } else {
+        $signup["activity:$run_id"] = $prio;
+      }
+    }
+
+    // Collect wear orders
+    $wear_orders = $participant->getWear();
+    foreach($wear_orders as $wear_order) {
+      $wear_id = $wear_order->getWear()->id;
+      $signup["wear:$wear_id"] = 'size:'.$wear_order->size.'--amount:'.$wear_order->antal;
+    }
+
+    return [
+      'signup' => $signup,
+      'errors' => $errors,
     ];
   }
 }

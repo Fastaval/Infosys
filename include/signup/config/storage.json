@@ -1,0 +1,30 @@
+{
+  "header": {
+    "en": "Load/save signup information",
+    "da": "Hent/gem tilmelding"
+  },
+  "from_server": {
+    "en": "Load a submitted sign-up registration",
+    "da": "Hent en tidligere indsent tilmelding"
+  },
+  "signup_id": {
+    "en": "Email or participant id",
+    "da": "Email eller deltagernummer"
+  },
+  "signup_pass": {
+    "en": "Password",
+    "da": "Kodeord"
+  },
+  "signup_pass_note": {
+    "en": "You can find your password in the email that was sent to you when you submitted your signup",
+    "da": "Du kan finde dit kodeord i den email du modtog efter du indsendte din tilmelding"
+  },
+  "load": {
+    "en": "Load",
+    "da": "Hent"
+  },
+  "load_success": {
+    "en": "Your registration has been loaded",
+    "da": "Din tilmelding er blevet hentet"
+  }
+}

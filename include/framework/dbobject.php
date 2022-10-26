@@ -425,6 +425,20 @@ class DBObject
     }
 
     /**
+     * Find element where value == field_name
+     * 
+     * @param string $field_name - name of field to compare with
+     * @param string $value - value of the field on the element we're looking for
+     *
+     * @access public
+     * @return object|bool - false on fail
+     */
+    public function findByField($field_name, $value) {
+        $select = $this->getSelect()->setWhere($field_name, "=", $value);
+        return $this->findBySelect($select);
+    }
+
+    /**
      * uses a select object to try to load the current object
      *
      * @param object $select - select object with various criteria set
