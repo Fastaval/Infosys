@@ -71,6 +71,11 @@ class DummyParticipant extends DBObject
     private $entrance = [];
 
     /**
+     * Notes
+     */
+    private $notes = [];
+
+    /**
      * dummy update method
      *
      * @access public
@@ -356,6 +361,10 @@ class DummyParticipant extends DBObject
         $diff = $now->diff(new DateTime($this->birthdate));
 
         return floor($diff->y);
+    }
+
+    public function setNote($name, $content) {
+        $this->notes[$name] = $content;
     }
 
 }

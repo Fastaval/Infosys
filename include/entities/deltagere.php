@@ -1661,9 +1661,18 @@ WHERE
     }
 
     public function setNote($name, $content) {
-        $note = json_decode($this->deltager_note);
+        if (!empty($this->deltager_note)) {
+            $note = json_decode($this->deltager_note);
+        } else {
+            $note = new stdClass();
+        }
+        
         $note->$name = $content;
+        // Decode HTML special chars and save to storage
         parent::__set('deltager_note', json_encode($note));
+
+        // Update note object
+        $this->note_obj = self::parseNote($this->deltager_note);
     }
 
     public static function parseNote($note){
