@@ -175,7 +175,7 @@
                     "infosys_id": "participant",
                     "options": [
                         {
-                            "value": "deltager",
+                            "value": "Deltager",
                             "text": {
                                 "en": "I am a participant",
                                 "da": "Jeg er deltager"
@@ -183,21 +183,14 @@
                             "default": true
                         },
                         {
-                            "value": "digital",
-                            "text": {
-                                "en": "I participate online (Read more on next page)",
-                                "da": "Jeg deltager digitalt (L\u00e6s mere p\u00e5 n\u00e6ste side)"
-                            }
-                        },
-                        {
-                            "value": "junior",
+                            "value": "Juniordeltager",
                             "text": {
                                 "en": "Fastaval Junior (175 kr.) for b\u00f8rn fra 6 til 14 \u00e5r. LUKKE",
                                 "da": "Fastaval Junior (175 kr.) for b\u00f8rn fra 6 til 14 \u00e5r. LUKKE"
                             }
                         },
                         {
-                            "value": "organizer",
+                            "value": "Organizer",
                             "text": {
                                 "en": "I am an organizer, writer or board game designer etc.",
                                 "da": "Jeg er arrang\u00f8r, forfatter eller br\u00e6tspilsdesigner m.m."

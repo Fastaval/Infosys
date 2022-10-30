@@ -1,5 +1,5 @@
 {
-    "order": 4,
+    "order": 5,
     "slug": {
         "en": "Practical",
         "da": "Praktisk"
@@ -8,6 +8,20 @@
         "en": "Practical stuff",
         "da": "Praktisk"
     },
+    "page_logic": [
+        {
+            "type": "field_compare",
+            "enabled": false,
+            "input": "participant",
+            "compare": "equals",
+            "value": "Juniordeltager"
+        },
+        {
+            "type": "checkbox",
+            "enabled": true,
+            "input": "junior:plus"
+        }
+    ],
     "sections": [
         {
             "headline": {

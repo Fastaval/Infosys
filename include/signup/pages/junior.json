@@ -1,0 +1,137 @@
+{
+    "order": 3,
+    "slug": {
+        "en": "Junior",
+        "da": "Junior"
+    },
+    "title": {
+        "en": "Fastaval Junior - This page is not available in English\n",
+        "da": "Fastaval Junior"
+    },
+    "page_logic": [
+      {
+        "type": "default",
+        "enabled": false
+      },
+      {
+        "type": "field_compare",
+        "enabled": true,
+        "input": "participant",
+        "compare": "equals",
+        "value": "Juniordeltager"
+      }
+    ],
+    "sections": [
+        {
+            "headline": {
+                "en": "\n",
+                "da": "\n"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "[b]K\u00e6re deltager p\u00e5 Fastaval Junior[\/b]\n\nFastaval Junior melder udsolgt. Men ventelisten er \u00e5ben.\n Vi har begr\u00e6nset antal pladser p\u00e5 arrangementet Fastaval Junior, og vi har f\u00e5et rigtig mange tilmeldinger. Alle 60 pladser er nu besat, men du kan komme p\u00e5 venteliste, hvis du udfylder tilmeldingen her. \n\nArrangementet foreg\u00e5r l\u00f8rdag den 16. april fra kl. 10-15.",
+                        "da": "[b]K\u00e6re deltager p\u00e5 Fastaval Junior[\/b]\n\nFastaval Junior melder udsolgt. Men ventelisten er \u00e5ben.\n Vi har begr\u00e6nset antal pladser p\u00e5 arrangementet Fastaval Junior, og vi har f\u00e5et rigtig mange tilmeldinger. Alle 60 pladser er nu besat, men du kan komme p\u00e5 venteliste, hvis du udfylder tilmeldingen her. \n\nArrangementet foreg\u00e5r l\u00f8rdag den 16. april fra kl. 10-15."
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Hvad skal der ske nu?",
+                "da": "Hvad skal der ske nu?"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "Vi vil g\u00f8re alt, hvad vi kan, for at der ogs\u00e5 bliver plads til dig, men vi kan ikke love noget, og vi kan f\u00f8rst give endelig besked, n\u00e5r vi har lavet hold til de enkelte aktiviteter. \nDu f\u00e5r en mail med svar hurtigst muligt derefter. Det kan ogs\u00e5 v\u00e6re, vi ringer, hvis det skal g\u00e5 rigtig st\u00e6rkt. \n\n OBS: Er du mellem 13 og 14 \u00e5r og vil spille med p\u00e5 Fastaval de \u00f8vrige dage? S\u00e5 skal du udfylde tilmeldingen to gange: som hhv. Junior-deltager og som almindelig deltager. B\u00f8rn p\u00e5 12 \u00e5r eller under har gratis adgang til Fastaval, men kan ikke tilmelde sig andre aktiviteter end Fastaval Junior.",
+                        "da": "Vi vil g\u00f8re alt, hvad vi kan, for at der ogs\u00e5 bliver plads til dig, men vi kan ikke love noget, og vi kan f\u00f8rst give endelig besked, n\u00e5r vi har lavet hold til de enkelte aktiviteter. \nDu f\u00e5r en mail med svar hurtigst muligt derefter. Det kan ogs\u00e5 v\u00e6re, vi ringer, hvis det skal g\u00e5 rigtig st\u00e6rkt. \n\n OBS: Er du mellem 13 og 14 \u00e5r og vil spille med p\u00e5 Fastaval de \u00f8vrige dage? S\u00e5 skal du udfylde tilmeldingen to gange: som hhv. Junior-deltager og som almindelig deltager. B\u00f8rn p\u00e5 12 \u00e5r eller under har gratis adgang til Fastaval, men kan ikke tilmelde sig andre aktiviteter end Fastaval Junior."
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Hold \u00f8je med mailen - du h\u00f8rer fra os inden udgangen af marts",
+                "da": "Hold \u00f8je med mailen - du h\u00f8rer fra os inden udgangen af marts"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "De bedste hilsner\n\nMette og Anne, Pingvintanter\n\nSp\u00f8rgsm\u00e5l?\nSkriv til  [email]fastavaljunior@gmail.com[\/email]\n",
+                        "da": "De bedste hilsner\n\nMette og Anne, Pingvintanter\n\nSp\u00f8rgsm\u00e5l?\nSkriv til  [email]fastavaljunior@gmail.com[\/email]\n"
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Almindelig Fastaval\n",
+                "da": "Almindelig Fastaval"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "Hvis du ogs\u00e5 deltager i den almindelige Fastaval, skal du markere feltet nedenfor\u00a0 ",
+                        "da": "Hvis du ogs\u00e5 deltager i den almindelige Fastaval, skal du markere feltet nedenfor\u00a0 \n"
+                    }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "Jeg\u00a0 deltager ogs\u00e5 i den almindelige Fastaval",
+                        "da": "Jeg\u00a0 deltager ogs\u00e5 i den almindelige Fastaval\n"
+                    },
+                    "no_submit": "true",
+                    "infosys_id": "junior:plus"
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Voksen kontaktperson",
+                "da": "Voksen kontaktperson"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "Inden Fastaval starter sender vi Junior-programmet ud til alle deltagere, s\u00e5 alle ved, hvad de skal spille. Skriv info p\u00e5 den voksne kontaktperson, vi kan kontakte f\u00f8r Fastaval\n\n Mens Fastaval Junior k\u00f8rer, skal alle deltagere have en ansvarlig voksen til stede p\u00e5 Fastaval, som vi kan tilkalde, hvis der er behov for det. Hvis det ikke er den samme som nedenst\u00e5ende, bedes du skrive dennes navn og telefonnummer i kommentarfeltet p\u00e5 tilmeldingen.\u00a0",
+                        "da": "Inden Fastaval starter sender vi Junior-programmet ud til alle deltagere, s\u00e5 alle ved, hvad de skal spille. Skriv info p\u00e5 den voksne kontaktperson, vi kan kontakte f\u00f8r Fastaval\n\n Mens Fastaval Junior k\u00f8rer, skal alle deltagere have en ansvarlig voksen til stede p\u00e5 Fastaval, som vi kan tilkalde, hvis der er behov for det. Hvis det ikke er den samme som nedenst\u00e5ende, bedes du skrive dennes navn og telefonnummer i kommentarfeltet p\u00e5 tilmeldingen.\u00a0"
+                    }
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Kontaktperson",
+                        "da": "Kontaktperson"
+                    },
+                    "infosys_id": "junior:contact_name",
+                    "required": "true"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Telefonnummer",
+                        "da": "Telefonnummer"
+                    },
+                    "infosys_id": "junior:contact_number",
+                    "required": "true"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Email",
+                        "da": "Email"
+                    },
+                    "infosys_id": "junior:contact_mail",
+                    "required": "true"
+                }
+            ]
+        }
+    ]
+}

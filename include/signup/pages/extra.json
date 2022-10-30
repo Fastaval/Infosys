@@ -1,0 +1,13 @@
+{
+  "order": 10,
+  "slug": {
+      "en": "Extra",
+      "da": "Ekstra"
+  },
+  "title": {
+      "en": "Additional Information",
+      "da": "Ekstra informationer"
+  },
+  "sections": [
+  ]
+}

@@ -1,5 +1,5 @@
 {
-    "order": 3,
+    "order": 4,
     "slug": {
         "en": "Organizer",
         "da": "Arrang\u00f8r"
@@ -8,16 +8,19 @@
         "en": "Special information for organizers, writers and designers",
         "da": "Specielt for arrang\u00f8rer, forfattere og designere"
     },
-    "page_logic": {
-      "default"  : "disabled",
-      "enable_if": [
+    "page_logic": [
         {
-            "field": "participant",
+            "type": "default",
+            "enabled": false
+        },
+        {
+            "type": "field_compare",
+            "enabled": "true",
+            "input": "participant",
             "compare": "equals",
-            "value": "organizer"
+            "value": "Organizer"
         }
-      ]
-    },
+    ],
     "sections": [
         {
             "headline": {

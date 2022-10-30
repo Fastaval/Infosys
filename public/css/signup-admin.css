@@ -1,3 +1,6 @@
+body {
+  min-width: unset;
+}
 /*---------------------------------------------------------
 Settings
 ---------------------------------------------------------*/
@@ -67,6 +70,7 @@ div#page-admin-container nav {
   display: flex;
   justify-content: center;
   border-bottom: var(--tab-border) solid black;
+  flex-wrap: wrap;
 }
 
 div#page-admin-container nav .nav-button {

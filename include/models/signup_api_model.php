@@ -374,6 +374,7 @@ class SignupApiModel extends Model {
     $errors = $categories = [];
     $is_alea = $is_organizer = false;
     $total = 0;
+    $junior_note = "";
 
     $participant->signed_up = date('Y-m-d H:i:s');
     // Reset orders
@@ -436,7 +437,7 @@ class SignupApiModel extends Model {
 
             case 'participant':
               $bk  = $this->createEntity('BrugerKategorier');
-              if ($value != 'organizer') {
+              if ($value != 'Organizer') {
                 $participant->brugerkategori_id = $bk->findByname($value)->id;
               } else {
                 $is_organizer = true;
@@ -475,6 +476,22 @@ class SignupApiModel extends Model {
           $key_item = $key_parts[1];
 
           switch($key_cat) {
+            case 'junior':
+              $labels = [
+                'contact_name' => 'Navn',
+                'contact_number' => 'Telefon',
+                'contact_mail' => 'Email',
+              ];
+              if (!isset($labels[$key_item])) {
+                $errors[$category][] = [
+                  'type' => 'no_field',
+                  'info' => "$key_cat $key_item",
+                ];
+                continue 2;
+              }
+              $junior_note .= "$labels[$key_item]: $value\n";
+              break;
+
             case 'entry':
               $entry = $this->createEntity('Indgang');
               $select = $entry->getSelect();
@@ -605,6 +622,8 @@ class SignupApiModel extends Model {
               break;
 
             case 'activity':
+              // TODO check for alder
+              // TODO check for max tilmeldinger 
               $run = $this->createEntity('Afviklinger')->findbyId($key_item);
               if (!$run) {
                 $errors[$category][] = [
@@ -686,6 +705,9 @@ class SignupApiModel extends Model {
         $total += $category_total;
       }
     }
+
+    // Notes
+    if ($junior_note) $participant->setNote('junior_ward', $junior_note);
 
     // Set some defaults if missing
     if (!isset($participant->medical_note)) $participant->medical_note = '';
