@@ -304,8 +304,19 @@ class SignupApiModel extends Model {
 
   public function confirmSignup($data) {
     if (!isset($data['info'])) {
+      // Create barebone participant
       $participant = $this->createEntity('Deltagere');
       $participant->password = sprintf('%06d', mt_rand(0, 999999));
+      $participant->fornavn = "";
+      $participant->efternavn = "";
+      $participant->adresse1 = "";
+      $participant->postnummer = "";
+      $participant->by = "";
+      $participant->brugerkategori_id = 1;
+      $participant->birthdate = '0000-00-00 00:00:00';
+      $participant->medical_note = '';
+      $participant->gcm_id = '';
+      $participant->insert();
     } else {
       $participant = $this->createEntity('Deltagere')->findById($data['info']['id']);
       if (!$participant || $participant->password != $data['info']['pass']) {
@@ -315,12 +326,8 @@ class SignupApiModel extends Model {
     $result = $this->applySignup($data['signup'], $participant, $data['lang']);
     
     if(count($result['errors']) == 0) {
-      // Update/create participant
-      if ($participant->isLoaded()) {
-        $res = $participant->update();
-      } else {
-        $res = $participant->insert();
-      }
+      // Update participant
+      $res = $participant->update();
     }
 
     if(!$res) {
@@ -776,10 +783,6 @@ class SignupApiModel extends Model {
 
     // Notes
     if ($junior_note) $participant->setNote('junior_ward', $junior_note);
-
-    // Set some defaults if missing
-    if (!isset($participant->medical_note)) $participant->medical_note = '';
-    if (!isset($participant->gcm_id)) $participant->gcm_id = '';
 
     return [
       'errors' => $errors,
