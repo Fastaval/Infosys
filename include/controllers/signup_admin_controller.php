@@ -41,6 +41,20 @@ class SignupAdminController extends Controller {
   }
 
   /**
+   * Show page for editing signup settings
+   */
+  public function signupConfig() {
+    $this->page->includeCSS('signup-admin.css');
+    $this->page->includeCss('fontello-ebe72605/css/idtemplate.css');
+
+    $this->page->registerEarlyLoadJS('signup/admin/config_render.js');
+    $this->page->registerEarlyLoadJS('signup/admin/controls.js');
+    $this->page->registerEarlyLoadJS('signup/admin/toolbar.js');
+
+    $this->page->setTemplate('');
+  }
+
+  /**
    * Add element to signup page
    */
   public function addPageElement() {
@@ -162,8 +176,10 @@ class SignupAdminController extends Controller {
     }
     file_put_contents($page_file_path, json_encode($page, JSON_PRETTY_PRINT));
     
-    header('Status: 200');
-    exit;
+    $this->jsonOutput([
+      'success' => true,
+      'text' => $text,
+    ]);
   }
 
   /**
@@ -251,37 +267,38 @@ class SignupAdminController extends Controller {
       }
     }
 
+    $text = trim($post->text);
     switch ($post->type) {
       case 'slug':
-        $page->slug->{$post->lang} = $post->text;
+        $page->slug->{$post->lang} = $text;
         break;
       case 'title':
-        $page->title->{$post->lang} = $post->text;
+        $page->title->{$post->lang} = $text;
         break;
       case 'headline':
-        $page->sections[$post->section_id]->headline->{$post->lang} = $post->text;
+        $page->sections[$post->section_id]->headline->{$post->lang} = $text;
         break;
       case 'item':
-        $page->sections[$post->section_id]->items[$post->item_id]->text->{$post->lang} = $post->text;
+        $page->sections[$post->section_id]->items[$post->item_id]->text->{$post->lang} = $text;
         break;
       case 'setting':
-        if ($post->text == 'false') {
+        if ($text == 'false') {
           unset($page->sections[$post->section_id]->items[$post->item_id]->{$post->setting});  
         } else {
-          $page->sections[$post->section_id]->items[$post->item_id]->{$post->setting} = $post->text;
+          $page->sections[$post->section_id]->items[$post->item_id]->{$post->setting} = $text;
         }
         break;
       case 'infosys_id':
-        $page->sections[$post->section_id]->items[$post->item_id]->infosys_id = $post->text;
+        $page->sections[$post->section_id]->items[$post->item_id]->infosys_id = $text;
         break;
       case 'option':
-        $page->sections[$post->section_id]->items[$post->item_id]->options[$post->option_id]->text->{$post->lang} = $post->text;
+        $page->sections[$post->section_id]->items[$post->item_id]->options[$post->option_id]->text->{$post->lang} = $text;
         break;
       case 'value':
-        $page->sections[$post->section_id]->items[$post->item_id]->options[$post->option_id]->value = $post->text;
+        $page->sections[$post->section_id]->items[$post->item_id]->options[$post->option_id]->value = $text;
         break;
       case 'module_id':
-        $page->sections[$post->section_id]->module = $post->text;
+        $page->sections[$post->section_id]->module = $text;
         break;
         
       default:
@@ -292,7 +309,9 @@ class SignupAdminController extends Controller {
     }
     file_put_contents($page_file_path, json_encode($page, JSON_PRETTY_PRINT));
     
-    header('Status: 200');
-    exit;
+    $this->jsonOutput([
+      'success' => true,
+      'text' => $text,
+    ]);
   }
 }

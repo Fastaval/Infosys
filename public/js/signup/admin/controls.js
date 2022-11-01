@@ -180,7 +180,7 @@ class SignupAdminControls {
     // Finde selectables in element (including the element itself)
     let selectables = element.find(this.selection_string)
     if (element.is(this.selection_string)) {
-      selectables.add(element);
+      selectables = selectables.add(element);
     }
 
     // Select item when clicked
@@ -366,9 +366,16 @@ class SignupAdminControls {
     console.log(data);
     jQuery.ajax({
       type: "POST",
+      dataType: 'json',
       url: "/signup/pages/"+slug,
       data: data,
-      success: success,
+      success: function(response) {
+        if (!response.success) {
+          alert("Der skete en fejl i kommunikationen med infosys");
+          return;  
+        }
+        success();
+      },
       error: function(request, status, error) {
         alert("Der skete en fejl i kommunikationen med infosys");
       }
@@ -513,8 +520,7 @@ class SignupAdminControls {
 
     this.post('add-element', data, function() {
         insert();
-        SignupAdminControls.initEditables(new_section);
-        SignupAdminControls.initSelectables(new_section);
+        SignupAdminControls.init_element(new_section);
     });
   }
   // Insert Item
@@ -588,7 +594,7 @@ class SignupAdminControls {
           index++;
           new_item.attr('id', 'page:'+page_id+'--section:'+section_id+'--item:'+index);
         }
-        SignupAdminControls.initEditables(new_item);
+        SignupAdminControls.init_element(new_item);
     });
   }
 

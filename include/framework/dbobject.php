@@ -178,11 +178,7 @@ class DBObject
      */
     public function __isset($property)
     {
-        if (isset($this->storage[$property])) {
-            return true;
-        }
-
-        return false;
+        return isset($this->storage[$property]);
     }
 
     /**

@@ -269,9 +269,9 @@ class DummyParticipant extends DBObject
      * @access public
      * @return $this
      */
-    public function setGDSTilmelding(GDSCategory $gdscategory, $period) {
+    public function setGDSTilmelding(?GDSCategory $gdscategory, $period) {
         $gdstilmelding = $this->createEntity('DeltagereGDSTilmeldinger');
-        $gdstilmelding->category_id = $gdscategory->id;
+        $gdstilmelding->category_id = $gdscategory == null ? 0 : $gdscategory->id;;
         $gdstilmelding->period      = $period;
 
         $this->diy_signups[] = $gdstilmelding;
@@ -367,4 +367,15 @@ class DummyParticipant extends DBObject
         $this->notes[$name] = $content;
     }
 
+    public function setSprog($sprog_array)
+    {
+        if (!is_array($sprog_array)) {
+            return false;
+        }
+        foreach ($sprog_array as &$sprog) {
+            $sprog = strtolower($sprog);
+        }
+        $this->sprog = implode(',', $sprog_array);
+        return true;
+    }
 }

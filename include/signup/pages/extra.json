@@ -1,13 +1,74 @@
 {
-  "order": 10,
-  "slug": {
-      "en": "Extra",
-      "da": "Ekstra"
-  },
-  "title": {
-      "en": "Additional Information",
-      "da": "Ekstra informationer"
-  },
-  "sections": [
-  ]
+    "order": 10,
+    "slug": {
+        "en": "Extra",
+        "da": "Ekstra"
+    },
+    "title": {
+        "en": "Additional Information",
+        "da": "Ekstra informationer"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "New Section",
+                "da": "Rige tanter, onkler og andet"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "I \u00e5r bruger vi st\u00f8tten fra rige st\u00f8tter til at give personer aftensmad, hvis de f\u00f8ler, de har behov for et \u00f8konomisk bidrag"
+                    }
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Jeg vil gerne v\u00e6re en af Fastavals rige st\u00f8tter og donerer hermed et ekstra bel\u00f8b oveni billetprisen. Som tak vil jeg blive n\u00e6vnt p\u00e5 Fastavals hjemmeside"
+                    },
+                    "infosys_id": "misc:extra_support"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "New Item",
+                        "da": "\u00a0Jeg vil gerne v\u00e6re en af Fastavals hemmelige st\u00f8tter og donerer hermed et ekstra bel\u00f8b oveni billetprisen. Kun de indviede ved, hvor sej jeg er"
+                    },
+                    "infosys_id": "misc:secret_support"
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "New Section",
+                "da": "Bem\u00e6rkninger"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Er der noget du ikke har haft mulighed for at fort\u00e6lle os? S\u00e5 kan du skrive det her. Eller er du altid velkommen til at skrive en s\u00f8d besked til vores h\u00e5rdtarbejdende Infonauter"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "[b]OBS[\/b] Vi kigger f\u00f8st bemerkningerne igennem efter tilmeldingen er lukket. S\u00e5 har du sp\u00f8rgsm\u00e5l eller lignende, s\u00e5 send dem per mail til [email]info@fastaval.dk[\/email] eller stil dem p\u00e5 [url=www.facebook.dk\/fastaval]Facebook[\/url]"
+                    }
+                },
+                {
+                    "type": "text_area",
+                    "text": {
+                        "en": "Comment",
+                        "da": "Kommentar"
+                    },
+                    "infosys_id": "note:comment"
+                }
+            ]
+        }
+    ]
 }

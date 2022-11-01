@@ -1,321 +1,202 @@
 {
-    "order": 5,
+    "order": 2,
     "slug": {
         "en": "Practical",
         "da": "Praktisk"
     },
     "title": {
-        "en": "Practical stuff",
-        "da": "Praktisk"
+        "en": "Practical information",
+        "da": "Praktisk information"
     },
-    "page_logic": [
-        {
-            "type": "field_compare",
-            "enabled": false,
-            "input": "participant",
-            "compare": "equals",
-            "value": "Juniordeltager"
-        },
-        {
-            "type": "checkbox",
-            "enabled": true,
-            "input": "junior:plus"
-        }
-    ],
     "sections": [
         {
             "headline": {
-                "en": "Entry (which days will you participate at Fastaval)",
-                "da": "Entr\u00e9 (hvilke dage deltager du p\u00e5 Fastaval)"
+                "en": "Contact information",
+                "da": "Kontaktoplysninger"
             },
             "items": [
                 {
-                    "type": "hidden",
+                    "type": "text_input",
                     "text": {
-                        "en": "Ticket fee",
-                        "da": "Billetgebyr"
+                        "en": "First name",
+                        "da": "Fornavn"
                     },
-                    "infosys_id": "misc:ticket_fee"
+                    "infosys_id": "fornavn",
+                    "required": "true"
                 },
                 {
-                    "type": "checkbox",
+                    "type": "text_input",
                     "text": {
-                        "en": "5-day pass for all of Fastaval (325 kr.)  + fees ( Under 18 years (225 kr.) \/ Organizers (100 kr. incl. Alea discount) )",
-                        "da": "Partout - Alle dage (325 kr.) + gebyr ( Under 18 \u00e5r (225 kr.) \/ Arrang\u00f8rer (100 kr. ink Alea rabat) )"
+                        "en": "Last name",
+                        "da": "Efternavn"
                     },
-                    "infosys_id": "entry:partout",
-                    "excludes": [
-                        "entry:1",
-                        "entry:2",
-                        "entry:3",
-                        "entry:4",
-                        "entry:5"
-                    ]
+                    "infosys_id": "efternavn",
+                    "required": "true"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Nickname",
+                        "da": "Kaldenavn"
+                    },
+                    "infosys_id": "nickname"
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "One-day tickets are 100 kr. a piece\n",
-                        "da": "Endagsbilletter koster 100 kr. per styk\n"
+                        "en": "The deadline for name-tags has been exceeded and the Nickname is therefore no longer in use.",
+                        "da": "Deadline for navneskilte er overskredet og kaldenavn-feltet er derfor ikke l\u00e6ngere i brug."
                     }
                 },
                 {
-                    "type": "checkbox",
+                    "type": "text_input",
                     "text": {
-                        "en": "Entry Wednesday\n",
-                        "da": "Indgang Onsdag\n"
+                        "en": "Address",
+                        "da": "Adresse"
                     },
-                    "infosys_id": "entry:1",
-                    "excludes": [
-                        "entry:partout"
-                    ]
+                    "infosys_id": "adresse1",
+                    "required": "true"
                 },
                 {
-                    "type": "checkbox",
+                    "type": "text_input",
                     "text": {
-                        "en": "Entry Thursday",
-                        "da": "Indgang Torsdag\n"
+                        "en": "",
+                        "da": ""
                     },
-                    "infosys_id": "entry:2",
-                    "excludes": [
-                        "entry:partout"
-                    ]
+                    "infosys_id": "adresse2"
                 },
                 {
-                    "type": "checkbox",
+                    "type": "text_input",
                     "text": {
-                        "en": "Entry Friday",
-                        "da": "Indgang Fredag"
+                        "en": "Post code",
+                        "da": "Postnr."
                     },
-                    "infosys_id": "entry:3",
-                    "excludes": [
-                        "entry:partout"
-                    ]
+                    "infosys_id": "postnummer",
+                    "required": "true"
                 },
                 {
-                    "type": "checkbox",
+                    "type": "text_input",
                     "text": {
-                        "en": "Entry Saturday",
-                        "da": "Indgang L\u00f8rdag"
+                        "en": "City",
+                        "da": "By"
                     },
-                    "infosys_id": "entry:4",
-                    "excludes": [
-                        "entry:partout"
-                    ]
+                    "infosys_id": "by",
+                    "required": "true"
                 },
                 {
-                    "type": "checkbox",
+                    "type": "text_input",
                     "text": {
-                        "en": "Entry Sunday",
-                        "da": "Indgang S\u00f8ndag"
+                        "en": "Country",
+                        "da": "Land"
                     },
-                    "infosys_id": "entry:5",
-                    "excludes": [
-                        "entry:partout"
-                    ]
-                }
-            ]
-        },
-        {
-            "headline": {
-                "en": "Sleeping arrangements\n",
-                "da": "Overnatning"
-            },
-            "items": [
-                {
-                    "type": "checkbox",
-                    "text": {
-                        "en": "I will be sleeping at Fastaval all days, Participant (200 kr.) Organizer (50 kr.)\t\t\t",
-                        "da": "Jeg overnatter alle dage p\u00e5 Fastaval (200 kr.) Arrang\u00f8rer (50 kr.)\t\t\t"
-                    },
-                    "infosys_id": "sleeping:partout",
-                    "excludes": [
-                        "sleeping:1",
-                        "sleeping:2",
-                        "sleeping:3",
-                        "sleeping:4",
-                        "sleeping:5"
-                    ]
+                    "infosys_id": "land",
+                    "required": "true"
                 },
                 {
-                    "type": "paragraph",
+                    "type": "telephone",
                     "text": {
-                        "en": "[b]At Fastaval you can sleep in the grand dorm at the sportscenter, the sober dorm at Bymarksskolen or the youth dorm at the high school.\nNotice: If you are sleeping in the sober sleeping area or the organizer dormitory, you must still check off the above field.[\/b]",
-                        "da": "[b]P\u00e5 Fastaval kan du overnatte i den store sovesal p\u00e5 idr\u00e6tscentret, en \u00e6dru sovesal p\u00e5 Bymarksskolen eller ungdomssovesalen p\u00e5 gymnasiet. \nBem\u00e6rk: Hvis du skal sove i \u00e6dru sovesalen eller arrang\u00f8rsovesalen, skal du ogs\u00e5 afkrydse ovenst\u00e5ende felt.[\/b]"
-                    }
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "Single night sleeping tickets are 100 kr. a piece",
-                        "da": "Enkelt overnatning koster 100 kr. per nat\n"
-                    }
+                        "en": "Mobile",
+                        "da": "Mobil"
+                    },
+                    "infosys_id": "mobiltlf"
                 },
                 {
                     "type": "checkbox",
                     "text": {
-                        "en": "Sleeping Wednesday to Thursday\n",
-                        "da": "Overnatning onsdag til torsdag\n"
+                        "en": "I will bring a cell phone to Fastaval and can\nbe contacted by phone\n(unfortunately Fastaval SMS-alerts do not work with non-Danish phones) ",
+                        "da": "Jeg medbringer mobil p\u00e5 Fastaval og vil gerne have updates ang. spil og\nanden info, samt p\u00e5mindelser om spilstart\n(Bem\u00e6rk at sms-funktionen kun fungerer med danske telefonnumre)."
                     },
-                    "infosys_id": "sleeping:1",
-                    "excludes": [
-                        "sleeping:partout"
-                    ]
+                    "infosys_id": "medbringer_mobil"
                 },
                 {
-                    "type": "checkbox",
+                    "type": "date",
                     "text": {
-                        "en": "Sleeping Thursday to Friday\n",
-                        "da": "Overnatning torsdag til fredag\n"
+                        "en": "Birthdate",
+                        "da": "F\u00f8dselsdato"
                     },
-                    "infosys_id": "sleeping:2",
-                    "excludes": [
-                        "sleeping:partout"
-                    ]
+                    "infosys_id": "birthdate",
+                    "required": "true"
                 },
                 {
-                    "type": "checkbox",
+                    "type": "email",
                     "text": {
-                        "en": "Sleeping Friday to Saturday\n",
-                        "da": "Overnatning fredag til l\u00f8rdag\n"
+                        "en": "Email",
+                        "da": "Email"
                     },
-                    "infosys_id": "sleeping:3",
-                    "excludes": [
-                        "sleeping:partout"
-                    ]
+                    "infosys_id": "email",
+                    "required": "true"
                 },
                 {
-                    "type": "checkbox",
+                    "type": "email",
                     "text": {
-                        "en": "Sleeping Saturday to Sunday\n",
-                        "da": "Overnatning l\u00f8rdag til s\u00f8ndag\n"
+                        "en": "Email (repeat)",
+                        "da": "Email (gentag)"
                     },
-                    "infosys_id": "sleeping:4",
-                    "excludes": [
-                        "sleeping:partout"
-                    ]
-                },
-                {
-                    "type": "checkbox",
-                    "text": {
-                        "en": "Sleeping Sunday to Monday\n",
-                        "da": "Overnatning s\u00f8ndag til mandag\n"
-                    },
-                    "infosys_id": "sleeping:5",
-                    "excludes": [
-                        "sleeping:partout"
-                    ]
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "[b]Mattress[\/b]\nYou can rent a mattress at Fastaval \n[b]Note, the mattress cannot be used in the organizer, youth dormitories or sober dormitories.[\/b]",
-                        "da": "[b]Madras[\/b]\nDu kan reservere en madras til brug under hele Fastaval.\n[b]Bem\u00e6rk: madrassen kan ikke medtages i \u00e6drusovesal, ungdomssovesalen eller arrang\u00f8rsovesalen.[\/b]"
-                    }
-                },
-                {
-                    "type": "checkbox",
-                    "text": {
-                        "en": "Yes, I would like to rent a matress for 150 kr.\t\t\t",
-                        "da": "Ja tak, jeg vil gerne leje en madras for 150 kr.\t\t\t"
-                    },
-                    "infosys_id": "misc:mattres"
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "[b]sober dormitory[\/b]\nThis year there will be a sober dormitory for people who can stay sober, quiet and prefer others to do the same. ",
-                        "da": "[b]\u00c6dru sovesal[\/b]\nI \u00e5r vil der v\u00e6re en s\u00e6rlig sovesal for folk der \u00f8nsker at holde sig \u00e6dru, stille og \u00f8nsker at andre g\u00f8r det samme.\nDet er ikke muligt at leje en madras i \u00e6drusovesalen."
-                    }
-                },
-                {
-                    "type": "checkbox",
-                    "text": {
-                        "en": "I would like to sleep in the area for sober and quiet people\t\t\t",
-                        "da": "Jeg vil gerne sove i sovesalen for folk der er \u00e6dru og stille\t\t\t"
-                    },
-                    "infosys_id": "sober_sleeping"
-                }
-            ]
-        },
-        {
-            "headline": {
-                "en": "The Otto party\n",
-                "da": "Ottofesten"
-            },
-            "items": [
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "The Otto party takes place Sunday evening - this is where we congratulate each other, and spend the last energy while we party. The golden penguins will be handed out, and there will be dancing!",
-                        "da": "En god Fastaval afsluttes bedst med et brag af en fest! Det er her vi hylder hinanden, det er her vi fyrer den sidste energi af og det er her Ottoerne uddeles."
-                    }
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "The show takes place sunday 7:30PM on the sportscenter. No food will be serves at the party.",
-                        "da": "Ottofesten afholdes s\u00f8ndag kl 19.30 p\u00e5 Idr\u00e6tscentret. Der serveres ikke mad til Ottofesten."
-                    }
-                },
-                {
-                    "type": "checkbox",
-                    "text": {
-                        "en": "I want to attend the Otto party\n",
-                        "da": "Jeg vil gerne have billet til Ottofesten\n"
-                    },
-                    "infosys_id": "misc:party",
-                    "disabled": "true"
-                },
-                {
-                    "type": "checkbox",
-                    "text": {
-                        "en": "I would like some bubblies at the party\n",
-                        "da": "Jeg vil gerne have bobler til ottofesten\n"
-                    },
-                    "infosys_id": "misc:bubbles",
-                    "disabled": "true"
-                }
-            ]
-        },
-        {
-            "headline": {
-                "en": "Why join Alea?",
-                "da": "Hvorfor melde sig ind i Alea?"
-            },
-            "items": [
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "Alea is the organization behind Fastaval. The organization is a part of organizing Fastaval and also have a big responsibility to pass on important experience and resources to future Fastavals. We believe it is important at Fastaval and Alea stand together in tough times, and it is our way of supporting Bifrost, the National Organisation of Creative Development of Youth of which Alea is a member. The organization gets financial support based on membercount. \n A Membership costs 75 kr. And lasts until Fastaval next year. You get a 125 kr. discount on the entry fee for Fastaval as a member. \n Fastaval organizors have to be members for insurance reasons.",
-                        "da": "Alea er foreningen bag Fastaval. Foreningen er en del af at arrang\u00f8re Fastaval og har ogs\u00e5 et stort ansvar for at overlevere vigtig erfaring og ressourcer til fremtidige Fastavaller. Vi mener, at det er vigtigt, at Fastaval og Alea st\u00e5 sammen gennem h\u00e5rde tider, og det er vores m\u00e5de at st\u00f8tte Landsforeningen Bifrost, som Alea er medlem af. Foreningen modtager \u00f8konomisk st\u00f8tte baseret p\u00e5 vores medlemstal. \n Medlemskab koster 75 kr. og varer indtil Fastaval n\u00e6ste \u00e5r. Du f\u00e5r 125 kr. rabat p\u00e5 partout som medlem af Alea. \n Det er obligatorisk for fastavalarrang\u00f8rer at v\u00e6re medlem af forsikringsm\u00e6ssige \u00e5rsager."
-                    }
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "As organizer you will not be able to participate to Fastaval without an Alea membership. Thank you for understanding.",
-                        "da": "Som arrang\u00f8r p\u00e5 Fastaval vil du ikke kunne v\u00e6lge medlemskab af ALEA fra. Tak for din forst\u00e5else."
-                    }
-                },
-                {
-                    "type": "checkbox",
-                    "text": {
-                        "en": "Yes, I would like to join Alea and get a discount on the entry fee (75 kr.)\t\t\t",
-                        "da": "Ja tak, jeg vil gerne melde mig ind i Alea og f\u00e5 rabat p\u00e5 partout billet (75 kr.)\t\t\t"
-                    },
-                    "infosys_id": "misc:alea",
+                    "infosys_id": "email-confirm",
+                    "required": "true",
+                    "equals": "email",
+                    "no_submit": "true",
                     "errors": {
-                        "required": {
-                            "en": "As organizer you have to be a memeber of Alea",
-                            "da": "Som arrang\u00f8r skal du v\u00e6re medlem af Alea"
+                        "match": {
+                            "en": "The email adresses are not the same",
+                            "da": "Emailadresserne er ikke ens"
                         }
-                    },
-                    "required_if": {
-                        "field": "participant",
-                        "logic": "equals",
-                        "value": "organizer"
                     }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "If you're\u00a0 attending Fastaval with\u00a0 your club\/school, fill out the name below\n",
+                        "da": "Hvis du er p\u00e5 Fastaval med din klub\/ungdomsskole, s\u00e5 udfyld navnet nedenfor\n"
+                    }
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Name of club\/school",
+                        "da": "Navn p\u00e5 klub\/ungdomsskole"
+                    },
+                    "infosys_id": "ungdomsskole"
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "Choose visitor type",
+                "da": "V\u00e6lg deltagertype"
+            },
+            "items": [
+                {
+                    "type": "radio",
+                    "text": {
+                        "en": "Which participant type are you?",
+                        "da": "Hvilken deltagertype er du? "
+                    },
+                    "infosys_id": "participant",
+                    "options": [
+                        {
+                            "value": "Deltager",
+                            "text": {
+                                "en": "I am a participant",
+                                "da": "Jeg er deltager"
+                            },
+                            "default": true
+                        },
+                        {
+                            "value": "Juniordeltager",
+                            "text": {
+                                "en": "Fastaval Junior (175 kr.) for b\u00f8rn fra 6 til 14 \u00e5r. LUKKE",
+                                "da": "Fastaval Junior (175 kr.) for b\u00f8rn fra 6 til 14 \u00e5r. LUKKE"
+                            }
+                        },
+                        {
+                            "value": "Organizer",
+                            "text": {
+                                "en": "I am an organizer, writer or board game designer etc.",
+                                "da": "Jeg er arrang\u00f8r, forfatter eller br\u00e6tspilsdesigner m.m."
+                            }
+                        }
+                    ]
                 }
             ]
         }

@@ -5,8 +5,8 @@
         "da": "Arrang\u00f8r"
     },
     "title": {
-        "en": "Special information for organizers, writers and designers",
-        "da": "Specielt for arrang\u00f8rer, forfattere og designere"
+        "en": "Thank you for making Fastaval possible!",
+        "da": "Tak fordi du g\u00f8r Fastaval mulig!"
     },
     "page_logic": [
         {
@@ -22,6 +22,35 @@
         }
     ],
     "sections": [
+        {
+            "headline": {
+                "en": "About discounts",
+                "da": "Om rabatterne\n"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "Fastaval is forever grateful for the great amount of work done by our many writers, designers and organizers. Therefore we offer some discount to our lovely organizers.\n Organizers under 18 receive both the youth and organizer discount on entrance.",
+                        "da": "Fastaval er dybt taknemlige for det arbejde du l\u00e6gger i at f\u00e5 vores alle sammen Val p\u00e5 benene igen! Derfor tilbyder vi ogs\u00e5 lidt rabat til vores dejlige arrang\u00f8rer.\n Arrang\u00f8rer under 18 f\u00e5r b\u00e5de arrang\u00f8r- og ungdomsrabat p\u00e5 partout."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "[b]In addition, organizers and writers who work more than 48 hours before\/after Fastaval and \/or 24 hours during Fastaval will receive:[\/b]\n",
+                        "da": "[b]Arrang\u00f8rer og forfattere\/designere der arbejder mere end 48 timer f\u00f8r\/efter Fastaval og\/eller 24 timer p\u00e5 Fastaval modtager derudover:[\/b]\n"
+                    }
+                },
+                {
+                    "type": "list",
+                    "text": {
+                        "en": "Discount on entrance and accommodation\nDiscount on t-shirts and at sales venues                    ",
+                        "da": "Rabat p\u00e5 indgang og overnatning\nRabat p\u00e5 t-shirts og ved salgssteder"
+                    }
+                }
+            ]
+        },
         {
             "headline": {
                 "en": "\n",
@@ -132,35 +161,6 @@
                             }
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "headline": {
-                "en": "About discounts",
-                "da": "Om rabatterne\n"
-            },
-            "items": [
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "Fastaval is forever grateful for the great amount of work done by our many writers, designers and organizers. Therefore we offer some discount to our lovely organizers.\n Organizers under 18 receive both the youth and organizer discount on entrance.",
-                        "da": "Fastaval er dybt taknemlige for det arbejde du l\u00e6gger i at f\u00e5 vores alle sammen Val p\u00e5 benene igen! Derfor tilbyder vi ogs\u00e5 lidt rabat til vores dejlige arrang\u00f8rer.\n Arrang\u00f8rer under 18 f\u00e5r b\u00e5de arrang\u00f8r- og ungdomsrabat p\u00e5 partout."
-                    }
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "[b]In addition, organizers and writers who work more than 48 hours before\/after Fastaval and \/or 24 hours during Fastaval will receive:[\/b]\n",
-                        "da": "[b]Arrang\u00f8rer og forfattere\/designere der arbejder mere end 48 timer f\u00f8r\/efter Fastaval og\/eller 24 timer p\u00e5 Fastaval modtager derudover:[\/b]\n"
-                    }
-                },
-                {
-                    "type": "list",
-                    "text": {
-                        "en": "Discount on entrance and accommodation\nDiscount on t-shirts and at sales venues                    ",
-                        "da": "Rabat p\u00e5 indgang og overnatning\nRabat p\u00e5 t-shirts og ved salgssteder"
-                    }
                 }
             ]
         },

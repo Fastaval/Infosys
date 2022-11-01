@@ -471,14 +471,14 @@ class Deltagere extends DBObject implements AgeFulfilment
      * @access public
      * @return bool
      */
-    public function setGDSTilmelding(GDSCategory $gdscategory, $period) {
-        if (!$gdscategory->isLoaded() || !$this->isLoaded()) {
+    public function setGDSTilmelding(?GDSCategory $gdscategory, $period) {
+        if (($gdscategory != null && !$gdscategory->isLoaded()) || !$this->isLoaded()) {
             return false;
         }
 
         $gdstilmelding = $this->createEntity('DeltagereGDSTilmeldinger');
         $gdstilmelding->deltager_id = $this->id;
-        $gdstilmelding->category_id = $gdscategory->id;
+        $gdstilmelding->category_id = $gdscategory == null ? 0 : $gdscategory->id;
         $gdstilmelding->period      = $period;
         return $gdstilmelding->insert();
     }

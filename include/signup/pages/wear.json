@@ -5,8 +5,8 @@
         "da": "Wear"
     },
     "title": {
-        "en": "Fasta Wear",
-        "da": "Fasta Wear"
+        "en": "Fastaval Wear",
+        "da": "Fastaval Wear"
     },
     "sections": [
         {
@@ -36,7 +36,7 @@
                 "en": "\n",
                 "da": "\n"
             },
-            "module" : "wear"
+            "module": "wear"
         }
     ]
 }

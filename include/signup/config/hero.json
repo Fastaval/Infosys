@@ -1,0 +1,42 @@
+{
+  "table_header": {
+    "en": "In which time slots can you perform your hero tasks?",
+    "da": "Hvilke tidsintervaller kan du udføre dine helte-opgaver?"
+  },
+  "times": [
+    {
+      "text": {
+        "en": "Morning (7am - 12pm)",
+        "da": "Morgen (7 - 12)"
+      },
+      "short_text": {
+        "en": "Morning",
+        "da": "Morgen"
+      },
+      "infosys_id": "morning",
+      "skip": 1
+    },
+    {
+      "text": {
+        "en": "Afternoon (12pm - 5pm)",
+        "da": "Eftermiddag (12 - 17)"
+      },
+      "short_text": {
+        "en": "Afternoon",
+        "da": "Eftermiddag"
+      },
+      "infosys_id": "afternoon"
+    },
+    {
+      "text": {
+        "en": "Evening (5pm - 12am)",
+        "da": "Aften (17 - 24)"
+      },
+      "short_text": {
+        "en": "Evening",
+        "da": "Aften"
+      },
+      "infosys_id": "evening"
+    }
+  ]
+}

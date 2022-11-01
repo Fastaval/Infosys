@@ -41,6 +41,54 @@
         },
         {
             "headline": {
+                "en": "In which languages would you like to participate in activities?\n",
+                "da": "P\u00e5 hvilke sprog vil du gerne deltage i aktiviteter?\n"
+            },
+            "items": [
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "Danish\n",
+                        "da": "Dansk"
+                    },
+                    "infosys_id": "activity_language:dansk"
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "English\n",
+                        "da": "Engelsk\n"
+                    },
+                    "infosys_id": "activity_language:engelsk"
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "Scandinavian (Danish\/Swedish\/Norwegian)\n",
+                        "da": "Skandinavisk (Dansk\/Svensk\/Norsk)\n"
+                    },
+                    "infosys_id": "activity_language:skandinavisk"
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "I want to sign up for a lot of games, but\u00a0 only join a limited number\n",
+                "da": "Jeg vil gerne tilmelde mig mange spil, men kun ende med at spille et begr\u00e6nset antal"
+            },
+            "items": [
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "Maximum games I want to join",
+                        "da": "Antal spil jeg h\u00f8jst vil spille"
+                    },
+                    "infosys_id": "desired_activities"
+                }
+            ]
+        },
+        {
+            "headline": {
                 "en": "Are you considering being a gamemaster?",
                 "da": "T\u00e6nker du p\u00e5 at v\u00e6re spilleder?"
             },
@@ -90,12 +138,6 @@
                     }
                 }
             ]
-        },
-        {
-            "headline": {
-                "en": "TODO activity max\n",
-                "da": "TODO maks aktiviteter\n"
-            }
         },
         {
             "headline": {

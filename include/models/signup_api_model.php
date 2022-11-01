@@ -120,7 +120,7 @@ class SignupApiModel extends Model {
         'en' => 'dinner',
         'da' => 'aftensmad',
       ]
-      ];
+    ];
 
     $food =  $this->createEntity('Madtider')->findAll();
     usort($food, function($a, $b) {
@@ -370,11 +370,11 @@ class SignupApiModel extends Model {
    * Apply signup data to a participant
    */
   public function applySignup($data, $participant, $lang) {
-    $gdpr_accept = false;
     $errors = $categories = [];
     $is_alea = $is_organizer = false;
     $total = 0;
     $junior_note = "";
+    $sprog = [];
 
     $participant->signed_up = date('Y-m-d H:i:s');
     // Reset orders
@@ -430,11 +430,6 @@ class SignupApiModel extends Model {
         $key_parts = explode(":", $key, 2);
         if (count($key_parts) == 1) {
           switch($key) {
-            case 'gdpr_accept':
-              //TODO add to database
-              $gdpr_accept = true;
-              break;
-
             case 'participant':
               $bk  = $this->createEntity('BrugerKategorier');
               if ($value != 'Organizer') {
@@ -451,7 +446,7 @@ class SignupApiModel extends Model {
               $is_organizer = true;
               $participant->brugerkategori_id = $value;
               break;
-            
+
             default:
               if (!isset($column_info[$key])) {
                 $errors[$category][] = [
@@ -590,7 +585,21 @@ class SignupApiModel extends Model {
                 case 'ticket_fee':
                   $select->setWhere('type', '=', 'Billetgebyr');
                   break;
+
+                case 'extra_support':
+                  $amount = min(9, floor(intval($value) / 100));
+                  $select->setWhere('type', '=', "Rig onkel - {$amount}00");
+                  $participant->rig_onkel = 'ja';
+                  $value = 'on';
+                  break;
   
+                case 'secret_support':
+                  $amount = min(9, floor(intval($value) / 100));
+                  $select->setWhere('type', '=', "Hemmelig onkel - {$amount}00");
+                  $participant->hemmelig_onkel = 'ja';
+                  $value = 'on';
+                  break;
+
                 default:
                   $errors[$category][] = [
                     'type' => 'no_field',
@@ -621,6 +630,36 @@ class SignupApiModel extends Model {
               $price = $food->getMad()->pris;
               break;
 
+            case 'hero':
+              [$day, $time] = explode("-", $key_item, 2);
+              $day = intval($day) -3;
+              $date = new DateTime($this->config->get('con.start'));
+              $date->add(new DateInterval("P{$day}D"));
+              $date_string = $date->format('Y-m-d');
+              switch($time) {
+                case 'morning':
+                  $period = "7-12";
+                  break;
+
+                case 'afternoon':
+                  $period = "12-17";
+                  break;
+
+                case 'evening':
+                  $period = "17-24";
+                  break;
+
+                default:
+                $errors[$category][] = [
+                  'type' => 'unknown_time',
+                  'info' => "$key_cat:$key_item $value",
+                ];
+                continue 2;
+              }
+
+              $participant->setGDSTilmelding(null, "$date_string $period");
+              break;
+
             case 'activity':
               // TODO check for alder
               // TODO check for max tilmeldinger 
@@ -643,6 +682,10 @@ class SignupApiModel extends Model {
                 }
               }
               $price = $run->getAktivitet()->pris;
+              break;
+
+            case 'activity_language':
+              $sprog[] = $key_item;
               break;
 
             case 'wear':
@@ -679,12 +722,15 @@ class SignupApiModel extends Model {
               $price = $wear_prices[0]->pris * $amount_match[1];
               break;
 
+            case 'note':
+              $participant->setNote($key_item, $value);
+              break;
+
             default:
               $errors[$category][] = [
                 'type' => 'no_field',
                 'info' => "$key_cat $key_item",
               ];
-              continue 2;
           }
         }
         $entries[] = array_merge([
@@ -705,6 +751,9 @@ class SignupApiModel extends Model {
         $total += $category_total;
       }
     }
+
+    // Languages
+    $participant->setSprog($sprog);
 
     // Notes
     if ($junior_note) $participant->setNote('junior_ward', $junior_note);
@@ -740,9 +789,9 @@ class SignupApiModel extends Model {
 
     $column_info = $participant->getColumnInfo();
     $signup = $errors = [];
+    $entrance = false;
 
-    $pages = $this->getAllPages();
-    foreach($pages as $page_id => $page_data) {
+    foreach($this->getAllPages() as $page_id => $page_data) {
       $lookup = $this->createLookup($page_data);
       // Collect simple properties
       foreach($lookup as $key => $info) {
@@ -750,15 +799,11 @@ class SignupApiModel extends Model {
         $key_parts = explode(":", $key, 2);
         if (count($key_parts) == 1) {
           switch($key) {
-            case 'gdpr_accept':
-              //TODO add to database
-              break;
-
             case 'participant':
               $bid = $participant->brugerkategori_id;
               $bk  = $this->createEntity('BrugerKategorier')->findById($bid);
               if ($bk->isArrangoer()) {
-                $value = 'organizer';
+                $value = 'Organizer';
               } else {
                 $value = $bk->navn;
               }
@@ -776,12 +821,18 @@ class SignupApiModel extends Model {
               $value = substr($participant->birthdate, 0, 10);
               break;
 
+            case 'ready_mandag':
+            case 'ready_tirsdag':
+              $signup['together:prepare'] = 'on';
+              // Notice no break here
             default:
               if (!isset($column_info[$key])) {
+                // Value is the same as a different field
                 if($equals = $lookup[$key]['item']->equals) {
                   $value = $participant->$equals;
                   break;
                 }
+                // Value isn't submitted
                 if($lookup[$key]['item']->no_submit) break;
                 $errors[] = [
                   'type' => 'no_field',
@@ -793,6 +844,7 @@ class SignupApiModel extends Model {
 
               $value = $participant->$key;
               if ($value == 'ja') $value = 'on';
+              if ($value == 'nej') $value = '';
           }
         }
         $signup[$key] = $value;
@@ -800,12 +852,12 @@ class SignupApiModel extends Model {
     }
 
     // Collect entrance items
-    $entrances = $participant->getIndgang();
-    foreach($entrances as $entrance) {
+    foreach($participant->getIndgang() as $entrance) {
       switch(true) {
         case $entrance->isPartout():
           if ($entrance->isEntrance()) {
             $signup['entry:partout'] = 'on';
+            $entrance = true;
           } else {
             $signup['sleeping:partout'] = 'on';
           }
@@ -813,6 +865,7 @@ class SignupApiModel extends Model {
 
         case  $entrance->isDayTicket() || $entrance->isSleepTicket():
           $type = $entrance->isDayTicket() ? 'entry' : 'sleeping';
+          $entrance = $type == 'entry' ? true : $entrance;
           $start = new DateTime($entrance->start);
           $day = intval($start->format('d')) -2;
           $signup["$type:$day"] = 'on';
@@ -838,6 +891,14 @@ class SignupApiModel extends Model {
           $signup['misc:ticket_fee'] = 'on';
           break;
 
+        case preg_match("/Rig onkel - (\d+)/", $entrance->type, $matches):
+          $signup['misc:extra_support'] = $matches[1];
+          break;
+
+        case preg_match("/Hemmelig onkel - (\d+)/", $entrance->type, $matches):
+          $signup['misc:secret_support'] = $matches[1];
+          break;
+
         default:
           $errors[] = [
             'type' => 'unknown_entry',
@@ -847,19 +908,56 @@ class SignupApiModel extends Model {
     }
 
     // Collect food order
-    $foods = $participant->getMadtider();
-    foreach($foods as $food) {
-      $signup['food:'.$food->id] = $food->id;
+    foreach($participant->getMadtider() as $food) {
+      if ($food->isDinner()) {
+        $day = date('N', strtotime($food->dato));
+        $signup['food:dinner'.$day] = $food->id;
+      } else {
+        $signup['food:'.$food->id] = $food->id;
+      }
+    }
+
+    // Collect hero-task signup
+    foreach($participant->getGDSTilmeldinger() as $hero_signup) {
+      $period = $hero_signup->period;
+      preg_match("/(\d{4}-\d{2}-\d{2}) (\d{2}-\d{2})/", $period, $match);
+      $day = date('N', strtotime($match[1]));
+      switch($match[2]) {
+        case "7-12":
+          $time = 'morning';
+          break;
+
+        case "12-17":
+          $time = 'afternoon';
+          break;
+
+        case "17-24":
+          $time = 'evening';
+          break;
+
+        default:
+          $errors[] = [
+            'type' => 'unknown_time',
+            'period' => $period,
+          ];
+          continue 2;
+      }
+      $signup["hero:$day-$time"] = 'on';
+      $signup['together:hero'] = 'on';
     }
 
     // Collect activity signup
-    $run_signups = $participant->getTilmeldinger();
-    foreach ($run_signups as $run_signup) {
+    foreach ($participant->getTilmeldinger() as $run_signup) {
       $run_id = $run_signup->afvikling_id;
       $prio = $run_signup->prioritet;
       $type = $run_signup->tilmeldingstype;
       if ($type == 'spilleder') {
         $prio = count(self::ACTIVITY_CHOICES['prio']['en']) +1;
+        if($run_signup->getAktivitet()->type == 'braet') {
+          $signup['together:gm'] = 'on';
+        } else {
+          $signup['together:rules'] = 'on';
+        }
       }
       if (isset($signup["activity:$run_id"])) {
         // We have a combination of player and GM signup
@@ -869,11 +967,37 @@ class SignupApiModel extends Model {
       }
     }
 
+    // Activity languages
+    foreach($participant->getSprog() as $sprog) {
+      $signup['activity_language:'.$sprog] = 'on';
+    }
+
     // Collect wear orders
-    $wear_orders = $participant->getWear();
-    foreach($wear_orders as $wear_order) {
+    foreach($participant->getWear() as $wear_order) {
       $wear_id = $wear_order->getWear()->id;
       $signup["wear:$wear_id"] = 'size:'.$wear_order->size.'--amount:'.$wear_order->antal;
+    }
+
+    // Get notes
+    foreach($participant->note as $key => $note) {
+      if ($key == 'junior_ward') {
+        $ids = [
+          'Navn' => 'contact_name',
+          'Telefon' => 'contact_number',
+          'Email' => 'contact_mail',
+        ];
+        foreach(explode("\n", $note->content) as $line) {
+          [$label, $value] = explode(":", $line);
+          $signup['junior:'.$ids[$label]] = trim($value);
+        }
+      } else {
+        $signup['note:'.$key] = $note->content;
+      }
+    }
+
+    // Check for junior:plus
+    if ($entrance && $signup['participant'] == 'Juniordeltager') {
+      $signup['junior:plus'] = 'on';
     }
 
     return [

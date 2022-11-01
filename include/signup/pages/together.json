@@ -1,0 +1,213 @@
+{
+    "order": 7,
+    "slug": {
+        "en": "Fastaval Together",
+        "da": "F\u00e6lles Fastaval"
+    },
+    "title": {
+        "en": "Fastaval Together",
+        "da": "Et f\u00e6lles Fastaval"
+    },
+    "sections": [
+        {
+            "headline": {
+                "en": "\n",
+                "da": "\n"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Vi er alle sammen f\u00e6lles om Fastaval... bla bla mere tekst..\nL\u00e6s mere om de forskellige helte-roller nedenfor."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "[b]Hvad er Heltestyrken?[\/b]\nForklarende tekst... Kort beskrivelse af omr\u00e5derne og link til hjemmeside"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "[b]Hvad er en spilleder?[\/b]\nForklarende tekst..."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "[b]Hvad er en regelformidler?[\/b]\nForklarende tekst..."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "[b]Hvad er ops\u00e6tningsholdet?[\/b]\nForklarende tekst..."
+                    }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "New Section",
+                "da": "Hvordan vil du v\u00e6re en helt p\u00e5 Fastaval?"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "V\u00e6lg minimum \u00e9n af nedenst\u00e5ende, men gerne flere hvis du har lyst.\nHvis du regner med at ankomme i ops\u00e6tningsdagene skal du notere det som \u201cops\u00e6tningshold\u201d"
+                    }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Jeg vil v\u00e6re en del af Heltestyrken"
+                    },
+                    "infosys_id": "together:hero",
+                    "no_submit": true
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Jeg vil v\u00e6re spilleder"
+                    },
+                    "infosys_id": "together:gm",
+                    "no_submit": true
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Jeg vil v\u00e6re regelformidler"
+                    },
+                    "infosys_id": "together:rules",
+                    "no_submit": true
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Jeg vil v\u00e6re p\u00e5 ops\u00e6tningsholdet"
+                    },
+                    "infosys_id": "together:prepare",
+                    "no_submit": true
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "New Section",
+                "da": "Heltestyrken"
+            },
+            "module": "hero",
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "[b]OBS! INGEN HELTE-OPGAVER ER MERE END 3 TIMER LANGE[\/b]"
+                    }
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Hvor mange helte-opgaver vil du udf\u00f8re p\u00e5 Fastaval?"
+                    },
+                    "infosys_id": "desired_diy_shifts"
+                },
+                {
+                    "type": "text_area",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Hvis der er noget vi skal vide i forhold til din evne til at udf\u00f8re\u00a0 en helte-opgave, typen af opgaver du foretr\u00e6kker e.lign., s\u00e5 skriv dem her"
+                    },
+                    "infosys_id": "note:gds"
+                }
+            ],
+            "show_if": {
+                "field": "together:hero",
+                "logic": "checked"
+            }
+        },
+        {
+            "headline": {
+                "en": "New Section",
+                "da": "Spilleder"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Vil du v\u00e6re super-spilleder?"
+                    }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Ja, absolut. Fastaval m\u00e5 gerne kontakte mig, hvis der mangler ekstra spilledere"
+                    },
+                    "infosys_id": "supergm"
+                },
+                {
+                    "type": "text_input",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Er der et maksimum antal scenarier du vil spillede?"
+                    },
+                    "infosys_id": "gm_max"
+                }
+            ],
+            "show_if": {
+                "field": "together:gm",
+                "logic": "checked"
+            }
+        },
+        {
+            "headline": {
+                "en": "New Section",
+                "da": "Ops\u00e6tning"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Angiv hvilke dage du kommer til ops\u00e6tningen:"
+                    }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Klarg\u00f8ring mandag"
+                    },
+                    "infosys_id": "ready_mandag"
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "New Item",
+                        "da": "Klarg\u00f8ring tirsdag"
+                    },
+                    "infosys_id": "ready_tirsdag"
+                }
+            ],
+            "show_if": {
+                "field": "together:prepare",
+                "logic": "checked"
+            }
+        }
+    ]
+}
