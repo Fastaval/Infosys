@@ -91,14 +91,21 @@ class SignupApiController extends Controller {
 
     $signup = json_decode(file_get_contents($signup_file), true);
     $data['signup'] = $signup;
-    [$info,$result] = $this->model->confirmSignup($data);
-    $status = count($result['errors']) == 0 ? '200' : '400';
-
-    // TODO send mail
+    [$result, $participant] = $this->model->confirmSignup($data);
+    
+    $status = '400';
+    if (count($result['errors']) == 0) {
+      $status = '200';
+      $participant_controller = new ParticipantController($this->route, $this->config, $this->dic);
+      $participant_controller->sendEmailFromSignup($participant);
+    }
 
     $this->jsonOutput([
       'result' => $result,
-      'info' => $info,
+      'info' => [
+        'id' => $participant->id,
+        'pass' => $participant->password,
+      ],
     ], $status);
   }
 

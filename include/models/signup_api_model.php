@@ -327,19 +327,14 @@ class SignupApiModel extends Model {
     
     if(count($result['errors']) == 0) {
       // Update participant
-      $res = $participant->update();
-    }
-
-    if(!$res) {
-      $result['errors']['confirm'][] = ['type' => 'database'];
+      if(!$participant->update()) {
+        $result['errors']['confirm'][] = ['type' => 'database'];
+      }
     }
 
     return [
-      [
-        'id' => $participant->id,
-        'pass' => $participant->password,
-      ],
       $result,
+      $participant,
     ];
   }
 
