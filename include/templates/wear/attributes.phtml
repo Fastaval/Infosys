@@ -1,0 +1,30 @@
+<?=$this->getMessagesHtml()?>
+<div id="wear-attributes">
+  <div id="wear-attribute-categories">
+    <?php
+    foreach ($this->wear_attributes as $category => $collection) {
+      ?>
+        <div class="category-wrapper">
+          <h2><?=$category?></h2>
+          <table id="<?=$category?>">
+            <thead>
+              <tr><th>Dansk</th><th>Engelsk</th></tr>
+            </thead>
+            <tbody>
+      <?php
+      foreach($collection as $attribute) {
+        ?>
+              <tr id="<?=$attribute['id']?>"><td contentEditable="true"><?=$attribute['desc_da']?></td><td contentEditable="true"><?=$attribute['desc_en']?></td><td class="button-cell"></td></tr>
+        <?php
+      }
+      ?>
+              <tr><td><button class="add-item">Tilføj egenskab</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      <?php
+    }
+    ?>
+  </div>
+  <button id="add-category">Tilføj Kategori</button>
+</div>

@@ -91,7 +91,7 @@ FROM
         deltager_id,
         SUM(wp.pris) AS wear_cost
     FROM
-        deltagere_wear AS dwp
+        deltagere_wear_order AS dwp
         JOIN wearpriser AS wp ON wp.id = dwp.wearpris_id
     GROUP BY
         deltager_id
@@ -282,7 +282,7 @@ SELECT
     SUM(wp.pris) AS cost,
     COUNT(*) AS amount
 FROM
-    deltagere_wear AS dw
+    deltagere_wear_order AS dw
     JOIN wearpriser AS wp ON wp.id = dw.wearpris_id
     JOIN brugerkategorier AS bk ON bk.id = wp.brugerkategori_id
     JOIN wear AS w ON w.id = wp.wear_id

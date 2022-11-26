@@ -31,10 +31,45 @@ var wear_object = {
 
         $('#wear-priser').on('click', 'input.remove-wearprice', function() {
             that.removePrice($(this));
-        }).
-            on('click', '#add-wearprice', function() {
-                that.addPrice($(this));
+        }).on('click', '#add-wearprice', function() {
+            that.addPrice($(this));
+        });
+
+        $('#add-variant').click(function() {
+            that.addVariant();
+        });
+
+        $('#attributes input').click(function(evt) {
+            that.attributeClick(evt.delegateTarget);
+        })
+
+        $('#add-image').click(function() {
+            $('#add-image-dialog-modal').removeClass('closed');
+        });
+
+        $('.image-selection-wrapper li').click(function(evt) {
+            that.imageSelect(evt.delegateTarget);
+        });
+
+        $('#add-image-confirm').click(function() {
+            that.imageConfirm(true);
+        });
+
+        $('#add-image-cancel').click(function() {
+            that.imageConfirm(false);
+        });
+
+        $('#image-attribute-list input').click(function(evt) {
+            that.imageAttributeClick(evt.delegateTarget);
+        });
+
+        $('.folding-section').each(function() {
+            let section = $(this);
+            section.find('.folding-element').hide();
+            section.find('.folding-button').click(function() {
+                that.foldSection(section);
             });
+        })
 
         this.sortCategories();
     },
@@ -69,6 +104,121 @@ var wear_object = {
             selected.remove();
 
             price.val('');
+        }
+    },
+
+    addVariant: function() {
+        let varian_count = $('#attributes .attribute-variant').length;
+        let varaint_div = $('<div class="attribute-variant">');
+        for(const type in this.attributes) {
+            let type_div = $('<div class="attribute-type-list">');
+            type_div.append('<h3>'+type+'</h3>');
+            let entries = Object.entries(this.attributes[type]).sort(function(a,b){
+                return a[1].position - b[1].position;
+            });
+            for(const [id, att] of entries) {
+                type_div.append(`
+                    <div class="attribute-input-wrapper">
+                        <input type="checkbox" id="attribute-${varian_count}-${id}" name="attributes[${varian_count}][]" value="${id}">
+                        <label for="attribute-${varian_count}-${id}">${att.desc_da}</label>
+                    </div>
+                `);
+            }
+            varaint_div.append(type_div);
+        }
+        $('#attributes').append(varaint_div);
+    },
+
+    attributeClick(input) {
+        let checkbox = $(input);
+        let attribute_id = checkbox.val();
+        let type = checkbox.closest('.attribute-type-list').find('h3').text();
+
+        if (checkbox.prop('checked')) {
+            if($(`input#attribute-img-${attribute_id}`).length == 1) return; // Checkbox already exist
+
+            let image_type_headers = $('#image-attribute-list .attribute-type-list h3');
+            let type_section;
+            image_type_headers.each(function() {
+                if ($(this).text() !== type) return;
+
+                let text = $(`label[for="${checkbox.attr('id')}"]`).text();
+
+                type_section = $(this).closest('.attribute-type-list');
+                type_section.append(`
+                    <div class="attribute-input-wrapper">
+                        <input type="checkbox" id="attribute-img-${attribute_id}" attribute-id="${attribute_id}">
+                        <label for="attribute-img-${attribute_id}">${text}</label>
+                    </div>
+                `);
+            });
+        }
+    },
+
+    imageSelect(image_name) {
+        let li = $(image_name);
+        let wrapper = li.closest('.image-selection-wrapper');
+        wrapper.find('li').removeClass('selected');
+        li.addClass('selected');
+        let preview = wrapper.find('.image-preview');
+        preview.find('img').attr('src', li.attr('file'));
+        preview.attr('selected-image', li.attr('image-id'));
+
+        let input_wrapper = wrapper.find('#image-attribute-inputs');
+        if (input_wrapper.length == 1) {
+            $('#image-attribute-list input').prop('checked', false);
+            input_wrapper.find('input').each(function() {
+                let input = $(this);
+                let attribute_id = input.val();
+                if (input.attr('image-id') !== li.attr('image-id')) return;
+
+                $('#image-attribute-list #attribute-img-'+attribute_id).prop('checked', true);
+            })
+        }
+    },
+
+    imageConfirm(confirm) {
+        // Close dialog
+        $('#add-image-dialog-modal').addClass('closed');
+        
+        // Get image id
+        let image_id = $('#dialog-image-preview').attr('selected-image');
+        
+        // Reset preview
+        $('#dialog-image-preview').find('img').attr('src', '');
+        $('#dialog-image-preview').attr('selected-image', '');
+        
+        if (!image_id && confirm) return;
+
+        image_item = $(`#add-image-dialog li[image-id=${image_id}]`)
+        image_item.removeClass('selected');
+        $('#image-list-wrapper ul').append(image_item);
+    },
+
+    imageAttributeClick(input) {
+        let checkbox = $(input);
+        let attribute_id = checkbox.attr('attribute-id');
+
+        image_id = $('#image-list-wrapper .image-preview').attr('selected-image');
+        if(!image_id) return; // No image selected
+
+        if (checkbox.prop('checked')) {
+            $('#image-attribute-inputs').append(
+                `<input type="hidden" name="wear_image[${image_id}][]" id="wear-image-${image_id}-attribute-${attribute_id}" image-id="${image_id}" value="${attribute_id}">`
+            )
+        } else {
+            $('#image-attribute-inputs').find(`#wear-image-${image_id}-attribute-${attribute_id}`).remove();
+        }
+    },
+
+    foldSection(section) {
+        let button = section.find('.folding-button')
+        if(button.hasClass('open')) {
+            button.removeClass('open').addClass('closed');
+            section.find('.folding-element').hide();
+        } else {
+            button.removeClass('closed').addClass('open');
+            section.find('.folding-element').show();
         }
     }
 };

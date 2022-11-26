@@ -188,7 +188,7 @@ SELECT
 FROM
     wear AS w
     JOIN wearpriser AS wp ON wp.wear_id = w.id
-    JOIN deltagere_wear AS dw ON wp.id = dw.wearpris_id
+    JOIN deltagere_wear_order AS dw ON wp.id = dw.wearpris_id
     JOIN deltagere AS d ON d.id = dw.deltager_id
 WHERE
     d.annulled = "nej"

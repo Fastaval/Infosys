@@ -790,7 +790,7 @@ class ParticipantModel extends Model
     }
 
     protected function handleWearUpdate(Deltagere $deltager, RequestVars $post) {
-        $query = "DELETE FROM deltagere_wear WHERE deltager_id = '{$deltager->id}'";
+        $query = "DELETE FROM deltagere_wear_order WHERE deltager_id = '{$deltager->id}'";
         $this->db->exec($query);
 
         if (!empty($post->wearpriser) && $post->wearantal && $post->wearsize) {
@@ -1390,7 +1390,7 @@ FROM
         SELECT di.deltager_id, sum(i.pris) AS pris FROM deltagere_indgang AS di JOIN indgang AS i ON i.id = di.indgang_id WHERE i.type LIKE 'Dagsbillet%' GROUP BY di.deltager_id
     ) AS i_d ON i_d.deltager_id = d.id
     LEFT JOIN (
-        SELECT deltager_id, SUM(dw.antal * wp.pris) AS pris FROM deltagere_wear AS dw JOIN wearpriser AS wp ON wp.id = dw.wearpris_id GROUP BY deltager_id
+        SELECT deltager_id, SUM(dw.antal * wp.pris) AS pris FROM deltagere_wear_order AS dw JOIN wearpriser AS wp ON wp.id = dw.wearpris_id GROUP BY deltager_id
     ) AS w ON w.deltager_id = d.id
     LEFT JOIN (
         SELECT p.deltager_id, SUM(case when p.type = 'spilleder' then -30 else ak.pris end) AS pris FROM pladser AS p JOIN hold AS h ON h.id = p.hold_id JOIN afviklinger AS af ON af.id = h.afvikling_id JOIN aktiviteter AS ak ON ak.id = af.aktivitet_id GROUP BY deltager_id

@@ -1,0 +1,48 @@
+{
+    "order_header": {
+        "en": "Wear orders",
+        "da": "Wear bestillinger"
+    },
+    "no_orders": {
+        "en": "You haven't ordered any wear",
+        "da": "Du har ikke bestil noget wear"
+    },
+    "amount": {
+        "en": "Amount",
+        "da": "Antal"
+    },
+    "add": {
+        "en": "Add",
+        "da": "Tilføj"
+    },
+    "delete": {
+        "en": "Delete",
+        "da": "Slet"
+    },
+    "max_error": {
+        "en": "You're not allowed to order more than",
+        "da": "Du må ikke bestille mere end"
+    },
+    "attribute_type": {
+        "model": {
+            "en": "Model",
+            "da": "Model",
+            "position": 1
+        },
+        "color": {
+            "en": "Color",
+            "da": "Farve",
+            "position": 2
+        },
+        "size": {
+            "en": "Size",
+            "da": "Størrelse",
+            "position": 3
+        },
+        "design": {
+            "en": "Design",
+            "da": "Design",
+            "position": 4
+        }
+    }
+}

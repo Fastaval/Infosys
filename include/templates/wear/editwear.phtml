@@ -1,76 +1,193 @@
 <?php echo $this->getMessagesHtml();?>
 <div id='wear-details'>
-    <fieldset>
-        <legend><?php echo (isset($this->wear) ? 'Opdater' : 'Opret');?> wear</legend>
-        <form action='' method='post'>
-            <span class='label'>Navn:</span> <span class='detail'><input type='text' name='navn' value='<?php echo (isset($this->wear) ? $this->wear->navn : '');?>'/></span><br/>
-            <span class='label'>Beskrivelse:</span> <span class='detail'><input type='text' name='beskrivelse' value='<?php echo (isset($this->wear) ? $this->wear->beskrivelse : '');?>'/></span><br/>
-            <span class='label'>Engelsk titel:</span> <span class='detail'><input type='text' name='title_en' value='<?php echo (isset($this->wear) ? $this->wear->title_en : '');?>'/></span><br/>
-            <span class='label'>Engelsk beskrivelse:</span> <span class='detail'><input type='text' name='description_en' value='<?php echo (isset($this->wear) ? $this->wear->description_en : '');?>'/></span><br/>
-            <span class='label'>Min str.:</span> <span class='detail'><?php echo $this->genSelect('min_size', $this->model->getSelectSizes(), isset($this->wear) ? $this->wear->getMinSize()['size_id'] : null);?></span><br/>
-            <span class='label'>Max str.:</span> <span class='detail'><?php echo $this->genSelect('max_size', $this->model->getSelectSizes(), isset($this->wear) ? $this->wear->getMaxSize()['size_id'] : null);?></span><br/>
-            <?php if (isset($this->wear)) : ?>
-                <hr/>
-                <table id='wear-priser'>
-                    <caption><b>Wear priser</b></caption>
-                    <thead>
-                        <th>Brugerkategori</th>
-                        <th>Pris</th>
-                    </thead>
-                    <tbody>
-                        <?php
-                            if ($result = $this->wear->getWearpriserSquashed()) :
-                                foreach ($result as $price) : 
-                                    if ($price->brugerkategori_id == 0) {
-                                        $navn = $this->model->allOrganizerCategory;
-                                    } else {
-                                        $navn = $price->getCategory()->navn;
-                                    }
-                                
-                                ?>
-                                    <tr>
-                                        <td>
-                                            <input name='wearpriceid[]' value='<?php echo $price->id;?>' type='hidden'/>
-                                            <input name='wearprice_category[]' value='<?php echo $price->brugerkategori_id;?>' type='hidden'/>
-                                            <input value='<?=$navn;?>' type='hidden'/>
-                                            <input type='hidden' value='<?php echo $price->wear_id;?>' name='wearprice_wearid[]'/>
-                                            <?=$navn;?>
-                                        </td>
-                                        <td><input type='text' name='wearprice_price[]' value='<?php echo $price->pris;?>'/></td>
-                                        <td><input type='button' value='Slet' class='remove-wearprice' /></td>
-                                    </tr>
-                        <?php
-                                endforeach;
-                            endif; ?>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>
-                                <select id='category-select'>
-                                    <?php foreach ($this->model->getAllParticipantCategories() as $cat) :
-                                        if (!in_array($cat->id, $this->wear->getUsedUserCategories())) : ?>
-                                            <option value='<?php echo $cat->id;?>'><?php echo $cat->navn;?></option>
-                                        <?php endif;
-                                    endforeach; ?>
-                                </select>
-                                <input type='hidden' id='wear-id' value='{$id}'/>
-                            </td>
-                            <td><input id='category-price' type='text' value=''/></td>
-                            <td><input type='button' value='Tilføj' id='add-wearprice' /></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            <?php endif;?>
-            <hr/>
-            <?php if (isset($this->wear)) : ?>
-                <input type='submit' value='Opdater' name='update_wear' class='centersubmits'/>
-                <input type='submit' value='Fortryd' class='centersubmits'/>
-                <input type='submit' value='Slet' name='delete_wear' class='centersubmits'/>
-            <?php else : ?>
-                <input type='submit' value='Opret' name='create_wear'/>
-            <?php endif;?>
-        </form>
-    </fieldset>
+  <fieldset>
+    <legend><?php echo (isset($this->wear) ? 'Opdater' : 'Opret');?> wear</legend>
+    <form action='' method='post'>
+      <span class='label'>Navn:</span> <span class='detail'><input type='text' name='navn' value='<?php echo (isset($this->wear) ? $this->wear->navn : '');?>'/></span><br/>
+      <span class='label'>Beskrivelse:</span> <span class='detail'><input type='text' name='beskrivelse' value='<?php echo (isset($this->wear) ? $this->wear->beskrivelse : '');?>'/></span><br/>
+      <span class='label'>Engelsk titel:</span> <span class='detail'><input type='text' name='title_en' value='<?php echo (isset($this->wear) ? $this->wear->title_en : '');?>'/></span><br/>
+      <span class='label'>Engelsk beskrivelse:</span> <span class='detail'><input type='text' name='description_en' value='<?php echo (isset($this->wear) ? $this->wear->description_en : '');?>'/></span><br/>
+      <span class='label'>Maks Bestilling:</span> <span class='detail'><input type='number' name='max_order' value='<?php echo (isset($this->wear) ? $this->wear->max_order : 0);?>'/></span><br/>
+      <hr/>
+      <div class="folding-section">
+        <h2>Varianter</h2>
+        <div class="folding-button closed">Fold ud</div>
+        <div id="attributes" class="folding-element">
+          <?php
+            $all_attributes = $this->model->getAttributes();
+            $attribute_variants = isset($this->wear) ? $this->wear->getAttributes() : [null];
+            $used_attributes = [];
+
+            foreach ($attribute_variants as $variant => $variant_types) {
+              ?><div class="attribute-variant"><?php
+              foreach ($all_attributes as $type => $attributes) {
+                ?>
+                  <div class="attribute-type-list">
+                    <h3><?=$type?></h3>
+                <?php
+                foreach($attributes as $att) {
+                  $checked = "";
+                  if (isset($variant_types[$type][$att['id']])) {
+                    $checked = "checked";
+                    $used_attributes[$type][$att['id']] = true;
+                  }
+                  ?>
+                    <div class="attribute-input-wrapper">
+                      <input type="checkbox" id="attribute-<?=$variant?>-<?=$att['id']?>" name="attributes[<?=$variant?>][]" value="<?=$att['id']?>" <?=$checked?>>
+                      <label for="attribute-<?=$variant?>-<?=$att['id']?>"><?=$att['desc_da']?></label>
+                    </div>
+                  <?php
+                }
+                ?>
+                  </div>
+                <?php
+              }
+              ?></div><?php
+            }
+          ?>
+        </div>
+        <input type="button" id="add-variant" value="Tilføj variant" class="folding-element">
+      </div>
+      <?php
+        $images_available = $this->model->getImages();
+        $images_added = isset($this->wear) ? $this->wear->getImages() : [];
+        foreach($images_added as $id => $image) {
+          unset($images_available[$id]);
+        }
+      ?>
+      <div class="folding-section">
+        <h2>Indstillinger for billeder</h2>
+        <div class="folding-button closed">Fold ud</div>
+        <input type="button" id="add-image" value="Tilføj billede" class="folding-element">
+        <div id="add-image-dialog-modal" class="closed">
+          <div id="add-image-dialog" class="image-selection-wrapper">
+            <ul>
+              <?php foreach ($images_available as $id => $location) { ?>
+                <li id="wear-image-<?=$id?>" image-id="<?=$id?>" file="<?=$location?>"><?=basename($location)?></li>
+              <?php } ?>
+            </ul>
+            <div id="dialog-image-preview" class="image-preview">
+              <img>
+              <div id="image-dialog-button-wrapper">
+                <input type="button" id="add-image-cancel" value="Annulér">
+                <input type="button" id="add-image-confirm" value="Tilføj billede">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="image-selection-wrapper folding-element">
+          <div id="image-attribute-inputs">
+              <?php 
+                foreach ($images_added as $id => $image) {
+                  foreach($image['attributes'] as $type => $values) {
+                    foreach($values as $value) {
+                      ?>
+                        <input type="hidden" name="wear_image[<?=$id?>][]" id="wear-image-<?=$id?>-attribute-<?=$value?>" image-id="<?=$id?>" value="<?=$value?>">
+                      <?php
+                    }
+                  } 
+                }
+              ?>
+          </div>
+          <h3>Vælg billede</h3>
+          <div id="image-list-wrapper">
+            <ul>
+              <?php foreach ($images_added as $id => $image) { ?>
+                <li id="wear-image-<?=$id?>" image-id="<?=$id?>" file="<?=$image['image_file']?>"><?=basename($image['image_file'])?></li>
+              <?php } ?>
+            </ul>
+            <div class="image-preview"><img></div>
+          </div>
+          <div id="image-attribute-list">
+            <div class="attribute-input-wrapper">
+              <input type="checkbox" id="attribute-img-45" attribute-id="45">
+              <label for="attribute-img-45">Alle</label>
+            </div><?php
+            foreach ($all_attributes as $type => $attributes) {
+              if (!isset($used_attributes[$type])) continue; // We can only add images for used attributes
+              ?>
+                <div class="attribute-type-list">
+                  <h3><?=$type?></h3>
+              <?php
+              foreach($attributes as $att) {
+                if (!isset($used_attributes[$type][$att['id']])) continue; // We can only add images for used attributes
+                ?>
+                  <div class="attribute-input-wrapper">
+                    <input type="checkbox" id="attribute-img-<?=$att['id']?>" attribute-id="<?=$att['id']?>">
+                    <label for="attribute-img-<?=$att['id']?>"><?=$att['desc_da']?></label>
+                  </div>
+                <?php
+              }
+              ?>
+                </div>
+              <?php
+            }
+          ?></div>
+        </div>
+      </div>
+      <?php if (isset($this->wear)) : ?>
+        <hr/>
+        <table id='wear-priser'>
+          <caption><b>Wear priser</b></caption>
+          <thead>
+            <th>Brugerkategori</th>
+            <th>Pris</th>
+          </thead>
+          <tbody>
+            <?php
+              if ($result = $this->wear->getWearpriserSquashed()) :
+                foreach ($result as $price) : 
+                  if ($price->brugerkategori_id == 0) {
+                    $navn = $this->model->allOrganizerCategory;
+                  } else {
+                    $navn = $price->getCategory()->navn;
+                  }
+                
+                ?>
+                  <tr>
+                    <td>
+                      <input name='wearpriceid[]' value='<?php echo $price->id;?>' type='hidden'/>
+                      <input name='wearprice_category[]' value='<?php echo $price->brugerkategori_id;?>' type='hidden'/>
+                      <input value='<?=$navn;?>' type='hidden'/>
+                      <input type='hidden' value='<?php echo $price->wear_id;?>' name='wearprice_wearid[]'/>
+                      <?=$navn;?>
+                    </td>
+                    <td><input type='text' name='wearprice_price[]' value='<?php echo $price->pris;?>'/></td>
+                    <td><input type='button' value='Slet' class='remove-wearprice' /></td>
+                  </tr>
+            <?php
+                endforeach;
+              endif; ?>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>
+                <select id='category-select'>
+                  <?php foreach ($this->model->getAllParticipantCategories() as $cat) :
+                    if (!in_array($cat->id, $this->wear->getUsedUserCategories())) : ?>
+                      <option value='<?php echo $cat->id;?>'><?php echo $cat->navn;?></option>
+                    <?php endif;
+                  endforeach; ?>
+                </select>
+                <input type='hidden' id='wear-id' value='{$id}'/>
+              </td>
+              <td><input id='category-price' type='text' value=''/></td>
+              <td><input type='button' value='Tilføj' id='add-wearprice' /></td>
+            </tr>
+          </tfoot>
+        </table>
+      <?php endif;?>
+      <hr/>
+      <?php if (isset($this->wear)) : ?>
+        <input type='submit' value='Opdater' name='update_wear' class='centersubmits'/>
+        <input type='submit' value='Fortryd' class='centersubmits'/>
+        <input type='submit' value='Slet' name='delete_wear' class='centersubmits'/>
+      <?php else : ?>
+        <input type='submit' value='Opret' name='create_wear'/>
+      <?php endif;?>
+    </form>
+  </fieldset>
 </div>
 <script type='text/javascript' src="<?php echo $this->JSLink('wear.js');?>"></script>
+<script type='text/javascript'>wear_object.attributes = JSON.parse('<?=json_encode($all_attributes)?>')</script>
 

@@ -278,10 +278,11 @@ class SignupApiModel extends Model {
           'en' => $item->description_en,
           'da' => $item->beskrivelse,
         ],
-        'min_size' => $item->min_size,
-        'max_size' => $item->max_size,
-        'order' => $item->wear_order,
+        'position' => $item->position,
         'prices' => [],
+        'max_order' => $item->max_order,
+        'variants' => $item->getAttributes(),
+        'images' => $item->getImages(),
       ];
       $prices = $item->getWearpriserSquashed();
       foreach($prices as $price) {
@@ -291,18 +292,6 @@ class SignupApiModel extends Model {
         ];
       }
       $result->wear[] = $result_item;
-    }
-
-    $result->sizes = [];
-    $sizes = $wear->getWearSizes();
-    foreach($sizes as $size) {
-      $result->sizes[$size['size_id']] = [
-        'order' => $size['size_order'],
-        'name' => [
-          'en' => $size['size_name_en'],
-          'da' => $size['size_name_da'],
-        ]
-      ];
     }
 
     return $result;

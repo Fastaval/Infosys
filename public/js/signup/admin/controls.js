@@ -4,8 +4,6 @@ jQuery(function() {
   SignupAdminControls.init();
 });
 
-// TODO set default
-
 class SignupAdminControls {
   static selection_string = "fieldset, .selectable";
   

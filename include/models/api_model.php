@@ -1120,7 +1120,7 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
         $this->db->exec('DELETE FROM deltagere_madtider WHERE deltager_id = ?', $participant->id);
         $this->db->exec('DELETE FROM deltagere_gdstilmeldinger WHERE deltager_id = ?', $participant->id);
         $this->db->exec('DELETE FROM deltagere_indgang WHERE deltager_id = ?', $participant->id);
-        $this->db->exec('DELETE FROM deltagere_wear WHERE deltager_id = ?', $participant->id);
+        $this->db->exec('DELETE FROM deltagere_wear_order WHERE deltager_id = ?', $participant->id);
     }
 
     /**
@@ -1534,7 +1534,7 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
             'interpreter' => $participant->interpreter,
             'skills' => $participant->skills,
             'brugerkategori' => $participant->getBrugerKategori()->navn,
-            'payment_url' => $this->url('participant_payment', array('hash' => $this->getParticipantPaymentHash($participant))),
+            //'payment_url' => $this->url('participant_payment', array('hash' => $this->getParticipantPaymentHash($participant))),
             'id' => $participant->id,
             'session' => '',
         );

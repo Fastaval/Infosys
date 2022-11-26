@@ -493,6 +493,8 @@ HTML;
             <li><a href='{$this->url('detailed_unfilled_order_list')}'>Alle ikke-udleverede</a></li>
             <li><a href='{$this->url('show_wear')}'>Wear-typer</a></li>
             <li><a href='{$this->url('create_wear')}'>Opret wear-type</a></li>
+            <li><a href='{$this->url('wear_attributes')}'>Rediger wear egenskaber</a></li>
+            <li><a href='{$this->url('wear_upload_image')}'>Upload billede til wear</a></li>
             <li><a href='{$this->url('wear_handout')}'>Wear-udlevering</a></li>
         </ul>
     </li>
@@ -595,7 +597,8 @@ HTML;
     <li class='topmenu-item'>
         Tilmelding
         <ul class='submenu'>
-            <li><a href='{$this->url('signup_pages')}'>Tilpads sider</a></li>
+            <li><a href='{$this->url('signup_pages')}'>Tilpas sider</a></li>
+            <li><a href='{$this->url('signup_config', ['module' => 'submit'])}'>Indstillinger for submit modul</a></li>
         </ul>
     </li>
 HTML;

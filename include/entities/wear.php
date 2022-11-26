@@ -46,7 +46,7 @@ class Wear extends DBObject
      * 
      * @var string
      */
-    protected $default_order = 'wear_order';
+    protected $default_order = 'position';
 
     /**
      * used for storing sizes once loaded from the database
@@ -233,11 +233,22 @@ class Wear extends DBObject
     {
         if (!isset(self::$sizes)) {
             // Load sizes from DB
-            $query = "SELECT * FROM wear_sizes ORDER BY size_order";
+            $query = "SELECT * FROM wear_attributes WHERE attribute_type = 'size' ORDER BY position";
             self::$sizes = $this->db->query($query);
         }
 
         return self::$sizes;
+    }
+
+    public function getAttributes() {
+        $query = "SELECT * from wear_attribute_available as waa JOIN wear_attributes as wa on waa.attribute_id = wa.id WHERE waa.wear_id = ? ORDER BY variant, attribute_type, position";
+
+        $wear_attributes = [null];
+        foreach($this->db->query($query, [$this->id]) as $attribute) {
+            $wear_attributes[$attribute['variant']][$attribute['attribute_type']][$attribute['attribute_id']] = $attribute;
+        }
+
+        return $wear_attributes;
     }
 
     /**
@@ -316,5 +327,25 @@ class Wear extends DBObject
         $sizes = $this->getWearSizes();
         $size = $sizes[array_search($id, array_column($sizes, 'size_id'))];
         return $english ? $size['size_name_en'] : $size['size_name_da'];
+    }
+
+    public function getImages() {
+        $query = 
+            "SELECT wi.id, wi.image_file, wic.attribute_id, wa.attribute_type FROM wear_image as wi 
+            JOIN wear_image_connection as wic ON wic.image_id = wi.id 
+            LEFT JOIN wear_attributes as wa ON wa.id = wic.attribute_id
+            WHERE wic.wear_id = {$this->id}";
+        $result = $this->db->query($query);
+        $list = [];
+        foreach($result as $row) {
+            if (!isset($list[$row['id']])) {
+                $list[$row['id']] = [
+                    'image_file' => $row['image_file'],
+                    'attributes' => [],
+                ];
+            }
+            $list[$row['id']]['attributes'][$row['attribute_type']][] = $row['attribute_id'];
+        }
+        return $list;
     }
 }

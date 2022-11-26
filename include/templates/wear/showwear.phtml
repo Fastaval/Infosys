@@ -5,9 +5,30 @@
         <span class='label'>Id:</span> <span class='detail'><?php echo $this->wear->id;?></span><br class='clearit'/>
         <span class='label'>Navn:</span> <span class='detail'><?php echo $this->wear->navn;?></span><br class='clearit'/>
         <span class='label'>Engelsk titel:</span> <span class='detail'><?php echo $this->wear->title_en;?></span><br class='clearit'/>
-        <span class='label'>Str.:</span> <span class='detail'><?php echo $this->wear->getSizeRange();?></span><br class='clearit'/>
         <span class='label'>Beskrivelse:</span> <span class='detail'><?php echo $this->wear->beskrivelse;?></span><br class='clearit'/>
         <span class='label'>Engelsk beskrivelse:</span> <span class='detail'><?php echo $this->wear->description_en;?></span><br class='clearit'/>
+        <span class='label'>Maks bestilling:</span> <span class='detail'><?php echo $this->wear->max_order;?></span><br class='clearit'/>
+        <hr/>
+        <div id="attributes">
+            <?php
+                foreach($this->wear->getAttributes() as $variant => $types){
+                    ?><div class="attribute-variant"><?php
+                    foreach ($types as $type => $attributes) {
+                        ?>
+                            <div class="attribute-type-list">
+                                <h3><?=$type?></h3>
+                        <?php
+                        foreach($attributes as $att) {
+                            ?><span class='attribute'><?=$att['desc_da']?></span><?php
+                        }
+                        ?>
+                            </div>
+                        <?php
+                    }
+                    ?></div><?php
+                }
+            ?>
+        </div>
         <hr/>
         <table>
             <thead>

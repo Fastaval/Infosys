@@ -270,6 +270,7 @@ class Routes
         $this->routes['edit_wear']                    = array('url' => 'wear/editwear/:id:', 'controller' => 'Wear', 'method' => 'editWear');
         $this->routes['delete_wear']                  = array('url' => 'wear/deletewear/:id:', 'controller' => 'Wear', 'method' => 'deleteWear');
         $this->routes['create_wear']                  = array('url' => 'wear/createwear', 'controller' => 'Wear', 'method' => 'createWear');
+        $this->routes['wear_attributes']              = array('url' => 'wear/attributes', 'controller' => 'Wear', 'method' => 'attributes');
         $this->routes['wear_breakdown']               = array('url' => 'wear/breakdown', 'controller' => 'Wear', 'method' => 'wearBreakdown');
         $this->routes['detailed_order_list']          = array('url' => 'wear/detailed', 'controller' => 'Wear', 'method' => 'detailedOrderList');
         $this->routes['detailed_unfilled_order_list'] = array('url' => 'wear/unfilled', 'controller' => 'Wear', 'method' => 'detailedUnfilledOrderList');
@@ -280,6 +281,7 @@ class Routes
         $this->routes['wear_handout']                 = array('url' => 'wear/handout', 'controller' => 'Wear', 'method' => 'displayHandout');
         $this->routes['wear_handout_ajax']            = array('url' => 'wear/handout/ajax', 'controller' => 'Wear', 'method' => 'ajaxHandout');
         $this->routes['wear_labels']                  = array('url' => 'wear/print-labels', 'controller' => 'Wear', 'method' => 'showPrintLabels');
+        $this->routes['wear_upload_image']            = array('url' => 'wear/upload-image', 'controller' => 'Wear', 'method' => 'uploadImage');
         
 
         // mad routes
@@ -438,6 +440,7 @@ class Routes
         $this->routes['signup_pages_specific']      = array('url' => 'signup/pages/:page:', 'controller' => 'SignupAdmin', 'method' => 'signupPages');
         $this->routes['signup_pages_add_element']   = array('url' => 'signup/pages/add-element', 'controller' => 'SignupAdmin', 'method' => 'addPageElement');
         $this->routes['signup_pages_edit_text']     = array('url' => 'signup/pages/edit-text', 'controller' => 'SignupAdmin', 'method' => 'editText');
+        $this->routes['signup_config']              = array('url' => 'signup/config/:module:', 'controller' => 'SignupAdmin', 'method' => 'signupConfig');
 
         // Signup API
         $this->routes['api_signup_config']          = array('url' => 'api/signup/config/:module:', 'controller' => 'SignupApi', 'method' => 'getConfig');

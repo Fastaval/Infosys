@@ -1007,6 +1007,134 @@ div#wear-details fieldset span.label {
     clear: none;
 }
 
+div#wear-details .folding-section {
+    position: relative;
+}
+
+div#wear-details .folding-section .folding-button {
+    position: absolute;
+    right: 0;
+    top: .5rem;
+    border: 1px lightgray solid;
+    border-radius: 3px;
+    padding: 3px 10px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+div#wear-details .folding-section .folding-button::after {
+    content: "";
+    width: 21px;
+    height: 21px;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 3px;
+}
+
+div#wear-details .folding-section .folding-button.closed::after {
+    background-image: url("/img/down.png");
+}
+
+div#wear-details .folding-section .folding-button.open::after {
+    background-image: url("/img/up.png");
+}
+
+div#wear-details #image-attribute-list,
+div#wear-details .attribute-variant {
+    display: flex;
+    gap: 1em;
+}
+
+div#wear-details #attributes .attribute {
+    display: block;
+}
+
+div#wear-details #image-attribute-list input,
+div#wear-details #attributes input {
+    vertical-align: baseline;
+}
+
+
+div#wear-details #image-attribute-list label,
+div#wear-details #attributes label {
+    display: inline-block;
+}
+
+div#wear-details #add-image-dialog-modal.closed {
+    display: none;
+}
+
+div#wear-details #add-image-dialog-modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.5);
+}
+
+div#wear-details #add-image-dialog-modal #add-image-dialog {
+    width: 50%;
+    margin: auto;
+    background: white;
+    height: 80%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 1rem;
+    border: 3px solid gray;
+    padding: 2rem;
+}
+
+
+div#wear-details #image-list-wrapper,
+div#wear-details #add-image-dialog-modal #add-image-dialog {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+div#wear-details #add-image-dialog-modal #add-image-dialog ul {
+    overflow: auto;
+}
+
+div#wear-details #image-list-wrapper ul,
+div#wear-details #add-image-dialog-modal #add-image-dialog ul {
+    border: 1px solid black;
+    list-style-type: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    margin: 0;
+    flex: 0 1 30%;
+    max-height: 100%;
+}
+
+div#wear-details #image-list-wrapper ul li,
+div#wear-details #add-image-dialog-modal #add-image-dialog ul li {
+    padding: 0 1rem;
+}
+
+div#wear-details .image-selection-wrapper li.selected {
+    background-color: blue;
+    color: white;
+}
+
+div#wear-details #image-list-wrapper .image-preview,
+div#wear-details #add-image-dialog .image-preview {
+    border: 1px solid black;
+    flex: 1 1 50%;
+}
+
+div#wear-details #add-image-dialog #dialog-image-preview #image-dialog-button-wrapper {
+    position: absolute;
+    bottom: 2rem;
+    right: calc(2rem + 2px);
+}
+
 div#wear-details .centersubmits {
     margin: 10px;
 }
@@ -1017,6 +1145,26 @@ div#wear-table table{
 
 div#wear-table tr.selected{
     background-color: lightgray;
+}
+
+div#wear-attributes {
+    width: fit-content;
+    margin: auto;
+}
+
+div#wear-attributes div#wear-attribute-categories {
+    width: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+div#wear-attributes div#wear-attribute-categories h2 {
+    border-bottom: 1px black solid;
+}
+
+div#wear-attributes td {
+    padding: 2px 5px;
 }
 /* Food styles */
 div#food-details {

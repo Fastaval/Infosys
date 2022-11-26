@@ -28,7 +28,7 @@ class SignupApiController extends Controller {
    * @access protected
    * @return void
    */
-  protected function jsonOutput($data, $http_status = '200', $content_type = 'text/plain; charset=UTF-8')
+  protected function jsonOutput($data, $http_status = '200', $content_type = 'text/plain')
   {
     if (!is_string($data)) {
       $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);

@@ -138,6 +138,11 @@ class WearController extends Controller {
         if (!$this->page->request->isPost() || !$this->page->request->post->delete_wear) {
             $this->hardRedirect($this->url('vis_wear', array('id' => $wear->id)));
         }
+
+        foreach($wear->getWearpriser() as $wear_price) {
+            $wear_price->delete();
+        }
+
         $id = $wear->id;
         $name = $wear->navn;
         if ($wear->delete()) {
@@ -212,6 +217,68 @@ class WearController extends Controller {
                 $this->errorMessage('Wear-typen blev ikke opdateret.');
             }
             $this->hardRedirect($this->url('vis_wear', array('id' => $wear->id)));
+        }
+    }
+    /**
+     * Edit available wear attributes
+     *
+     * @access
+     * @return void
+     */
+    public function attributes() {
+
+        if ($this->page->request->isPost()) {
+            $post = $this->page->request->post;
+            $result = $this->model->setAttribute($post);
+            $status = $result->success ? '200' : '400';
+            
+            $data = json_encode($result->data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+            header('Status: ' . $status);
+            header('Content-Type: text/plain; charset=UTF-8');
+            header('Content-Length: ' . strlen($data));
+            echo $data;
+            exit;
+        }
+
+        $this->page->wear_attributes = $this->model->getAttributes();
+        $this->page->registerEarlyLoadJS('wear_attributes.js');
+    }
+    /**
+     * Upload image used for wear
+     *
+     * @access
+     * @return void
+     */
+    public function uploadImage() {
+        if ($this->page->request->isPost()) {
+            if(getimagesize($_FILES["wear-image"]["tmp_name"]) === false) {
+                $this->errorMessage("Infosys kunne ikke genkende filen som et billede");
+                return;
+            }
+            
+            $filename = basename($_FILES["wear-image"]["name"]);
+            $subfolder = 'uploads/wear';
+            $folder = PUBLIC_PATH . $subfolder;
+            $target_file = $folder .'/' . $filename;
+            $external = "/$subfolder/$filename";
+
+            if (file_exists($target_file)) {
+                $this->errorMessage("Der findes allerede en fil med samme navn");
+                return;
+            }
+
+            if (!file_exists($folder)) {
+                mkdir($folder, 0777, true);
+            }
+
+            if (move_uploaded_file($_FILES["wear-image"]["tmp_name"], $target_file)) {
+                $this->successMessage("Billedet ". htmlspecialchars( basename( $_FILES["wear-image"]["name"])). " blev uploaded.");
+                $this->log("{$target_file} blev uploaded af {$this->model->getLoggedInUser()->user}", 'Wear', $this->model->getLoggedInUser());
+                $this->model->addImage($external);
+                $this->page->image_file = $external;
+            } else {
+                $this->errorMessage("Der skete en ukendt fejl under upload");
+            }
         }
     }
     /**

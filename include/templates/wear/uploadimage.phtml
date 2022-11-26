@@ -1,0 +1,19 @@
+<?=$this->getMessagesHtml()?>
+<div id='wear-image-upload'>
+  <?php if ($this->image_file) { ?>
+    <div class="image-wrapper">
+      <img src="<?=$this->image_file?>">
+  <?php } ?>
+  <fieldset>
+    <legend>Upload billede til wear</legend>
+    <form action="" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="wear-image-file">Vælg billede</label>
+        <input class="form-control" id="wear-image-file" name="wear-image" type="file" accept="image/*">
+      </div>
+      <div class="form-group">
+        <button type="submit">Upload</button>
+      </div>
+    </form>
+  </fieldset>
+</div>

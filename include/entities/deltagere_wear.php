@@ -26,7 +26,7 @@
      */
 
     /**
-     * handles the deltagere_wear table
+     * handles the deltagere_wear_order table
      *
      * @package MVC
      * @subpackage Entities
@@ -39,7 +39,7 @@ class DeltagereWear extends DBObject
      *
      * @var string
      */
-    protected $tablename = 'deltagere_wear';
+    protected $tablename = 'deltagere_wear_order';
 
     /**
      * returns the orders for a given participant

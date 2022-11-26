@@ -5,17 +5,15 @@
             <tr>
                 <th>Id</th>
                 <th>Navn</th>
-                <th>Str.</th>
                 <th>Beskrivelse</th>
                 <th>Rækkefølge</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($this->wear_types as $type) : ?>
-            <tr row-id="<?=$type->id?>" row-order="<?=$type->wear_order?>">
+            <tr row-id="<?=$type->id?>" row-order="<?=$type->position?>">
                 <td><?php echo $type->id;?></a></td>
                 <td><a href="<?php echo $this->url('vis_wear', array('id' => $type->id));?>"><?php echo $type->navn;?></a></td>
-                <td><?php echo $type->getSizeRange();?></td>
                 <td><?php echo $type->beskrivelse;?></td>
                 <td class="buttons">
                     <img src='<?= $this->imgLink('up.png');?>' direction="up" alt='Flyt op'/>
