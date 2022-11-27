@@ -42,6 +42,33 @@ class DeltagereWear extends DBObject
     protected $tablename = 'deltagere_wear_order';
 
     /**
+     * For getting extra attributes
+     */
+    public function __get($var) {
+        if (array_key_exists($var, $this->storage)) {
+            return $this->storage[$var];
+        }
+
+        $query = 
+            "SELECT * FROM deltagere_wear_order_attributes AS dwoa 
+            JOIN wear_attributes AS wa ON dwoa.attribute_id = wa.id 
+            WHERE dwoa.order_id = ? AND wa.attribute_type = ?";
+
+        $result = $this->db->query($query, [$this->storage['id'], $var]);
+        if(count($result) == 0) {
+            $this->storage[$var] = null;
+            return null;
+        }
+
+        $this->storage[$var] = $result[0]['attribute_id'];
+        return $this->storage[$var];
+    }
+
+    public function __isset($var) {
+        return $this->__get($var) !== null;
+    }
+
+    /**
      * returns the orders for a given participant
      *
      * @param object $deltager - Deltagere entity
@@ -157,14 +184,23 @@ class DeltagereWear extends DBObject
      * @access public
      * @return bool
      */
-    public function setOrderDirect($participant, $wearprice, $size, $amount)
+    public function setOrderDirect($participant, $wearprice, $amount, $attributes)
     {
         $this->deltager_id = $participant->id;
         $this->wearpris_id = $wearprice->id;
         $this->antal       = $amount;
-        $this->size        = $size;
 
-        return $this->insert();
+        if (!$this->insert()) {
+            return false;
+        }
+
+        foreach($attributes as $att) {
+            $query = "INSERT INTO deltagere_wear_order_attributes (order_id,attribute_id) VALUES (?,?)";
+            $args = [$this->id, $att];
+            $this->db->exec($query, $args);
+        }
+        
+        return true;
     }
 
     /**
@@ -227,4 +263,19 @@ class DeltagereWear extends DBObject
         return $this->createEntity('Wear')->getSizeName($this->size, $english);
     }
 
+    public function getAttributes() {
+        $attributes = [];
+        
+        $query = 
+            "SELECT * FROM deltagere_wear_order_attributes AS dwoa 
+            JOIN wear_attributes AS wa ON dwoa.attribute_id = wa.id 
+            WHERE dwoa.order_id = ?";
+
+        $result = $this->db->query($query, [$this->storage['id']]);
+        foreach($result as $row) {
+            $attributes[$row['attribute_type']] = $row['id'];
+        }
+
+        return $attributes;
+    }
 }

@@ -512,9 +512,9 @@ class Deltagere extends DBObject implements AgeFulfilment
      * @access public
      * @return $this
      */
-    public function setWearOrder(DBObject $wearprice, $size, $amount)
+    public function setWearOrder(DBObject $wearprice, $amount, ?array $attributes)
     {
-        $this->createEntity('DeltagereWear')->setOrderDirect($this, $wearprice, $size, $amount);
+        $this->createEntity('DeltagereWear')->setOrderDirect($this, $wearprice, $amount, $attributes);
 
         return $this;
     }

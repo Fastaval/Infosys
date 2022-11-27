@@ -243,7 +243,7 @@ class Wear extends DBObject
     public function getAttributes() {
         $query = "SELECT * from wear_attribute_available as waa JOIN wear_attributes as wa on waa.attribute_id = wa.id WHERE waa.wear_id = ? ORDER BY variant, attribute_type, position";
 
-        $wear_attributes = [null];
+        $wear_attributes = [];
         foreach($this->db->query($query, [$this->id]) as $attribute) {
             $wear_attributes[$attribute['variant']][$attribute['attribute_type']][$attribute['attribute_id']] = $attribute;
         }
@@ -325,8 +325,8 @@ class Wear extends DBObject
     public function getSizeName($id, $english = false)
     {
         $sizes = $this->getWearSizes();
-        $size = $sizes[array_search($id, array_column($sizes, 'size_id'))];
-        return $english ? $size['size_name_en'] : $size['size_name_da'];
+        $size = $sizes[array_search($id, array_column($sizes, 'id'))];
+        return $english ? $size['desc_en'] : $size['desc_da'];
     }
 
     public function getImages() {

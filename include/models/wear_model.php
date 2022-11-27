@@ -265,7 +265,7 @@ class WearModel extends Model
         }
         
         for($i = 0 ; $i < $vmax; $i++) {
-            $selected_attributes = $post->attributes[$i] ? array_flip($post->attributes[$i]) : null;
+            $selected_attributes = array_key_exists($i, $post->attributes) ? array_flip($post->attributes[$i]) : null;
 
             foreach($attribute_types as $type => $attribues) {
                 foreach($attribues as $key => $value) {

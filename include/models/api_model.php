@@ -842,6 +842,7 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
 
                 }
 
+                // Must be updated if needed
                 $deltager->setWearOrder($wearprice, $wear['size'], $wear['amount']);
             }
 

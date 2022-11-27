@@ -360,7 +360,7 @@ class SignupApiModel extends Model {
    */
   public function applySignup($data, $participant, $lang) {
     $errors = $categories = [];
-    $is_alea = $is_organizer = false;
+    $is_alea = $is_organizer = $junior_plus = false;
     $total = 0;
     $junior_note = "";
     $sprog = [];
@@ -436,6 +436,65 @@ class SignupApiModel extends Model {
               $participant->brugerkategori_id = $value;
               break;
 
+            case 'wear_orders':
+              // We assume the user category has been set at this point
+              $user_category = $this->createEntity('BrugerKategorier')->findById($participant->brugerkategori_id);
+              if(!$user_category) {
+                $errors[$category][] = [
+                  'type' => 'no_user_category',
+                  'info' => "$key_cat $key_item",
+                ];
+                continue 2;
+              }
+
+              foreach($value as $wear_order) {
+                $wear = $this->createEntity('Wear')->findById($wear_order['wear_id']);
+                $wear_prices = $wear->getWearpriser($user_category);
+  
+                // If there is no price for junior, check regular participant prices
+                if (count($wear_prices) == 0 && $junior_plus) {
+                  $user_category = $this->createEntity('BrugerKategorier')->getDeltager();
+                  $wear_prices = $wear->getWearpriser($user_category);
+                }
+
+                if (count($wear_prices) == 0) {
+                  $errors[$category][] = [
+                    'type' => 'no_wear_price',
+                    'info' => "wear_order",
+                    'user_category_id' => $user_category->id,
+                    'wear_id' => $wear->id,
+                  ];
+                  continue 3;
+                }
+                
+                if(!$participant->setWearOrder($wear_prices[0], $wear_order['amount'], $wear_order['attributes'])) {
+                  $errors[$category][] = [
+                    'type' => 'wear_order_fail',
+                    'info' => "wear_order",
+                    'user_category_id' => $user_category->id,
+                    'wear_id' => $wear->id,
+                    'amount' => $wear_order['amount'],
+                    'attributes' => $wear_order['attributes'],
+                  ];
+                  continue 3;
+                }
+
+                $price = $wear_prices[0]->pris * $wear_order['amount'];
+                $entries[] = [
+                  'special_module' => 'wear',
+                  'key' => $key,
+                  'value' => $wear_order,
+                  'wear_id' => $wear->id,
+                  'price' => $price,
+                  'amount' => $wear_order['amount'],
+                  'attributes' => $wear_order['attributes'],
+                  'single_price' => $wear_prices[0]->pris,
+                ];
+        
+                $category_total += $price;
+              }
+              continue 2;
+
             default:
               if (!isset($column_info[$key])) {
                 $errors[$category][] = [
@@ -461,6 +520,11 @@ class SignupApiModel extends Model {
 
           switch($key_cat) {
             case 'junior':
+              if ($key_item == 'plus') {
+                $junior_plus = true;
+                break;
+              }
+
               $labels = [
                 'contact_name' => 'Navn',
                 'contact_number' => 'Telefon',
@@ -675,40 +739,6 @@ class SignupApiModel extends Model {
 
             case 'activity_language':
               $sprog[] = $key_item;
-              break;
-
-            case 'wear':
-              $user_category = $this->createEntity('BrugerKategorier')->findById($participant->brugerkategori_id);
-              if(!$user_category) {
-                $errors[$category][] = [
-                  'type' => 'no_user_category',
-                  'info' => "$key_cat $key_item",
-                ];
-                continue 2;
-              }
-
-              $wear = $this->createEntity('Wear')->findById($key_item);
-              $wear_prices = $wear->getWearpriser($user_category);
-
-              if (count($wear_prices) == 0) {
-                $errors[$category][] = [
-                  'type' => 'no_wear_price',
-                  'info' => "$key_cat $key_item",
-                  'user_category_id' => $user_category->id,
-                  'wear_id' => $wear->id,
-                ];
-                continue 2;
-              }
-
-              preg_match('/amount:(\d+)/', $value, $amount_match);
-              preg_match('/size:(\d+)/', $value, $size_match);
-              $participant->setWearOrder($wear_prices[0], $size_match[1], $amount_match[1]);
-              $extra = [
-                'size' => $size_match[1],
-                'amount' => $amount_match[1],
-                'single_price' => $wear_prices[0]->pris,
-              ];
-              $price = $wear_prices[0]->pris * $amount_match[1];
               break;
 
             case 'note':
@@ -962,9 +992,23 @@ class SignupApiModel extends Model {
     }
 
     // Collect wear orders
+    $signup["wear_orders"] = [];
     foreach($participant->getWear() as $wear_order) {
-      $wear_id = $wear_order->getWear()->id;
-      $signup["wear:$wear_id"] = 'size:'.$wear_order->size.'--amount:'.$wear_order->antal;
+      $wearprice = $wear_order->getWearpris();
+      
+      $order = [
+        'wear_id' => $wear_order->getWear()->id,
+        'amount' => $wear_order->antal,
+        'price' => $wearprice->pris,
+        'price_category' => $wearprice->brugerkategori_id,
+        'attributes' => [],
+      ];
+      
+      foreach($wear_order->getAttributes() as $type => $id) {
+        $order['attributes'][$type] = $id;
+      }
+
+      $signup["wear_orders"][$wear_order->id] = $order;
     }
 
     // Get notes
