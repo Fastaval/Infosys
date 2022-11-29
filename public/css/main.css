@@ -962,21 +962,49 @@ span.group-status span.full {
 /* }}} */
 
 /* wear styles */
+table.wear-breakdown {
+    margin-bottom: 2rem;
+}
+
+table.wear-breakdown thead tr {
+    position: sticky;
+    top: 0;
+}
+
 table.wear-breakdown tr th.wear-header {
     background-color: #aaaaaa;
     color: #ffffff;
 }
 
 table.wear-breakdown tr th.wear-subheader {
+    position: relative;
     background-color: #cccccc;
     color: #ffffff;
-    width: 50px;
+    width: 4.5rem;
+    height: 5rem;
+}
+
+table.wear-breakdown tr th.wear-subheader span {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform-origin: bottom left;
+    transform: rotateZ(-22deg);
+    display: inline-block;
+    width: fit-content;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+table.wear-breakdown tr.first {
+    border-top: .5rem solid #dddddd;
 }
 
 table.wear-breakdown tr td.wear-type {
     background-color: #aaaacc;
     color: #ffffff;
     height: 30px;
+    padding: 0 1rem;
     text-align: left;
 }
 

@@ -287,13 +287,9 @@ class WearController extends Controller {
      * @access
      * @return void
      */
-    public function wearBreakdown()
-    {
+    public function wearBreakdown() {
         $this->page->wear_data = $this->model->getWearBreakdown();
-        $this->page->wear_types = $this->model->getAllWearTypes();
-        $this->page->model = $this->model;
-        $this->page->sizes = $this->model->getWearSizes();
-        $this->page->size_count = count($this->page->sizes);
+        $this->page->wear_attributes = $this->model->getAttributes();
     }
 
     /**

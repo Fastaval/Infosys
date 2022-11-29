@@ -11,7 +11,7 @@
         <hr/>
         <div id="attributes">
             <?php
-                foreach($this->wear->getAttributes() as $variant => $types){
+                foreach($this->wear->getVariants() as $variant => $types){
                     ?><div class="attribute-variant"><?php
                     foreach ($types as $type => $attributes) {
                         ?>

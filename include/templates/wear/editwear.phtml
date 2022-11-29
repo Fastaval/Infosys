@@ -15,7 +15,7 @@
         <div id="attributes" class="folding-element">
           <?php
             $all_attributes = $this->model->getAttributes();
-            $attribute_variants = isset($this->wear) ? $this->wear->getAttributes() : [null];
+            $attribute_variants = isset($this->wear) ? $this->wear->getVariants() : [null];
             $used_attributes = [];
 
             foreach ($attribute_variants as $variant => $variant_types) {

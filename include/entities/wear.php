@@ -240,7 +240,7 @@ class Wear extends DBObject
         return self::$sizes;
     }
 
-    public function getAttributes() {
+    public function getVariants() {
         $query = "SELECT * from wear_attribute_available as waa JOIN wear_attributes as wa on waa.attribute_id = wa.id WHERE waa.wear_id = ? ORDER BY variant, attribute_type, position";
 
         $wear_attributes = [];

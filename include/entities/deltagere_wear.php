@@ -49,6 +49,10 @@ class DeltagereWear extends DBObject
             return $this->storage[$var];
         }
 
+        // If this isn't loaded from the database, just return null
+        if (!$this->isLoaded()) return null;
+
+        // If this is loaded, check if there's an attribute type that matches variable name
         $query = 
             "SELECT * FROM deltagere_wear_order_attributes AS dwoa 
             JOIN wear_attributes AS wa ON dwoa.attribute_id = wa.id 

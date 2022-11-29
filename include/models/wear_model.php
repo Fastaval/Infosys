@@ -43,39 +43,153 @@ class WearModel extends Model
      * @access public
      * @return array
      */
-    public function getWearBreakdown()
-    {
-        $results = array();
-        $wear_types = $this->createEntity('Wear')->findAll();
-        foreach ($wear_types as $wear)
-        {
-            $results[$wear->id] = array();
-        }
-        $select = $this->createEntity('DeltagereWear')->getSelect();
-        $select->setFrom('wearpriser')->
-                 setTableWhere('wearpriser.id','deltagere_wear_order.wearpris_id')->
-                 setFrom('deltagere_wear_order_attributes')->
-                 setTableWhere('deltagere_wear_order.id', 'deltagere_wear_order_attributes.order_id')->
-                 setFrom('wear_attributes')->
-                 setTableWhere('deltagere_wear_order_attributes.attribute_id', 'wear_attributes.id')->
-                 setGroupBy('attribute_id')->
-                 setGroupBy('wear_id')->
-                 setField('desc_da')->
-                 setField('wear_id')->
-                 setField('SUM(antal) AS antal',false)->
-                 setOrder('wear_id','asc')->
-                 setOrder('attribute_type','asc')->
-                 setOrder('wear_attributes.position','asc');
-        $DB = $this->db;
-        if ($result = $DB->query($select))
-        {
-            foreach ($result as $row)
-            {
-                $results[$row['wear_id']][$row['size']] = $row['antal'];
+    public function getWearBreakdown() {
+        // Display order of attributes
+        $attribute_order = [
+            'model',
+            'design',
+            'color',
+        ];
+
+        // Collect all wear orders
+        $order_list = [];
+        $wear_orders = $this->createEntity('DeltagereWear')->findAll();
+        foreach ($wear_orders as $order) {
+            // Get attributes for the order
+            $attributes = $order->getAttributes();
+
+            // Prepare a unique array key based on attributes
+            $combotext = "wear-".$order->getWear()->id;
+            foreach($attribute_order as $type) {
+                if (isset($attributes[$type])) {
+                    $combotext .= "--$type-".$attributes[$type];
+                }
+            }
+
+            // Add order to list - depending on whether the item has different sizes
+            if (isset($attributes['size'])) {
+                $order_list[$combotext][$attributes['size']][$order->id] = $order->antal;
+            } else {
+                $order_list[$combotext]['none'][$order->id] = $order->antal;
             }
         }
-        return $results;
+
+        // Find all wear types
+        $result = [];
+        $wear_types = $this->createEntity('Wear')->findAll();
+        foreach ($wear_types as $wear) {
+            $collection = [];
+            $variants = $wear->getVariants();
+            if (empty($variants)) {
+                $combotext = "wear-".$wear->id;
+
+                // Count total number of orders
+                $total = 0;
+                $orders = [];
+                if (isset($order_list[$combotext])) {
+                    $orders = $order_list[$combotext];
+                    foreach($orders as $size_orders) {
+                        foreach($size_orders as $amount) {
+                            $total += $amount;
+                        }
+                    }
+
+                    // Remove asigned orders from the list
+                    unset($order_list[$combotext]);
+                }
+
+                // All variants for this wear id
+                $result['wear'][$wear->id] = [
+                    'variants' => [[
+                        'items' => [[
+                            'attributes' => [],
+                            'orders' => $orders,
+                            'total' => $total,
+                        ]],
+                        'sizes' => isset($var['size']) && is_array($var['size']) ? array_keys($var['size']): [],
+                    ]],
+                    'object' => $wear,
+                ];
+
+                continue;
+            }
+
+            foreach($variants as $key => $var) {
+                // Find each unique combination of attributes available
+                $combos = $this->createVariantCombinations(0, $var, $attribute_order);
+                
+                // Create an item for each combination
+                $items = [];
+                foreach ($combos as $attributes) {
+                    // Create the same unique array key to find any orders related to the item
+                    $combotext = "wear-".$wear->id;
+                    foreach($attribute_order as $type) {
+                        if (isset($attributes[$type])) {
+                            $combotext .= "--$type-".$attributes[$type];
+                        }
+                    }
+
+                    // Count total number of orders
+                    $total = 0;
+                    $orders = [];
+                    if (isset($order_list[$combotext])) {
+                        $orders = $order_list[$combotext];
+                        foreach($orders as $size_orders) {
+                            foreach($size_orders as $amount) {
+                                $total += $amount;
+                            }
+                        }
+
+                        // Remove asigned orders from the list
+                        unset($order_list[$combotext]);
+                    }
+
+                    // Attributes and orders for each item
+                    $items[] = [
+                        'attributes' => $attributes,
+                        'orders' => $orders,
+                        'total' => $total,
+                    ];
+                }
+
+                // Add items and sizes related to each variant to the variant collection
+                $collection[$key] = [
+                    'items' => $items,
+                    'sizes' => isset($var['size']) && is_array($var['size']) ? array_keys($var['size']): [],
+                ];
+            }
+            // All variants for this wear id
+            $result['wear'][$wear->id] = [
+                'variants' => $collection,
+                'object' => $wear,
+            ];
+        }
+
+        $result['sizes'] = $this->getWearSizes();
+
+        // In case we have orders that doesn't fit any items, we return them seperately for trouble shooting
+        $result['unasigned_orders'] = $order_list;
+
+        return $result;
+    }
+
+    private function createVariantCombinations($layer, $variant, $order) {
+        if ($layer >= count($order)) return [[]];
         
+        $sub_types = $this->createVariantCombinations($layer+1, $variant, $order);
+        $type = $order[$layer];
+        if (!isset($variant[$type])) return $sub_types;
+        
+        $combos = [];
+        foreach($variant[$type] as $value) {
+            foreach($sub_types as $sub) {
+                $combos[] = array_merge(
+                    ["$type" => $value['attribute_id']],
+                    $sub
+                );
+            }
+        }
+        return $combos;
     }
 
     /**
@@ -256,7 +370,7 @@ class WearModel extends Model
 
     protected function updateAttributes(Wear $wear, RequestVars $post) {
         $attribute_types = $this->getAttributes();
-        $current_attributes = $wear->getAttributes();
+        $current_attributes = $wear->getVariants();
         
         if (isset($post->attributes)) {
             $vmax = max(count($current_attributes), count($post->attributes));
@@ -267,7 +381,7 @@ class WearModel extends Model
         for($i = 0 ; $i < $vmax; $i++) {
             $selected_attributes = array_key_exists($i, $post->attributes) ? array_flip($post->attributes[$i]) : null;
 
-            foreach($attribute_types as $type => $attribues) {
+            foreach($attribute_types as $type => $attributes) {
                 foreach($attribues as $key => $value) {
                     // Insert missing
                     if (isset($selected_attributes[$key]) && !isset($current_attributes[$i][$type][$key])) {

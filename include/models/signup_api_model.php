@@ -281,7 +281,7 @@ class SignupApiModel extends Model {
         'position' => $item->position,
         'prices' => [],
         'max_order' => $item->max_order,
-        'variants' => $item->getAttributes(),
+        'variants' => $item->getVariants(),
         'images' => $item->getImages(),
       ];
       $prices = $item->getWearpriserSquashed();

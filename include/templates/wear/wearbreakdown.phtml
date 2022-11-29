@@ -4,49 +4,55 @@
         <thead>
             <tr>
                 <th>&nbsp;</th>
-                <th colspan='<?php echo $this->size_count + 1;?>' class='wear-header'>Bestilt wear</th>
+                <th colspan='<?=count($this->wear_data['sizes'])+2?>' class='wear-header'>Bestilt wear</th>
             </tr>
             <tr>
                 <th>&nbsp;</th>
-                <th class='wear-subheader'>Ialt</th>
-                <?php foreach ($this->sizes as $size) : ?>
-                    <th class='wear-subheader'><?php echo $size['size_name_da'];?></th>
+                <th class='wear-subheader'><span>I alt</span></th>
+                <th class='wear-subheader'><span>Ingen størrelse</span></th>
+                <?php foreach ($this->wear_data['sizes'] as $size) : ?>
+                    <th class='wear-subheader'><span><?php echo $size['desc_da'];?></span></th>
                 <?php endforeach;?>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->wear_types as $key => $wear) :
-                $ialt = 0;
-            ?>
-            <tr>
-                <td class='wear-type'>(<?=$wear->id?>) <?=$wear->navn;?></td>
-                <?php foreach($this->wear_data[$wear->id] as $antal) {
-                    $ialt += $antal;
-                } ?>
-                <td class='alt'><?php echo $ialt;?></td>
-                <?php if (empty($this->wear_data[$wear->id])) : 
-                    foreach ($this->sizes as $size) :?>
-                        <td>0</td>
-                    <?php endforeach;?>
-                <?php else :
-                    foreach ($this->sizes as $size) :
-                        if (isset($this->wear_data[$wear->id][$size['size_id']])) {
-                            ?>
-                                <td class='alt'>
-                                    <a href="<?php echo $this->url('detailed_mini_list', array('type' => $wear->id, 'size' => $size['size_id']));?>">
-                                        <?=$this->wear_data[$wear->id][$size['size_id']]?>
-                                    </a>
-                                </td>
-                            <?php
-                        } else {
-                            ?>
-                                <td>0</td>
-                            <?php        
+            <?php 
+            foreach ($this->wear_data['wear'] as $key => $wear) :
+                foreach ($wear['variants'] as $variant) :
+                    $row_class = 'first';
+                    foreach ($variant['items'] as $wear_item) :
+                        $wear_text = $wear['object']->navn;
+                        foreach ($wear_item['attributes'] as $type => $id) {
+                            $wear_text .= " - ". $this->wear_attributes[$type][$id]['desc_da'];
                         }
-                    endforeach; ?>
-                <?php endif;?>
-            </tr>
-            <?php endforeach;?>
+                        $display_sizes = array_merge([['id' => 'none']], $this->wear_data['sizes']);
+                        ?>
+                            <tr class="<?=$row_class?>">
+                                <td class='wear-type'>(<?=$key?>) <?=$wear_text?></td>
+                                <td class='alt'><?=$wear_item['total']?></td>
+                                <?php foreach ($display_sizes as $size) :
+                                    if (isset($wear_item['orders'][$size['id']])) {
+                                        $order_count = 0;
+                                        foreach ($wear_item['orders'][$size['id']] as $order_id => $value) {
+                                            $order_count += $value;
+                                        }
+                                        ?>
+                                            <td class='alt'>
+                                                <a href="<?php echo $this->url('detailed_mini_list', array('type' => $wear['object']->id, 'size' => $size['id']));?>">
+                                                    <?=$order_count?>
+                                                </a>
+                                            </td>
+                                        <?php
+                                    } else {
+                                        ?><td>0</td><?php        
+                                    }
+                                endforeach; ?>
+                            </tr>
+                        <?php
+                        $row_class = '';
+                    endforeach;
+                endforeach;
+            endforeach;?>
         </tbody>
     </table>
 </div>
