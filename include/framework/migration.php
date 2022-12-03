@@ -197,7 +197,8 @@ WHERE
             $contents = file_get_contents($migration_file);
 
             if ($contents) {
-                preg_match_all('/^.+?;\\s*$/ms', $contents . ';', $matches);
+                // Match single line comments or multiline queries
+                preg_match_all('/^[ \n]--.+?$|^.+?;\s*$/ms', $contents . ';', $matches);
 
                 $this->log->logToFile('Running migration ' . $migration_file . ' with id ' . $id);
 
