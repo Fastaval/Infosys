@@ -93,73 +93,7 @@ class Wear extends DBObject
         return $this->createEntity('WearPriser')->findBySelectMany($select);
     }
 
-    /**
-     * returns array of wear prices for the wear object, with only one price for organizers
-     *
-     * @param object $kategori - BrugerKategorier entity
-     * @access public
-     * @return array
-     */
-    public function getWearpriserSquashed()
-    {
-        if (!$this->isLoaded()) {
-            return array();
-        }
-
-        $select = $this->createEntity('BrugerKategorier')->getSelect();
-        $select->setWhere('arrangoer','=','ja');
-        $organizer_cats = $this->createEntity('BrugerKategorier')->findBySelectMany($select);
-
-        $select = $this->createEntity('WearPriser')->getSelect();
-        $select->setLeftJoin('brugerkategorier','brugerkategori_id', 'brugerkategorier.id');
-        $select->setWhere('wear_id', '=', $this->id);
-        $select->setWhere('arrangoer','=','nej');
-        $select->setField('wearpriser.id');
-        $select->setField('wearpriser.wear_id');
-        $select->setField('wearpriser.brugerkategori_id');
-        $select->setField('wearpriser.pris');
-        $participant_prices = $this->createEntity('WearPriser')->findBySelectMany($select);
-
-        $select = $this->createEntity('WearPriser')->getSelect();
-        $select->setLeftJoin('brugerkategorier','brugerkategori_id', 'brugerkategorier.id');
-        $select->setWhere('wear_id', '=', $this->id);
-        $select->setWhere('arrangoer','=','ja');
-        $select->setField('wearpriser.id');
-        $select->setField('wearpriser.wear_id');
-        $select->setField('wearpriser.brugerkategori_id');
-        $select->setField('wearpriser.pris');
-        $organizer_prices = $this->createEntity('WearPriser')->findBySelectMany($select);
-
-        // Check if we can combine all organizer prices into one
-        $combine_organizer = false;
-        if (count($organizer_cats) == count($organizer_prices)){
-            $combine_organizer = true;
-            $price = $organizer_prices[0]->pris;
-            for($i = 1; $i < count($organizer_prices); $i++) {
-                if ($price != $organizer_prices[$i]->pris) {
-                    $combine_organizer = false;
-                    break;
-                }
-            }
-        }
-        
-        // If all organizer prices are the same, add a single price for organizers and return
-        if ($combine_organizer) {
-            $organizer_price = (object) [
-                'id' => 0,
-                'brugerkategori_id' => 0,
-                'wear_id' => $this->id,
-                'pris' => $organizer_prices[0]->pris 
-            ];
-            $participant_prices[] = $organizer_price;
-            return $participant_prices;
-        }
-
-        // Return array with all individual prices
-        return array_merge($participant_prices,$organizer_prices);
-    }
-
-    /**
+     /**
      * returns array of user category id's that already have prices
      * set for them, for this wear item
      *
@@ -169,7 +103,7 @@ class Wear extends DBObject
     public function getUsedUserCategories()
     {
         $return = array();
-        $prices = $this->getWearpriserSquashed();
+        $prices = $this->getWearpriser();
         foreach ($prices as $price)
         {
             $return[] = $price->brugerkategori_id;

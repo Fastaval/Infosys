@@ -135,14 +135,9 @@
           </thead>
           <tbody>
             <?php
-              if ($result = $this->wear->getWearpriserSquashed()) :
+              if ($result = $this->wear->getWearpriser()) :
                 foreach ($result as $price) : 
-                  if ($price->brugerkategori_id == 0) {
-                    $navn = $this->model->allOrganizerCategory;
-                  } else {
-                    $navn = $price->getCategory()->navn;
-                  }
-                
+                  $navn = $price->getCategory()->navn;
                 ?>
                   <tr>
                     <td>

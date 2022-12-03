@@ -35,8 +35,6 @@
 
 class WearModel extends Model
 {
-    public $allOrganizerCategory = "Alle arrangører";
-
     /**
      * returns array of info on ordered wear
      *
@@ -624,23 +622,15 @@ class WearModel extends Model
         $category = $this->createEntity('BrugerKategorier');
         $categories = $category->findAll();
         $categories = $categories ? $categories : array();
-        $category->navn = $this->allOrganizerCategory;
-        $category->id = 0;
-        $categories[] = $category;
 
         return $categories;
     }
 
     public function getAllOrganizerCategories(){
         $category = $this->createEntity('BrugerKategorier');
-        $categories = $category->findAll();
-        $categories = $categories ? $categories : array();
-        foreach($categories as $key => $category){
-            if (!$category->isArrangoer()){
-                unset($categories[$key]);
-            }
-        }
-        return $categories;
+        $select = $category->getSelect();
+        $select->setWhere('arrangoer', '=', 'ja');
+        return $category->findBySelectMany($select);
     }
 
     /**

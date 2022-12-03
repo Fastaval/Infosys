@@ -284,7 +284,7 @@ class SignupApiModel extends Model {
         'variants' => $item->getVariants(),
         'images' => $item->getImages(),
       ];
-      $prices = $item->getWearpriserSquashed();
+      $prices = $item->getWearpriser();
       foreach($prices as $price) {
         $result_item['prices'][] = [
           'user_category' => $price->brugerkategori_id,

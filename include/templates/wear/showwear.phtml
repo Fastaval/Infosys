@@ -40,13 +40,9 @@
             </thead>
             <tbody>
                 <?php
-                    if ($prices = $this->wear->getWearpriserSquashed()) :
+                    if ($prices = $this->wear->getWearpriser()) :
                         foreach ($prices as $price) :
-                            if ($price->brugerkategori_id == 0) {
-                                $navn = $this->model->allOrganizerCategory;
-                            } else {
-                                $navn = $price->getCategory()->navn;
-                            }
+                            $navn = $price->getCategory()->navn;
                 ?>
                 <tr id='wp_<?php echo $price->id;?>'>
                     <td><?php echo $price->id;?></td>
