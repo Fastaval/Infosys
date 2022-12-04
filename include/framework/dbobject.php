@@ -444,6 +444,7 @@ class DBObject
      */
     public function findBySelect(Select $select)
     {
+        $this->setMyFields($select);
         $results = $this->getDB()->query($select);
         return (($results && count($results)) ? $this->loadObject($results[0], $this) : false);
     }
@@ -458,8 +459,15 @@ class DBObject
      */
     public function findBySelectMany(Select $select)
     {
+        $this->setMyFields($select);
         $results = $this->getDB()->query($select);
         return (($results) ? $this->loadObjects($results) : array());
+    }
+
+    public function setMyFields(Select $select) {
+        foreach ($this->getColumns() as $column) {
+            $select->setField("{$this->tablename}.$column");
+        }
     }
 
     /**
