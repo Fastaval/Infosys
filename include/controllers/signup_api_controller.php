@@ -19,27 +19,6 @@ class SignupApiController extends Controller {
     header('Access-Control-Allow-Origin: *');
   }
 
-  /**
-   * outputs json data and sets headers accordingly
-   *
-   * @param string $data        Data to output
-   * @param string $http_status HTTP status code
-   *
-   * @access protected
-   * @return void
-   */
-  protected function jsonOutput($data, $http_status = '200', $content_type = 'text/plain')
-  {
-    if (!is_string($data)) {
-      $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
-    }
-    header('Status: ' . $http_status);
-    header('Content-Type: ' . $content_type . '; charset=UTF-8');
-    header('Content-Length: ' . strlen($data));
-    echo $data;
-    exit;
-  }
-
   public function getConfig() {
     $module = $this->vars['module'];
     $config = $this->model->getConfig($module);

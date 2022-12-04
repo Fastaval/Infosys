@@ -7,26 +7,6 @@ class SignupAdminController extends Controller {
   );
 
   /**
-   * outputs json data and sets headers accordingly
-   *
-   * @param string $data        Data to output
-   * @param string $http_status HTTP status code
-   *
-   * @access protected
-   * @return void
-   */
-  protected function jsonOutput($data, $http_status = '200', $content_type = 'text/plain')
-  {
-    $string = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    header('Status: ' . $http_status);
-    header('Content-Type: ' . $content_type . '; charset=UTF-8');
-    header('Content-Length: ' . strlen($string));
-    echo $string;
-    exit;
-  }
-
-  
-  /**
    * Show page for editing signup pages
    */
   public function signupPages() {
