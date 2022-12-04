@@ -108,7 +108,7 @@ var wear_object = {
     },
 
     addVariant: function() {
-        let varian_count = $('#attributes .attribute-variant').length;
+        let variant_count = $('#attributes .attribute-variant').length;
         let varaint_div = $('<div class="attribute-variant">');
         for(const type in this.attributes) {
             let type_div = $('<div class="attribute-type-list">');
@@ -119,14 +119,20 @@ var wear_object = {
             for(const [id, att] of entries) {
                 type_div.append(`
                     <div class="attribute-input-wrapper">
-                        <input type="checkbox" id="attribute-${varian_count}-${id}" name="attributes[${varian_count}][]" value="${id}">
-                        <label for="attribute-${varian_count}-${id}">${att.desc_da}</label>
+                        <input type="checkbox" id="attribute-${variant_count}-${id}" name="attributes[${variant_count}][]" value="${id}">
+                        <label for="attribute-${variant_count}-${id}">${att.desc_da}</label>
                     </div>
                 `);
             }
             varaint_div.append(type_div);
         }
         $('#attributes').append(varaint_div);
+        
+        // Add onclick to new checkboxes
+        let that = this;
+        varaint_div.find('input').click(function(evt) {
+            that.attributeClick(evt.delegateTarget);
+        })
     },
 
     attributeClick(input) {
@@ -134,23 +140,45 @@ var wear_object = {
         let attribute_id = checkbox.val();
         let type = checkbox.closest('.attribute-type-list').find('h3').text();
 
+        // Add attribute to image selection if needed
         if (checkbox.prop('checked')) {
             if($(`input#attribute-img-${attribute_id}`).length == 1) return; // Checkbox already exist
 
             let image_type_headers = $('#image-attribute-list .attribute-type-list h3');
             let type_section;
+            let section_header;
             image_type_headers.each(function() {
-                if ($(this).text() !== type) return;
+                if ($(this).text() === type) {
+                    section_header = $(this);
+                }
+            });
 
-                let text = $(`label[for="${checkbox.attr('id')}"]`).text();
+            // The attribute section doesn't exist for the given type
+            if (!section_header) {
+                // create type section
+                type_section = $('<div class="attribute-type-list"></div>');
+                $('#image-attribute-list').append(type_section);
+                
+                section_header = $(`<h3>${type}</h3>`)
+                type_section.append(section_header);
+            } else {
+                type_section = $(section_header).closest('.attribute-type-list');
+            }
 
-                type_section = $(this).closest('.attribute-type-list');
-                type_section.append(`
-                    <div class="attribute-input-wrapper">
-                        <input type="checkbox" id="attribute-img-${attribute_id}" attribute-id="${attribute_id}">
-                        <label for="attribute-img-${attribute_id}">${text}</label>
-                    </div>
-                `);
+            // Create the input wrapper and input
+            let input_wrapper = $('<div class="attribute-input-wrapper"></div>');
+            type_section.append(input_wrapper);
+
+            let text = $(`label[for="${checkbox.attr('id')}"]`).text();
+            input_wrapper.append(`
+                <input type="checkbox" id="attribute-img-${attribute_id}" attribute-id="${attribute_id}">
+                <label for="attribute-img-${attribute_id}">${text}</label>
+            `);
+
+            // Add click functionality to new input
+            let that = this;
+            input_wrapper.find('input').click(function(evt) {
+                that.imageAttributeClick(evt.delegateTarget);
             });
         }
     },
