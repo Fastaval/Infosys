@@ -66,16 +66,15 @@
                 <tr><th colspan='2'>Wear</th></tr>
                 <tr>
                     <td>
-                        <select id='wearselect_top'>
+                        <select id='wear-select-item'>
                             <option value=''>Vælg</option>
                             <?php foreach ($this->model->getAllWear() as $wear) :?>
-                            <option value='<?php echo $wear->id;?>'><?php echo e($wear->navn);?></option>
+                                <option value='<?=$wear->id?>'><?=e($wear->navn)?></option>
                             <?php endforeach;?>
                         </select>
-                        <select id='wearselect_middle'>
-                        </select>
-                        <select id='wearselect_bottom'>
-                        </select><br/>
+                        <select id='wear-select-price'></select>
+                        <div id='wear-select-attributes'></div>
+                        <label for="wear_antal">Antal:</label>
                         <input type='text' name='wear_antal' id='wear_antal' value='0' /><br/>
                         <br/><input type='button' id='wear_tilfoej' value='Tilføj' />
                     </td>
@@ -83,15 +82,28 @@
                         <table id='wear_edit'>
                             <tbody>
                                 <?php if (!empty($this->deltager_info['wear'])) :
-                                    foreach ($this->deltager_info['wear'] as $wearpris) :?>
-                                    <tr>
-                                        <td class='choice'><?=e($wearpris->antal)?> stk. <?=e($wearpris->getWearpris()->getWear()->navn)?> str. <?=e($wearpris->getSizeName())?> &mdash; (<?=e($wearpris->getWearpris()->getCategory()->navn)?> -  <?=e($wearpris->getWearpris()->pris)?>,-)
-                                        <input type='hidden' name='wearpriser[]' value='<?=$wearpris->wearpris_id?>'/>
-                                        <input type='hidden' name='wearantal[]' value='<?=e($wearpris->antal)?>' />
-                                        <input type='hidden' name='wearsize[]' value='<?=$wearpris->size?>' /></td>
-                                        <td><input type='button' value='Slet' /></td>
-                                    </tr>
-                                    <?php endforeach;
+                                    $row_index = 0;
+                                    foreach ($this->deltager_info['wear'] as $wear_order) :?>
+                                        <tr index="<?=$row_index?>">
+                                            <td class='choice'>
+                                                <span class="wear-amount"><?=e($wear_order->antal)?></span> stk.
+                                                <?=e($wear_order->getWearName('da', false))?>
+                                                <?=$wear_order->size !== null ? "str. ".e($wear_order->getSizeName()) : ""?>
+                                                &mdash;
+                                                (
+                                                    <?=e($wear_order->getWearpris()->getCategory()->navn)?>
+                                                    -
+                                                    <?=e($wear_order->getWearpris()->pris)?>,-
+                                                )
+                                            <input type='hidden' name='wear[<?=$row_index?>][price]' field='price' value='<?=$wear_order->wearpris_id?>'/>
+                                            <input type='hidden' name='wear[<?=$row_index?>][amount]' field='amount' value='<?=e($wear_order->antal)?>' />
+                                            <?php foreach($wear_order->getAttributes(true) as $type => $att) { ?>
+                                                <input type='hidden' name='wear[<?=$row_index?>][attribute][<?=$type?>]' field='<?=$type?>' value='<?=$att['id']?>' /></td>
+                                            <?php } ?>
+                                            <td><input type='button' value='Slet' /></td>
+                                        </tr>
+                                        <?php $row_index++;
+                                    endforeach;
                                 endif;?>
                             </tbody>
                         </table>

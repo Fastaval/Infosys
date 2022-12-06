@@ -42,6 +42,14 @@ class DeltagereWear extends DBObject
     protected $tablename = 'deltagere_wear_order';
 
     /**
+     * Display order of attributes (including or excluding size)
+     *
+     * @var array
+     */
+    private static $attribute_order_size;
+    private static $attribute_order;
+
+    /**
      * For getting extra attributes
      */
     public function __get($var) {
@@ -111,15 +119,19 @@ class DeltagereWear extends DBObject
      * @access public
      * @return string
      */
-    public function getWearName($lang = 'da')
+    public function getWearName($lang = 'da', $with_size = true)
     {
         if (!($wearpris = $this->createEntity('WearPriser')->findById($this->wearpris_id))) {
             return false;
         }
 
-        $wear = $this->createEntity('Wear')->findById($wearpris->wear_id); 
+        $wear = $this->createEntity('Wear')->findById($wearpris->wear_id);
+        $wear_name = $lang === 'da' ? $wear->navn : $wear->title_en;
 
-        return $lang === 'da' ? $wear->navn : $wear->title_en;
+        foreach ($this->getAttributes($with_size) as $attribute) {
+            $wear_name .= "-". ($lang === 'da' ? $attribute['desc_da'] : $attribute['desc_en']);
+        }
+        return $wear_name;
     }
 
     /**
@@ -158,25 +170,18 @@ class DeltagereWear extends DBObject
      * @param object $deltager - Deltagere entity
      * @param object $wear - Wear entity
      * @param int $antal - number of wear pieces to order
-     * @param strin $size - size of the item
+     * @param array $attributes - attributes of the item (size,model,color etc.)
      * @access public
      * @return bool
      */
-    public function setBestilling($deltager, $wear, $antal, $size)
+    public function setBestilling($participant, $wear, $amount, ?array $attributes)
     {
-        if ($this->isLoaded() || !is_object($deltager) || !is_object($wear) || empty($antal) || empty($size) || $antal < 1) {
+        if ($this->isLoaded() || !is_object($participant) || !is_object($wear) || empty($amount) || $amount < 1) {
             return false;
         }
 
-        if (!$wear->sizeInRange($size)) {
-            return false;
-        }
-
-        $this->deltager_id = $deltager->id;
-        $this->wearpris_id = $wear->getWearprisForDeltager($deltager)->id;
-        $this->antal = $antal;
-        $this->size = $size;
-        return $this->insert();
+        $wearprice = $wear->getWearprisForDeltager($participant);
+        return $this->setOrderDirect($participant, $wearprice, $amount, $attributes);
     }
 
     /**
@@ -188,7 +193,7 @@ class DeltagereWear extends DBObject
      * @access public
      * @return bool
      */
-    public function setOrderDirect($participant, $wearprice, $amount, $attributes)
+    public function setOrderDirect($participant, $wearprice, $amount, ?array $attributes)
     {
         $this->deltager_id = $participant->id;
         $this->wearpris_id = $wearprice->id;
@@ -207,79 +212,52 @@ class DeltagereWear extends DBObject
         return true;
     }
 
-    /**
-     * sets an order for a given infonaut
-     *
-     * @param object $deltager - Deltagere entity
-     * @param object $wear - Wear entity
-     * @param int $antal - number of wear pieces to order
-     * @param strin $size - size of the item
-     * @access public
-     * @return bool
-     */
-    public function setInfonautBestilling($deltager, $wear, $antal, $size)
-    {
-        if ($this->isLoaded() || !is_object($deltager) || !is_object($wear) || empty($antal) || empty($size) || $antal < 1) {
-            return false;
-        }
-
-        if (!$wear->sizeInRange($size)) {
-            return false;
-        }
-
-        $wearpriser = $wear->getWearpriser();
-        $price = null;
-
-        foreach ($wearpriser as $wearpris) {
-            if ($this->createEntity('BrugerKategorier')->getCategoryName($wearpris->brugerkategori_id) == 'Infonaut') {
-                $price = $wearpris;
-                break;
-            }
-        }
-
-        if (!$price) {
-            return false;
-        }
-
-        $select = $this->getSelect();
-        $select->setWhere('deltager_id','=',$deltager->id);
-        $select->setWhere('wearpris_id','=',$price->id);
-
-        if ($this->createEntity('DeltagereWear')->findBySelect($select)) {
-            return false;
-        }
-
-        $this->wearpris_id = $price->id;
-        $this->deltager_id = $deltager->id;
-        $this->antal = $antal;
-        $this->size = $size;
-        return $this->insert();
-    }
-
-    /**
+     /**
      * returns the human readable name for the size
      *
      * @access public
      * @return string
      */
-    public function getSizeName($english = false)
-    {
+    public function getSizeName($english = false) {
         return $this->createEntity('Wear')->getSizeName($this->size, $english);
     }
 
-    public function getAttributes() {
-        $attributes = [];
-        
+    public function getAttributeOrder($with_size = false) {
+        if ($with_size) {
+            if (!isset(self::$attribute_order_size)) {
+                self::$attribute_order_size = $this->createEntity('Wear')->getAttributeOrder(true);
+            }
+            return self::$attribute_order_size;
+        } else {
+            if (!isset(self::$attribute_order)) {
+                self::$attribute_order = $this->createEntity('Wear')->getAttributeOrder(false);
+            }
+            return self::$attribute_order;
+        }
+    }
+
+    public function getAttributes($with_size = true) {
+        // Get all attributes
         $query = 
             "SELECT * FROM deltagere_wear_order_attributes AS dwoa 
             JOIN wear_attributes AS wa ON dwoa.attribute_id = wa.id 
-            WHERE dwoa.order_id = ?";
+            WHERE dwoa.order_id = ? ORDER BY position";
 
         $result = $this->db->query($query, [$this->storage['id']]);
+        $attributes = [];
         foreach($result as $row) {
-            $attributes[$row['attribute_type']] = $row['id'];
+            if (!$with_size && $row['attribute_type'] == 'size') continue;
+            $attributes[$row['attribute_type']] = $row;
         }
 
-        return $attributes;
+        // Sort attributes in display order
+        $attributes_order = $this->getAttributeOrder($with_size);
+        $ordered_attributes = [];
+        foreach($attributes_order as $type) {
+            if (isset($attributes[$type]))
+            $ordered_attributes[$type] = $attributes[$type];
+        }
+
+        return $ordered_attributes;
     }
 }

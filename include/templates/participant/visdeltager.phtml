@@ -238,7 +238,14 @@ $this->registerLateLoadJS('participant.js');
                     <td colspan='2'><em>
                         <?php if (!empty($this->deltager_info['wear'])) :
                             foreach ($this->deltager_info['wear'] as $wear) :?>
-                            <?= $wear->antal;?> stk. <?= $wear->getWearName();?>, str. <?= $wear->getSizeName();?> &mdash; <?= $wear->getWearpris()->pris * $wear->antal;?>,- (<?= $wear->getWearpris()->pris;?>,-) &mdash; (<em><?= $wear->received == 't' ? 'Udleveret' : 'Ikke udleveret';?></em>)<br/>
+                            <?= $wear->antal;?> stk.
+                            <?= $wear->getWearName('da', false)?>
+                            <?= $wear->size ? ", str. ".$wear->getSizeName() : ""?>
+                            &mdash;
+                            <?= $wear->getWearpris()->pris * $wear->antal;?>,-
+                            (<?= $wear->getWearpris()->pris;?>,-)
+                            &mdash;
+                            (<em><?= $wear->received == 't' ? 'Udleveret' : 'Ikke udleveret';?></em>)<br/>
                             <?php endforeach;
                         endif;?>
                     </em></td>

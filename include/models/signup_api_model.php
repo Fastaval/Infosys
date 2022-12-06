@@ -1004,8 +1004,8 @@ class SignupApiModel extends Model {
         'attributes' => [],
       ];
       
-      foreach($wear_order->getAttributes() as $type => $id) {
-        $order['attributes'][$type] = $id;
+      foreach($wear_order->getAttributes() as $type => $att) {
+        $order['attributes'][$type] = $att['id'];
       }
 
       $signup["wear_orders"][$wear_order->id] = $order;

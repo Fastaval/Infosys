@@ -54,6 +54,23 @@ class Wear extends DBObject
     private static $sizes = null;
 
     /**
+     * display order of wear attributes
+     */
+    public function getAttributeOrder($with_size = false) {
+        $ordering = [
+            'model',
+            'design',
+            'color',
+        ];
+
+        if ($with_size) {
+            $ordering[] = 'size';
+        }
+        
+        return $ordering;
+    }
+
+    /**
      * checks if a given size is within the sizerange of this wear-object
      *
      * @param string $size - size to check
@@ -175,14 +192,29 @@ class Wear extends DBObject
     }
 
     public function getVariants() {
-        $query = "SELECT * from wear_attribute_available as waa JOIN wear_attributes as wa on waa.attribute_id = wa.id WHERE waa.wear_id = ? ORDER BY variant, attribute_type, position";
-
+        // Get all attributes available for this wear item
         $wear_attributes = [];
+        $query = "SELECT * from wear_attribute_available as waa 
+            JOIN wear_attributes as wa on waa.attribute_id = wa.id
+            WHERE waa.wear_id = ?
+            ORDER BY variant, attribute_type, position";
+            
         foreach($this->db->query($query, [$this->id]) as $attribute) {
             $wear_attributes[$attribute['variant']][$attribute['attribute_type']][$attribute['attribute_id']] = $attribute;
         }
 
-        return $wear_attributes;
+        // Sort the attributes by display order
+        $wear_variants = [];
+        $ordering = $this->getAttributeOrder(true);
+        foreach($wear_attributes as $variant_id => $attributes) {
+            foreach($ordering as $type) {
+                if (isset($wear_attributes[$variant_id][$type])) {
+                    $wear_variants[$variant_id][$type] = $wear_attributes[$variant_id][$type];
+                }
+            }
+        }
+
+        return $wear_variants;
     }
 
     /**

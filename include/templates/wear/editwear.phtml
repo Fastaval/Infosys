@@ -104,7 +104,7 @@
               <label for="attribute-img-45">Alle</label>
             </div><?php
             foreach ($all_attributes as $type => $attributes) {
-              if (!isset($used_attributes[$type])) continue; // We can only add images for used attributes
+              if (!isset($used_attributes[$type])) continue; // We can only add images for used attribute types
               ?>
                 <div class="attribute-type-list">
                   <h3><?=$type?></h3>
@@ -125,7 +125,6 @@
           ?></div>
         </div>
       </div>
-      <?php if (isset($this->wear)) : ?>
         <hr/>
         <table id='wear-priser'>
           <caption><b>Wear priser</b></caption>
@@ -135,7 +134,7 @@
           </thead>
           <tbody>
             <?php
-              if ($result = $this->wear->getWearpriser()) :
+              if (isset($this->wear) && $result = $this->wear->getWearpriser()) :
                 foreach ($result as $price) : 
                   $navn = $price->getCategory()->navn;
                 ?>
@@ -159,7 +158,7 @@
               <td>
                 <select id='category-select'>
                   <?php foreach ($this->model->getAllParticipantCategories() as $cat) :
-                    if (!in_array($cat->id, $this->wear->getUsedUserCategories())) : ?>
+                    if (!isset($this->wear) || !in_array($cat->id, $this->wear->getUsedUserCategories())) : ?>
                       <option value='<?php echo $cat->id;?>'><?php echo $cat->navn;?></option>
                     <?php endif;
                   endforeach; ?>
@@ -171,14 +170,14 @@
             </tr>
           </tfoot>
         </table>
-      <?php endif;?>
       <hr/>
       <?php if (isset($this->wear)) : ?>
         <input type='submit' value='Opdater' name='update_wear' class='centersubmits'/>
         <input type='submit' value='Fortryd' class='centersubmits'/>
         <input type='submit' value='Slet' name='delete_wear' class='centersubmits'/>
       <?php else : ?>
-        <input type='submit' value='Opret' name='create_wear'/>
+        <input type='submit' value='Opret' name='create_wear' class='centersubmits'/>
+        <input type='submit' value='Fortryd' class='centersubmits'/>
       <?php endif;?>
     </form>
   </fieldset>

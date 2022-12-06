@@ -1,13 +1,22 @@
 <?php echo $this->getMessagesHtml();?>
 <div>
-<h3>Liste over <?php echo $this->headname;?> <?php echo $this->headsize;?> bestillinger</h3>
+<h3>Liste over <?=$this->headname?> bestillinger</h3>
     <?php foreach ($this->orders as $ord) : ?>
     <div class='deltager-wearorder'>
         <?php
             $deltager = $ord->getDeltager();
         ?>
-        <p class='deltager-wearorder-deltager'>ID: <?php echo $deltager->id;?> Navn: <a href="<?php echo $this->url('visdeltager', array('id' => $deltager->id));?>"><?php echo $deltager->fornavn;?> <?php echo $deltager->efternavn;?></a></p>
-        <p class='deltager-wearord-order'>Kategori: <?php echo $ord->getWearName();?>, <?php echo $ord->getWearpris()->getCategory()->navn;?>, Antal: <?php echo $ord->antal;?>, Str.: <?php echo $ord->getSizeName();?></p>
+        <p class='deltager-wearorder-deltager'>
+            ID: <?=$deltager->id?>
+            Navn: <a href="<?=$this->url('visdeltager', array('id' => $deltager->id))?>"><?=$deltager->fornavn?> <?=$deltager->efternavn?></a>
+        </p>
+        <p class='deltager-wearord-order'>
+            Kategori: <?=$ord->getWearName('da', false)?>, <?=$ord->getWearpris()->getCategory()->navn?>
+            Antal: <?=$ord->antal?>
+            <?php if($ord->size !== null) { ?>
+                Str.: <?=$ord->getSizeName()?>
+            <?php } ?>
+        </p>
     </div>
     <?php endforeach; ?>
 </div>

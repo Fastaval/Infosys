@@ -172,7 +172,15 @@ class WearController extends Controller {
             $this->page->setTemplate('editWear');
             return;
         }
-        if ($wear = $this->model->createWear($this->page->request->post)) {
+        $post = $this->page->request->post;
+
+        // We pressed cancel
+        if (empty($post->create_wear)) {
+            $this->errorMessage('Wear typen blev ikke oprettet.');
+            $this->hardRedirect($this->url('wearhome'));
+        }
+
+        if ($wear = $this->model->createWear($post)) {
             $this->successMessage('Wear typen blev oprettet.');
             $this->log("Wear Id #{$wear->id} ({$wear->navn}) oprettet af {$this->model->getLoggedInUser()->user}", 'Wear', $this->model->getLoggedInUser());
             $this->hardRedirect($this->url('vis_wear', array('id' => $wear->id)));
@@ -350,40 +358,51 @@ class WearController extends Controller {
      */
     public function detailedMiniList()
     {
-        $type = ((!empty($this->vars['type'])) ? $this->vars['type'] : null);
-        $size = ((!empty($this->vars['size'])) ? strtoupper($this->vars['size']) : null);
-        $this->page->orders = $this->model->getWearOrders($type, $size);
-        $this->page->size = $size;
-        $this->page->type = (($type) ? $this->model->findEntity('Wear', $type) : null);
-        $this->page->headname = $type ? $this->page->type->navn : '';
-        $this->page->headsize = $size ? 'str. ' . $size : '';
+        $query = $this->page->request->get->getRequestVarArray();
+        $wear_id = ((!empty($this->vars['id'])) ? $this->vars['id'] : null);
+
+        $all_attributes = $this->model->getAttributes();
+        $headname = $this->model->findEntity('Wear', $wear_id)->navn;
+        foreach ($query as $type => $id) {
+            if (isset($all_attributes[$type][$id])) {
+                $headname .= " - " . $all_attributes[$type][$id]['desc_da'];
+            }
+        }
+
+        $this->page->headname = $headname;
+        $this->page->orders = $this->model->getWearOrders($wear_id, $query);
     }
 
     /**
-     * outputs a string of <option> elements containing groups running an activity
+     * Returns information about wear item (for use on participant edit wear page)
      *
      * @access public
      * @return void
      */
-    public function ajaxGetWear()
-    {
-        if (empty($this->vars['id']) || !($wear = $this->model->findEntity('Wear', $this->vars['id']))) {
-            exit;
-        } else {
-            $result = $wear->getWearpriser();
-            if (!empty($result)) {
-                header('Content-Type: text/plain; encoding: UTF-8');
-                $strings = array();
-                foreach ($result as $wearpris) {
-                    $strings[] = '{"value": "' . $wearpris->id . 
-                        '", "min_size": "' . $wear->min_size .
-                        '", "max_size": "' . $wear->max_size .
-                        '", "text": "' . $wearpris->getCategory()->navn . ' - ' . $wearpris->pris . ',-"}';
-                }
-                echo '{"pairs": [' . implode(',', $strings) . ']}';
+    public function ajaxGetWear() {
+        if (empty($this->vars['id'])) {
+            $this->jsonOutput(['id' => null], $http_status = '400');
+        }
+        
+        if(!($wear = $this->model->findEntity('Wear', $this->vars['id']))) {
+            $this->jsonOutput(['id' => $this->vars['id']], $http_status = '404');
+        }
+
+        $data = [ 
+            'variants' => $wear->getVariants(),
+            'prices' => [],
+        ];
+        $result = $wear->getWearpriser();
+        if (!empty($result)) {
+            foreach ($result as $wearpris) {
+                $data['prices'][] = [
+                    'id' => $wearpris->id,
+                    'text' => $wearpris->getCategory()->navn . ' - ' . $wearpris->pris . ',-',
+                ];
             }
         }
-        exit;
+
+        $this->jsonOutput($data, $http_status = '200');
     }
 
     /**

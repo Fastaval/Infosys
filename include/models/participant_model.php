@@ -793,18 +793,12 @@ class ParticipantModel extends Model
         $query = "DELETE FROM deltagere_wear_order WHERE deltager_id = '{$deltager->id}'";
         $this->db->exec($query);
 
-        if (!empty($post->wearpriser) && $post->wearantal && $post->wearsize) {
-            $wearantal = $post->wearantal;
-            $wearsize = $post->wearsize;
-            foreach ($post->wearpriser as $wearpris) {
-                $ent = $this->createEntity('DeltagereWear');
-                $ent->deltager_id = $deltager->id;
-                $ent->wearpris_id = $wearpris;
-                $ent->antal = current($wearantal);
-                $ent->size = current($wearsize);
-                $ent->insert();
-                next($wearantal);
-                next($wearsize);
+        if (!empty($post->wear)) {
+            $this->fileLog(print_r($post->wear, true));
+            foreach ($post->wear as $wear) {
+                $order = $this->createEntity('DeltagereWear');
+                $price = $this->findEntity('WearPriser', $wear['price']);
+                $order->setOrderDirect($deltager, $price, $wear['amount'], $wear['attribute']);
             }
         }
     }

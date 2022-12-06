@@ -94,27 +94,75 @@ var madwearedit = {
 
     setupWear: function(){
         var that = this,
-            select_top    = $('#wearselect_top')[0],
-            select_middle = $('#wearselect_middle')[0],
-            select_bottom = $('#wearselect_bottom')[0];
+            select_item     = $('#wear-select-item'),
+            select_price    = $('#wear-select-price'),
+            attribute_div   = $('#wear-select-attributes');
 
         $('#wear_tilfoej').click(function(e) {
-            var opt_top,
-                opt_middle,
-                opt_bottom,
-                inp_antal;
-
-            if (select_middle.selectedIndex < 0) {
+            if (select_price.val() == '') {
                 return;
             }
 
-            opt_top    = select_top.options[select_top.selectedIndex];
-            opt_middle = select_middle.options[select_middle.selectedIndex];
-            opt_bottom = select_bottom.options[select_bottom.selectedIndex];
-            inp_antal  = $('#wear_antal').val();
+            let item_id     = select_item.val();
+            let item_text   = select_item.find('option:selected').text();
+            
+            let price_id    = select_price.val();
+            let price_text  = select_price.find('option:selected').text();
 
-            if (opt_top.value && opt_bottom.value && opt_middle.value  && inp_antal > 0 && !that.checkForAlreadySelectedWear(opt_middle.value, opt_bottom.value)) {
-                $('<tr><td class="choice"><input type="hidden" name="wearpriser[]" value="' + opt_middle.value + '"><input type="hidden" name="wearantal[]" value="' + inp_antal + '"><input type="hidden" name="wearsize[]" value="' + opt_bottom.value + '">' + inp_antal + ' stk. ' + opt_top.text + ' str. ' + opt_bottom.text + ' - (' + opt_middle.text + ')</td><td><input type="button" value="Slet"></td></tr>').appendTo($('#wear_edit tbody'));
+            let attributes = {};
+            attribute_div.find('select').each(function () {
+                let type = $(this).attr('attribute-type');
+                attributes[type] = $(this).val();
+                // Add text for attributes except size that we handle differently
+                if (type === 'size') {
+                    item_text += " str. " + $(this).find('option:selected').text();
+                } else {
+                    item_text += "-" + $(this).find('option:selected').text();
+                }
+            })
+
+            let amount   = $('#wear_antal').val();
+
+            // Check for already added wear with same attributes
+            let item = that.checkForAlreadySelectedWear({
+                price: price_id,
+                ...attributes,
+            })
+
+            if(item) {
+                let amount_input = $(item).find('input[field=amount]');
+                let new_amount = parseInt(amount_input.val()) + parseInt(amount);
+                amount_input.val(new_amount);
+                $(item).find('span.wear-amount').text(new_amount);
+                return;
+            }
+
+            // Create a new row for the item
+            if (item_id && price_id && amount > 0) {
+                let last_index = 0;
+                $('#wear_edit tr').each(function() {
+                    last_index = Math.max(parseInt($(this).attr('index')), last_index);
+                })
+                let index = last_index + 1;
+
+                let fields = 
+                `<input type="hidden" name="wear[${index}][price]" field="price" value="${price_id}">
+                <input type="hidden" name="wear[${index}][amount]" field="amount" value="${amount}">`;
+
+                for (const [type, value] of Object.entries(attributes)) {
+                    fields += `<input type="hidden" name="wear[${index}][attribute][${type}]" field="${type}" value="${value}">`;
+                }
+
+                $('#wear_edit tbody').append(`
+                    <tr index="${index}">
+                        <td class="choice">
+                            ${fields}
+                            <span class="wear-amount">${amount}</span> stk. ${item_text} - ( ${price_text} )
+                        </td>
+                        <td>
+                            <input type="button" value="Slet">
+                        </td>
+                    </tr>`);
             }
 
         });
@@ -123,29 +171,102 @@ var madwearedit = {
             $(this).closest('tr').remove();
         });
 
-        $(select_top).change(function(e){
-            var id,
-                response,
-                theArray,
-                to_die;
-
-            $(select_middle).html('');
-            $(select_bottom).html('');
-
-            if (select_top.selectedIndex > 0) {
-                id = select_top.options[select_top.selectedIndex].value;
-                $.ajax({
-                    url: that.public_uri + 'wear/ajaxgetwear/' + id,
-                    type: 'get',
-                    success: function(data){
-                        that.ajaxToSelect($(select_middle), data);
-
-                        response = $.parseJSON(data).pairs;
-                        theArray = that.prepareSecondWearArray(response[0].min_size, response[0].max_size);
-                        for (var i = 0; i < theArray.length; i++) {
-                            $(select_bottom).append('<option value="' + theArray[i].value + '">' + theArray[i].text + '</option>');
+        let arttibute_select_update = function(select) {
+            let option = $(select.selectedOptions[0]);
+            let variants = option.attr('variants').split(',');
+        
+            // Filter for common variants among previous options
+            let jq_select = $(select);
+            for (let prev = jq_select.prev(); prev.length > 0; prev = prev.prev()) {
+                let pre_option = $(prev[0].selectedOptions[0]);
+                variants = variants.filter(function(value) {
+                    return pre_option.attr('variants').split(',').includes(value);
+                })
+            }
+        
+            // Filter out options not available for current variants
+            for (let next = jq_select.next(); next.length > 0; next = next.next()) {
+                let next_select = next[0];
+                let first_valid;
+                let invalid_selection = false;
+                for(const option of next_select.options) {
+                    let common_variants = variants.filter(function(value) {
+                        return $(option).attr('variants').split(',').includes(value);
+                    })
+                    if (common_variants.length > 0) {
+                        first_valid = first_valid ?? option;
+                        option.disabled = false;
+                        option.hidden = false;
+                    } else {
+                        // The option is invalid
+                        if (option == next_select.selectedOptions[0]) {
+                            // The option is the one curently selected, so we have to change it
+                            invalid_selection = true;
                         }
+                        option.disabled = true;
+                        option.hidden = true;
                     }
+                }
+                if (invalid_selection) next_select.value = first_valid.value;
+            }
+        }
+        
+        select_item.change(function(){
+            select_price.empty();
+            attribute_div.empty();
+
+            if (select_item.val() !== '') {
+                let id = select_item.val();
+                let url = that.public_uri + 'wear/ajaxgetwear/' + id
+                $.getJSON(
+                    url,
+                    "",
+                    function(data){
+                        // There should be some available prices for the wear item
+                        if (!(data.prices instanceof Object)) {
+                            alert("Der skete en fejl ved hentning a wear priser");
+                            return;
+                        }
+                        for (const [index, price] of Object.entries(data.prices)) {
+                            select_price.append(`<option value="${price.id}">${price.text}</option>`);
+                        }
+
+                        // The wear item may not have any variants
+                        if (data.variants.length == 0) return;
+
+                        for (const variant_id in data.variants) {
+                            const variant = data.variants[variant_id];
+                            for (const [type, attributes] of Object.entries(variant)) {
+                                // Find the select element
+                                let select_attribute = attribute_div.find(`select#wear-attribute-${type}`);
+                                // Add a select element if it doesn't exist
+                                if (select_attribute.length == 0) {
+                                    select_attribute = $(`<select id="wear-attribute-${type}" attribute-type="${type}"></select>`);
+                                    attribute_div.append(select_attribute);
+                                }
+                                select_attribute.change(function(evt) {
+                                    arttibute_select_update(evt.delegateTarget);
+                                });
+
+                                for (const [id, att] of Object.entries(attributes)) {
+                                    let option = select_attribute.find(`option[value=${id}]`);
+                                    if (option.length > 0) {
+                                        // If option exist, add current variant to it
+                                        option.attr('variants', option.attr('variants') + `,${variant_id}`)
+                                    } else {
+                                        // Else create the option
+                                        select_attribute.append(`<option value="${id}" variants="${variant_id}" >${att.desc_da}</option>`);
+                                    }
+                                }
+                            }
+                        }
+
+                        // Update available options
+                        arttibute_select_update(attribute_div.find('select')[0]);
+                    },
+                ).fail(function(jqXHR) {
+                    alert("Der skete en fejl ved hentning a information om wear");
+                    console.error("There was an error requesting information from ", url, " Data:", jqXHR);
                 });
             }
         });
@@ -427,53 +548,33 @@ var madwearedit = {
         return return_value;
     },
 
-    checkForAlreadySelectedWear: function(wearpris, size){
-        var rows = $('#wear_edit tr'),
-            return_value = false;
+    checkForAlreadySelectedWear: function(attributes){
+        var rows = $('#wear_edit tr');
+        let same_item;
 
         rows.each(function(idx, item) {
             var inputs = $(item).find('input'),
-                wp = false,
-                s  = false;
+                diff  = false;
 
-            inputs.each(function(idx_inner, item_inner) {
-                if (item_inner.name == 'wearpriser[]' && item_inner.value == wearpris) {
-                    wp = true;
-                }
-
-                if (item_inner.name == 'wearsize[]' && item_inner.value == size) {
-                    s = true;
+            // Check for any diferences with current row 
+            inputs.each(function() {
+                let input = $(this);
+                for( const [type, value] of Object.entries(attributes)) {
+                    if (input.attr('field') == type && input.val() != value) {
+                        diff = true;
+                        return false; // Stop the loop
+                    }
                 }
             });
 
-            if (wp && s) {
-                return_value = true;
-            }
+            // We found a match
+            if (!diff) {
+                same_item = item;
+                return false; // Stop the loop
+            } 
         });
 
-        return return_value;
-    },
-
-    prepareSecondWearArray: function(min_size, max_size){
-        let start = -1;
-        let end = -1;
-
-        this.wearSizes.forEach( (element, index) => {
-            if (element.size_id === min_size) start = index;
-            if (element.size_id === max_size) end = index;
-        });
-        
-        if (start === -1 || end === -1) {
-            return [];
-        }
-        
-        return this.wearSizes.slice(start, end + 1).map(function (item) {
-            return {
-                value: item.size_id,
-                text: item.size_name_da
-            };
-        });
-
+        return same_item;
     },
 
     blankSelect: function(select_id){

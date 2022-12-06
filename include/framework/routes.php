@@ -276,7 +276,7 @@ class Routes
         $this->routes['detailed_unfilled_order_list'] = array('url' => 'wear/unfilled', 'controller' => 'Wear', 'method' => 'detailedUnfilledOrderList');
         $this->routes['detailed_ajax']                = array('url' => 'wear/detailed/ajax/', 'controller' => 'Wear', 'method' => 'detailedOrderAjax');
         $this->routes['detailed_order_list_print']    = array('url' => 'wear/detailed/print/', 'controller' => 'Wear', 'method' => 'detailedOrderListPrint');
-        $this->routes['detailed_mini_list']           = array('url' => 'wear/detailed/:type:/:size:', 'controller' => 'Wear', 'method' => 'detailedMiniList');
+        $this->routes['detailed_mini_list']           = array('url' => 'wear/detailed/:id:', 'controller' => 'Wear', 'method' => 'detailedMiniList');
         $this->routes['ajax_get_wear']                = array('url' => 'wear/ajaxgetwear/:id:', 'controller' => 'Wear', 'method' => 'ajaxGetWear');
         $this->routes['wear_handout']                 = array('url' => 'wear/handout', 'controller' => 'Wear', 'method' => 'displayHandout');
         $this->routes['wear_handout_ajax']            = array('url' => 'wear/handout/ajax', 'controller' => 'Wear', 'method' => 'ajaxHandout');

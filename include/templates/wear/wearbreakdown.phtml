@@ -22,8 +22,10 @@
                     $row_class = 'first';
                     foreach ($variant['items'] as $wear_item) :
                         $wear_text = $wear['object']->navn;
+                        $query = "";
                         foreach ($wear_item['attributes'] as $type => $id) {
                             $wear_text .= " - ". $this->wear_attributes[$type][$id]['desc_da'];
+                            $query .= $query == "" ? "?$type=$id" : "&$type=$id";
                         }
                         $display_sizes = array_merge([['id' => 'none']], $this->wear_data['sizes']);
                         ?>
@@ -32,13 +34,14 @@
                                 <td class='alt'><?=$wear_item['total']?></td>
                                 <?php foreach ($display_sizes as $size) :
                                     if (isset($wear_item['orders'][$size['id']])) {
+                                        $size_query = $query == "" ? "?size=$size[id]" : $query."&size=$size[id]";
                                         $order_count = 0;
                                         foreach ($wear_item['orders'][$size['id']] as $order_id => $value) {
                                             $order_count += $value;
                                         }
                                         ?>
                                             <td class='alt'>
-                                                <a href="<?php echo $this->url('detailed_mini_list', array('type' => $wear['object']->id, 'size' => $size['id']));?>">
+                                                <a href="<?=$this->url('detailed_mini_list', ['id' => $wear['object']->id]).$size_query?>">
                                                     <?=$order_count?>
                                                 </a>
                                             </td>
