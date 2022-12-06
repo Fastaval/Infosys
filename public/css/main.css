@@ -1174,6 +1174,38 @@ div#wear-table table{
 div#wear-table tr.selected{
     background-color: lightgray;
 }
+/* Food styles */
+div#food-details {
+    text-align: center;
+    width: 700px;
+    margin: 0 auto;
+}
+
+div#food-details fieldset {
+    text-align: left;
+    margin: 0 auto;
+}
+
+div#food-details fieldset span.label {
+    font-weight: bold;
+    width: 150px;
+    display: block;
+    float: left;
+    clear: none;
+    margin-right: 1em;
+}
+
+div#food-details .centersubmits {
+    margin: 10px;
+}
+
+div#food-details table{
+    margin-bottom: 1em;
+}
+
+div#food-details table input[type="text"]{
+    width: 30em;
+}
 
 div#wear-attributes {
     width: fit-content;

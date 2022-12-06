@@ -598,7 +598,6 @@ HTML;
         Tilmelding
         <ul class='submenu'>
             <li><a href='{$this->url('signup_pages')}'>Tilpas sider</a></li>
-            <li><a href='{$this->url('signup_config', ['module' => 'submit'])}'>Indstillinger for submit modul</a></li>
         </ul>
     </li>
 HTML;
