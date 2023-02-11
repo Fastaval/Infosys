@@ -1198,7 +1198,7 @@ class ParticipantController extends Controller
     public function sendSMSes()
     {
         $post = $this->page->request->post;
-        if (empty($post->sms_afsender) || empty($post->sms_besked) || !($this->model->getLoggedInUser()->hasRole('Admin') || $this->model->getLoggedInUser()->hasRole('SMS'))) {
+        if (empty($post->sms_afsender) || empty($post->sms_besked_da) || empty($post->sms_besked_en) || !($this->model->getLoggedInUser()->hasRole('Admin') || $this->model->getLoggedInUser()->hasRole('SMS'))) {
             $this->errorMessage("SMSerne blev ikke sendt - besked eller afsender manglede.");
             $this->hardRedirect($this->url('sms_dialog'));
         }

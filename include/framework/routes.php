@@ -90,7 +90,6 @@ class Routes
         // SMS stuffs - hackish
         $this->routes['kickoff_sms_script'] = array('url' => 'index/kickoffsmsscript', 'controller' => 'index', 'method' => 'kickOffSMSScript');
         $this->routes['sms_auto_dryrun']    = array('url' => 'sms/auto-dryrun', 'controller' => 'sms', 'method' => 'autoDryRun');
-        $this->routes['sms_stats']          = array('url' => 'sms/stats', 'controller' => 'sms', 'method' => 'showStats');
 
         // deltager routes
         $this->routes['all_users_ajax']                             = array('url' => 'deltager/ajax/userlist', 'controller' => 'Participant', 'method' => 'ajaxlist');
@@ -398,6 +397,7 @@ class Routes
         $this->routes['api_user_schedules_v2']   = array('url' => 'api/v2/user/:id:', 'controller' => 'Api', 'method' => 'getUserScheduleV2');
         $this->routes['api_user_data_v']         = array('url' => 'api/v:version:/user-data/:email:', 'controller' => 'Api', 'method' => 'getUserDataVersioned');
         $this->routes['api_user_data']           = array('url' => 'api/v2/user-data/:email:', 'controller' => 'Api', 'method' => 'getUserData');
+        $this->routes['api_get_messages']        = array('url' => 'api/messages/:email:', 'controller' => 'Api', 'method' => 'getUserMessages');
         $this->routes['api_user_register']       = array('url' => 'api/user/:id:/register', 'controller' => 'Api', 'method' => 'registerApp');
         $this->routes['api_user_unregister']     = array('url' => 'api/user/:id:/unregister', 'controller' => 'Api', 'method' => 'unregisterApp');
         $this->routes['api_user_data_v']         = array('url' => 'api/v:version:/confirmation-data', 'controller' => 'Api', 'method' => 'getConfirmationData');

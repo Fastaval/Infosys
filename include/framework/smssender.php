@@ -160,28 +160,6 @@ class SMSSender implements SMSSending
         //$result = 'OK';
         $result = file_get_contents($url); // afsendelse
 
-        $smslog = $this->entity_factory->create('SMSLog');
-
-        $smslog->nummer      = $number;
-        $smslog->deltager_id = $participant->id;
-        $smslog->besked      = $message;
-        $smslog->sendt       = date('Y-m-d H:i:s');
-        $smslog->return_val  = $result;
-
-        try {
-            $smslog->insert();
-
-        } catch (Exception $e) {
-            $smslog->nummer      = '00000000';
-            $smslog->deltager_id = $participant->id;
-            $smslog->besked      = $message;
-            $smslog->sendt       = date('Y-m-d H:i:s');
-            $smslog->return_val  = $result;
-
-            $smslog->insert();
-
-        }
-
         return $result === '<succes>SMS succesfully sent to 1 recipient(s)</succes>';
     }
 }

@@ -733,4 +733,18 @@ class ApiController extends Controller
 
         $this->jsonOutput($model->getGameStatus(), '200 Here you are', 'application/json');
     }
+
+    public function getUserMessages() {
+        if (empty($this->vars['email']) || !$this->page->request->get->pass) {
+            header('HTTP/1.1 400 No such user');
+            exit;
+        }
+
+        if (!($participant = $this->model->getParticipantByEmailAndPassword($this->vars['email'], $this->page->request->get->pass)) || $participant->annulled === 'ja') {
+            header('HTTP/1.1 403 No access');
+            exit;
+        }
+
+        $this->jsonOutput($this->model->getUserMessages($participant));
+    }
 }

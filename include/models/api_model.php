@@ -1917,4 +1917,18 @@ SELECT hash FROM participantpaymenthashes WHERE participant_id = ?
 
         return $output;
     }
+
+
+    public function getUserMessages(Deltagere $participant) {
+        $query = "SELECT text_da, text_en, send_time FROM messages AS m JOIN participant_messages AS pm ON m.id = pm.message_id WHERE pm.participant_id = ?";
+        $result = [];
+        foreach ($this->db->query($query, [$participant->id]) as $m) {
+            $result[] = [
+                'send_time' => strtotime($m['send_time']),
+                'en' => $m['text_en'],
+                'da' => $m['text_da']
+            ];
+        }
+        return $result;
+    }
 }

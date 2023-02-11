@@ -2670,3 +2670,12 @@ form#frmExcelExport select {
 .deltager-search-box-inner input[type=checkbox] {
     margin: 0px;
 }
+
+#sms-dialog .message-wrapper {
+    display: inline-block;
+}
+
+#sms-dialog .message-wrapper textarea{
+    width: 20rem;
+    height: 5rem;
+}

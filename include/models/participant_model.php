@@ -1306,11 +1306,6 @@ class ParticipantModel extends Model
                ];
     }
 
-    public function getSMSLog()
-    {
-        return $this->createEntity('SMSLog');
-    }
-
     /**
      * returns all rooms marked as sleeping room
      *
@@ -2121,24 +2116,35 @@ INSERT INTO participantidtemplates SET template_id = ?, participant_id = ? ON DU
      */
     public function sendSMSes(RequestVars $post)
     {
-        $status = array();
+        $query = "INSERT INTO messages (text_da, text_en, send_time) VALUES (?,?, NOW())";
+        $args = [$post->sms_besked_da, $post->sms_besked_da];
+        $message_id = $this->db->exec($query, $args);
 
+        $status = array();
         foreach ($this->getSavedSearchResult() as $receiver) {
+            $field = "sms_besked_".$receiver->main_lang;
+            $message = $post->$field;
             try {
+                $query = "INSERT INTO participant_messages (message_id, participant_id) VALUES (?,?)";
+                $args = [$message_id, $receiver->id];
+                $this->db->exec($query, $args);
+
                 if ($receiver->apple_id) {
-                    $result = $receiver->sendIosMessage($this->config->get('ios.certificate_path'), $post->sms_besked, 'Fastaval message');
+                    $result = $receiver->sendIosMessage($this->config->get('ios.certificate_path'), $message, 'Fastaval message');
                     $this->log('Sent iOS notification to participant #' . $receiver->id . '. Result: ' . $result, 'App', null);
 
                     $status[] = intval($result === IosPushMessage::SEND_SUCCESS);
 
                 } elseif ($receiver->gcm_id) {
-                    $result = $receiver->sendFirebaseMessage($this->config->get('firebase.server_api_key'), $post->sms_besked, 'Fastaval message');
+                    $result = $receiver->sendFirebaseMessage($this->config->get('firebase.server_api_key'), $message, 'Fastaval message');
                     $this->log('Sent android notification to participant #' . $receiver->id . '. Result: ' . $result, 'App', null);
 
                     $status[] = intval($result === FirebaseMessage::SEND_SUCCESS);
 
                 } elseif (empty($post->app_only)) {
-                    $status[] = intval(!!$receiver->sendSMS($this->dic->get('SMSSender'), $post->sms_besked));
+                    $status[] = intval(!!$receiver->sendSMS($this->dic->get('SMSSender'), $message));
+                    $query = "INSERT INTO smslog (phone_number, message_id) VALUES(?,?)";
+                    $this->db->exec($query, [$receiver->mobiltlf, $message_id]);
                 }
 
             } catch (Exception $e) {

@@ -5,7 +5,16 @@
         <p>Antal modtagere: <?php echo count($this->receivers);?></p>
         <form action="<?php echo $this->url('sms_send');?>" method='post'>
             <label for='afsender'>Afsender:</label> <input type='text' name='sms_afsender' id='afsender' value='Fastaval'/><br/>
-            <label for='besked'>Besked:</label> <textarea name='sms_besked' id='besked'></textarea><br/>
+            <div>
+                <div class="message-wrapper">
+                    <label for='besked'>Besked Dansk:</label>
+                    <textarea name='sms_besked_da' id='besked_da'></textarea>
+                </div>
+                <div class="message-wrapper">
+                    <label for='besked'>Besked Engelsk:</label>
+                    <textarea name='sms_besked_en' id='besked_en'></textarea>
+                </div>
+            </div>
             <label style="border: 1px solid #555; border-radius: 0.5rem; padding: 0.5rem; display: inline-block; margin-bottom: 1rem;"><input type='checkbox' value='1' name='app_only'/> Kun til apps, ingen SMS</label><br/>
             <input type='submit' value='Send beskeder'/>
         </form>

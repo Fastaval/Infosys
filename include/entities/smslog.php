@@ -42,9 +42,8 @@ class SMSLog extends DBObject
     protected $tablename = 'smslog';
 
     public function safetyCheck($num) {
-        if ($this->getDB()->query("SELECT * FROM smslog WHERE nummer = '" . intval($num) . "' AND sendt > NOW() - INTERVAL 10 MINUTE")) {
+        if ($this->getDB()->query("SELECT * FROM smslog AS sl JOIN messages as m ON sl.message_id = m.id WHERE sl.phone_number = ? AND m.send_time > NOW() - INTERVAL 10 MINUTE", $num)) {
             return false;
-
         }
 
         return true;
