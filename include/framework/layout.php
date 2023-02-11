@@ -581,7 +581,6 @@ HTML;
         SMS
         <ul class="submenu">
             <li><a href='{$this->url('sms_auto_dryrun')}'>Auto send dryrun</a></li>
-            <li><a href='{$this->url('admin_handle_users')}'>Manual send dryrun</a></li>
             <li><a href='{$this->url('sms_stats')}'>Statistics</a></li>
         </ul>
     </li>
