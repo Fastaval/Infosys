@@ -3,6 +3,7 @@
 
     <button class="btn btn-primary">Dry-run</button>
 </form>
+<?php if ($this->dryrun_results) { ?>
 <hr/>
 <p><?= e($this->when);?></p>
 <p>Messages: <?= count($this->dryrun_results);?></p>
@@ -26,3 +27,4 @@
 <?php endforeach;?>
     </tbody>
 </table>
+<?php } ?>
