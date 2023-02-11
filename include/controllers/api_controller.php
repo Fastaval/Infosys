@@ -735,12 +735,14 @@ class ApiController extends Controller
     }
 
     public function getUserMessages() {
-        if (empty($this->vars['email']) || !$this->page->request->get->pass) {
+        if (empty($this->vars['id']) || !($participant = $this->model->findParticipant($this->vars['id'])) || $participant->annulled === 'ja') {
             header('HTTP/1.1 400 No such user');
             exit;
         }
 
-        if (!($participant = $this->model->getParticipantByEmailAndPassword($this->vars['email'], $this->page->request->get->pass)) || $participant->annulled === 'ja') {
+        $pass = isset($this->page->request->post->pass) ? $this->page->request->post->pass : $this->page->request->get->pass;
+
+        if (!$pass || $participant->password != $pass) {
             header('HTTP/1.1 403 No access');
             exit;
         }
