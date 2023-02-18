@@ -100,5 +100,15 @@
       "en": "Secret support",
       "da": "Hemmelig støtte"
     }
+  },
+  "warnings": {
+    "page_disabled": {
+      "en": "This page has been disabled and all information entered on this page will be ignored",
+      "da": "Denne side er blevet slået fra og alt information der er indtastet på siden vil blive ignoreret"
+    },
+    "input_disabled": {
+      "en": "This item has been disabled and any changes will be ignored",
+      "da": "Dette element er blevet slået fra og enhver ændring vil blive ignoreret"
+    }
   }
 }

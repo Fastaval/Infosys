@@ -1523,6 +1523,21 @@ WHERE
     }
 
     /**
+     * Removes all entrance relationships except the given ids
+     *
+     * @access public
+     * @return $this
+     */
+    public function removeEntranceExcept(Array $ids) {
+        foreach ($this->createEntity('DeltagereIndgang')->getForParticipant($this) as $entrance) {
+            if (in_array($entrance->indgang_id, $ids)) continue;
+            $entrance->delete();
+        }
+
+        return $this;
+    }
+
+    /**
      * removes all activity signups
      *
      * @access public

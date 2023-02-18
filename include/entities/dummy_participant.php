@@ -224,6 +224,24 @@ class DummyParticipant extends DBObject
     }
 
     /**
+     * removes all entrance relationships except ones with the given id
+     *
+     * @access public
+     * @return $this
+     */
+    public function removeEntranceExcept(Array $ids) {
+        $saved = [];
+        foreach ($this->entrance as $key => $item) {
+            if (!in_array($item->id, $ids)) continue;
+            $saved[] = $item;
+        }
+        $this->entrance = $saved;
+
+        return $this;
+    }
+    
+
+    /**
      * signs the user up for a given entry type
      *
      * @param object $indgang - Indgang entity

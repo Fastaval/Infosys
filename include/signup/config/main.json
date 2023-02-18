@@ -5,6 +5,18 @@
   "birth": "birthdate",
   "participant": "participant",
   "organizer": "organizercategory",
+  "main_signup_only": {
+    "pages": [
+      "activity",
+      "food",
+      "wear"
+    ],
+    "items": {
+      "extra": [
+        "misc:party1"
+      ]
+    }
+  },
   "errors": {
     "required": {
       "en": "This input may not be empty",

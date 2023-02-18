@@ -35,11 +35,30 @@ class SignupApiModel extends Model {
   public function getAllPages() {
     $pages = [];
 
+    $skip_pages = null;
+    $disabled_items = null;
+    // Skip certain pages for late signup
+    if (strtotime('now') > strtotime($this->config->get('con.signupend'))) {
+      $config_file = SIGNUP_FOLDER."config/main.json";
+      $config = json_decode(file_get_contents($config_file));
+      $skip_pages = $config->main_signup_only->pages;
+      $disabled_items = $config->main_signup_only->items;
+    }
+
     $page_files = glob(SIGNUP_FOLDER."pages/*");
     foreach($page_files as $page_file){ // iterate files
       if(!is_file($page_file)) continue;
+      
       $name = basename($page_file, ".json");
-      $pages[$name] = json_decode(file_get_contents($page_file));
+      
+      if ($skip_pages && in_array($name, $skip_pages)) continue;
+      $page = json_decode(file_get_contents($page_file));
+
+      if (isset($disabled_items->$name)) {
+        $page->disabled_items = $disabled_items->$name;
+      }
+
+      $pages[$name] = $page;
     }
 
     return $pages;
@@ -47,9 +66,25 @@ class SignupApiModel extends Model {
 
   public function getPage($page_id) {
     $page_file = SIGNUP_FOLDER."pages/$page_id.json";
-    if(!is_file($page_file)) die("Signup page not found");
+    if(!is_file($page_file)) throw new FrameworkException("Signup page not found");
 
-    return file_get_contents($page_file);
+    $content = file_get_contents($page_file);
+
+    // If this is not a late signup, just return file content
+    if (strtotime('now') <= strtotime($this->config->get('con.signupend'))) return $content;
+
+    $config_file = SIGNUP_FOLDER."config/main.json";
+    $config = json_decode(file_get_contents($config_file));
+    $disabled_items = $config->main_signup_only->items;
+
+    // If page dosen't have any disabled items, just return file content
+    if (!isset($disabled_items->$page_id)) return $content;
+
+    // Add disabled items to output
+    $page = json_decode($content);
+    $page->disabled_items = $disabled_items->$page_id;
+
+    return $page;
   }
 
 
@@ -288,13 +323,14 @@ class SignupApiModel extends Model {
    */
   private function createLookup($page) {
     $lookup = [];
+    $disabled_items = $page->disabled_items ?? [];
     foreach($page->sections as $skey => $section) {
       if(!isset($section->items)) continue;
       foreach($section->items as $ikey => $item) {
         if (isset($item->infosys_id)) {
           $lookup[$item->infosys_id] = [
             'item' => $item,
-            'disabled' => ($item->disabled ?? false) || ($section->disabled ?? false),
+            'disabled' => ($item->disabled ?? false) || ($section->disabled ?? false) || in_array($item->infosys_id, $disabled_items),
             'required' => $item->required ?? false,
           ];
         }
@@ -307,30 +343,25 @@ class SignupApiModel extends Model {
    * Apply signup data to a participant
    */
   public function applySignup($data, $participant, $lang) {
+    // Initialize variables
     $errors = $categories = [];
     $is_alea = $is_organizer = $junior_plus = false;
     $total = 0;
     $junior_contact = "";
     $sprog = [];
     $sleeping_areas = $author = [];
+    $food_credits = [
+      'breakfast' => 0,
+      'dinner' => 0,
+    ];
+    
+    // Load config and other info 
+    $late_signup = strtotime('now') > strtotime($this->config->get('con.signupend'));
     $config = [
       'main' => json_decode($this->getConfig('main')),
       'activities' => json_decode($this->getConfig('activities')),
     ];
     $choice_count = count($config['activities']->choices->prio->$lang);
-    $food_credits = [
-      'breakfast' => 0,
-      'dinner' => 0,
-    ];
-
-    $participant->signed_up = date('Y-m-d H:i:s');
-    // Reset orders
-    $participant->removeEntrance();
-    $participant->removeOrderedFood();
-    $participant->removeActivitySignups();
-    $participant->removeAllWear();
-    $participant->removeDiySignup();
-
     $column_info = $this->createEntity('Deltagere')->getColumnInfo();
 
     // Load full runs
@@ -355,20 +386,59 @@ class SignupApiModel extends Model {
       } 
     }
 
+    // Set signup time
+    $participant->signed_up = date('Y-m-d H:i:s');
+    
+    // Reset entrance types
+    if ($late_signup) {
+      // Don't remove sparkling wine from late signups since it's disabled on the page
+      $participant->removeEntranceExcept([81]);
+    } else {
+      $participant->removeEntrance();
+    }
+
+    // Reset DIY
+    $participant->removeDiySignup();
+
     foreach($data as $category => $items) {
+      // Check for disabled pages on late signup
+      if ($late_signup && in_array($category, $config['main']->main_signup_only->pages)) {
+        $categories[$category] = [[
+          'special_module' => 'submit',
+          'warning' => 'page_disabled',
+        ]];
+        continue;
+      }
+
       $entries = [];
       $category_total = 0;
+
+      // Reset certain areas before processing page
+      switch ($category) {
+        case "food":
+          $participant->removeOrderedFood();
+          break;
+        
+        case "activity":
+          $participant->removeActivitySignups();
+          break;
+
+        case "wear":
+          $participant->removeAllWear();
+          break;
+      }
       
       // Load file for the category/page
-      $page_file = SIGNUP_FOLDER."pages/$category.json";
-      if(!is_file($page_file)) {
+      try {
+        $page = $this->getPage($category);
+        if (is_string($page)) $page = json_decode($page);
+      } catch (FrameworkException $e) {
         $errors[$category][] = [
           'type' => 'missing_page',
           'info' => $category,
         ];
         continue;
       }
-      $page = json_decode(file_get_contents($page_file));
       $lookup = $this->createLookup($page);
 
       // Check for missing
@@ -388,9 +458,9 @@ class SignupApiModel extends Model {
         $extra = [];
 
         if (isset($lookup[$key]) && $lookup[$key]['disabled']) {
-          $errors[$category][] = [
-            'type' => 'disabled',
-            'info' => $category." ".$key,
+          $entries[] = [
+            'special_module' => 'submit',
+            'warning' => 'input_disabled',
             'id' => $key,
           ];
           continue;
