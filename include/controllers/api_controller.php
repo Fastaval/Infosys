@@ -749,4 +749,15 @@ class ApiController extends Controller
 
         $this->jsonOutput($this->model->getUserMessages($participant));
     }
+
+    public function getBoardgameLoans() {
+        if (empty($this->vars['id']) || !($participant = $this->model->findParticipant($this->vars['id'])) || $participant->annulled === 'ja') {
+            header('HTTP/1.1 400 No such user');
+            exit;
+        }
+
+        $loans = $this->model->getBoardgameLoans($participant->id);
+
+        $this->jsonOutput($loans);
+    }
 }

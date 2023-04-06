@@ -1944,4 +1944,38 @@ SELECT hash FROM participantpaymenthashes WHERE participant_id = ?
         }
         return $result;
     }
+
+    public function getBoardgameLoans($id = null) {
+        $and = '';
+        $args = [];
+        if ($id !== null) {
+            $and = "AND data LIKE CONCAT('%\"', ?, '\"%')";
+            $args = [$id];
+        }
+
+        $query = "SELECT * FROM boardgameevents WHERE type  = 'borrowed' $and";
+        $result = $this->db->query($query, $args);
+
+        $loans = [];
+        foreach ($result as $row) {
+            // Create loan data for each game
+            $loan = [
+                'boardgame_id' => $row['boardgame_id'],
+                'loan_time' => strtotime($row['timestamp']),
+                'return_time' => null,
+            ];
+            
+            // Check if the game has been returned
+            $query = "SELECT * FROM boardgameevents WHERE boardgame_id = ? AND timestamp > ? ORDER BY timestamp LIMIT 1";
+            $args = [ $row['boardgame_id'], $row['timestamp']];
+            $return_event =  $this->db->query($query, $args);
+            if (count($return_event)) {
+                $loan['return_time'] = strtotime($return_event[0]['timestamp']);
+            }
+
+            $loans[] = $loan;
+        }
+
+        return $loans;
+    }
 }
