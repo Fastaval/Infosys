@@ -1,33 +1,20 @@
 #!/bin/bash
 
-/bin/chown mysql:mysql /var/lib/mysql -R
-/bin/chown mysql:mysql /var/run/mysqld -R
-
-/usr/sbin/service nginx start
 /usr/sbin/service php8.0-fpm start
-/usr/sbin/service mysql start
 
-if [ ! -f /var/www/infosys/composer.phar ]
+if [ -f /var/www/infosys/docker/create.sql ]
 then
-    cd /var/www/infosys
-    /usr/local/bin/composer-installer.sh
+    while ! mysql -u root -proot -h mysql -e "select 1" > /dev/null ; do sleep 1 ; done
+    /usr/bin/mysql -u root -h mysql -proot  < /var/www/infosys/docker/create.sql
 fi
 
-if [ -f /var/www/create.sql ]
+if [ -f /var/www/infosys/composer.json ]
 then
-    /usr/bin/mysql -u root < /var/www/create.sql
-    rm /var/www/create.sql
+    (cd /var/www/infosys/ && composer i)
 fi
-
-OLD_PWD=$(pwd)
-cd /var/www/infosys
-./composer.phar install
-cd $OLD_PWD
 
 shutdown() {
 	/usr/sbin/service php8.0-fpm stop
-    /usr/sbin/service nginx stop
-    /usr/sbin/service mysql stop
 }
 
 trap shutdown INT TERM

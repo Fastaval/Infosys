@@ -1,12 +1,12 @@
 CREATE DATABASE infosys default character set utf8mb4;
-GRANT ALL ON infosys.* to 'infosys'@'localhost' IDENTIFIED BY 'infosys';
+GRANT ALL ON infosys.* to 'infosys'@'%' IDENTIFIED BY 'infosys';
 FLUSH PRIVILEGES;
 USE infosys;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -20,7 +20,7 @@ USE infosys;
 
 DROP TABLE IF EXISTS `activityageranges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `activityageranges` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `activity_id` int(11) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `activityageranges` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `activity_requirement` (`activity_id`,`requirementtype`),
   CONSTRAINT `activityageranges_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `aktiviteter` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=563 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=563 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,7 +48,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `afviklinger`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `afviklinger` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `aktivitet_id` int(11) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE `afviklinger` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `periode_aktivitet` (`aktivitet_id`,`start`,`slut`),
   CONSTRAINT `afviklinger_ibfk_1` FOREIGN KEY (`aktivitet_id`) REFERENCES `aktiviteter` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=668 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=668 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `afviklinger` (
 
 DROP TABLE IF EXISTS `afviklinger_multiblok`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `afviklinger_multiblok` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `afvikling_id` int(11) NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE `afviklinger_multiblok` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `periode_aktivitet` (`afvikling_id`,`start`,`slut`),
   CONSTRAINT `afviklinger_multiblok_ibfk_1` FOREIGN KEY (`afvikling_id`) REFERENCES `afviklinger` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `afviklinger_multiblok` (
 
 DROP TABLE IF EXISTS `aktiviteter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `aktiviteter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `navn` varchar(256) NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE `aktiviteter` (
   `karmatype` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `max_signups` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,7 +137,7 @@ CREATE TABLE `aktiviteter` (
 
 DROP TABLE IF EXISTS `api_auth`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `api_auth` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
@@ -163,7 +163,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `boardgameevents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `boardgameevents` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `boardgame_id` int(10) unsigned NOT NULL,
@@ -173,7 +173,7 @@ CREATE TABLE `boardgameevents` (
   PRIMARY KEY (`id`),
   KEY `boardgame` (`boardgame_id`),
   CONSTRAINT `boardgameevents_ibfk_1` FOREIGN KEY (`boardgame_id`) REFERENCES `boardgames` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8272 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8272 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +186,7 @@ CREATE TABLE `boardgameevents` (
 
 DROP TABLE IF EXISTS `boardgames`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `boardgames` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `barcode` varchar(256) NOT NULL DEFAULT '',
@@ -196,7 +196,7 @@ CREATE TABLE `boardgames` (
   `designergame` tinyint(4) NOT NULL DEFAULT '0',
   `bgg_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4891 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4891 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,14 +210,14 @@ CREATE TABLE `boardgames` (
 
 DROP TABLE IF EXISTS `brugerkategorier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `brugerkategorier` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `navn` varchar(256) NOT NULL,
   `arrangoer` enum('ja','nej') NOT NULL DEFAULT 'nej',
   `beskrivelse` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +236,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `brugerkategorier_idtemplates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `brugerkategorier_idtemplates` (
   `template_id` int(10) unsigned NOT NULL,
   `category_id` int(11) NOT NULL,
@@ -244,7 +244,7 @@ CREATE TABLE `brugerkategorier_idtemplates` (
   KEY `category` (`category_id`),
   CONSTRAINT `brugerkategorier_idtemplates_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `brugerkategorier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `brugerkategorier_idtemplates_ibfk_2` FOREIGN KEY (`template_id`) REFERENCES `idtemplates` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +258,7 @@ CREATE TABLE `brugerkategorier_idtemplates` (
 
 DROP TABLE IF EXISTS `deltagere`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `deltagere` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fornavn` varchar(128) NOT NULL,
@@ -335,7 +335,7 @@ CREATE TABLE `deltagere` (
   KEY `sovelokale_id` (`sovelokale_id`),
   CONSTRAINT `deltagere_ibfk_1` FOREIGN KEY (`brugerkategori_id`) REFERENCES `brugerkategorier` (`id`),
   CONSTRAINT `deltagere_ibfk_2` FOREIGN KEY (`sovelokale_id`) REFERENCES `lokaler` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1013 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1013 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,7 +349,7 @@ CREATE TABLE `deltagere` (
 
 DROP TABLE IF EXISTS `deltagere_gdstilmeldinger`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `deltagere_gdstilmeldinger` (
   `deltager_id` int(11) NOT NULL,
   `period` char(17) NOT NULL DEFAULT '',
@@ -359,7 +359,7 @@ CREATE TABLE `deltagere_gdstilmeldinger` (
   KEY `gdscategory_fk` (`category_id`),
   CONSTRAINT `deltagere_gdstilmeldinger_ibfk_1` FOREIGN KEY (`deltager_id`) REFERENCES `deltagere` (`id`),
   CONSTRAINT `gdscategory_fk` FOREIGN KEY (`category_id`) REFERENCES `gdscategories` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -372,7 +372,7 @@ CREATE TABLE `deltagere_gdstilmeldinger` (
 
 DROP TABLE IF EXISTS `deltagere_gdsvagter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `deltagere_gdsvagter` (
   `deltager_id` int(11) NOT NULL,
   `gdsvagt_id` int(11) NOT NULL,
@@ -381,7 +381,7 @@ CREATE TABLE `deltagere_gdsvagter` (
   KEY `gdsvagt_id` (`gdsvagt_id`),
   CONSTRAINT `deltagere_gdsvagter_ibfk_1` FOREIGN KEY (`deltager_id`) REFERENCES `deltagere` (`id`),
   CONSTRAINT `deltagere_gdsvagter_ibfk_2` FOREIGN KEY (`gdsvagt_id`) REFERENCES `gdsvagter` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -395,7 +395,7 @@ CREATE TABLE `deltagere_gdsvagter` (
 
 DROP TABLE IF EXISTS `deltagere_indgang`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `deltagere_indgang` (
   `deltager_id` int(11) NOT NULL,
   `indgang_id` int(11) NOT NULL,
@@ -403,7 +403,7 @@ CREATE TABLE `deltagere_indgang` (
   KEY `indgang_id` (`indgang_id`),
   CONSTRAINT `deltagere_indgang_ibfk_1` FOREIGN KEY (`deltager_id`) REFERENCES `deltagere` (`id`),
   CONSTRAINT `deltagere_indgang_ibfk_2` FOREIGN KEY (`indgang_id`) REFERENCES `indgang` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -416,7 +416,7 @@ CREATE TABLE `deltagere_indgang` (
 
 DROP TABLE IF EXISTS `deltagere_madtider`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `deltagere_madtider` (
   `deltager_id` int(11) NOT NULL,
   `madtid_id` int(11) NOT NULL,
@@ -426,7 +426,7 @@ CREATE TABLE `deltagere_madtider` (
   KEY `madtid_id` (`madtid_id`),
   CONSTRAINT `deltagere_madtider_ibfk_1` FOREIGN KEY (`deltager_id`) REFERENCES `deltagere` (`id`),
   CONSTRAINT `deltagere_madtider_ibfk_2` FOREIGN KEY (`madtid_id`) REFERENCES `madtider` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,7 +440,7 @@ CREATE TABLE `deltagere_madtider` (
 
 DROP TABLE IF EXISTS `deltagere_tilmeldinger`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `deltagere_tilmeldinger` (
   `deltager_id` int(11) NOT NULL,
   `prioritet` int(11) NOT NULL,
@@ -450,7 +450,7 @@ CREATE TABLE `deltagere_tilmeldinger` (
   KEY `afvikling_id` (`afvikling_id`),
   CONSTRAINT `deltagere_tilmeldinger_ibfk_1` FOREIGN KEY (`deltager_id`) REFERENCES `deltagere` (`id`),
   CONSTRAINT `deltagere_tilmeldinger_ibfk_2` FOREIGN KEY (`afvikling_id`) REFERENCES `afviklinger` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -464,7 +464,7 @@ CREATE TABLE `deltagere_tilmeldinger` (
 
 DROP TABLE IF EXISTS `deltagere_wear`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `deltagere_wear` (
   `deltager_id` int(11) NOT NULL,
   `wearpris_id` int(11) NOT NULL,
@@ -475,7 +475,7 @@ CREATE TABLE `deltagere_wear` (
   KEY `wearpris_id` (`wearpris_id`),
   CONSTRAINT `deltagere_wear_ibfk_1` FOREIGN KEY (`wearpris_id`) REFERENCES `wearpriser` (`id`),
   CONSTRAINT `deltagere_wear_ibfk_2` FOREIGN KEY (`deltager_id`) REFERENCES `deltagere` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -489,7 +489,7 @@ CREATE TABLE `deltagere_wear` (
 
 DROP TABLE IF EXISTS `diyageranges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `diyageranges` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `diy_id` int(11) NOT NULL,
@@ -498,7 +498,7 @@ CREATE TABLE `diyageranges` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `diy_requirement` (`diy_id`,`requirementtype`),
   CONSTRAINT `diyageranges_ibfk_1` FOREIGN KEY (`diy_id`) REFERENCES `gds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -516,7 +516,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `gamestarts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `gamestarts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
@@ -526,7 +526,7 @@ CREATE TABLE `gamestarts` (
   UNIQUE KEY `datetime` (`datetime`),
   KEY `user_id_fk` (`user_id`),
   CONSTRAINT `gamestarts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `deltagere` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -540,7 +540,7 @@ CREATE TABLE `gamestarts` (
 
 DROP TABLE IF EXISTS `gamestartschedules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `gamestartschedules` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `gamestart_id` int(10) unsigned NOT NULL,
@@ -559,7 +559,7 @@ CREATE TABLE `gamestartschedules` (
   CONSTRAINT `gamestartschedules_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `deltagere` (`id`),
   CONSTRAINT `gamestartschedules_ibfk_2` FOREIGN KEY (`schedule_id`) REFERENCES `afviklinger` (`id`),
   CONSTRAINT `gamestartschedules_ibfk_3` FOREIGN KEY (`gamestart_id`) REFERENCES `gamestarts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -573,7 +573,7 @@ CREATE TABLE `gamestartschedules` (
 
 DROP TABLE IF EXISTS `gds`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `gds` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `navn` varchar(64) NOT NULL,
@@ -588,7 +588,7 @@ CREATE TABLE `gds` (
   KEY `gds_category` (`category_id`),
   CONSTRAINT `gds_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `gdscategories` (`id`),
   CONSTRAINT `gds_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `gdscategories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -607,13 +607,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `gdscategories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `gdscategories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name_da` varchar(64) NOT NULL,
   `name_en` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -632,7 +632,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `gdsvagter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `gdsvagter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `gds_id` int(11) NOT NULL,
@@ -642,7 +642,7 @@ CREATE TABLE `gdsvagter` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `gds_id` (`gds_id`,`start`),
   CONSTRAINT `gdsvagter_ibfk_1` FOREIGN KEY (`gds_id`) REFERENCES `gds` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=265 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=265 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -661,7 +661,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `hold`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `hold` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `afvikling_id` int(11) NOT NULL,
@@ -672,7 +672,7 @@ CREATE TABLE `hold` (
   KEY `lokale_id` (`lokale_id`),
   CONSTRAINT `hold_ibfk_1` FOREIGN KEY (`afvikling_id`) REFERENCES `afviklinger` (`id`),
   CONSTRAINT `hold_ibfk_2` FOREIGN KEY (`lokale_id`) REFERENCES `lokaler` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=684 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=684 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -691,13 +691,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `idtemplates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `idtemplates` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL DEFAULT '',
   `background` varchar(256) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -716,7 +716,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `idtemplates_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `idtemplates_items` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `template_id` int(10) unsigned NOT NULL,
@@ -730,7 +730,7 @@ CREATE TABLE `idtemplates_items` (
   PRIMARY KEY (`id`),
   KEY `template` (`template_id`),
   CONSTRAINT `idtemplates_items_ibfk_1` FOREIGN KEY (`template_id`) REFERENCES `idtemplates` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11247 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11247 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -749,14 +749,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `indgang`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `indgang` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pris` int(11) NOT NULL,
   `start` datetime NOT NULL,
   `type` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -775,7 +775,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `loanevents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `loanevents` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `loanitem_id` int(10) unsigned NOT NULL,
@@ -785,7 +785,7 @@ CREATE TABLE `loanevents` (
   PRIMARY KEY (`id`),
   KEY `loanitem` (`loanitem_id`),
   CONSTRAINT `loanevents_ibfk_1` FOREIGN KEY (`loanitem_id`) REFERENCES `loanitems` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -799,7 +799,7 @@ CREATE TABLE `loanevents` (
 
 DROP TABLE IF EXISTS `loanitems`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `loanitems` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `barcode` varchar(256) NOT NULL DEFAULT '',
@@ -807,7 +807,7 @@ CREATE TABLE `loanitems` (
   `owner` varchar(256) NOT NULL DEFAULT '',
   `comment` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -821,7 +821,7 @@ CREATE TABLE `loanitems` (
 
 DROP TABLE IF EXISTS `log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
@@ -829,7 +829,7 @@ CREATE TABLE `log` (
   `user_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40285 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40285 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -843,7 +843,7 @@ CREATE TABLE `log` (
 
 DROP TABLE IF EXISTS `lokaler`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `lokaler` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `beskrivelse` varchar(256) DEFAULT NULL,
@@ -853,7 +853,7 @@ CREATE TABLE `lokaler` (
   `sovelokale` enum('ja','nej') NOT NULL DEFAULT 'nej',
   `sovekapacitet` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -872,7 +872,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `mad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `mad` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `kategori` varchar(64) NOT NULL,
@@ -880,7 +880,7 @@ CREATE TABLE `mad` (
   `title_en` varchar(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `kategori` (`kategori`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -899,7 +899,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `madtider`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `madtider` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mad_id` int(11) NOT NULL,
@@ -909,7 +909,7 @@ CREATE TABLE `madtider` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `mad_id` (`mad_id`,`dato`),
   CONSTRAINT `madtider_ibfk_1` FOREIGN KEY (`mad_id`) REFERENCES `mad` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -928,11 +928,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `migrations` (
   `id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -951,14 +951,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `notes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `notes` (
   `area` enum('shop','boardgames','loans') NOT NULL,
   `note` text NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`area`),
   UNIQUE KEY `area` (`area`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -972,7 +972,7 @@ CREATE TABLE `notes` (
 
 DROP TABLE IF EXISTS `participantidtemplates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `participantidtemplates` (
   `participant_id` int(11) NOT NULL,
   `template_id` int(10) unsigned NOT NULL,
@@ -980,7 +980,7 @@ CREATE TABLE `participantidtemplates` (
   KEY `template` (`template_id`),
   CONSTRAINT `participantidtemplates_ibfk_1` FOREIGN KEY (`participant_id`) REFERENCES `deltagere` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `participantidtemplates_ibfk_2` FOREIGN KEY (`template_id`) REFERENCES `idtemplates` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -994,13 +994,13 @@ CREATE TABLE `participantidtemplates` (
 
 DROP TABLE IF EXISTS `participantpaymenthashes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `participantpaymenthashes` (
   `participant_id` int(11) NOT NULL,
   `hash` char(32) NOT NULL,
   PRIMARY KEY (`participant_id`),
   CONSTRAINT `participantpaymenthashes_ibfk_1` FOREIGN KEY (`participant_id`) REFERENCES `deltagere` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1014,13 +1014,13 @@ CREATE TABLE `participantpaymenthashes` (
 
 DROP TABLE IF EXISTS `participantphotoidentifiers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `participantphotoidentifiers` (
   `participant_id` int(11) NOT NULL,
   `identifier` tinytext NOT NULL,
   PRIMARY KEY (`participant_id`),
   CONSTRAINT `participantphotoidentifiers_ibfk_1` FOREIGN KEY (`participant_id`) REFERENCES `deltagere` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1034,7 +1034,7 @@ CREATE TABLE `participantphotoidentifiers` (
 
 DROP TABLE IF EXISTS `participants_sleepingplaces`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `participants_sleepingplaces` (
   `participant_id` int(11) NOT NULL,
   `room_id` int(11) NOT NULL,
@@ -1044,7 +1044,7 @@ CREATE TABLE `participants_sleepingplaces` (
   KEY `room_fk` (`room_id`),
   CONSTRAINT `participants_sleepingplaces_ibfk_1` FOREIGN KEY (`participant_id`) REFERENCES `deltagere` (`id`),
   CONSTRAINT `participants_sleepingplaces_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `lokaler` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1058,7 +1058,7 @@ CREATE TABLE `participants_sleepingplaces` (
 
 DROP TABLE IF EXISTS `paymentfritidlog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `paymentfritidlog` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `participant_id` int(11) NOT NULL,
@@ -1067,7 +1067,7 @@ CREATE TABLE `paymentfritidlog` (
   `fees` int(10) unsigned NOT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=775 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=775 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1081,7 +1081,7 @@ CREATE TABLE `paymentfritidlog` (
 
 DROP TABLE IF EXISTS `pladser`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `pladser` (
   `hold_id` int(11) NOT NULL,
   `pladsnummer` int(11) NOT NULL,
@@ -1092,7 +1092,7 @@ CREATE TABLE `pladser` (
   KEY `deltager_id` (`deltager_id`),
   CONSTRAINT `pladser_ibfk_1` FOREIGN KEY (`hold_id`) REFERENCES `hold` (`id`),
   CONSTRAINT `pladser_ibfk_2` FOREIGN KEY (`deltager_id`) REFERENCES `deltagere` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1106,13 +1106,13 @@ CREATE TABLE `pladser` (
 
 DROP TABLE IF EXISTS `privileges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `privileges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `controller` varchar(128) NOT NULL,
   `method` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1131,13 +1131,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1156,7 +1156,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `roles_privileges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `roles_privileges` (
   `role_id` int(11) NOT NULL,
   `privilege_id` int(11) NOT NULL,
@@ -1164,7 +1164,7 @@ CREATE TABLE `roles_privileges` (
   KEY `privilege_id` (`privilege_id`),
   CONSTRAINT `roles_privileges_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
   CONSTRAINT `roles_privileges_ibfk_2` FOREIGN KEY (`privilege_id`) REFERENCES `privileges` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1183,7 +1183,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `schedules_votes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `schedules_votes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `schedule_id` int(11) NOT NULL,
@@ -1192,7 +1192,7 @@ CREATE TABLE `schedules_votes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `schedule_code` (`schedule_id`,`code`),
   CONSTRAINT `schedules_votes_ibfk_1` FOREIGN KEY (`schedule_id`) REFERENCES `afviklinger` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6423 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6423 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1206,7 +1206,7 @@ CREATE TABLE `schedules_votes` (
 
 DROP TABLE IF EXISTS `shopevents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `shopevents` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('cost','price','stock','sold') NOT NULL,
@@ -1216,7 +1216,7 @@ CREATE TABLE `shopevents` (
   PRIMARY KEY (`id`),
   KEY `product_id` (`shopproduct_id`),
   CONSTRAINT `shopevents_ibfk_1` FOREIGN KEY (`shopproduct_id`) REFERENCES `shopproducts` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1234,7 +1234,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `shopproducts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `shopproducts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
@@ -1243,7 +1243,7 @@ CREATE TABLE `shopproducts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_u` (`name`),
   UNIQUE KEY `code_u` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1261,7 +1261,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `smslog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `smslog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nummer` bigint(20) unsigned DEFAULT NULL,
@@ -1270,7 +1270,7 @@ CREATE TABLE `smslog` (
   `besked` text NOT NULL,
   `return_val` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1724 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1724 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1284,7 +1284,7 @@ CREATE TABLE `smslog` (
 
 DROP TABLE IF EXISTS `translations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `translations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `table` varchar(64) NOT NULL,
@@ -1293,7 +1293,7 @@ CREATE TABLE `translations` (
   `english` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `table` (`table`,`field`,`row_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1311,7 +1311,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` varchar(255) NOT NULL,
@@ -1321,7 +1321,7 @@ CREATE TABLE `users` (
   `password_reset_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1340,7 +1340,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `users_roles` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
@@ -1348,7 +1348,7 @@ CREATE TABLE `users_roles` (
   KEY `role_id` (`role_id`),
   CONSTRAINT `users_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `users_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1367,7 +1367,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `wear`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `wear` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `navn` varchar(64) NOT NULL,
@@ -1376,7 +1376,7 @@ CREATE TABLE `wear` (
   `title_en` varchar(64) NOT NULL DEFAULT '',
   `description_en` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1395,7 +1395,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `wearpriser`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client =utf8mb4 */;
 CREATE TABLE `wearpriser` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `wear_id` int(11) NOT NULL,
@@ -1406,7 +1406,7 @@ CREATE TABLE `wearpriser` (
   KEY `brugerkategori_id` (`brugerkategori_id`),
   CONSTRAINT `wearpriser_ibfk_1` FOREIGN KEY (`wear_id`) REFERENCES `wear` (`id`),
   CONSTRAINT `wearpriser_ibfk_2` FOREIGN KEY (`brugerkategori_id`) REFERENCES `brugerkategorier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=331 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=331 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -4,7 +4,7 @@ CREATE TABLE organizer_categories (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   name_da TEXT,
   name_en TEXT
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
 
 ALTER TABLE deltagere DROP COLUMN arbejdsomraade;
 ALTER TABLE deltagere ADD COLUMN work_area INT UNSIGNED DEFAULT NULL;

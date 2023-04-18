@@ -6,4 +6,4 @@ CREATE TABLE paymentfritidlog (
     cost INT UNSIGNED NOT NULL,
     fees INT UNSIGNED NOT NULL,
     timestamp DATETIME NOT NULL
-) engine=innodb default character set utf8;
+) engine=innodb default character set utf8mb4;

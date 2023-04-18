@@ -98,7 +98,7 @@ class DB
     {
         try {
             $this->connection = new PDO($config->get('db.type') . ':host=' . $config->get('db.host') . ';port=' . $config->get('db.port') . ';dbname=' . $config->get('db.database'), $config->get('db.user'), $config->get('db.password'));
-            if (false === $this->connection->exec("SET NAMES 'utf8';") || false === $this->connection->exec("SET CHARACTER SET 'utf8';") || false ===  $this->connection->exec("SET SESSION sql_mode='STRICT_ALL_TABLES';")) {
+            if (false === $this->connection->exec("SET NAMES 'utf8mb4';") || false === $this->connection->exec("SET CHARACTER SET 'utf8mb4';") || false ===  $this->connection->exec("SET SESSION sql_mode='STRICT_ALL_TABLES';")) {
                 $this->last_error = "Could not init database connection with proper settings.";
                 throw new DBException($this->last_error);
 

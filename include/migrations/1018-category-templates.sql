@@ -5,4 +5,4 @@ CREATE TABLE brugerkategorier_idtemplates (
     category_id INT NOT NULL PRIMARY KEY,
     CONSTRAINT FOREIGN KEY category (category_id) REFERENCES brugerkategorier (id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY template (template_id) REFERENCES idtemplates (id) ON UPDATE CASCADE ON DELETE CASCADE
-) engine=InnoDB character set utf8;
+) engine=InnoDB character set utf8mb4;

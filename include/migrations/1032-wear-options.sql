@@ -3,7 +3,7 @@ CREATE TABLE wear_sizes (
   size_order INT UNSIGNED,
   size_name_da VARCHAR(32),
   size_name_en VARCHAR(32)
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
 
 -- No size;
 INSERT INTO wear_sizes (size_name_da, size_name_en) VALUES ('Ingen størrelse', 'No size');
@@ -35,14 +35,14 @@ CREATE TABLE wear_colors (
   color_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   color_name_da VARCHAR(32),
   color_name_en VARCHAR(32)
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
 
 CREATE TABLE wear_color_available (
   wear_id INT,
   color_id INT UNSIGNED,
   FOREIGN KEY (wear_id) REFERENCES wear(id),
   FOREIGN KEY (color_id) REFERENCES wear_colors(color_id)
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
 
 ALTER TABLE wear DROP COLUMN size_range;
 ALTER TABLE wear ADD min_size INT UNSIGNED DEFAULT 1;

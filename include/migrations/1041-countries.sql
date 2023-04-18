@@ -2,7 +2,7 @@ CREATE TABLE countries (
   code CHAR(2) PRIMARY KEY,
   name_en TEXT,
   name_da TEXT
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- list created from php-intl ResourceBundle::getLocales and Locale::getDisplayRegion
 INSERT INTO countries (code, name_en, name_da) VALUES('AF', 'Afghanistan', 'Afghanistan');

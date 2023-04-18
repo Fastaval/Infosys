@@ -6,4 +6,4 @@ CREATE TABLE `diyageranges` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `diy_requirement` (`diy_id`,`requirementtype`),
   CONSTRAINT `diyageranges_ibfk_1` FOREIGN KEY (`diy_id`) REFERENCES `gds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -7,4 +7,4 @@ CREATE TABLE activityageranges (
     requirementtype ENUM('min', 'max', 'exact') NOT NULL,
     CONSTRAINT FOREIGN KEY activity (activity_id) REFERENCES aktiviteter (id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT UNIQUE activity_requirement (activity_id, requirementtype)
-) engine=InnoDB character set utf8;
+) engine=InnoDB character set utf8mb4;

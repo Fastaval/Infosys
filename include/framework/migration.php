@@ -133,6 +133,8 @@ class Migration
 
         $index = json_decode($file, true);
 
+        asort($index);
+
         if (empty($index)) {
             return [];
         }

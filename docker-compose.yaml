@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  infosys:
+    build:
+      context: ./docker
+      args:
+        USER_ID: $UID
+        GROUP_ID: $GID
+    container_name: infosys
+    volumes:
+      - ./docker/infosys-fpm.conf:/etc/php/8.0/fpm/pool.d/infosys-fpm.conf
+      - ./:/var/www/infosys
+      - ./docker/config.ini:/var/www/infosys/include/config.ini
+    expose:
+      - "9000"
+    depends_on:
+      - mysql
+    networks:
+      infosys_net:
+        aliases:
+          - infosys.localhost
+  nginx:
+    image: nginx:1.23.4
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./public:/var/www/infosys/public
+      - ./docker/infosys-site.conf:/etc/nginx/conf.d/infosys.conf
+    networks:
+      infosys_net: {}
+    depends_on:
+      - infosys
+  mysql:
+    image: mysql:5.7.41
+    container_name: mysql
+    ports:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      infosys_net: {}
+
+networks:
+  infosys_net: {}

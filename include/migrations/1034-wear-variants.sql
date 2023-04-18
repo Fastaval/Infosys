@@ -19,7 +19,7 @@ CREATE TABLE wear_attributes (
     desc_en TEXT,
     position INT(11),
     PRIMARY KEY (`id`)
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
 
 -- Baby sizes;
 INSERT INTO wear_attributes (attribute_type, desc_da, desc_en, position) VALUES ('size', 'Baby 56(0-1 md)', 'Baby 56(0-1 mo)', 1);
@@ -51,7 +51,7 @@ CREATE TABLE wear_attribute_available (
     PRIMARY KEY (`wear_id`,`attribute_id`,`variant`),
     CONSTRAINT `wear_attribute_available_fk_1` FOREIGN KEY (`wear_id`) REFERENCES `wear` (`id`) ON DELETE CASCADE,
     CONSTRAINT `wear_attribute_available_fk_2` FOREIGN KEY (`attribute_id`) REFERENCES `wear_attributes` (`id`) ON DELETE CASCADE
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
 
 DROP TABLE deltagere_wear;
 CREATE TABLE deltagere_wear_order (
@@ -62,7 +62,7 @@ CREATE TABLE deltagere_wear_order (
     received enum('t','f') NOT NULL DEFAULT 'f',
     CONSTRAINT `deltagere_wear_order_fk_1` FOREIGN KEY (`wearpris_id`) REFERENCES `wearpriser` (`id`),
     CONSTRAINT `deltagere_wear_order_fk_2` FOREIGN KEY (`deltager_id`) REFERENCES `deltagere` (`id`) 
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
 
 CREATE TABLE deltagere_wear_order_attributes (
     order_id INT UNSIGNED NOT NULL,
@@ -70,12 +70,12 @@ CREATE TABLE deltagere_wear_order_attributes (
     PRIMARY KEY (`order_id`,`attribute_id`),
     CONSTRAINT `deltagere_wear_order_attributes_fk_1` FOREIGN KEY (`order_id`) REFERENCES `deltagere_wear_order` (`id`) ON DELETE CASCADE,
     CONSTRAINT `deltagere_wear_order_attributes_fk_2` FOREIGN KEY (`attribute_id`) REFERENCES `wear_attributes` (`id`)
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
 
 CREATE TABLE wear_image (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     image_file TEXT
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
 
 CREATE TABLE wear_image_connection (
     image_id INT UNSIGNED NOT NULL,
@@ -85,4 +85,4 @@ CREATE TABLE wear_image_connection (
     CONSTRAINT `wear_image_connection_fk_1` FOREIGN KEY (`image_id`) REFERENCES `wear_image` (`id`) ON DELETE CASCADE,
     CONSTRAINT `wear_image_connection_fk_2` FOREIGN KEY (`wear_id`) REFERENCES `wear` (`id`) ON DELETE CASCADE,
     CONSTRAINT `wear_image_connection_fk_3` FOREIGN KEY (`attribute_id`) REFERENCES `wear_attributes` (`id`)
-);
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
