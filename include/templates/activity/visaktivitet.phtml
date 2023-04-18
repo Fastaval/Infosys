@@ -205,7 +205,7 @@ $this->registerLateLoadJS('activity.js');
                                     <td class='afviklingsbox-extras'><?= e($deltager->alder);?></td>
                                     <td class='max-wanted'><?= $desired;?></td>
                                     <td class='language'><i class="icon-<?= $language;?>"></i></td>
-                                    <td class='message'><?= trim($deltager->note->comment->content) ? '<i class="icon-chat"></i>' : '';?></td>
+                                    <td class='message'><?= ($deltager->note->comment && trim($deltager->note->comment->content)) ? '<i class="icon-chat"></i>' : '';?></td>
                                 </tr>
                         <?php endforeach;?>
                     </tbody>
