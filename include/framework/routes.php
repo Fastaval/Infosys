@@ -158,6 +158,7 @@ class Routes
 
         // New mail sender
         $this->routes['send_setup_mail']                            = array('url' => 'mail/sendsetupmail', 'controller' => 'Mail', 'method' => 'sendSetupMail');
+        $this->routes['send_evaluation_mail']                       = array('url' => 'mail/sendevaluationmail', 'controller' => 'Mail', 'method' => 'sendEvaluationMail');
         $this->routes['send_password_mail']                         = array('url' => 'mail/fixpassword', 'controller' => 'Mail', 'method' => 'fixPasswords');
         
         // Misc mail

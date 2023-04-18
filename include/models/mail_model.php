@@ -1,18 +1,42 @@
 <?php
 
 class MailModel extends Model {
+
+  /**
+   * Get relevant participants for a certain mail type
+   */
   public function getRecipients($type, $filter_recent = 1) {
 
+    // Find participants by list of ids
+    if (is_array($type)) {
+      $recipients = [];
+      foreach($type as $id) {
+        $recipients[] = $this->createEntity('Deltagere')->findById($id);
+      }
+      return $recipients;
+    }
+
+    // Find participant by single id
     if (intval($type) !== 0) {
       return [$this->createEntity('Deltagere')->findById(intval($type))];
     }
 
+    // Get all participants
     $participants = $this->createEntity('Deltagere')->findAll();
 
+    // Filter out anyone ho recently recieved a mail of the same type (if needed)
     if ($filter_recent) {
       $this->filterOutRecentMails($participants, $type, $filter_recent);
     }
 
+    // Filter out canceled participants
+    foreach ($participants as $id => $participant) {
+      if ($participant->annulled == 'ja') {
+        unset($participants[$id]);
+      }
+    }
+
+    // Filter out participants based on type
     switch ($type) {
       case 'setup':
         foreach ($participants as $id => $participant) {

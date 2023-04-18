@@ -3,13 +3,17 @@
 class MailController extends Controller {
 
   static protected $enabled_types = [
-    'setup' => true,
-    'fixpass' => true,
+    //'setup' => true,
+    //'fixpass' => true,
+    //'evaluation' => true,
   ];
 
+  /**
+   * Send mail for participants joining during the setup days
+   */
   public function sendSetupMail() {
     $recipients = $this->model->getRecipients('setup');
-    //$recipients = $this->model->getRecipients(3);
+    //$recipients = $this->model->getRecipients(1);
 
     $year = $this->getConYear();
     $title = [
@@ -20,6 +24,25 @@ class MailController extends Controller {
     $this->sendBatchMail('setup', $title, $recipients);
   }
 
+  /**
+   * Send all participants a link to the evaluation
+   */
+  public function sendEvaluationMail() {
+    $recipients = $this->model->getRecipients('evaluation');
+    //$recipients = $this->model->getRecipients(3);
+
+    $year = $this->getConYear();
+    $title = [
+      'da' => "Evaluering af Fastaval $year",
+      'en' => "Evaluation of Fastaval $year"
+    ];
+
+    $this->sendBatchMail('evaluation', $title, $recipients, ['work_area']);
+  }
+
+  /**
+   * Used for fixing passwords and notifying participants who had their passwords changed
+   */
   public function fixPasswords() {
     $recipients = $this->model->getRecipients('fixpass', 0);
 
@@ -53,10 +76,11 @@ class MailController extends Controller {
     // Finish response before sending mails, to avoid timeout
     session_write_close();
     fastcgi_finish_request();
-    //set_time_limit(300) - try setting this to avoid ending execution when sending a lot of mails
+    set_time_limit(0); // setting this to avoid ending execution when sending a lot of mails
 
     $count = 0;
     foreach ($recipients as $recipient) {
+      if (!$recipient->email) continue;
 
       $lang = $recipient->speaksDanish() ? 'da' : 'en';
       //$lang = 'en';
@@ -71,7 +95,7 @@ class MailController extends Controller {
         }
       }
       $this->page->info = $page_info;
-      
+
       $mail = new Mail($this->config);
       $mail->setFrom($this->config->get('app.email_address'), $this->config->get('app.email_alias'))
           ->setRecipient($recipient->email)
