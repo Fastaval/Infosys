@@ -138,6 +138,7 @@ ORDER BY
             'Entrance'   => $this->calculateEntranceDetails(),
             'Activities' => $this->calculateActivityDetails(),
             'Food'       => $this->calculateFoodDetails(),
+            'Support'    => $this->calculateSupportDetails(),
             'Wear'       => $this->calculateWearDetails(),
             'Sponsors'   => $this->calculateSponsorDetails(),
         );
@@ -263,6 +264,43 @@ ORDER BY
 ";
 
         return $this->db->query($query);
+    }
+
+    protected function calculateSupportDetails() {
+        $food_query = "SELECT * FROM mad";
+        $count_query = 
+            "SELECT COUNT(*) AS participants, IFNULL(LEAST(fc.food_count, 2), 0) AS `food count` 
+            FROM deltagere d 
+            LEFT JOIN (
+                SELECT deltager_id, COUNT(*) AS food_count 
+                FROM deltagere_madtider dm 
+                JOIN madtider mt ON dm.madtid_id = mt.id 
+                WHERE mt.mad_id = ?
+                GROUP BY deltager_id
+            ) AS fc ON fc.deltager_id = d.id
+            WHERE d.financial_struggle = 'ja'
+            GROUP BY `food count`
+            HAVING `food count` > 0";
+
+        $categories = [];
+        foreach($this->db->query($food_query) as $food_category) {
+            if ($food_category['pris'] == 0) continue;
+
+            $count = 0;
+            foreach ($this->db->query($count_query, [$food_category['id']]) as $support_count) {
+                $count += $support_count['participants'] * $support_count['food count'];
+            }
+            if ($count == 0) continue;
+
+            $categories[] = [
+                'name' => $food_category['kategori'],
+                'price' => -$food_category['pris'],
+                'cost' => -$count * $food_category['pris'],
+                'amount' => $count,
+            ];
+        }
+
+        return $categories;
     }
 
     /**
