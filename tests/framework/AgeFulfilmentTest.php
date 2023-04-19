@@ -1,10 +1,9 @@
 <?php
 
-namespace Fv\Tests;
+namespace Fv\Tests\Framework;
+use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../bootstrap.php';
-
-class AgeFulfilmentTest extends \PHPUnit_Framework_TestCase
+class AgeFulfilmentTest extends TestCase
 {
     public function testGetAge()
     {

@@ -1,10 +1,11 @@
 <?php
 
-namespace Fv\Tests;
+namespace Fv\Tests\Framework;
+use PHPUnit\Framework\TestCase;
+use PaymentFritidDkLink;
+use PaymentFritidDkApi;
 
-require_once __DIR__ . '/../bootstrap.php';
-
-class PaymentFritidDkLinkTest extends \PHPUnit_Framework_TestCase
+class PaymentFritidDkLinkTest extends TestCase
 {
     public function testGenerateOutput_checkGood()
     {
@@ -21,9 +22,9 @@ class PaymentFritidDkLinkTest extends \PHPUnit_Framework_TestCase
             ->with('email')
             ->willReturn('test@example.com');
 
-        $payment = new \PaymentFritidDkLink(new \PaymentFritidDkApi('test-key', $http));
+        $payment = new PaymentFritidDkLink(new PaymentFritidDkApi('test-key', $http));
 
-        $url = \PaymentFritidDkApi::APIURL;
+        $url = PaymentFritidDkApi::APIURL;
 
         $data = [
             'fritid_key'   => 'test-key',
@@ -46,7 +47,7 @@ class PaymentFritidDkLinkTest extends \PHPUnit_Framework_TestCase
 
         $http->expects($this->once())
             ->method('request')
-            ->with('POST', $url, ['json' => $data])
+            ->with('POST', $url, ['json' => $data, 'verify' => false])
             ->willReturn($response);
 
         $response->expects($this->once())
@@ -75,9 +76,9 @@ class PaymentFritidDkLinkTest extends \PHPUnit_Framework_TestCase
             ->with('email')
             ->willReturn('test@example.com');
 
-        $payment = new \PaymentFritidDkLink(new \PaymentFritidDkApi('test-key', $http));
+        $payment = new PaymentFritidDkLink(new PaymentFritidDkApi('test-key', $http));
 
-        $url = \PaymentFritidDkApi::APIURL;
+        $url = PaymentFritidDkApi::APIURL;
 
         $data = [
             'fritid_key'   => 'test-key',
@@ -100,14 +101,14 @@ class PaymentFritidDkLinkTest extends \PHPUnit_Framework_TestCase
 
         $http->expects($this->once())
             ->method('request')
-            ->with('POST', $url, ['json' => $data])
+            ->with('POST', $url, ['json' => $data, 'verify' => false])
             ->willReturn($response);
 
         $response->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(400);
 
-        $this->setExpectedException('FrameworkException', 'Could not create ticket at fritid.dk');
+        $this->expectException('FrameworkException', 'Could not create ticket at fritid.dk');
 
         $payment->generateOutput($participant, 100, $links);
     }
@@ -127,9 +128,9 @@ class PaymentFritidDkLinkTest extends \PHPUnit_Framework_TestCase
             ->with('email')
             ->willReturn('test@example.com');
 
-        $payment = new \PaymentFritidDkLink(new \PaymentFritidDkApi('test-key', $http));
+        $payment = new PaymentFritidDkLink(new PaymentFritidDkApi('test-key', $http));
 
-        $url = \PaymentFritidDkApi::APIURL;
+        $url = PaymentFritidDkApi::APIURL;
 
         $data = [
             'fritid_key'   => 'test-key',
@@ -152,7 +153,7 @@ class PaymentFritidDkLinkTest extends \PHPUnit_Framework_TestCase
 
         $http->expects($this->once())
             ->method('request')
-            ->with('POST', $url, ['json' => $data])
+            ->with('POST', $url, ['json' => $data, 'verify' => false])
             ->willReturn($response);
 
         $response->expects($this->once())
@@ -163,7 +164,7 @@ class PaymentFritidDkLinkTest extends \PHPUnit_Framework_TestCase
             ->method('getBody')
             ->willReturn('');
 
-        $this->setExpectedException('FrameworkException', 'Data from fritid.dk makes no sense: ');
+        $this->expectException('FrameworkException', 'Data from fritid.dk makes no sense: ');
 
         $payment->generateOutput($participant, 100, $links);
     }
@@ -178,14 +179,14 @@ class PaymentFritidDkLinkTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $payment = new \PaymentFritidDkLink(new \PaymentFritidDkApi('test-key', $http));
+        $payment = new PaymentFritidDkLink(new PaymentFritidDkApi('test-key', $http));
 
-        $url = \PaymentFritidDkApi::APIURL;
+        $url = PaymentFritidDkApi::APIURL;
 
         $http->expects($this->never())
             ->method('request');
 
-        $this->setExpectedException('FrameworkException', 'Setup data lacks connection links: success, cancel, callback');
+        $this->expectException('FrameworkException', 'Setup data lacks connection links: success, cancel, callback');
 
         $payment->generateOutput($participant, 100, []);
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Fv\Tests;
+namespace Fv\Tests\Framework;
+use PHPUnit\Framework\TestCase;
+use KarmaDiscreteValuesRule;
 
-require_once __DIR__ . '/../bootstrap.php';
-
-class KarmaDiscreteValuesTest extends \PHPUnit_Framework_TestCase
+class KarmaDiscreteValuesTest extends TestCase
 {
     public function getRule()
     {
@@ -18,7 +18,7 @@ class KarmaDiscreteValuesTest extends \PHPUnit_Framework_TestCase
                    7 => -44,
                   ];
 
-        return new \KarmaDiscreteValuesRule('potential', 1, $values);
+        return new KarmaDiscreteValuesRule('potential', 1, $values);
     }
 
     public function testRule()

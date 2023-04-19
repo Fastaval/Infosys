@@ -1,10 +1,11 @@
 <?php
 
-namespace Fv\Tests;
+namespace Fv\Tests\Entities;
+use PHPUnit\Framework\TestCase;
+use Deltagere;
+use DateTimeImmutable;
 
-require_once __DIR__ . '/../bootstrap.php';
-
-class DeltagereTest extends \PHPUnit_Framework_TestCase
+class DeltagereTest extends TestCase
 {
     public function testAgeFulfilment()
     {
@@ -12,17 +13,18 @@ class DeltagereTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $participant = new \Deltagere($ef);
+        $participant = new Deltagere($ef);
 
         $this->assertTrue(is_a($participant, 'AgeFulfilment'));
 
         $this->assertEquals(-1, $participant->getAge());
 
-        //hackish check
-        $years = (time() - strtotime('1978-04-18')) / (365 * 24 * 3600);
+        $then = new DateTimeImmutable('1978-04-18');
+        $now = new DateTimeImmutable();
+        $diff = $then->diff($now);
 
         $participant->birthdate = '1978-04-18';
 
-        $this->assertEquals(floor($years), $participant->getAge());
+        $this->assertEquals($diff->y, $participant->getAge());
     }
 }

@@ -156,7 +156,7 @@ class EntityFactory
             throw new EntityException('No such entity is defined: '. $entity_name);
         }
 
-        if (!class_exists($entity_name, false)) {
+        if (!isset(self::$entity_classes[$entity_name])) {
             $class_name = $this->autoload->normalizeClass($this->entities[$entity_name]);
 
             include_once(ENTITY_FOLDER . "{$class_name}.php");

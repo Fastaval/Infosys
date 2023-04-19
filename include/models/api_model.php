@@ -843,7 +843,7 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
                 }
 
                 // Must be updated if needed
-                $deltager->setWearOrder($wearprice, $wear['size'], $wear['amount']);
+                $deltager->setWearOrder($wearprice, $wear['amount'], [$wear['size']]);
             }
 
         } catch (Exception $e) {
@@ -926,8 +926,11 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
                     $deltager->setAktivitetTilmelding($schedule, $activity['priority'], $activity['type']);
                 }
             }
-        } catch (Exception $e) {
+
+        } catch (FrameworkException $e) {
             $e->logException();
+            return 'Failed to add activity choices for participant';
+        } catch (Exception $e) {
             return 'Failed to add activity choices for participant';
         }
     }
@@ -951,8 +954,10 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
                 $deltager->setIndgang($entry);
                 //$this->db->exec("INSERT INTO deltagere_indgang (deltager_id, indgang_id) VALUES (?, ?)", $deltager->id, $entrance['entrance_id']);
             }
-        } catch (Exception $e) {
+        } catch (FrameworkException $e) {
             $e->logException();
+            return 'Failed to add entrance choices for participant';
+        } catch (Exception $e) {
             return 'Failed to add entrance choices for participant';
         }
     }
@@ -980,8 +985,10 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
                 return ['Could not update database with participant data'];
             }
 
-        } catch (Exception $e) {
+        } catch (FrameworkException $e) {
             $e->logException();
+            return ['Could not update database with participant data'];
+        } catch (Exception $e) {
 
             return ['Could not update database with participant data'];
         }

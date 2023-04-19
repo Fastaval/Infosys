@@ -1,14 +1,14 @@
 <?php
 
-namespace Fv\Tests;
+namespace Fv\Tests\Framework;
+use PHPUnit\Framework\TestCase;
+use FulfilmentBlob;
 
-require_once __DIR__ . '/../bootstrap.php';
-
-class FulfilmentBlobTest extends \PHPUnit_Framework_TestCase
+class FulfilmentBlobTest extends TestCase
 {
     public function testAddFulfilment()
     {
-        $blob = new \FulfilmentBlob();
+        $blob = new FulfilmentBlob();
 
         $this->assertEquals(0, count($blob->getFulfilments()));
 

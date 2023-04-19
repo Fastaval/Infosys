@@ -1,10 +1,12 @@
 <?php
 
-namespace Fv\Tests;
+namespace Fv\Tests\Framework;
+use PHPUnit\Framework\TestCase;
+use RequirementBlob;
+use FulfilmentBlob;
+use OlderThanRequirement;
 
-require_once __DIR__ . '/../bootstrap.php';
-
-class RequirementBlobTest extends \PHPUnit_Framework_TestCase
+class RequirementBlobTest extends TestCase
 {
     /**
      * tests plain simple blob with no requirements
@@ -14,20 +16,20 @@ class RequirementBlobTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyBlob()
     {
-        $blob = new \RequirementBlob();
+        $blob = new RequirementBlob();
 
-        $f_blob = new \FulfilmentBlob();
+        $f_blob = new FulfilmentBlob();
 
         $this->assertTrue($blob->isFulFilledBy($f_blob));
     }
 
     public function testNonFulfilled()
     {
-        $blob = new \RequirementBlob();
+        $blob = new RequirementBlob();
 
-        $age_requirement = new \OlderThanRequirement(18);
+        $age_requirement = new OlderThanRequirement(18);
 
-        $f_blob = new \FulfilmentBlob();
+        $f_blob = new FulfilmentBlob();
 
         $blob->addRequirement($age_requirement);
 
@@ -36,11 +38,11 @@ class RequirementBlobTest extends \PHPUnit_Framework_TestCase
 
     public function testFulfilled()
     {
-        $blob = new \RequirementBlob();
+        $blob = new RequirementBlob();
 
-        $age_requirement = new \OlderThanRequirement(18);
+        $age_requirement = new OlderThanRequirement(18);
 
-        $f_blob = new \FulfilmentBlob();
+        $f_blob = new FulfilmentBlob();
 
         $participant = $this->getMockBuilder('Deltagere')
             ->disableOriginalConstructor()

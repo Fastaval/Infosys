@@ -1,10 +1,11 @@
 <?php
 
-namespace Fv\Tests;
+namespace Fv\Tests\Framework;
+use PHPUnit\Framework\TestCase;
+use StdClass;
+use PaymentFritidDkApi;
 
-require_once __DIR__ . '/../bootstrap.php';
-
-class PaymentFritidDkUrlTest extends \PHPUnit_Framework_TestCase
+class PaymentFritidDkApiTest extends TestCase
 {
     public function testParseCallbackRequest_properData()
     {
@@ -16,7 +17,7 @@ class PaymentFritidDkUrlTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['__get'])
             ->getMock();
 
-        $data = new \StdClass();
+        $data = new StdClass();
         $data->fees = 150;
         $data->cost = 950;
 
@@ -24,7 +25,7 @@ class PaymentFritidDkUrlTest extends \PHPUnit_Framework_TestCase
             ->method('__get')
             ->willReturn($data);
 
-        $payment = new \PaymentFritidDkApi('test-key', $http);
+        $payment = new PaymentFritidDkApi('test-key', $http);
 
         $parse_data = $payment->parseCallbackRequest($request);
 
@@ -53,7 +54,7 @@ class PaymentFritidDkUrlTest extends \PHPUnit_Framework_TestCase
             ->method('__get')
             ->willReturn($data);
 
-        $payment = new \PaymentFritidDkApi('test-key', $http);
+        $payment = new PaymentFritidDkApi('test-key', $http);
 
         $parse_data = $payment->parseCallbackRequest($request);
 

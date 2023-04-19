@@ -1,10 +1,12 @@
 <?php
 
-namespace Fv\Tests;
+namespace Fv\Tests\Framework;
+use PHPUnit\Framework\TestCase;
+use KarmaFlatValueRule;
+use KarmaDiscreteValuesRule;
+use Karma;
 
-require_once __DIR__ . '/../bootstrap.php';
-
-class KarmaTest extends \PHPUnit_Framework_TestCase
+class KarmaTest extends TestCase
 {
     /**
      * return rule set
@@ -15,12 +17,12 @@ class KarmaTest extends \PHPUnit_Framework_TestCase
     public function getRuleSet()
     {
         return [
-                new \KarmaFlatValueRule('potential', 0, -7),
-                new \KarmaDiscreteValuesRule('potential', 1, [1 => -12, 2 => -20, 3 => -26, 4 => -29, 5 => -32, 6 => -34, 7 => -35, 8 => -36]),
-                new \KarmaDiscreteValuesRule('potential', 2, [1 => -1, 2 => -2, 3 => -3]),
-                new \KarmaDiscreteValuesRule('potential', 3, [1 => -1]),
-                new \KarmaDiscreteValuesRule('factual', 1, [1 => 10, 2 => 20, 3 => 30, 4 => 40, 5 => 50, 6 => 60, 7 => 70, 8 => 80, 9 => 90, 10 => 100]),
-                new \KarmaDiscreteValuesRule('factual', 2, [1 => 7, 2 => 14, 3 => 21, 4 => 28, 5 => 35, 6 => 42, 7 => 49, 8 => 56, 9 => 63, 10 => 70]),
+                new KarmaFlatValueRule('potential', 0, -7),
+                new KarmaDiscreteValuesRule('potential', 1, [1 => -12, 2 => -20, 3 => -26, 4 => -29, 5 => -32, 6 => -34, 7 => -35, 8 => -36]),
+                new KarmaDiscreteValuesRule('potential', 2, [1 => -1, 2 => -2, 3 => -3]),
+                new KarmaDiscreteValuesRule('potential', 3, [1 => -1]),
+                new KarmaDiscreteValuesRule('factual', 1, [1 => 10, 2 => 20, 3 => 30, 4 => 40, 5 => 50, 6 => 60, 7 => 70, 8 => 80, 9 => 90, 10 => 100]),
+                new KarmaDiscreteValuesRule('factual', 2, [1 => 7, 2 => 14, 3 => 21, 4 => 28, 5 => 35, 6 => 42, 7 => 49, 8 => 56, 9 => 63, 10 => 70]),
                ];
     }
 
@@ -31,7 +33,7 @@ class KarmaTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['query'])
             ->getMock();
 
-        return new \Karma($this->db, $this->getRuleSet());
+        return new Karma($this->db, $this->getRuleSet());
     }
 
     public function testYoungUnCalculation()
@@ -41,6 +43,10 @@ class KarmaTest extends \PHPUnit_Framework_TestCase
         $participant = $this->getMockBuilder('Deltagere')
             ->disableOriginalConstructor()
             ->getMock();
+
+        $participant->method('__get')
+            ->with('id')
+            ->willReturn(1);
 
         $return = [
                    [
@@ -225,7 +231,8 @@ class KarmaTest extends \PHPUnit_Framework_TestCase
                    ],
                   ];
 
-        $this->db->method('query')
+        $this->db->expects($this->once())
+            ->method('query')
             ->willReturn($return);
 
         $this->assertEquals(14, $karma->calculate($participant));
@@ -239,6 +246,9 @@ class KarmaTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $participant->method('__get')
+            ->with('id')
+            ->willReturn(1);
 
         $return = [
                    [
@@ -311,6 +321,10 @@ class KarmaTest extends \PHPUnit_Framework_TestCase
         $participant = $this->getMockBuilder('Deltagere')
             ->disableOriginalConstructor()
             ->getMock();
+
+        $participant->method('__get')
+            ->with('id')
+            ->willReturn(1);
 
         $return = [
                    [

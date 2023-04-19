@@ -1,14 +1,14 @@
 <?php
 
-namespace Fv\Tests;
+namespace Fv\Tests\Framework;
+use PHPUnit\Framework\TestCase;
+use KarmaFlatValueRule;
 
-require_once __DIR__ . '/../bootstrap.php';
-
-class KarmaFlatValueTest extends \PHPUnit_Framework_TestCase
+class KarmaFlatValueTest extends TestCase
 {
     public function testRule()
     {
-        $rule = new \KarmaFlatValueRule('potential', 0, -10);
+        $rule = new KarmaFlatValueRule('potential', 0, -10);
 
         $this->assertEquals(-10, $rule->calculate(
             [
@@ -25,14 +25,14 @@ class KarmaFlatValueTest extends \PHPUnit_Framework_TestCase
 
     public function testEmptyData()
     {
-        $rule = new \KarmaFlatValueRule('potential', 0, -10);
+        $rule = new KarmaFlatValueRule('potential', 0, -10);
 
         $this->assertEquals(0, $rule->calculate([]));
     }
 
     public function testNoMatch()
     {
-        $rule = new \KarmaFlatValueRule('potential', 0, -10);
+        $rule = new KarmaFlatValueRule('potential', 0, -10);
 
         $this->assertEquals(0, $rule->calculate(
             [
