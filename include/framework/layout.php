@@ -523,7 +523,6 @@ HTML;
         <span>Economy</span>
         <ul class='submenu'>
             <li><a href='{$this->url('economy_breakdown')}'>Budget oversigt</a></li>
-            <li><a href='{$this->url('detailed_budget')}'>Deltager-budget</a></li>
             <li><a href='{$this->url('accounting_overview')}'>Regnskabs-oversigt</a></li>
         </ul>
     </li>

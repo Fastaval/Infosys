@@ -200,8 +200,10 @@ class Routes
 
         // economy stuffs
         $this->routes['economy_breakdown']    = array('url' => 'economy/breakdown', 'controller' => 'Participant', 'method' => 'economyBreakdown');
-        $this->routes['detailed_budget']      = array('url' => 'economy/detailedbudget/', 'controller' => 'Economy', 'method' => 'detailedBudget');
         $this->routes['accounting_overview']  = array('url' => 'economy/accounting-overview/', 'controller' => 'Economy', 'method' => 'accountingOverview');
+
+        // TODO remove methods and pages only used by this route
+        $this->routes['detailed_budget']      = array('url' => 'economy/detailedbudget/', 'controller' => 'Economy', 'method' => 'detailedBudget');
 
         // graph routes
         $this->routes['graph_participant_signups']       = array('url' => 'graph/ajax/signups', 'controller' => 'Graph', 'method' => 'ajaxSignups');
