@@ -267,7 +267,21 @@ ORDER BY
     }
 
     protected function calculateSupportDetails() {
-        $food_query = "SELECT * FROM mad";
+        $food_query = "SELECT id, SUBSTRING(kategori, 1, 9) AS meal, pris FROM mad";
+        $meals = [];
+        foreach($this->db->query($food_query) as $food_category) {
+            if ($food_category['pris'] == 0) continue;
+
+            if (isset($meals[$food_category['meal']])) {
+                $meals[$food_category['meal']]['ids'][] = $food_category['id'];
+            } else {
+                $meals[$food_category['meal']] = [
+                    'ids' => [$food_category['id']],
+                    'price' => $food_category['pris'],
+                ];
+            }
+        }
+
         $count_query = 
             "SELECT COUNT(*) AS participants, IFNULL(LEAST(fc.food_count, 2), 0) AS `food count` 
             FROM deltagere d 
@@ -275,7 +289,7 @@ ORDER BY
                 SELECT deltager_id, COUNT(*) AS food_count 
                 FROM deltagere_madtider dm 
                 JOIN madtider mt ON dm.madtid_id = mt.id 
-                WHERE mt.mad_id = ?
+                WHERE mt.mad_id IN ({args})
                 GROUP BY deltager_id
             ) AS fc ON fc.deltager_id = d.id
             WHERE d.financial_struggle = 'ja'
@@ -283,19 +297,18 @@ ORDER BY
             HAVING `food count` > 0";
 
         $categories = [];
-        foreach($this->db->query($food_query) as $food_category) {
-            if ($food_category['pris'] == 0) continue;
-
+        foreach($meals as $name => $cat) {
             $count = 0;
-            foreach ($this->db->query($count_query, [$food_category['id']]) as $support_count) {
+            $qmarks = "?" . str_repeat(", ?", count($cat['ids']) - 1);
+            foreach ($this->db->query(str_replace("{args}", $qmarks, $count_query), $cat['ids']) as $support_count) {
                 $count += $support_count['participants'] * $support_count['food count'];
             }
             if ($count == 0) continue;
 
             $categories[] = [
-                'name' => $food_category['kategori'],
-                'price' => -$food_category['pris'],
-                'cost' => -$count * $food_category['pris'],
+                'name' => $name,
+                'price' => -$cat['price'],
+                'cost' => -$count * $cat['price'],
                 'amount' => $count,
             ];
         }
