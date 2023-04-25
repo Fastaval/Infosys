@@ -2405,16 +2405,14 @@ die ("This page has to be enabled by someone with access to the server code");
             $cache = CACHE_FOLDER;
             // $badges = glob($cache."/<something>");
             
-            $signup = SIGNUP_FOLDER."data/";
-            $sessions = glob($signup."session*");
-            $parsed = glob($signup."parse*");
+            $signups = glob(SIGNUP_FOLDER."data/*.json");
 
             $uploads = PUBLIC_PATH."uploads/";
             $photos = glob($uploads."photo*");
 
             $deleted = [];
             $skipped = [];
-            $files = array_merge($sessions, $parsed, $photos);
+            $files = array_merge($signups, $photos);
             foreach($files as $file){ // iterate files
                 if(is_file($file) && unlink($file)) { // delete file
                     $deleted[] = $file;
