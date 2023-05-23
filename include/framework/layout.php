@@ -598,6 +598,9 @@ HTML;
             <li><a href='{$this->url('signup_pages')}'>Tilpas sider</a></li>
         </ul>
     </li>
+    <li class='topmenu-item'>
+        <a href='{$this->url('tickets_main')}'>Opgaver</a>
+    </li>
 HTML;
         }
 

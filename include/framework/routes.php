@@ -459,6 +459,9 @@ class Routes
         $this->routes['api_signup_submit']          = array('url' => 'api/signup/submit', 'controller' => 'SignupApi', 'method' => 'submitSignup');
         $this->routes['api_signup_confirm']         = array('url' => 'api/signup/confirm', 'controller' => 'SignupApi', 'method' => 'confirmSignup');
         $this->routes['api_signup_load']            = array('url' => 'api/signup/load', 'controller' => 'SignupApi', 'method' => 'loadSignup');
+
+        // Ticket system
+        $this->routes['tickets_main']               = array('url' => 'tickets', 'controller' => 'Tickets', 'method' => 'mainPage');
     }
 
     /**
