@@ -9,12 +9,12 @@ class TicketsController extends Controller
   public function mainPage() {
     $this->page->ticket_id = $this->vars['ticket_id'] ?? 0;
 
-    $scripts = glob(PUBLIC_PATH."js/tickets/*");
-    foreach($scripts as $script){ // iterate script files
-      $this->page->registerEarlyLoadJS('tickets/'.basename($script));
+    $scripts = glob(PUBLIC_PATH."js/tickets/*index*.js");
+    if (!empty($scripts)) {
+      $this->page->registerEarlyLoadJSModule('tickets/'.basename($scripts[0]));
     }
 
-    $stylesheets = glob(PUBLIC_PATH."css/tickets/*");
+    $stylesheets = glob(PUBLIC_PATH."css/tickets/*.css");
     foreach($stylesheets as $sheet){ // iterate script files
       $this->page->includeCSS('tickets/'.basename($sheet));
     }
@@ -71,8 +71,6 @@ class TicketsController extends Controller
       }
 
       $description = $ticket->getDescription();
-      $this->fileLog(print_r($description, true));
-
       $entry['description'] = $description['message'];
       $entry['created']     = $description['posted'];
       $entry['last_edit']   = $description['last_edit'];

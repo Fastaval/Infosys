@@ -335,6 +335,10 @@ XML;
     protected function renderEarlyLoadJS()
     {
         $return = '';
+        foreach ($this->page->getEarlyLoadJSModule() as $js) {
+            $return .= $this->includeJS($js, true) . PHP_EOL;
+        }
+
         foreach ($this->page->getEarlyLoadJS() as $js) {
             $return .= $this->includeJS($js) . PHP_EOL;
         }
@@ -380,9 +384,10 @@ XML;
      * @param string $url - relative uri of file to include
      * @access public
      */
-    public function includeJS($url)
+    public function includeJS($url, $ismodule = false)
     {
-        return "<script src='" . $this->config->get('app.public_uri') . staticLink("js/{$url}") . "' type='text/javascript'></script>";
+        $type = $ismodule ? 'module' : 'text/javascript';
+        return "<script src='" . $this->config->get('app.public_uri') . staticLink("js/{$url}", !$ismodule) . "' type='$type'></script>";
     }
 
     /**
