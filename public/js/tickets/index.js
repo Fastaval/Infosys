@@ -10,7 +10,7 @@ $( document ).ready(function() {
 
   function show_ticket(id) {
     $.get(
-      'https://infosys-test.fastaval.dk/tickets/find',
+      'https://infosys-test.fastaval.dk/tickets/ajax',
       {
         id: id
       },
@@ -44,7 +44,7 @@ $( document ).ready(function() {
     $('.tickets-wrapper').html('<h3>Opgaver til tilmelding og infosys<h3>');
 
     $.get(
-      'https://infosys-test.fastaval.dk/tickets/find',
+      'https://infosys-test.fastaval.dk/tickets/ajax',
       {},
       function(data, status) {
         if (data['status'] == 'success') {
@@ -95,7 +95,7 @@ $( document ).ready(function() {
   $('.tickets-wrapper').after(create_button);
   create_button.on('click', function() {
     $.post(
-      'https://infosys-test.fastaval.dk/tickets/create',
+      'https://infosys-test.fastaval.dk/tickets/ajax',
       {
         'name':'Test Opgave',
         'description': 'Opgave oprettet via test interface',
@@ -110,7 +110,7 @@ $( document ).ready(function() {
   $('.tickets-wrapper').after(list_button);
   list_button.on('click', function() {
     $.get(
-      'https://infosys-test.fastaval.dk/tickets/find',
+      'https://infosys-test.fastaval.dk/tickets/ajax',
       {},
       function(data, status) {
         console.log("Ticket list response:", data, "Status:", status);
@@ -123,7 +123,7 @@ $( document ).ready(function() {
     $('.tickets-wrapper').after(update_button);
     update_button.on('click', function() {
       $.post(
-        'https://infosys-test.fastaval.dk/tickets/update',
+        'https://infosys-test.fastaval.dk/tickets/ajax',
         {
           'id':window.infosys.ticket_id,
           'name':'Rettet Opgave',

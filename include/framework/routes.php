@@ -463,9 +463,7 @@ class Routes
         // Ticket system
         $this->routes['tickets_main']               = array('url' => 'tickets', 'controller' => 'Tickets', 'method' => 'mainPage');
         $this->routes['tickets_show']               = array('url' => 'tickets/show/:ticket_id:', 'controller' => 'Tickets', 'method' => 'mainPage');
-        $this->routes['tickets_create']             = array('url' => 'tickets/create', 'controller' => 'Tickets', 'method' => 'createTicket');
-        $this->routes['tickets_update']             = array('url' => 'tickets/update', 'controller' => 'Tickets', 'method' => 'updateTicket');
-        $this->routes['tickets_find']               = array('url' => 'tickets/find', 'controller' => 'Tickets', 'method' => 'getTickets');
+        $this->routes['tickets_ajax']               = array('url' => 'tickets/ajax', 'controller' => 'Tickets', 'method' => 'ajaxTickets');
 
         // Translations
         $this->routes['translations_get']           = array('url' => 'translations/find/:label:', 'controller' => 'Translation', 'method' => 'findTranslation');

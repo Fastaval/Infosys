@@ -20,13 +20,24 @@ class TicketsController extends Controller
     }
   }
 
-  public function createTicket() {
-    if (!$this->page->request->isPost()) {
-      header('HTTP/1.1 400 Not a POST request');
-      exit;
-    }
-    $post = $this->page->request->post;
+  public function ajaxTickets() {
+    if ($this->page->request->isPost()) {
+      // Posting ticket
+      $post = $this->page->request->post;
 
+      if (isset($post->id)) {
+        $this->updateTicket($post);
+      } else {
+        $this->createTicket($post);
+      }
+    } else {
+      // GET Ticket(s)
+      $get = $this->page->request->get;
+      $this->getTickets($get);
+    }
+  }
+
+  private function createTicket($post) {
     $id = $this->model->createTicket($post);
     if ($id !== false) {
       $this->jsonOutput(['status' => 'success', 'id' => $id]);
@@ -35,19 +46,9 @@ class TicketsController extends Controller
     }
   }
 
-  public function updateTicket() {
-    if (!$this->page->request->isPost()) {
-      header('HTTP/1.1 400 Not a POST request');
-      exit;
-    }
-    $post = $this->page->request->post;
-
-    if (!isset($post->id)) {
-      header('HTTP/1.1 400 No ID');
-      exit;
-    }
-
+  private function updateTicket($post) {
     $result = $this->model->updateTicket($post);
+
     if ($result['status'] === 'success') {
       $this->jsonOutput(['status' => 'success']);
     } else {
@@ -56,8 +57,8 @@ class TicketsController extends Controller
     }
   }
 
-  public function getTickets() {
-    $tickets = $this->model->getTickets($this->page->request->get);
+  private function getTickets($get) {
+    $tickets = $this->model->getTickets($get);
 
     if (empty($tickets)) {
       $this->jsonOutput(['status' => 'no results'], 404);
