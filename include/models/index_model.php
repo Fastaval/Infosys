@@ -143,7 +143,7 @@ SELECT
         WHEN birthdate > NOW() - INTERVAL 40 YEAR THEN "30-40"
         WHEN birthdate > NOW() - INTERVAL 50 YEAR THEN "40-50"
         ELSE "50+"
-        END AS grouping,
+        END AS age_group,
     COUNT(*) AS count
 FROM
     deltagere AS d
@@ -151,14 +151,14 @@ WHERE
     signed_up > "0000-00-00"
     AND annulled = "nej"
 GROUP BY
-    grouping
+    age_group
 ORDER BY
-    grouping
+    age_group
 ';
 
         if (($result = $this->db->query($query)) && !empty($result[0])) {
             foreach ($result as $row) {
-                $stats['age_group'][$row['grouping']] = $row['count'];
+                $stats['age_group'][$row['age_group']] = $row['count'];
             }
         }
 
