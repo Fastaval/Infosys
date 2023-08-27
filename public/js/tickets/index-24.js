@@ -156,19 +156,7 @@ $( document ).ready(function(infosys) {
         },
         function(data, status) {
           console.log("Create ticket response:", data, "Status:", status);
-        }
-      )
-    })
-
-    // Get ticket list (only in console)
-    let list_button = $('<button>Ticket List</button>');
-    buttons_div.append(list_button);
-    list_button.on('click', function() {
-      $.get(
-        '/tickets/ajax',
-        {},
-        function(data, status) {
-          console.log("Ticket list response:", data, "Status:", status);
+          location.reload();
         }
       )
     })
@@ -205,6 +193,7 @@ $( document ).ready(function(infosys) {
           },
           function(data, status) {
             console.log("Post message response:", data, "Status:", status);
+            location.reload();
           }
         )
       })
@@ -224,6 +213,7 @@ $( document ).ready(function(infosys) {
             },
             function(data, status) {
               console.log("Update message response:", data, "Status:", status);
+              location.reload();
             }
           ).fail(function (jqXHR) {
             console.log('Update message failed', jqXHR);
