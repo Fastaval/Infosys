@@ -209,12 +209,18 @@ class DB
         }
 
         $query = array_shift($args);
+        $mode = PDO::FETCH_DEFAULT;
 
         if ($query instanceof Select) {
             $args  = $query->getArguments();
             $query = $query->assemble();
         } else {
-            if (!empty($args) && count($args) == 1 && is_array($args[0])) {
+            if (
+                !empty($args) 
+                && (count($args) == 1 || (count($args) == 2 && $args[1] == 'assoc'))
+                && is_array($args[0])
+            ) {
+                if ($args[1] == 'assoc') $mode = PDO::FETCH_ASSOC;
                 $args = $args[0];
             }
         }
@@ -240,7 +246,7 @@ class DB
             }
 
             if (false !== $statement->execute($args)) {
-                while (false !== ($row = $statement->fetch())) {
+                while (false !== ($row = $statement->fetch($mode))) {
                     $this->query_result[] = $row;
                 }
             } else {
