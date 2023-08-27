@@ -144,25 +144,27 @@ $( document ).ready(function(infosys) {
     }
     buttons_div.html('');
     
-    // Create ticket
-    let create_button = $('<button>Create Ticket</button>');
-    buttons_div.append(create_button);
-    create_button.on('click', function() {
-      $.post(
-        '/tickets/ajax',
-        {
-          'name':'Test Opgave',
-          'description': 'Opgave oprettet via test interface',
-        },
-        function(data, status) {
-          console.log("Create ticket response:", data, "Status:", status);
-          location.reload();
-        }
-      )
-    })
+    if (infosys.ticket_id === undefined){
+      // Buttons only for when we are on the main ticket page
 
-    // Buttons only for when we have a current ticket
-    if (infosys.ticket_id !== undefined) {
+      // Create ticket
+      let create_button = $('<button>Create Ticket</button>');
+      buttons_div.append(create_button);
+      create_button.on('click', function() {
+        $.post(
+          '/tickets/ajax',
+          {
+            'name':'Test Opgave',
+            'description': 'Opgave oprettet via test interface',
+          },
+          function(data, status) {
+            console.log("Create ticket response:", data, "Status:", status);
+            location.reload();
+          }
+        )
+      })
+    } else {
+      // Buttons only for when we have a current ticket
       
       // Do a test update of a ticket
       let update_button = $('<button>Update Ticket</button>');
