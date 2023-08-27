@@ -54,7 +54,9 @@ $( document ).ready(function(infosys) {
             console.log("Message list response:", data, "Status:", status);
           }
         }
-      )
+      ).complete(function() {
+        set_buttons();
+      })
 
       function list_comments(messages) {
         if (messages.length > 0) {
@@ -73,7 +75,6 @@ $( document ).ready(function(infosys) {
           );
           wrapper.append(div);
         }
-        set_buttons();
       }
     }
   }
