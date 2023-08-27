@@ -6,6 +6,9 @@ class TicketsController extends Controller
     array('method' => 'checkUser', 'exclusive' => true),
   );
 
+  //--------------------------------------------------------------------------------------------------------------------
+  // Pages
+  //--------------------------------------------------------------------------------------------------------------------
   public function mainPage() {
     $this->page->ticket_id = $this->vars['ticket_id'] ?? 0;
 
@@ -20,6 +23,9 @@ class TicketsController extends Controller
     }
   }
 
+  //--------------------------------------------------------------------------------------------------------------------
+  // Ticket AJAX functions
+  //--------------------------------------------------------------------------------------------------------------------
   public function ajaxTickets() {
     if ($this->page->request->isPost()) {
       // Posting ticket
@@ -40,7 +46,11 @@ class TicketsController extends Controller
   private function createTicket($post) {
     $id = $this->model->createTicket($post);
     if ($id !== false) {
-      $this->jsonOutput(['status' => 'success', 'id' => $id]);
+      $this->jsonOutput([
+        'status' => 'success',
+        'message' => "Ticket with ID:$id created",
+        'id' => $id,
+        ]);
     } else {
       $this->jsonOutput(['status' => 'error'], 400);
     }
@@ -50,7 +60,10 @@ class TicketsController extends Controller
     $result = $this->model->updateTicket($post);
 
     if ($result['status'] === 'success') {
-      $this->jsonOutput(['status' => 'success']);
+      $this->jsonOutput([
+        'status' => 'success',
+        'message' => "Ticket updated",
+        ]);
     } else {
       $code = $result['code'] ?? 400;
       $this->jsonOutput($result, $code);
@@ -81,5 +94,68 @@ class TicketsController extends Controller
     }
 
     $this->jsonOutput(['status' => 'success', 'tickets' => $output]);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  // Ticket messages AJAX funtions
+  //--------------------------------------------------------------------------------------------------------------------
+  public function ajaxMessages() {
+    $ticket_id = $this->vars['ticket_id'];
+    if(empty($ticket_id) && !is_int($ticket_id)) {
+      header('HTTP/1.1 400 Missing or malformed ticket ID');
+      exit;
+    }
+
+    if ($this->page->request->isPost()) {
+      // Posting ticket
+      $post = $this->page->request->post;
+
+      if (isset($post->id)) {
+        $this->updateMessage($post, $ticket_id);
+      } else {
+        $this->createMessage($post, $ticket_id);
+      }
+    } else {
+      // GET Ticket(s)
+      $get = $this->page->request->get;
+      $this->getMessages($get, $ticket_id);
+    }
+  }
+
+  private function createMessage($post, int $ticket_id) {
+    $id = $this->model->createMessage($post, $ticket_id);
+    if ($id !== false) {
+      $this->jsonOutput([
+        'status' => 'success',
+        'message' => "Message with ID:$id created",
+        'id' => $id,
+        ]);
+    } else {
+      $this->jsonOutput(['status' => 'error'], 400);
+    }
+  }
+
+  private function updateMessage($post, int $ticket_id) {
+    $result = $this->model->updateMessage($post, $ticket_id);
+
+    if ($result['status'] === 'success') {
+      $this->jsonOutput([
+        'status' => 'success',
+        'message' => "Message updated",
+        ]);
+    } else {
+      $code = $result['code'] ?? 400;
+      $this->jsonOutput($result, $code);
+    }
+  }
+
+  private function getMessages($get, $ticket_id) {
+    $messages = $this->model->getMessages($get, $ticket_id);
+
+    if (empty($messages)) {
+      $this->jsonOutput(['status' => 'no results'], 404);
+    }
+    
+    $this->jsonOutput(['status' => 'success', 'messages' => $messages]);
   }
 }
