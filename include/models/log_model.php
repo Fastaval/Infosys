@@ -135,7 +135,7 @@ class LogModel extends Model
 
         $result = $this->db->query($query);
 
-        $query = 'SELECT FOUND_ROWS() AS rows';
+        $query = 'SELECT FOUND_ROWS() AS frows';
 
         $result_length = $this->db->query($query);
         $result_length = $result_length[0][0];
