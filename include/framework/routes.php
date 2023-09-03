@@ -467,7 +467,7 @@ class Routes
         $this->routes['tickets_messages_ajax']      = array('url' => 'tickets/:ticket_id:/messages', 'controller' => 'Tickets', 'method' => 'ajaxMessages');
 
         // Translations
-        $this->routes['translations_get']           = array('url' => 'translations/find/:label:', 'controller' => 'Translation', 'method' => 'findTranslation');
+        $this->routes['translations_ajax']           = array('url' => 'translations/ajax/:label:', 'controller' => 'Translation', 'method' => 'ajaxTranslations');
 
     }
 

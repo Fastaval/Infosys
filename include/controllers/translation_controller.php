@@ -1,17 +1,42 @@
 <?php
 
-class TranlationController extends Controller
+class TranslationController extends Controller
 {
-  public function findTranslation() {
+  public function ajaxTranslations () {
     $label = $this->vars['label'] ?? '';
 
-    $translations = $this->model->findTranslation($label);
+    if ($this->page->request->isPost()) {
+      // Posting translation
+      $this->checkUser();
+
+      // TODO
+      $post = $this->page->request->post;
+
+    } else {
+      // GET Ticket(s)
+      $get = $this->page->request->get;
+      $this->findTranslations($label, $get->lang);
+    }
+  }
+  
+  public function findTranslations($label, $lang) {
+    $translations = $this->model->findTranslations($label, $lang);
 
     if (empty($translations)) {
-      header('HTTP/1.1 404 No matching translation found');
-      exit;
+      $this->jsonOutput(
+        [
+          'status' => 'error',
+          'code' => '404',
+          'message' => "No translations matching \"$label\""
+        ],
+        404
+      );
     }
 
-    $this->jsonOutput($translations);
+    $this->jsonOutput(
+      [
+        'status' => 'success',
+        'translations' => $translations,
+      ]);
   }
 }

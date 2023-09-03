@@ -1,6 +1,38 @@
 "use strict";
-$( document ).ready(function(infosys) {
+$( function() {
+  let infosys = window.infosys;
+  let lang = 'da';
+
   // just some preliminary stuff for demonstration
+  let translations;
+  let translation_queue = [];
+
+  $.get(
+    '/translations/ajax/tickets.*',
+    {
+      lang
+    },
+    function(data, status) {
+      if (data['status'] == 'success') {
+        translations = data.translations.tickets;
+        translation_queue.forEach(function(func) {
+          func();
+        })
+      } else {
+        alert("Fejl under hentning af oversættelser fra serveren");
+        console.log("Ticket list response:", data, "Status:", status);
+      }
+    }
+  );
+
+  function await_translations(func) {
+    if (translations !== undefined) {
+      func();
+      return;
+    }
+
+    translation_queue.push(func);
+  }
 
   // Check if we have a ticket id set aka are we looking at a specific ticket
   if (infosys.ticket_id !== undefined) {
@@ -20,7 +52,9 @@ $( document ).ready(function(infosys) {
       },
       function(data, status) {
         if (data['status'] == 'success') {
-          show_ticket_info(Object.values(data.tickets)[0]);
+          await_translations(function() {
+            show_ticket_info(Object.values(data.tickets)[0]);
+          })
         } else {
           alert("Fejl under hentning af opgave fra serveren");
           console.log("Ticket list response:", data, "Status:", status);
@@ -33,13 +67,17 @@ $( document ).ready(function(infosys) {
       let created = new Date(ticket.created*1000);
       let edited = new Date(ticket.last_edit*1000);
 
+      let priority = translations.priority[ticket.priority][lang];
+      let open = ticket.open ? translations.open[lang] : translations.closed[lang];
+
       let wrapper = $('.tickets-wrapper');
       wrapper.html(`
         <button onclick="window.infosys.tickets.show_ticket_list()">Tilbage</button>
-        <h2>${ticket.name} ID:${ticket.id}</h2>
+        <h2>${ticket.name} ID:${ticket.id} (${open})</h2>
         <p>Oprettet af:${ticket.creator}, ${created}</p>
+        <p>Sidst opdateret: ${edited} </p>
         <p>Udføres af af:${ticket.assignee}</p>
-        <p>Sidst opdateret: ${edited} (${ticket.open ? 'Åben' : 'Lukket'})</p>
+        <p>Prioritet: ${priority}</p>
         <h3>Beskrivelse:</h3>
         <p>${ticket.description}</p>
       `);
@@ -60,7 +98,7 @@ $( document ).ready(function(infosys) {
 
       function list_comments(messages) {
         if (messages.length > 0) {
-          wrapper.append('<h3>Kommentare:</h3>');
+          wrapper.append('<h3>Kommentarer:</h3>');
         }
 
         for (const message of messages) {
@@ -91,7 +129,9 @@ $( document ).ready(function(infosys) {
       {},
       function(data, status) {
         if (data['status'] == 'success') {
-          create_tickets_table(data.tickets);
+          await_translations(function() {
+            create_tickets_table(data.tickets);
+          })
         } else {
           alert("Fejl under hentning af opgaver fra serveren");
           console.log("Ticket list response:", data, "Status:", status);
@@ -125,7 +165,16 @@ $( document ).ready(function(infosys) {
       for (const id in tickets) {
         let row = $(`<tr onclick="window.infosys.tickets.show_ticket(${id})"></tr>`);
         for(const column in headers) {
-          row.append(`<td>${tickets[id][column]}</td>`);
+          let text = tickets[id][column];
+
+          if (column == 'status') {
+            let open = tickets[id].open ? 'open' : 'closed';
+            text = translations.status[open][text]?.[lang] ?? text;
+          } else {
+            text = translations[column]?.[text]?.[lang] ?? text;
+          }
+          
+          row.append(`<td>${text}</td>`);
         }
         body.append(row);
       }
@@ -234,4 +283,4 @@ $( document ).ready(function(infosys) {
     show_ticket_list,
   }
 
-}(window.infosys));
+});
