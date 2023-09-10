@@ -14,8 +14,8 @@ class TicketsController extends Controller
 
     $scripts = glob(PUBLIC_PATH."js/tickets/*index*.js");
     if (!empty($scripts)) {
-      //$this->page->registerEarlyLoadJSModule('tickets/'.basename($scripts[0]));
-      $this->page->registerEarlyLoadJS('tickets/'.basename($scripts[0]));
+      $this->page->registerEarlyLoadJSModule('tickets/'.basename($scripts[0]));
+      //$this->page->registerEarlyLoadJS('tickets/'.basename($scripts[0]));
     }
 
     $stylesheets = glob(PUBLIC_PATH."css/tickets/*.css");

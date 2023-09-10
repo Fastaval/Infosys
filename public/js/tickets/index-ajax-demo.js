@@ -122,7 +122,7 @@ $( function() {
         <h2>${ticket.name} ID:${ticket.id} (${open})</h2>
         <p>Oprettet af:${us[ticket.creator]?.name || 'Ukendt'}, ${created}</p>
         <p>Sidst opdateret: ${edited} </p>
-        <p>Udføres af af:${us[ticket.assignee]?.name} || 'Ukendt'</p>
+        <p>Udføres af af:${us[ticket.assignee]?.name || 'Ukendt'}</p>
         <p>Prioritet: ${priority}</p>
         <h3>Beskrivelse:</h3>
         <p>${ticket.description}</p>
