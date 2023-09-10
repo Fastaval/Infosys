@@ -4,8 +4,12 @@ $( function() {
   let lang = 'da';
 
   // just some preliminary stuff for demonstration
-  let translations;
-  let translation_queue = [];
+  let saved_data = {};
+  let waiting = {
+    next: 1,
+    functions: [],
+    name_list: []
+  };
 
   $.get(
     '/translations/ajax/tickets.*',
@@ -14,10 +18,7 @@ $( function() {
     },
     function(data, status) {
       if (data['status'] == 'success') {
-        translations = data.translations.tickets;
-        translation_queue.forEach(function(func) {
-          func();
-        })
+        resolve('translations', data.translations.tickets);
       } else {
         alert("Fejl under hentning af oversættelser fra serveren");
         console.log("Ticket list response:", data, "Status:", status);
@@ -25,13 +26,56 @@ $( function() {
     }
   );
 
-  function await_translations(func) {
-    if (translations !== undefined) {
+  $.get(
+    '/admin/ajax/users/*',
+    {},
+    function(data, status) {
+      if (data['status'] == 'success') {
+        resolve('users', data.users);
+      } else {
+        alert("Fejl under hentning af brugere fra serveren");
+        console.log("users list response:", data, "Status:", status);
+      }
+    }
+  );
+
+  function await(names, func) {
+    if (!Array.isArray(names)) {
+      names = [names];
+    }
+
+    let wait_names = [];
+    names.forEach(function(name) {
+      if (saved_data[name] === undefined) {
+        wait_names.push(name);
+      }
+    });
+
+    if (wait_names.length == 0) {
       func();
       return;
     }
 
-    translation_queue.push(func);
+    waiting.functions[waiting.next] = func;
+    waiting.name_list[waiting.next] = wait_names;
+    waiting.next++;
+  }
+
+  function resolve(name, data) {
+    saved_data[name] = data;
+
+    waiting.name_list.forEach(function(names, index) {
+      let name_index = names.indexOf(name);
+      if (name_index != -1) {
+        waiting.name_list[index].splice(name_index, 1);
+      }
+
+      if (waiting.name_list[index].length == 0) {
+        waiting.functions[index]();
+        delete waiting.name_list[index];
+        delete waiting.functions[index];
+      }
+    });
   }
 
   // Check if we have a ticket id set aka are we looking at a specific ticket
@@ -52,7 +96,7 @@ $( function() {
       },
       function(data, status) {
         if (data['status'] == 'success') {
-          await_translations(function() {
+          await( ['translations', 'users'] , function() {
             show_ticket_info(Object.values(data.tickets)[0]);
           })
         } else {
@@ -66,17 +110,19 @@ $( function() {
     function show_ticket_info(ticket) {
       let created = new Date(ticket.created*1000);
       let edited = new Date(ticket.last_edit*1000);
+      let ts = saved_data.translations;
+      let us = saved_data.users;
 
-      let priority = translations.priority[ticket.priority][lang];
-      let open = ticket.open ? translations.open[lang] : translations.closed[lang];
+      let priority = ts.priority[ticket.priority][lang];
+      let open = ticket.open ? ts.open[lang] : ts.closed[lang];
 
       let wrapper = $('.tickets-wrapper');
       wrapper.html(`
         <button onclick="window.infosys.tickets.show_ticket_list()">Tilbage</button>
         <h2>${ticket.name} ID:${ticket.id} (${open})</h2>
-        <p>Oprettet af:${ticket.creator}, ${created}</p>
+        <p>Oprettet af:${us[ticket.creator]?.name || 'Ukendt'}, ${created}</p>
         <p>Sidst opdateret: ${edited} </p>
-        <p>Udføres af af:${ticket.assignee}</p>
+        <p>Udføres af af:${us[ticket.assignee]?.name} || 'Ukendt'</p>
         <p>Prioritet: ${priority}</p>
         <h3>Beskrivelse:</h3>
         <p>${ticket.description}</p>
@@ -129,7 +175,7 @@ $( function() {
       {},
       function(data, status) {
         if (data['status'] == 'success') {
-          await_translations(function() {
+          await(['translations', 'users'], function() {
             create_tickets_table(data.tickets);
           })
         } else {
@@ -167,11 +213,15 @@ $( function() {
         for(const column in headers) {
           let text = tickets[id][column];
 
+          let ts = saved_data.translations;
+          let us = saved_data.users;
           if (column == 'status') {
             let open = tickets[id].open ? 'open' : 'closed';
-            text = translations.status[open][text]?.[lang] ?? text;
+            text = ts.status[open][text]?.[lang] ?? text;
+          } else if (column == 'creator' || column == 'assignee') {
+            text = us[text]?.name ?? 'Ukendt';
           } else {
-            text = translations[column]?.[text]?.[lang] ?? text;
+            text = ts[column]?.[text]?.[lang] ?? text;
           }
           
           row.append(`<td>${text}</td>`);

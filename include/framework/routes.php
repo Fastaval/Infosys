@@ -374,6 +374,7 @@ class Routes
         $this->routes['admin_ajax_deleteprivilege'] = array('url' => 'admin/ajax/deleteprivilege/:id:', 'controller' => 'Admin', 'method' => 'ajaxDeletePrivilege');
         $this->routes['admin_ajax_deleterole']      = array('url' => 'admin/ajax/deleterole/:id:', 'controller' => 'Admin', 'method' => 'ajaxDeleteRole');
         $this->routes['admin_ajax_createrole']      = array('url' => 'admin/ajax/createrole', 'controller' => 'Admin', 'method' => 'ajaxCreateRole');
+        $this->routes['admin_ajax_users']           = array('url' => 'admin/ajax/users/:id:', 'controller' => 'Admin', 'method' => 'ajaxUsers');
 
         // api routes
         $this->routes['api_auth']                = array('url' => 'api/auth', 'controller' => 'Api', 'method' => 'auth');

@@ -46,6 +46,11 @@ class AdminModel extends Model
         return (($result = $this->createEntity('User')->findAll()) ? $result : array());
     }
 
+    public function getUserByID($id)
+    {
+        return (($result = $this->createEntity('User')->findById($id)) ? $result : array());
+    }
+
     /**
      * fetches all roles in the system
      *
