@@ -39,7 +39,7 @@ $( function() {
     }
   );
 
-  function await(names, func) {
+  function await_data(names, func) {
     if (!Array.isArray(names)) {
       names = [names];
     }
@@ -96,7 +96,7 @@ $( function() {
       },
       function(data, status) {
         if (data['status'] == 'success') {
-          await( ['translations', 'users'] , function() {
+          await_data( ['translations', 'users'] , function() {
             show_ticket_info(Object.values(data.tickets)[0]);
           })
         } else {
@@ -175,7 +175,7 @@ $( function() {
       {},
       function(data, status) {
         if (data['status'] == 'success') {
-          await(['translations', 'users'], function() {
+          await_data(['translations', 'users'], function() {
             create_tickets_table(data.tickets);
           })
         } else {
