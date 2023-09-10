@@ -153,7 +153,7 @@ $( function() {
 
           let div = $(`<div class="comment-div" message-id="${message.id}"></div>`);
           div.html(`
-            <p class="comment-header">Posted by ${message.user} on ${new Date(message.posted*1000)}</p>
+            <p class="comment-header">Posted by ${us[message.user]?.name || 'Ukendt'} on ${new Date(message.posted*1000)}</p>
             ${edited}
             <p class="comment-body">${message.message}</p>`
           );
