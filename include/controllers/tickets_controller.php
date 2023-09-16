@@ -152,11 +152,6 @@ class TicketsController extends Controller
 
   private function getMessages($get, $ticket_id) {
     $messages = $this->model->getMessages($get, $ticket_id);
-
-    if (empty($messages)) {
-      $this->jsonOutput(['status' => 'no results'], 404);
-    }
-    
     $this->jsonOutput(['status' => 'success', 'messages' => $messages]);
   }
 }
