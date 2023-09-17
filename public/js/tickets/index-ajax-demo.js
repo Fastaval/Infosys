@@ -245,42 +245,48 @@ $( function() {
     
     if (infosys.ticket_id === undefined){
       // Buttons only for when we are on the main ticket page
+      let data = JSON.stringify({
+        'name':'Test Opgave',
+        'description': 'Opgave oprettet via test interface med JSON data',
+      });
 
       // Create ticket
-      let create_button = $('<button>Create Ticket</button>');
+      let create_button = $('<button>Create Ticket (with JSON)</button>');
       buttons_div.append(create_button);
       create_button.on('click', function() {
-        $.post(
-          '/tickets/ajax',
-          {
-            'name':'Test Opgave',
-            'description': 'Opgave oprettet via test interface',
-          },
-          function(data, status) {
+        $.ajax({
+          type: 'POST',
+          url: '/tickets/ajax',
+          contentType: 'application/json',
+          data,
+          success: function(data, status) {
             console.log("Create ticket response:", data, "Status:", status);
             location.reload();
           }
-        )
+        })
       })
     } else {
       // Buttons only for when we have a current ticket
+      let data = JSON.stringify({
+        'id':infosys.ticket_id,
+        'name':'Rettet Opgave',
+        'description': 'Denne opgave er rettet med testknap',
+      });
       
       // Do a test update of a ticket
-      let update_button = $('<button>Update Ticket</button>');
+      let update_button = $('<button>Update Ticket (with JSON)</button>');
       buttons_div.append(update_button);
       update_button.on('click', function() {
-        $.post(
-          '/tickets/ajax',
-          {
-            'id':infosys.ticket_id,
-            'name':'Rettet Opgave',
-            'description': 'Denne opgave er rettet med testknap',
-          },
-          function(data, status) {
+        $.ajax({
+          type: 'POST',
+          url : '/tickets/ajax',
+          contentType: 'application/json',
+          data,
+          success: function(data, status) {
             console.log("Update ticket response:", data, "Status:", status);
             location.reload();
           }
-        )
+        })
       })
 
       // Post a message on a ticket

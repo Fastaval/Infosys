@@ -30,12 +30,12 @@ class TicketsController extends Controller
   public function ajaxTickets() {
     if ($this->page->request->isPost()) {
       // Posting ticket
-      $post = $this->page->request->post;
+      $data = $this->getPostData();
 
-      if (isset($post->id)) {
-        $this->updateTicket($post);
+      if (isset($data->id)) {
+        $this->updateTicket($data);
       } else {
-        $this->createTicket($post);
+        $this->createTicket($data);
       }
     } else {
       // GET Ticket(s)
@@ -44,8 +44,8 @@ class TicketsController extends Controller
     }
   }
 
-  private function createTicket($post) {
-    $id = $this->model->createTicket($post);
+  private function createTicket($data) {
+    $id = $this->model->createTicket($data);
     if ($id !== false) {
       $this->jsonOutput([
         'status' => 'success',
@@ -57,8 +57,8 @@ class TicketsController extends Controller
     }
   }
 
-  private function updateTicket($post) {
-    $result = $this->model->updateTicket($post);
+  private function updateTicket($data) {
+    $result = $this->model->updateTicket($data);
 
     if ($result['status'] === 'success') {
       $this->jsonOutput([
@@ -109,12 +109,12 @@ class TicketsController extends Controller
 
     if ($this->page->request->isPost()) {
       // Posting ticket
-      $post = $this->page->request->post;
+      $data = $this->getPostData();
 
-      if (isset($post->id)) {
-        $this->updateMessage($post, $ticket_id);
+      if (isset($data->id)) {
+        $this->updateMessage($data, $ticket_id);
       } else {
-        $this->createMessage($post, $ticket_id);
+        $this->createMessage($data, $ticket_id);
       }
     } else {
       // GET Ticket(s)
@@ -123,8 +123,8 @@ class TicketsController extends Controller
     }
   }
 
-  private function createMessage($post, int $ticket_id) {
-    $id = $this->model->createMessage($post, $ticket_id);
+  private function createMessage($data, int $ticket_id) {
+    $id = $this->model->createMessage($data, $ticket_id);
     if ($id !== false) {
       $this->jsonOutput([
         'status' => 'success',
@@ -136,8 +136,8 @@ class TicketsController extends Controller
     }
   }
 
-  private function updateMessage($post, int $ticket_id) {
-    $result = $this->model->updateMessage($post, $ticket_id);
+  private function updateMessage($data, int $ticket_id) {
+    $result = $this->model->updateMessage($data, $ticket_id);
 
     if ($result['status'] === 'success') {
       $this->jsonOutput([
@@ -153,5 +153,32 @@ class TicketsController extends Controller
   private function getMessages($get, $ticket_id) {
     $messages = $this->model->getMessages($get, $ticket_id);
     $this->jsonOutput(['status' => 'success', 'messages' => $messages]);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  // Utility functions
+  //--------------------------------------------------------------------------------------------------------------------
+  private function getPostData() {
+    // Checking for JSON input
+    if(isset($_SERVER["CONTENT_TYPE"]) &&  str_contains($_SERVER["CONTENT_TYPE"], 'json')) {
+      // Retrieve JSON
+      if (!($input = file_get_contents('php://input'))) {
+        $this->jsonOutput([
+          'status' => 'error',
+          'message' => "Could not read POST data",
+        ], 400);
+      }
+      // Parse JSON
+      if (!($data = json_decode($input))) {
+        $this->jsonOutput([
+          'status' => 'error',
+          'message' => "Could not parse JSON file",
+        ], 400);
+      }
+      return $data;
+    } else {
+      // Just normal form data
+      return $this->page->request->post;
+    }
   }
 }
