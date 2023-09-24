@@ -275,13 +275,17 @@ function EANToNumber($input)
  * @access public
  * @return string
  */
-function staticLink($filename)
+function staticLink($filename, $random = true)
 {
     if (!($stat = stat(PUBLIC_PATH . $filename))) {
         return $filename;
     }
 
-    return $filename . (mb_strpos($filename, '?') !== false ? '&' : '?') . 'random=' . $stat['mtime'];
+    if ($random) {
+        $filename .= (mb_strpos($filename, '?') !== false ? '&' : '?') . 'v=' . $stat['mtime'];
+    }
+
+    return $filename;
 }
 
 if (file_exists(LIB_FOLDER . 'markdown/markdown.php')) {

@@ -369,6 +369,7 @@ class Routes
         $this->routes['admin_ajax_deleteprivilege'] = array('url' => 'admin/ajax/deleteprivilege/:id:', 'controller' => 'Admin', 'method' => 'ajaxDeletePrivilege');
         $this->routes['admin_ajax_deleterole']      = array('url' => 'admin/ajax/deleterole/:id:', 'controller' => 'Admin', 'method' => 'ajaxDeleteRole');
         $this->routes['admin_ajax_createrole']      = array('url' => 'admin/ajax/createrole', 'controller' => 'Admin', 'method' => 'ajaxCreateRole');
+        $this->routes['admin_ajax_users']           = array('url' => 'admin/ajax/users/:id:', 'controller' => 'Admin', 'method' => 'ajaxUsers');
 
         // api routes
         $this->routes['api_auth']                = array('url' => 'api/auth', 'controller' => 'Api', 'method' => 'auth');
@@ -463,6 +464,15 @@ class Routes
         $this->routes['payment_cancel']             = array('url' => 'payment/cancel', 'controller' => 'Payment', 'method' => 'cancelPayment');
         $this->routes['payment_status']             = array('url' => 'payment/status', 'controller' => 'Payment', 'method' => 'checkPayment');
         $this->routes['payment_check_total']        = array('url' => 'payment/participanttotal', 'controller' => 'Payment', 'method' => 'checkTotal');
+        // Ticket system
+        $this->routes['tickets_main']               = array('url' => 'tickets', 'controller' => 'Tickets', 'method' => 'mainPage');
+        $this->routes['tickets_show']               = array('url' => 'tickets/show/:ticket_id:', 'controller' => 'Tickets', 'method' => 'mainPage');
+        $this->routes['tickets_ajax']               = array('url' => 'tickets/ajax', 'controller' => 'Tickets', 'method' => 'ajaxTickets');
+        $this->routes['tickets_messages_ajax']      = array('url' => 'tickets/:ticket_id:/messages', 'controller' => 'Tickets', 'method' => 'ajaxMessages');
+
+        // Translations
+        $this->routes['translations_ajax']           = array('url' => 'translations/ajax/:label:', 'controller' => 'Translation', 'method' => 'ajaxTranslations');
+
     }
 
     /**

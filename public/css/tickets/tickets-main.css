@@ -1,0 +1,22 @@
+.tickets-wrapper {
+  width: 80em;
+  margin: auto;
+}
+
+.tickets-wrapper table {
+  width: 100%;
+}
+
+.tickets-wrapper table tr {
+  cursor: pointer;
+}
+
+.tickets-wrapper table tr:hover {
+  background-color: lightblue;
+}
+
+.tickets-wrapper table td,
+.tickets-wrapper table th {
+  padding: 0 1em;
+  border: 1px solid black;
+}
