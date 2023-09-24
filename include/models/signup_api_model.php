@@ -3,7 +3,21 @@
 class SignupApiModel extends Model {
 
   /**
-   * Get general configuration related to signup
+   * Get list of configuration files related to signup
+   */
+  public function getConfigList() {
+    $config_files = glob(SIGNUP_FOLDER."config/*");
+    foreach($config_files as $config_file){ // iterate files
+      if(!is_file($config_file)) continue;
+      
+      $list[] = basename($config_file, ".json");
+    }
+
+    return $list;
+  }
+
+  /**
+   * Get a configuration related to signup
    */
   public function getConfig($module) {
     $config_file = SIGNUP_FOLDER."config/$module.json";
@@ -885,7 +899,7 @@ class SignupApiModel extends Model {
 
             case 'activity':
               // Check run id
-              $run = $this->createEntity('Afviklinger')->findbyId($key_item);
+              $run = $this->createEntity('Afviklinger')->findById($key_item);
               if (!$run) {
                 $errors[$category][] = [
                   'type' => 'no_run',

@@ -447,10 +447,12 @@ class Routes
         $this->routes['signup_pages_specific']      = array('url' => 'signup/pages/:page:', 'controller' => 'SignupAdmin', 'method' => 'signupPages');
         $this->routes['signup_pages_add_element']   = array('url' => 'signup/pages/add-element', 'controller' => 'SignupAdmin', 'method' => 'addPageElement');
         $this->routes['signup_pages_edit_text']     = array('url' => 'signup/pages/edit-text', 'controller' => 'SignupAdmin', 'method' => 'editText');
-        $this->routes['signup_config']              = array('url' => 'signup/config/:module:', 'controller' => 'SignupAdmin', 'method' => 'signupConfig');
+        $this->routes['signup_config']              = array('url' => 'signup/config', 'controller' => 'SignupAdmin', 'method' => 'signupConfig');
+        $this->routes['signup_config_edit']         = array('url' => 'signup/config/:module:/edit', 'controller' => 'SignupAdmin', 'method' => 'editConfig');
 
         // Signup API
         $this->routes['api_signup_config']          = array('url' => 'api/signup/config/:module:', 'controller' => 'SignupApi', 'method' => 'getConfig');
+        $this->routes['api_signup_configlist']      = array('url' => 'api/signup/configlist', 'controller' => 'SignupApi', 'method' => 'getConfigList');
         $this->routes['api_signup_page_list']       = array('url' => 'api/signup/pagelist', 'controller' => 'SignupApi', 'method' => 'getPageList');
         $this->routes['api_signup_page']            = array('url' => 'api/signup/page/:page_id:', 'controller' => 'SignupApi', 'method' => 'getPage');
         $this->routes['api_signup_food']            = array('url' => 'api/signup/food', 'controller' => 'SignupApi', 'method' => 'getFood');
