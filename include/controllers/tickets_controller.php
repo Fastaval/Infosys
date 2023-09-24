@@ -11,6 +11,7 @@ class TicketsController extends Controller
   //--------------------------------------------------------------------------------------------------------------------
   public function mainPage() {
     $this->page->ticket_id = $this->vars['ticket_id'] ?? 0;
+    $this->page->user_id = $this->model->getLoggedinUser()->id;
 
     $scripts = glob(PUBLIC_PATH."js/tickets/*index*.js");
     if (!empty($scripts)) {
