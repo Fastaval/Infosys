@@ -19,6 +19,11 @@ class SignupApiController extends Controller {
     header('Access-Control-Allow-Origin: *');
   }
 
+  public function getConfigList() {
+    $config_list = $this->model->getConfigList();
+    $this->jsonOutput($config_list);
+  }
+
   public function getConfig() {
     $module = $this->vars['module'];
     $config = $this->model->getConfig($module);

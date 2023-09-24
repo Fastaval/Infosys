@@ -13,8 +13,9 @@ class SignupAdminController extends Controller {
     $this->page->includeCSS('signup-admin.css');
     $this->page->includeCss('fontello-ebe72605/css/idtemplate.css');
 
-    $this->page->registerEarlyLoadJS('signup/admin/render.js');
     $this->page->registerEarlyLoadJS('signup/admin/controls.js');
+    $this->page->registerEarlyLoadJS('signup/admin/pages/render.js');
+    $this->page->registerEarlyLoadJS('signup/admin/pages/controls.js');
     $this->page->registerEarlyLoadJS('signup/admin/toolbar.js');
 
     $this->page->setTemplate('');
@@ -27,9 +28,11 @@ class SignupAdminController extends Controller {
     $this->page->includeCSS('signup-admin.css');
     $this->page->includeCss('fontello-ebe72605/css/idtemplate.css');
 
-    $this->page->registerEarlyLoadJS('signup/admin/config_render.js');
     $this->page->registerEarlyLoadJS('signup/admin/controls.js');
+    $this->page->registerEarlyLoadJS('signup/admin/config/render.js');
+    $this->page->registerEarlyLoadJS('signup/admin/config/controls.js');
     $this->page->registerEarlyLoadJS('signup/admin/toolbar.js');
+    $this->page->registerEarlyLoadJS('signup/admin/config/toolbar_buttons.js');
 
     $this->page->setTemplate('');
   }
@@ -158,7 +161,7 @@ class SignupAdminController extends Controller {
     
     $this->jsonOutput([
       'success' => true,
-      'text' => $text,
+      'text' => $post->text,
     ]);
   }
 
@@ -285,13 +288,73 @@ class SignupAdminController extends Controller {
         $this->jsonOutput([
           'error' => "Unknown element type: $post->type",
         ], '400');
-        exit;
     }
-    file_put_contents($page_file_path, json_encode($page, JSON_PRETTY_PRINT));
+    $result = file_put_contents($page_file_path, json_encode($page, JSON_PRETTY_PRINT));
+
+    if ($result === false) {
+      $this->jsonOutput([
+        'status' => 'error',
+        'message' => "could not write to file $post->page_id.json",
+      ], 500);
+    }
     
     $this->jsonOutput([
       'success' => true,
       'text' => $text,
     ]);
+  }
+
+  public function editConfig() {
+    if (!$this->page->request->isPost()) {
+      header('HTTP/1.1 400 Not a POST request');
+      exit;
+    }
+    $post = $this->page->request->post;
+
+    $module = $this->vars['module'];
+    $config_file_path = SIGNUP_FOLDER."config/$module.json";
+    if(!is_file($config_file_path)) {
+      $this->jsonOutput([
+        'status' => 'error',
+        'message' => "No module named $module",
+      ], '404');
+    } 
+
+    $config_file = file_get_contents($config_file_path);
+    $config = json_decode($config_file);
+
+    $keys = explode('::', $post->id);
+    if (!$this->edit_nested($keys, $post->text, $config)) {
+      $this->jsonOutput([
+        'status' => 'error',
+        'message' => "No setting with ID:$post->id",
+      ], '400');
+    }
+
+    $result = file_put_contents($config_file_path, json_encode($config, JSON_PRETTY_PRINT));
+
+    if ($result === false) {
+      $this->jsonOutput([
+        'status' => 'error',
+        'message' => "could not write to file $module.json",
+      ], 500);
+    }
+
+    $this->jsonOutput([
+      'status' => 'success',
+      'text' => $post->text,
+    ]);
+  }
+
+  private function edit_nested($keys, $value, &$object) {
+    $key = array_shift($keys);
+    if (!isset($object->$key)) return false;
+
+    if(count($keys) == 0) {
+      $object->$key = $value;
+      return true;
+    }
+
+    return $this->edit_nested($keys, $value, $object->$key);
   }
 }

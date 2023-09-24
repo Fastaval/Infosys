@@ -21,7 +21,7 @@ class SignupAdminRender {
   static init() {
     this.main_content = jQuery('.content-container');
 
-    this.main_container = jQuery('<div id="page-admin-container"></div>');
+    this.main_container = jQuery('<div id="signup-admin-container"></div>');
     this.main_container.append('<h1>Administration af tilmeldingssider</h1>')
     this.main_content.append(this.main_container);
 
@@ -38,11 +38,11 @@ class SignupAdminRender {
     jQuery.getJSON(
       "/api/signup/pagelist",
       function (pages) {
-        SignupAdminControls.pagelist_ready(pages);
+        SignupPageControls.pagelist_ready(pages);
         SignupAdminRender.parse_page_list(pages);
       }
     ).fail(function () {
-        SignupAdminRender.com_error();
+        SignupAdminControls.com_error();
     });
   }
 
@@ -60,7 +60,7 @@ class SignupAdminRender {
     // Setup navigation functionality
     this.nav.find("div.nav-button").click((evt) => {
       let key = evt.delegateTarget.getAttribute("page-id");
-      SignupAdminControls.nav_click(key);
+      SignupPageControls.nav_click(key);
     })
     // Fully load pages
     setTimeout( () => {this.load_pages(keys)});
@@ -76,7 +76,7 @@ class SignupAdminRender {
           SignupAdminRender.page_ready(key);
         }
       ).fail(function () {
-          SignupAdminRender.com_error();
+          SignupAdminControls.com_error();
       });
     })
   }
@@ -90,7 +90,7 @@ class SignupAdminRender {
         "</div>";
         SignupAdminRender.nav.append(button);    
     })
-    SignupAdminControls.init_element(this.nav);
+    SignupPageControls.init_element(this.nav);
   }
 
   static page(key) {
@@ -118,8 +118,8 @@ class SignupAdminRender {
 
     page_element.hide();
     this.page_container.append(page_element);
-    SignupAdminControls.init_element(page_element);
-    if (key == SignupAdminControls.current_page) SignupAdminControls.show_page(key);
+    SignupPageControls.init_element(page_element);
+    if (key == SignupPageControls.current_page) SignupPageControls.show_page(key);
   }
 
   static section(section, dom_id, index) {
@@ -223,13 +223,5 @@ class SignupAdminRender {
   }
 
   static page_ready(key) {
-  }
-
-  static com_error() {
-    alert(
-      "Der skete en fejl i kommunikationen med Infosys\n" +
-      "Dette kan være en midlertidig fejl og du er velkommen til at prøve igen.\n"+
-      "Hvis fejlen fortsættter må du meget gerne kontakte admin@fastaval.dk"
-    );
   }
 }
