@@ -788,30 +788,7 @@ HAVING
         $deltager->package_gds       = 0;
         $deltager->insert();
 
-        $hash = $this->setParticipantPaymentHash($deltager);
-
-        return array('id' => $deltager->id, 'password' => $deltager->password, 'payment_url' => $this->url('participant_payment', array('hash' => $hash)));
-    }
-
-    /**
-     * creates a payment hash
-     *
-     * @param \Deltagere $participant Participant to set hash for
-     *
-     * @access public
-     * @return string
-     */
-    public function setParticipantPaymentHash(DBObject $participant)
-    {
-        $query = '
-INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICATE KEY UPDATE hash = ?
-';
-
-        $hash = makeRandomString(32);
-
-        $this->db->exec($query, [$participant->id, $hash, $hash]);
-
-        return $hash;
+        return array('id' => $deltager->id, 'password' => $deltager->password);
     }
 
     public function addWear(array $json, $deltager = null) {
@@ -1552,30 +1529,6 @@ INSERT INTO participantpaymenthashes SET participant_id = ?, hash = ? ON DUPLICA
         }
 
         return $return;
-    }
-
-    /**
-     * returns the payment hash for a participant
-     *
-     * @param Deltagere $participant Participant to get hash for
-     *
-     * @throws FrameworkException
-     * @access public
-     * @return string
-     */
-    public function getParticipantPaymentHash(DBObject $participant)
-    {
-        $query = '
-SELECT hash FROM participantpaymenthashes WHERE participant_id = ?
-';
-
-        $result = $this->db->query($query, [$participant->id]);
-
-        if (empty($result)) {
-            throw new FrameworkException('No payment hash available for participant');
-        }
-
-        return $result[0]['hash'];
     }
 
     /**

@@ -1037,6 +1037,7 @@ class SignupApiModel extends Model {
       'errors' => $errors,
       'categories' => $categories,
       'total' => $total,
+      'paid' => $participant->betalt_beloeb,
     ];
   }
 

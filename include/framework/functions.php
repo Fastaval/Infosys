@@ -137,7 +137,7 @@ function numberToEAN13($input) {
     $int = intval($input);
     if (strlen($int) < 12) {
         $treated = str_pad($int, 12, '0', STR_PAD_LEFT);
-    } elseif ($strlen($int) > 12) {
+    } elseif (strlen($int) > 12) {
         $treated = substr($int, 0, 12);
     } else {
         $treated = $int;

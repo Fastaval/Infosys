@@ -1,0 +1,74 @@
+{
+    "headline": {
+        "en": "Payment for Fastaval registration",
+        "da": "Betaling for Fastaval tilmelding"
+    },
+    "cancel_text": {
+        "en": "<p>We're sorry that you had to cancel your payment.<\/p>\n<p>If you need our help to solve the problem, you're always welcome to send us an email at  <a href=\"mailto:info@fastaval.dk\">info@fastaval.dk<\/a><\/p>",
+        "da": "<p>Vi beklager at du m\u00e5tte anullere din betaling.<\/p>\n<p>Hvis du har brug for hj\u00e6lp til at l\u00f8se problemet er du altid velkommen til at sende en mail til <a href=\"mailto:info@fastaval.dk\">info@fastaval.dk<\/a><\/p>"
+    },
+    "pending_text": {
+        "en": "<p>Thank you for your payment. Please wait a moment while we await a response from the payment provider<\/p>\n<p>If this takes longer than 2 minutes, please send us an email at  <a href=\"mailto:info@fastaval.dk\">info@fastaval.dk<\/a><\/p>",
+        "da": "<p>Tak for din betaling. Vent venligst mens vi venter p\u00e5 svar fra vores betalingsudbyder<\/p>\n<p>Hvis dette tager l\u00e6ngere end 2 minutter, kontakt venligst infoen p\u00e5 <a href=\"mailto:info@fastaval.dk\">info@fastaval.dk<\/a><\/p>"
+    },
+    "confirm_text": {
+        "en": "<p>Your payment is now confirmed and saved in our system<\/p>\n<p>We're looking forward to seeing you at Fastaval<\/p>",
+        "da": "<p>Din betaling er nu bekr\u00e6ftet og gemt i vores system<\/p>\n<p>Vi gl\u00e6der os til at se dig p\u00e5 Fastaval<\/p>"
+    },
+    "fail_text": {
+        "en": "<p>There was an error while trying to confirm the payment<\/p>\n<p>Please send us an email at <a href=\"mailto:info@fastaval.dk?subject=Failed payment confirmation\">info@fastaval.dk<\/a> with your participant ID, so we can look into the issue.<\/p>",
+        "da": "<p>Der skete desv\u00e6rre en fejl i forbindelse med bekr\u00e6ftelse af betalingen<\/p>\n<p>Vi vil derfor bede dig om at sende en mail til <a href=\"mailto:info@fastaval.dk?subject=Bekr\u00e6ftelse af betaling fejlet\">info@fastaval.dk<\/a> med dit deltagernummer, s\u00e5 vi kan unders\u00f8ge problemet<\/p>"
+    },
+    "login_text": {
+        "en": "You need to enter your ID and password to retrieve a registration to pay for.",
+        "da": "Du skal indtaste deltagernummer og kode, for at hente en tilmelding at betale for."
+    },
+    "signup_id": {
+        "en": "Email or participant id",
+        "da": "Email eller deltagernummer"
+    },
+    "signup_pass": {
+        "en": "Password",
+        "da": "Kode"
+    },
+    "signup_pass_note": {
+        "en": "You can find your password in the email that was sent to you when you submitted your signup",
+        "da": "Du kan finde din kode i den email du modtog efter du indsendte din tilmelding"
+    },
+    "load": {
+        "en": "Load",
+        "da": "Hent"
+    },
+    "invalid_login": {
+        "en": "The entered information does not match any registration",
+        "da": "De indtastede oplysninger passer ikke med nogen tilmelding"
+    },
+    "payment_text": {
+        "en": "Your registration total is [TOTAL] DKK",
+        "da": "Den samlede pris for din tilmelding er [TOTAL] kr."
+    },
+    "payment_extra": {
+        "en": "You have already paid [PAIDTOTAL] so you need to pay [DUETOTAL]",
+        "da": "Du har allerede betalt [PAIDTOTAL] s\u00e5 du mangler at betale [DUETOTAL]"
+    },
+    "explanation_text": {
+        "en": "You can pay this amount using our on-line payment provider by pressing the button below",
+        "da": "Du kan betale dette bel\u00f8b ved at trykke p\u00e5 knappen her"
+    },
+    "pay_button": {
+        "en": "Pay now",
+        "da": "Betal nu"
+    },
+    "already_paid": {
+        "en": "You have already paid the full amount for your registration.",
+        "da": "Du har allerede betalt det fulde bel\u00f8b for din tilmelding."
+    },
+    "return_text": {
+        "en": "You can return to the signup by clicking this button",
+        "da": "Du kan g\u00e5 tilbage til tilmeldingen ved at trykke p\u00e5 knappen her"
+    },
+    "return_button": {
+        "en": "To Signup",
+        "da": "Til Tilmelding"
+    }
+}

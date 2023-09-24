@@ -184,11 +184,6 @@ class Routes
 
         $this->routes['id_card_render']                             = ['url' => 'id-card/render', 'controller' => 'IdTemplate', 'method' => 'renderIdCards'];
 
-        // online payment
-        $this->routes['participant_post_payment']                   = array('url' => 'participant/payment/done', 'controller' => 'Participant', 'method' => 'showPaymentDone');
-        $this->routes['participant_payment']                        = array('url' => 'participant/payment/:hash:', 'controller' => 'Participant', 'method' => 'processPayment');
-        $this->routes['participant_register_payment']               = array('url' => 'participant/payment/register/:hash:', 'controller' => 'Participant', 'method' => 'registerPayment');
-
         // payment reminders
         $this->routes['cron_payment_reminder']                      = array('url' => 'participant/payment-reminder/cron', 'controller' => 'Participant', 'method' => 'cronPaymentReminder');
         // $this->routes['13-day_payment_reminder']                    = array('url' => 'participant/payment-reminder/second', 'controller' => 'Participant', 'method' => 'sendSecondPaymentReminder');
@@ -461,6 +456,13 @@ class Routes
         $this->routes['api_signup_submit']          = array('url' => 'api/signup/submit', 'controller' => 'SignupApi', 'method' => 'submitSignup');
         $this->routes['api_signup_confirm']         = array('url' => 'api/signup/confirm', 'controller' => 'SignupApi', 'method' => 'confirmSignup');
         $this->routes['api_signup_load']            = array('url' => 'api/signup/load', 'controller' => 'SignupApi', 'method' => 'loadSignup');
+
+        // Payment
+        $this->routes['payment_callback']           = array('url' => 'payment/callback', 'controller' => 'Payment', 'method' => 'paymentCallBack');
+        $this->routes['payment_create_url']         = array('url' => 'payment/createurl', 'controller' => 'Payment', 'method' => 'createPaymentURL');
+        $this->routes['payment_cancel']             = array('url' => 'payment/cancel', 'controller' => 'Payment', 'method' => 'cancelPayment');
+        $this->routes['payment_status']             = array('url' => 'payment/status', 'controller' => 'Payment', 'method' => 'checkPayment');
+        $this->routes['payment_check_total']        = array('url' => 'payment/participanttotal', 'controller' => 'Payment', 'method' => 'checkTotal');
     }
 
     /**

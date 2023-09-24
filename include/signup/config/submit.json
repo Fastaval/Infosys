@@ -1,114 +1,134 @@
 {
-  "confirmationpage": {
-    "en": "<h2>Registration recieved</h2><h3>When paying remember to note the following:<ul><li>Your participant ID which is :<b>[ID]</b></li><li>Your name, as it apears in the registration</li></ul></h3><p>Otherwise you risk that we're not able to connect your payment with your registration</p><h2>Pay right away</h2><p>Total cost: [TOTAL] kr.</p><p>If you're using the Danish MobilePay, you can transfer the money to <b>438490 (Alea). </b>Pay with the same phone number you used in your sign-up.</p><p>You can also pay right away by using <b>Paypal</b>. Transfer to andreas@fastaval.dk. <b>Remember that fees will be deducted, so you will have to transfer an additional 100 DKK </b>. <h2>Pay by bank transfer</h2>  <p>You can pay by bank transfer.</p>  <p>Here is a guide to bank transfer</p>  <li>Our bank information is <strong>IBAN DK6693144573884464 and BIC SPNODK22</strong>.</li> </ul>   <p>If the bank fees are ridiculously high (as they most likely are), contact us at <a href='mailto:fastaval@fastaval.dk'>fastaval@fastaval.dk</a></p> <br>If you can not pay your ticket right away, you can do it later. In your confirmation email you will find the same payment information as on this page.<br><strong>Last day of payment is [PAYDAY]</strong><br> <br> <p>See you soon, at Fastaval</p>",
-    "da": "<h2>Tilmelding modtaget</h2><h3>Ved betaling skal du HUSKE at anføre følgende:<ul><li>Dit deltagernummer som er: <b>[ID]</b></li><li>Dit NAVN, som det fremgår af tilmeldingen</li></ul></h3><p>Ellers risikerer du at vi ikke kan henføre betalingen til lige præcis din tilmelding<br>(og så er det ikke så meget en betaling men bare en donation til Fastaval).</p><h2>Betal med det samme</h2><p>Du kan betale for din tilmelding med det samme ved at benytte mobilepay, og sende <b>[TOTAL]</b> kr. til <b>438490 (Alea).</b> Betal med samme tlf. nr. som du har angivet i din tilmelding.</p><p>Hvis du ikke kan betale din tilmelding med det samme, kan du gøre det senere. Den mail du modtager med bekræftelse af din tilmelding, indeholder også det ovenstående nummer til mobilepay. Du kan dermed også betale senere, nemt og bekvemt.</p><strong>Betalingen skal dog ske senest [PAYDAY]</strong><br><br> <h2>Betal med bankoverførsel</h2>  <p>Har du ikke mulighed for at betale med mobilepay, så er det også muligt at betale via bankoverførsel. </p>   <p>Bank overførsel foregår på følgende vis</p>  <li>Ved indbetaling på indbetalingskort: <strong>Kortart +73 Kreditornr 84520098</strong></li> <li>Ved bankoverførsel til vores bankkonto: <strong>Reg.: 9314 / kontonummer: 4573884464</strong></li> <li>Ved indbetaling fra en bank UDENFOR Danmark kontakt venligst <a href='mailto:fastaval@fastaval.dk'>fastaval@fastaval.dk</a></li> </ul><p>Vi ses på Fastaval!</p>"
-  },
-  "create_new": {
-    "en": "You can keep editing your registration and submit again.<br>If you want to start a new registration click the button below.",
-    "da": "Du kan stadig tilpasse din tilmelding og sende ind igen.<br>Hvis du ønsker at starte en ny tilmelding, så klik på knappen nedenfor."
-  },
-  "submit_text": {
-    "en": "Your registration has been sent. Please wait a moment while we process it.",
-    "da": "Din tilmelding er blevet sendt. Vent venligst et øjeblik mens vi behandler den."
-  },
-  "existing": {
-    "en": "You are editing an exiting registration with ID:",
-    "da": "Du retter en eksisterende tilmelding med ID:"
-  },
-  "reset": {
-    "en": "Create New",
-    "da": "Opret Ny"
-  },
-  "button_text": {
-    "en": "Confirm",
-    "da": "Bekræft"
-  },
-  "error_text": {
-    "en": "There are the following issues with your submission",
-    "da": "Der er følgende problemer med din indtastning"
-  },
-  "processing_text": {
-    "en": "Processing your submission",
-    "da": "Behandler din tilmelding"
-  },
-  "waiting_for_pages": {
-    "en": "Waiting for all pages to load",
-    "da": "Venter på at alle sider er hentet"
-  },
-  "unknown": {
-    "en": "Unknown error, if this persists, please contact The Info at info@fastaval.dk for help.",
-    "da": "Ukendt fejl, hvis dette fortsætter, kontakt venligst Infoen på info@fastaval.dk for hjælp"
-  },
-  "short_text": {
-    "gdpr_accept": {
-      "en": "I accept the GDPR terms",
-      "da": "Jeg accepterer GDPR betingelserne"
+    "confirmation": {
+        "en": "<h2>Registration received<\/h2>\n<h3>You have been registered with the following participant ID: <b>[ID]<\/b><\/h3>\n<p>This ID is needed whenever you communicate with Fastaval regarding your registration and especially when submitting payments<\/p>\n<p>You will also receive a confirmation email with your details, including this ID and a password to later retrieve or edit your registration<\/p>",
+        "da": "<h2>Tilmelding modtaget<\/h2>\n<h3>Du er blevet tilmeldt med deltagernummer: <b>[ID]<\/b><\/h3>\n<p>Dette deltagernummer er vigtigt n\u00e5r du kommunikerer med Fastaval ang\u00e5ende din tilmelding og is\u00e6r n\u00e5r du foretager betaling<\/p>\n<p>Du vil ogs\u00e5 modtage en bekr\u00e6ftelsesemail med dine detaljer samt dette nummer og en kode du skal bruge hvis du senere vil se eller rette din tilmelding<\/p>"
     },
-    "medbringer_mobil": {
-      "en": "I'm bringing my cell phone",
-      "da": "Jeg medbringer mobil"
+    "extra_payment": {
+        "en": "<h2>You still need to pay [DUETOTAL] DKK<\/h2>\n<p>Even though you have already paid [PAIDTOTAL] DKK, you still need to pay <b>[DUETOTAL] DKK<\/b><\/p>\n<p>This is probably either due to changes in your registration or because you didn't pay the full amount at first<\/p>",
+        "da": "<h2>Du mangler at betale [DUETOTAL] kr.<\/h2>\n<p>Selvom du allerede har betalt [PAIDTOTAL] kr., mangler du stadig at betale <b>[DUETOTAL] kr.<\/b><\/p>\n<p>Dette skyldes formodentlig enten \u00e6ndringer i din tilmelding eller at du ikke har betalt det fulde bel\u00f8b fra starten<p>"
     },
-    "tlf": {
-      "en": "Emergency phone number",
-      "da": "Nødkontakt telefonnummer"
+    "payment_info": {
+        "en": "<h2>Payment Information<\/h2>\n<h3>When paying remember to note the following:\n  <ul>\n    <li>Your participant ID which is :<b>[ID]<\/b><\/li>\n    <li>Your name, as it apears in the registration<\/li>\n  <\/ul>\n<\/h3>\n<p>Otherwise you risk that we're not able to connect your payment with your registration<\/p>\n\n<h3>Pay right away<\/h3>\n<p>Total cost: [DUETOTAL] kr.<\/p>\n<p>You can pay right away with credit\/debit card using our on-line payment provider here: [PAYBUTTON]<\/p>\n<p>If you're using the Danish MobilePay, you can transfer the money to <b>438490 (Alea). <\/b>Pay with the same phone number you used in your sign-up.<\/p>\n<p>You can also pay right away by using <b>Paypal<\/b>. Transfer to andreas@fastaval.dk. <b>Remember that fees will be deducted, so you will have to transfer an additional 100 DKK <\/b>. \n\n<h3>Pay by bank transfer<\/h3>\n<p>You can also pay by bank transfer.<\/p>\n<p>Our bank information is <strong>IBAN DK6693144573884464 and BIC SPNODK22<\/strong>.<\/p>\n<p>If the bank fees are ridiculously high (as they most likely are), contact us at <a href='mailto:fastaval@fastaval.dk'>fastaval@fastaval.dk<\/a><\/p>\n<p>If you can not pay your ticket right away, you can do it later. In your confirmation email you will find the same payment information as on this page.<\/p>\n<p><strong>Last day of payment is [PAYDAY]<\/strong><\/p>",
+        "da": "<h2>Information om betaling<\/h2>\n<h3>Ved betaling skal du HUSKE at anf\u00f8re f\u00f8lgende:\n  <ul>\n    <li>Dit deltagernummer som er: <b>[ID]<\/b><\/li>\n    <li>Dit NAVN, som det fremg\u00e5r af tilmeldingen<\/li>\n  <\/ul>\n<\/h3>\n<p>Ellers risikerer du at vi ikke kan henf\u00f8re betalingen til lige pr\u00e6cis din tilmelding\n<br>(og s\u00e5 er det ikke s\u00e5 meget en betaling men bare en donation til Fastaval).<\/p>\n\n<h3>Betal med det samme<\/h3>\n<p>Du kan betale med kort ved at benytte vores on-line betaling her: [PAYBUTTON]<\/p>\n<p>Du kan ogs\u00e5 betale ved at benytte mobilepay, og sende <b>[DUETOTAL]<\/b> kr. til <b>438490 (Alea).<\/b> Betal med samme tlf. nr. som du har angivet i din tilmelding.<\/p>\n<p>Hvis du ikke kan betale din tilmelding med det samme, kan du g\u00f8re det senere. Den mail du modtager med bekr\u00e6ftelse af din tilmelding, indeholder ogs\u00e5 det ovenst\u00e5ende nummer til mobilepay. Du kan dermed ogs\u00e5 betale senere, nemt og bekvemt.<\/p>\n<p><strong>Betalingen skal dog ske senest [PAYDAY]<\/strong><p>\n\n<h3>Betal med bankoverf\u00f8rsel<\/h3>\n<p>Har du ikke mulighed for at betale med mobilepay, s\u00e5 er det ogs\u00e5 muligt at betale via bankoverf\u00f8rsel. <\/p>\n<p>Bank overf\u00f8rsel foreg\u00e5r p\u00e5 f\u00f8lgende vis<\/p>\n<ul>\n  <li>Ved indbetaling p\u00e5 indbetalingskort: <strong>Kortart +73 Kreditornr 84520098<\/strong><\/li>\n  <li>Ved bankoverf\u00f8rsel til vores bankkonto: <strong>Reg.: 9314 \/ kontonummer: 4573884464<\/strong><\/li>\n  <li>Ved indbetaling fra en bank UDENFOR Danmark kontakt venligst <a href='mailto:fastaval@fastaval.dk'>fastaval@fastaval.dk<\/a><\/li>\n<\/ul>"
     },
-    "main_lang": {
-      "en": "Preferred language",
-      "da": "Foretrukket sprog"
+    "greetings": {
+        "en": "<p>See you soon, at Fastaval<\/p>",
+        "da": "<p>Vi ses p\u00e5 Fastaval!<\/p>"
     },
-    "participant": {
-      "en": "You've selected your role as organizer, author or designer",
-      "da": "Du har valgt at du er arrangør, forfatter eller designer"
+    "create_new": {
+        "en": "You can keep editing your registration and submit again.<br>If you want to start a new registration click the button below.",
+        "da": "Du kan stadig tilpasse din tilmelding og sende ind igen.<br>Hvis du \u00f8nsker at starte en ny tilmelding, s\u00e5 klik p\u00e5 knappen nedenfor."
     },
-    "knows_fastaval_from": {
-      "en": "Where have you heard about Fastaval?",
-      "da": "Hvor har du h\u00f8rt om Fastaval?"
+    "existing": {
+        "en": "You are editing an exiting registration with ID:",
+        "da": "Du retter en eksisterende tilmelding med ID:"
     },
-    "scenarie": {
-      "en": "The title of your scenario/game",
-      "da": "Titlen på dit scenarie/spil"
+    "reset": {
+        "en": "Create New",
+        "da": "Opret Ny"
     },
-    "entry:partout": {
-      "en": "5-day pass for all of Fastaval",
-      "da": "Partout - Alle dage"
+    "pay_now": {
+        "en": "You can pay right away by pressing this button",
+        "da": "Du kan betale med det samme ved at klikke p\u00e5 knappen her"
     },
-    "sleeping:partout": {
-      "en": "I will be sleeping at Fastaval all days",
-      "da": "Jeg overnatter alle dage på Fastaval"
+    "pay_button": {
+        "en": "Pay Now",
+        "da": "Betal Nu"
     },
-    "misc:alea": {
-      "en": "I would like to join Alea",
-      "da": "Jeg vil gerne melde mig ind i Alea"
+    "submit_text": {
+        "en": "Your registration has been sent. Please wait a moment while we process it.",
+        "da": "Din tilmelding er blevet sendt. Vent venligst et \u00f8jeblik mens vi behandler den."
     },
-    "note:sleeping": {
-      "en": "Comments for sleeping arrangements",
-      "da": "Bemærkninger til soveplads"
+    "button_text": {
+        "en": "Confirm",
+        "da": "Bekr\u00e6ft"
     },
-    "supergm": {
-      "en": "Super Scenario facilitator",
-      "da": "Super Spilleder"
+    "error_text": {
+        "en": "There are the following issues with your submission",
+        "da": "Der er f\u00f8lgende problemer med din indtastning"
     },
-    "super_rules_guide": {
-      "en": "Super Rules Guide",
-      "da": "Super Regelformidler"
+    "processing_text": {
+        "en": "Processing your submission",
+        "da": "Behandler din tilmelding"
     },
-    "misc:extra_support": {
-      "en": "Extra support",
-      "da": "Ekstra støtte"
+    "waiting_for_pages": {
+        "en": "Waiting for all pages to load",
+        "da": "Venter p\u00e5 at alle sider er hentet"
     },
-    "misc:secret_support": {
-      "en": "Secret support",
-      "da": "Hemmelig støtte"
+    "unknown": {
+        "en": "Unknown error, if this persists, please contact The Info at info@fastaval.dk for help.",
+        "da": "Ukendt fejl, hvis dette forts\u00e6tter, kontakt venligst Infoen p\u00e5 info@fastaval.dk for hj\u00e6lp"
+    },
+    "short_text": {
+        "gdpr_accept": {
+            "en": "I accept the GDPR terms",
+            "da": "Jeg accepterer GDPR betingelserne"
+        },
+        "medbringer_mobil": {
+            "en": "I'm bringing my cell phone",
+            "da": "Jeg medbringer mobil"
+        },
+        "tlf": {
+            "en": "Emergency phone number",
+            "da": "N\u00f8dkontakt telefonnummer"
+        },
+        "main_lang": {
+            "en": "Preferred language",
+            "da": "Foretrukket sprog"
+        },
+        "participant": {
+            "en": "You've selected your role as organizer, author or designer",
+            "da": "Du har valgt at du er arrang\u00f8r, forfatter eller designer"
+        },
+        "knows_fastaval_from": {
+            "en": "Where have you heard about Fastaval?",
+            "da": "Hvor har du h\u00f8rt om Fastaval?"
+        },
+        "scenarie": {
+            "en": "The title of your scenario\/game",
+            "da": "Titlen p\u00e5 dit scenarie\/spil"
+        },
+        "entry:partout": {
+            "en": "5-day pass for all of Fastaval",
+            "da": "Partout - Alle dage"
+        },
+        "sleeping:partout": {
+            "en": "I will be sleeping at Fastaval all days",
+            "da": "Jeg overnatter alle dage p\u00e5 Fastaval"
+        },
+        "misc:alea": {
+            "en": "I would like to join Alea",
+            "da": "Jeg vil gerne melde mig ind i Alea"
+        },
+        "note:sleeping": {
+            "en": "Comments for sleeping arrangements",
+            "da": "Bem\u00e6rkninger til soveplads"
+        },
+        "supergm": {
+            "en": "Super Scenario facilitator",
+            "da": "Super Spilleder"
+        },
+        "super_rules_guide": {
+            "en": "Super Rules Guide",
+            "da": "Super Regelformidler"
+        },
+        "misc:extra_support": {
+            "en": "Extra support",
+            "da": "Ekstra st\u00f8tte"
+        },
+        "misc:secret_support": {
+            "en": "Secret support",
+            "da": "Hemmelig st\u00f8tte"
+        }
+    },
+    "warnings": {
+        "page_disabled": {
+            "en": "This page has been disabled and all information entered on this page will be ignored",
+            "da": "Denne side er blevet sl\u00e5et fra og alt information der er indtastet p\u00e5 siden vil blive ignoreret"
+        },
+        "input_disabled": {
+            "en": "This item has been disabled and any changes will be ignored",
+            "da": "Dette element er blevet sl\u00e5et fra og enhver \u00e6ndring vil blive ignoreret"
+        }
     }
-  },
-  "warnings": {
-    "page_disabled": {
-      "en": "This page has been disabled and all information entered on this page will be ignored",
-      "da": "Denne side er blevet slået fra og alt information der er indtastet på siden vil blive ignoreret"
-    },
-    "input_disabled": {
-      "en": "This item has been disabled and any changes will be ignored",
-      "da": "Dette element er blevet slået fra og enhver ændring vil blive ignoreret"
-    }
-  }
 }

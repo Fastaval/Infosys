@@ -1866,4 +1866,9 @@ WHERE
     public static function getSpecialColumns() {
         return self::$special_columns;
     }
+
+    public function getContryISO() {
+        $result = $this->db->query("SELECT * FROM countries WHERE code = ?", [$this->storage['country']]);
+        return count($result) === 1 ? $result[0]["iso"] : "";
+    }
 }
