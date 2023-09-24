@@ -91,6 +91,8 @@ class Page
         'common.js',
     );
 
+    private $earlyloadmodule_js = [];
+
     /**
      * names of scripts to include at end of page
      *
@@ -416,6 +418,21 @@ class Page
     }
 
     /**
+     * sets up a javascript file for inclusion in the page head
+     *
+     * @param string $filename Javascript to include
+     *
+     * @access public
+     * @return void
+     */
+    public function registerEarlyLoadJSModule($filename)
+    {
+        if (is_file($this->getPublicPath() . 'js/' . $filename)) {
+            $this->earlyloadmodule_js[] = $filename;
+        }
+    }
+
+    /**
      * clears the early load js stack
      *
      * @access public
@@ -435,6 +452,11 @@ class Page
     public function getEarlyLoadJS()
     {
         return $this->earlyload_js;
+    }
+
+    public function getEarlyLoadJSModule()
+    {
+        return $this->earlyloadmodule_js;
     }
 
     /**

@@ -374,6 +374,7 @@ class Routes
         $this->routes['admin_ajax_deleteprivilege'] = array('url' => 'admin/ajax/deleteprivilege/:id:', 'controller' => 'Admin', 'method' => 'ajaxDeletePrivilege');
         $this->routes['admin_ajax_deleterole']      = array('url' => 'admin/ajax/deleterole/:id:', 'controller' => 'Admin', 'method' => 'ajaxDeleteRole');
         $this->routes['admin_ajax_createrole']      = array('url' => 'admin/ajax/createrole', 'controller' => 'Admin', 'method' => 'ajaxCreateRole');
+        $this->routes['admin_ajax_users']           = array('url' => 'admin/ajax/users/:id:', 'controller' => 'Admin', 'method' => 'ajaxUsers');
 
         // api routes
         $this->routes['api_auth']                = array('url' => 'api/auth', 'controller' => 'Api', 'method' => 'auth');
@@ -459,6 +460,16 @@ class Routes
         $this->routes['api_signup_submit']          = array('url' => 'api/signup/submit', 'controller' => 'SignupApi', 'method' => 'submitSignup');
         $this->routes['api_signup_confirm']         = array('url' => 'api/signup/confirm', 'controller' => 'SignupApi', 'method' => 'confirmSignup');
         $this->routes['api_signup_load']            = array('url' => 'api/signup/load', 'controller' => 'SignupApi', 'method' => 'loadSignup');
+
+        // Ticket system
+        $this->routes['tickets_main']               = array('url' => 'tickets', 'controller' => 'Tickets', 'method' => 'mainPage');
+        $this->routes['tickets_show']               = array('url' => 'tickets/show/:ticket_id:', 'controller' => 'Tickets', 'method' => 'mainPage');
+        $this->routes['tickets_ajax']               = array('url' => 'tickets/ajax', 'controller' => 'Tickets', 'method' => 'ajaxTickets');
+        $this->routes['tickets_messages_ajax']      = array('url' => 'tickets/:ticket_id:/messages', 'controller' => 'Tickets', 'method' => 'ajaxMessages');
+
+        // Translations
+        $this->routes['translations_ajax']           = array('url' => 'translations/ajax/:label:', 'controller' => 'Translation', 'method' => 'ajaxTranslations');
+
     }
 
     /**
