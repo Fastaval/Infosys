@@ -32,7 +32,7 @@ jobs:
 
       - run: |
           ls -l public/css/tickets
-          ls -l infosys-frontend/dist/app/tickets/css/tickets
+          ls -l infosys-frontend/dist/apps/tickets/css/tickets
 
       - name: Remove old files
         run: |
