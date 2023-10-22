@@ -30,17 +30,17 @@ jobs:
         run: npx nx run tickets:build
         working-directory: infosys-frontend
 
-      - run: > 
+      - run: |
           ls -l public/css/tickets
           ls -l infosys-frontend/dist/app/tickets/css/tickets
 
       - name: Remove old files
-        run: >
+        run: |
           rm -rf public/css/tickets/*
           rm -rf public/js/tickets/*
 
       - name: Copy files
-        run: >
+        run: |
           cp -r infosys-frontend/dist/apps/tickets/css/tickets public/css/tickets
           cp -r infosys-frontend/dist/apps/tickets/js/tickets public/js/tickets
 
