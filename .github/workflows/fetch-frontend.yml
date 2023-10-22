@@ -31,8 +31,8 @@ jobs:
         working-directory: infosys-frontend
 
       - run: > 
-          ls public/css/tickets
-          ls infosys-frontend/dist/app/tickets/css/tickets
+          ls -l public/css/tickets
+          ls -l infosys-frontend/dist/app/tickets/css/tickets
 
       - name: Remove old files
         run: >
