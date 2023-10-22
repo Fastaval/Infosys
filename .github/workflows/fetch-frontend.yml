@@ -12,7 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Infosys-frontend
+      - name: Checkout infosys repository
+        uses: actions/checkout@v4
+        
+      - name: Checkout Infosys-frontend repository
         uses: actions/checkout@v4
         with:
           repository: Fastaval/Infosys-frontend
