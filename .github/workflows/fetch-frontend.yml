@@ -19,7 +19,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Fastaval/Infosys-frontend
-          ref: main
           path: infosys-frontend
 
       - name: Install dependencies
@@ -29,10 +28,6 @@ jobs:
       - name: Build
         run: npx nx run tickets:build
         working-directory: infosys-frontend
-
-      - run: |
-          ls -l public/css/tickets
-          ls -l infosys-frontend/dist/apps/tickets/css/tickets
 
       - name: Remove old files
         run: |
@@ -47,4 +42,5 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
+          add: 'public'
           message: ${{ github.event.inputs.commit_message }}
