@@ -60,16 +60,7 @@ class TicketsController extends Controller
 
   private function updateTicket($data) {
     $result = $this->model->updateTicket($data);
-
-    if ($result['status'] === 'success') {
-      $this->jsonOutput([
-        'status' => 'success',
-        'message' => "Ticket updated",
-        ]);
-    } else {
-      $code = $result['code'] ?? 400;
-      $this->jsonOutput($result, $code);
-    }
+    $this->sendResult($result, "Ticket updated");
   }
 
   private function getTickets($get) {
@@ -79,6 +70,7 @@ class TicketsController extends Controller
       $this->jsonOutput(['status' => 'no results'], 404);
     }
     
+    $user_id = $this->model->getLoggedInUser()->id;
     $output = [];
     foreach($tickets as $ticket) {
       $entry = [];
@@ -90,7 +82,8 @@ class TicketsController extends Controller
       $entry['description'] = $description['message'];
       $entry['created']     = $description['posted'];
       $entry['last_edit']   = $description['last_edit'];
-
+      
+      $entry['subscribed']  = $ticket->isSubscribed($user_id);
 
       $output[$ticket->id] = $entry;
     }
@@ -139,21 +132,62 @@ class TicketsController extends Controller
 
   private function updateMessage($data, int $ticket_id) {
     $result = $this->model->updateMessage($data, $ticket_id);
-
-    if ($result['status'] === 'success') {
-      $this->jsonOutput([
-        'status' => 'success',
-        'message' => "Message updated",
-        ]);
-    } else {
-      $code = $result['code'] ?? 400;
-      $this->jsonOutput($result, $code);
-    }
+    $this->sendResult($result, "Message updated");
   }
 
   private function getMessages($get, $ticket_id) {
     $messages = $this->model->getMessages($get, $ticket_id);
     $this->jsonOutput(['status' => 'success', 'messages' => $messages]);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  // Ticket subscriptions AJAX funtions
+  //--------------------------------------------------------------------------------------------------------------------
+  public function ajaxSubscription() {
+    $ticket_id = $this->vars['ticket_id'];
+    if(empty($ticket_id) && !is_int($ticket_id)) {
+      header('HTTP/1.1 400 Missing or malformed ticket ID');
+      exit;
+    }
+
+    if ($this->page->request->isPost()) {
+      // Posting subscription
+      $data = $this->getPostData();
+      $this->setSubscription($data, $ticket_id);
+    } else {
+      // GET Ticket(s)
+      $get = $this->page->request->get;
+      $this->getSubscription($get, $ticket_id);
+    }
+  }
+
+  private function setSubscription($data, $ticket_id) {
+    $result = $this->model->setSubscription($data, $ticket_id);
+    $response = [
+      'status' => $result == 'success' ? 'success' : 'error',
+    ];
+    if ($result == 'no change') {
+      $response['message'] = "Desired subscription status is same as current";
+    }
+
+    $this->sendResult($response, "Subscription updated");
+  }
+
+  private function getSubscription($data, $ticket_id) {
+    $user_id = $data->user ?? $this->model->getLoggedInUser()->id;
+
+    $tickets = $this->model->getTickets(['id' => $ticket_id]);
+    if (count($tickets) == 0) {
+      $this->jsonOutput([
+        'status' => 'error',
+        'message' => "no ticket with ID:$ticket_id"
+      ], 404);
+    }
+
+    $this->jsonOutput([
+      'status' => 'success',
+      'subscribed' => $tickets[0]->isSubscribed($user_id)
+    ], 400);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -180,6 +214,18 @@ class TicketsController extends Controller
     } else {
       // Just normal form data
       return $this->page->request->post;
+    }
+  }
+
+  private function sendResult($result, $message) {
+    if ($result['status'] === 'success') {
+      $this->jsonOutput([
+        'status' => 'success',
+        'message' => $message,
+        ]);
+    } else {
+      $code = $result['code'] ?? 400;
+      $this->jsonOutput($result, $code);
     }
   }
 }

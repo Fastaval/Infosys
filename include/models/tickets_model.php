@@ -124,4 +124,28 @@ class TicketsModel extends Model {
     $result = $this->db->exec($query, $args);
     return ['status' => $result ? 'success' : 'error'];
   }
+
+  public function setSubscription($data, $ticket_id) {
+    $user_id = $data->user ?? $this->getLoggedInUser()->id;
+    
+    $query = "SELECT * FROM tickets_subscriptions WHERE user = ? AND ticket = ?";
+    $result = $this->db->query($query, [$user_id, $ticket_id]);
+    $subscribed = count($result) > 0;
+
+    if (isset($data->subscribe) && $data->subscribe == 'false') {
+      // Unsubscribe
+      if (!$subscribed) return "no change";
+
+      $query = "DELETE FROM tickets_subscriptions WHERE user = ? AND ticket = ?";
+      $this->db->exec($query, [$user_id, $ticket_id]);
+    } else {
+      // Subscribe
+      if ($subscribed) return "no change";
+
+      $query = "INSERT INTO tickets_subscriptions (user, ticket) VALUES (?,?)";
+      $this->db->exec($query, [$user_id, $ticket_id]);
+    }
+
+    return "success";
+  }
 }

@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS tickets_subscriptions;
+DROP TABLE IF EXISTS tickets_messages;
+DROP TABLE IF EXISTS tickets;
+
 CREATE TABLE tickets (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   name varchar(64),
@@ -20,4 +24,13 @@ CREATE TABLE tickets_messages (
   message TEXT,
   CONSTRAINT tickets_messages_ibfk_1 FOREIGN KEY (ticket) REFERENCES tickets(id),
   CONSTRAINT tickets_messages_ibfk_2 FOREIGN KEY (user) REFERENCES users(id)
+) engine=InnoDB DEFAULT CHARSET utf8mb4;
+
+CREATE TABLE tickets_subscriptions (
+  id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  user int(11),
+  ticket INT UNSIGNED,
+  CONSTRAINT tickets_subscriptions_ibfk_1 FOREIGN KEY (ticket) REFERENCES tickets(id),
+  CONSTRAINT tickets_subscriptions_ibfk_2 FOREIGN KEY (user) REFERENCES users(id),
+  CONSTRAINT tickets_subscriptions_UC UNIQUE (user, ticket)
 ) engine=InnoDB DEFAULT CHARSET utf8mb4;

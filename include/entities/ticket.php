@@ -97,4 +97,16 @@ class Ticket extends DBObject
     $this->description = count($result) ? $result[0] : [];
     return $this->description;
   }
+
+  public function getSubscribers() {
+    if (!$this->isLoaded()) return [];
+
+    $query = "SELECT user FROM tickets_subscriptions WHERE ticket = $this->id";
+    $result = $this->db->query($query);
+    return array_column($result, 'user');
+  }
+
+  public function isSubscribed($user_id) {
+    return in_array($user_id, $this->getSubscribers());
+  }
 }

@@ -116,6 +116,9 @@ $( function() {
       let priority = ts.priority[ticket.priority][lang];
       let open = ticket.open ? ts.open[lang] : ts.closed[lang];
 
+      let checked = ticket.subscribed ? 'checked="checked"' : '';
+      let subscribed = `<input type="checkbox" class="subscribe-checkbox" ticket="${id}" ${checked}>`;
+
       let wrapper = $('.tickets-wrapper');
       wrapper.html(`
         <button onclick="window.infosys.tickets.show_ticket_list()">Tilbage</button>
@@ -124,6 +127,7 @@ $( function() {
         <p>Sidst opdateret: ${edited} </p>
         <p>Udføres af af:${us[ticket.assignee]?.name || 'Ukendt'}</p>
         <p>Prioritet: ${priority}</p>
+        <p>Notifikationer: ${subscribed}</p>
         <h3>Beskrivelse:</h3>
         <p>${ticket.description}</p>
       `);
@@ -199,7 +203,8 @@ $( function() {
         priority: 'Prioritet',
         creator: 'Oprettet af',
         assignee: 'Udføres af',
-        status: 'Status'
+        status: 'Status',
+        subscribed: 'Notifikationer'
       }
       
       let header = table.find('thead');
@@ -220,6 +225,9 @@ $( function() {
             text = ts.status[open][text]?.[lang] ?? text;
           } else if (column == 'creator' || column == 'assignee') {
             text = us[text]?.name ?? 'Ukendt';
+          } else if (column == 'subscribed') {
+            let checked = tickets[id].subscribed ? 'checked="checked"' : '';
+            text = `<input type="checkbox" class="subscribe-checkbox" ticket="${id}" ${checked}>`;
           } else {
             text = ts[column]?.[text]?.[lang] ?? text;
           }
@@ -228,8 +236,8 @@ $( function() {
         }
         body.append(row);
       }
+      set_buttons();
     }
-    set_buttons();
   }
 
   //-----------------------------
@@ -332,6 +340,38 @@ $( function() {
         });
       })
     }
+
+    // Toggle subsciption
+    $('.subscribe-checkbox').each(function () {
+      let checkbox = $(this);
+      let cell = checkbox.parent();
+
+      cell.on('click', function(evt) {
+        evt.stopPropagation(); // Don't open ticket if we clicked the subscibe cell
+        
+        // Toggle the checkbox if we clicked on parent element
+        if (evt.target.type !== 'checkbox') {
+          checkbox.prop('checked', !checkbox.prop('checked'));
+        }
+
+        $.post(
+          `/tickets/${checkbox.attr('ticket')}/subscription`,
+          {
+            subscribe: checkbox.prop('checked'),
+          },
+          function(data, status) {
+            console.log("Subscription update response:", data, "Status:", status);
+          }
+        ).fail(function (jqXHR) {
+          console.log('Subscription update failed', jqXHR);
+          let response = JSON.parse(jqXHR.responseText);
+          let message = "Could not update subscription";
+          if (response != null) message += "\n" + response.message;
+          alert(message);
+        })
+
+      })
+    })
   }
 
   infosys.tickets = {
