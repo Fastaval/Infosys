@@ -1,0 +1,41 @@
+name: Build and commit
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_message:
+        description: 'Commit message'
+        required: true
+
+jobs:
+  build-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Infosys-frontend
+        uses: actions/checkout@v4
+        with:
+          repository: Fastaval/Infosys-frontend
+          ref: main
+          path: infosys-frontend
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npx nx run tickets:build
+
+      - name: Remove old files
+        run: >
+          rm -rf public/css/tickets/*
+          rm -rf public/js/tickets/*
+
+      - name: Copy files
+        run: >
+          cp -r infosys-frontend/dist/apps/tickets/css/tickets public/css/tickets
+          cp -r infosys-frontend/dist/apps/tickets/js/tickets public/js/tickets
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: ${{ github.event.inputs.commit_message }}
