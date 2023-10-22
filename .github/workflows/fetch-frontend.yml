@@ -46,7 +46,7 @@ jobs:
           message: ${{ github.event.inputs.commit_message }}
 
       - name: Make server pull latest changes
-        uses: appleboy/ssh-action@v1
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
