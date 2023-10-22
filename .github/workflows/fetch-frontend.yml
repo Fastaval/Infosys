@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout infosys repository
         uses: actions/checkout@v4
-        
+
       - name: Checkout Infosys-frontend repository
         uses: actions/checkout@v4
         with:
@@ -29,6 +29,10 @@ jobs:
       - name: Build
         run: npx nx run tickets:build
         working-directory: infosys-frontend
+
+      - run: > 
+          ls public/css/tickets
+          ls infosys-frontend/dist/app/tickets/css/tickets
 
       - name: Remove old files
         run: >
