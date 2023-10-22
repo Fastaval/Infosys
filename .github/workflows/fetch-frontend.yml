@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       commit_message:
-        description: 'Commit message'
+        description: "Commit message"
         required: true
 
 jobs:
@@ -36,11 +36,11 @@ jobs:
 
       - name: Copy files
         run: |
-          cp -r infosys-frontend/dist/apps/tickets/css/tickets public/css/tickets
-          cp -r infosys-frontend/dist/apps/tickets/js/tickets public/js/tickets
+          cp -r infosys-frontend/dist/apps/tickets/css/tickets public/css
+          cp -r infosys-frontend/dist/apps/tickets/js/tickets public/js
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
-          add: 'public'
+          add: "public"
           message: ${{ github.event.inputs.commit_message }}
