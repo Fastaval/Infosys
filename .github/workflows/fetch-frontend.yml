@@ -44,3 +44,15 @@ jobs:
         with:
           add: "public"
           message: ${{ github.event.inputs.commit_message }}
+
+      - name: Make server pull latest changes
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          command_timeout: 5m
+          script: |
+            cd /var/www/infosys/test
+            git pull
