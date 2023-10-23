@@ -13,6 +13,7 @@ INSERT INTO translations (label, lang, string) VALUES('tickets.category.1', 'da'
 INSERT INTO translations (label, lang, string) VALUES('tickets.category.2', 'da', 'Proces');
 INSERT INTO translations (label, lang, string) VALUES('tickets.category.3', 'da', 'Arrangør');
 INSERT INTO translations (label, lang, string) VALUES('tickets.category.4', 'da', 'Betaling');
+INSERT INTO translations (label, lang, string) VALUES('tickets.category.5', 'da', 'App');
 
 INSERT INTO translations (label, lang, string) VALUES('tickets.open', 'da', 'Åben');
 INSERT INTO translations (label, lang, string) VALUES('tickets.closed', 'da', 'Lukket');
