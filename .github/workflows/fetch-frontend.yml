@@ -55,4 +55,6 @@ jobs:
           command_timeout: 5m
           script: |
             cd /var/www/infosys/test
+            git checkout --no-overlay -- ./public/css
+            git checkout --no-overlay -- ./public/js
             git pull
