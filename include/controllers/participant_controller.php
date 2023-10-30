@@ -58,9 +58,6 @@ class ParticipantController extends Controller
             'ean8SmallBarcode',
             'ean8Barcode',
             'ean8Badge',
-            'processPayment',
-            'registerPayment',
-            'showPaymentDone',
             'resetParticipantPassword',
             'cronPaymentReminder',
             'cancelParticipantSignup',
@@ -1570,89 +1567,6 @@ class ParticipantController extends Controller
         } catch (Exception $e) {
             header('HTTP/1.1 500 Failed');
         }
-
-        exit;
-    }
-
-    /**
-     * handle a participant wanting to pay
-     *
-     * @access public
-     * @return void
-     */
-    public function processPayment()
-    {
-        if (empty($this->vars['hash'])) {
-            header('HTTP/1.1 400 Bad request');
-            exit;
-        }
-
-        if (!($participant = $this->model->getParticipantFromPaymentHash($this->vars['hash'])) || $participant->annulled === 'ja') {
-            $this->page->setTitle('Fejl / Fail');
-            $this->page->no_participant = true;
-
-            return;
-        }
-
-        if (!$this->model->participantHasOutstandingPayment($participant)) {
-            $this->page->setTitle('All good');
-            $this->page->nothing_outstanding = true;
-
-            return;
-        }
-
-        if (!($url = $this->model->generatePaymentUrl($participant))) {
-            $this->page->setTitle('Fejl / Fail');
-            $this->page->no_payment_url = true;
-
-            $this->log("Failed to create payment url for participant " . $participant->id, 'Payment', null);
-
-            return;
-        }
-
-        $this->log("Created payment url for participant " . $participant->id, 'Payment', null);
-
-        // redirect to url
-        $this->hardRedirect($url);
-    }
-
-    /**
-     * shows a thank you page after payment is done
-     *
-     * @access public
-     * @return void
-     */
-    public function showPaymentDone()
-    {
-    }
-
-    /**
-     * handle a participant wanting to pay
-     *
-     * @access public
-     * @return void
-     */
-    public function registerPayment()
-    {
-        if (empty($this->vars['hash'])) {
-            header('HTTP/1.1 400 Bad request');
-            exit;
-        }
-
-        if (!($participant = $this->model->getParticipantFromPaymentHash($this->vars['hash']))) {
-            header('HTTP/1.1 400 Bad request');
-
-            $this->log("Failed to locate participant for registering payment. Hash " . $this->vars['hash'], 'Payment', null);
-
-            exit;
-        }
-
-        if (!$this->model->registerParticipantPayment($participant, $this->page->request)) {
-            $this->log("Failed to register payment for participant " . $participant->id . ". Posted to error log" , 'Payment', null);
-            exit;
-        }
-
-        $this->log("Registered payment for participant " . $participant->id, 'Payment', null);
 
         exit;
     }

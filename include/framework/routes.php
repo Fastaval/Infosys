@@ -184,11 +184,6 @@ class Routes
 
         $this->routes['id_card_render']                             = ['url' => 'id-card/render', 'controller' => 'IdTemplate', 'method' => 'renderIdCards'];
 
-        // online payment
-        $this->routes['participant_post_payment']                   = array('url' => 'participant/payment/done', 'controller' => 'Participant', 'method' => 'showPaymentDone');
-        $this->routes['participant_payment']                        = array('url' => 'participant/payment/:hash:', 'controller' => 'Participant', 'method' => 'processPayment');
-        $this->routes['participant_register_payment']               = array('url' => 'participant/payment/register/:hash:', 'controller' => 'Participant', 'method' => 'registerPayment');
-
         // payment reminders
         $this->routes['cron_payment_reminder']                      = array('url' => 'participant/payment-reminder/cron', 'controller' => 'Participant', 'method' => 'cronPaymentReminder');
         // $this->routes['13-day_payment_reminder']                    = array('url' => 'participant/payment-reminder/second', 'controller' => 'Participant', 'method' => 'sendSecondPaymentReminder');
@@ -374,6 +369,7 @@ class Routes
         $this->routes['admin_ajax_deleteprivilege'] = array('url' => 'admin/ajax/deleteprivilege/:id:', 'controller' => 'Admin', 'method' => 'ajaxDeletePrivilege');
         $this->routes['admin_ajax_deleterole']      = array('url' => 'admin/ajax/deleterole/:id:', 'controller' => 'Admin', 'method' => 'ajaxDeleteRole');
         $this->routes['admin_ajax_createrole']      = array('url' => 'admin/ajax/createrole', 'controller' => 'Admin', 'method' => 'ajaxCreateRole');
+        $this->routes['admin_ajax_users']           = array('url' => 'admin/ajax/users/:id:', 'controller' => 'Admin', 'method' => 'ajaxUsers');
 
         // api routes
         $this->routes['api_auth']                = array('url' => 'api/auth', 'controller' => 'Api', 'method' => 'auth');
@@ -447,10 +443,12 @@ class Routes
         $this->routes['signup_pages_specific']      = array('url' => 'signup/pages/:page:', 'controller' => 'SignupAdmin', 'method' => 'signupPages');
         $this->routes['signup_pages_add_element']   = array('url' => 'signup/pages/add-element', 'controller' => 'SignupAdmin', 'method' => 'addPageElement');
         $this->routes['signup_pages_edit_text']     = array('url' => 'signup/pages/edit-text', 'controller' => 'SignupAdmin', 'method' => 'editText');
-        $this->routes['signup_config']              = array('url' => 'signup/config/:module:', 'controller' => 'SignupAdmin', 'method' => 'signupConfig');
+        $this->routes['signup_config']              = array('url' => 'signup/config', 'controller' => 'SignupAdmin', 'method' => 'signupConfig');
+        $this->routes['signup_config_edit']         = array('url' => 'signup/config/:module:/edit', 'controller' => 'SignupAdmin', 'method' => 'editConfig');
 
         // Signup API
         $this->routes['api_signup_config']          = array('url' => 'api/signup/config/:module:', 'controller' => 'SignupApi', 'method' => 'getConfig');
+        $this->routes['api_signup_configlist']      = array('url' => 'api/signup/configlist', 'controller' => 'SignupApi', 'method' => 'getConfigList');
         $this->routes['api_signup_page_list']       = array('url' => 'api/signup/pagelist', 'controller' => 'SignupApi', 'method' => 'getPageList');
         $this->routes['api_signup_page']            = array('url' => 'api/signup/page/:page_id:', 'controller' => 'SignupApi', 'method' => 'getPage');
         $this->routes['api_signup_food']            = array('url' => 'api/signup/food', 'controller' => 'SignupApi', 'method' => 'getFood');
@@ -459,6 +457,24 @@ class Routes
         $this->routes['api_signup_submit']          = array('url' => 'api/signup/submit', 'controller' => 'SignupApi', 'method' => 'submitSignup');
         $this->routes['api_signup_confirm']         = array('url' => 'api/signup/confirm', 'controller' => 'SignupApi', 'method' => 'confirmSignup');
         $this->routes['api_signup_load']            = array('url' => 'api/signup/load', 'controller' => 'SignupApi', 'method' => 'loadSignup');
+
+        // Payment
+        $this->routes['payment_callback']           = array('url' => 'payment/callback', 'controller' => 'Payment', 'method' => 'paymentCallBack');
+        $this->routes['payment_create_url']         = array('url' => 'payment/createurl', 'controller' => 'Payment', 'method' => 'createPaymentURL');
+        $this->routes['payment_cancel']             = array('url' => 'payment/cancel', 'controller' => 'Payment', 'method' => 'cancelPayment');
+        $this->routes['payment_status']             = array('url' => 'payment/status', 'controller' => 'Payment', 'method' => 'checkPayment');
+        $this->routes['payment_check_total']        = array('url' => 'payment/participanttotal', 'controller' => 'Payment', 'method' => 'checkTotal');
+
+        // Ticket system
+        $this->routes['tickets_main']               = array('url' => 'tickets', 'controller' => 'Tickets', 'method' => 'mainPage');
+        $this->routes['tickets_show']               = array('url' => 'tickets/show/:ticket_id:', 'controller' => 'Tickets', 'method' => 'mainPage');
+        $this->routes['tickets_ajax']               = array('url' => 'tickets/ajax', 'controller' => 'Tickets', 'method' => 'ajaxTickets');
+        $this->routes['tickets_messages_ajax']      = array('url' => 'tickets/:ticket_id:/messages', 'controller' => 'Tickets', 'method' => 'ajaxMessages');
+        $this->routes['tickets_subscription_ajax']  = array('url' => 'tickets/:ticket_id:/subscription', 'controller' => 'Tickets', 'method' => 'ajaxSubscription');
+
+        // Translations
+        $this->routes['translations_ajax']           = array('url' => 'translations/ajax/:label:', 'controller' => 'Translation', 'method' => 'ajaxTranslations');
+
     }
 
     /**

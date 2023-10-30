@@ -95,6 +95,7 @@ class EntityFactory
         'Privilege'                 => 'Privilege',
         'Role'                      => 'Role',
         'RolePrivilege'             => 'RolePrivilege',
+        'Ticket'                    => 'Ticket',
         'ShopProduct'               => 'ShopProduct',
         'SMSLog'                    => 'SMSLog',
         'TodoItems'                 => 'TodoItems',

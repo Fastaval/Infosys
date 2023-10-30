@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       commit_message:
-        description: 'Commit message'
+        description: "Commit message"
         required: true
 
 jobs:
@@ -12,30 +12,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Infosys-frontend
+      - name: Checkout infosys repository
+        uses: actions/checkout@v4
+
+      - name: Checkout Infosys-frontend repository
         uses: actions/checkout@v4
         with:
           repository: Fastaval/Infosys-frontend
-          ref: main
           path: infosys-frontend
 
       - name: Install dependencies
         run: npm ci
+        working-directory: infosys-frontend
 
       - name: Build
         run: npx nx run tickets:build
+        working-directory: infosys-frontend
 
       - name: Remove old files
-        run: >
+        run: |
           rm -rf public/css/tickets/*
           rm -rf public/js/tickets/*
 
       - name: Copy files
-        run: >
-          cp -r infosys-frontend/dist/apps/tickets/css/tickets public/css/tickets
-          cp -r infosys-frontend/dist/apps/tickets/js/tickets public/js/tickets
+        run: |
+          cp -r infosys-frontend/dist/apps/tickets/css/tickets public/css
+          cp -r infosys-frontend/dist/apps/tickets/js/tickets public/js
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
+          add: "public"
           message: ${{ github.event.inputs.commit_message }}
+
+      - name: Make server pull latest changes
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          command_timeout: 5m
+          script: |
+            cd /var/www/infosys/test
+            git checkout --no-overlay -- ./public/css
+            git checkout --no-overlay -- ./public/js
+            git pull

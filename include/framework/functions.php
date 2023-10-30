@@ -137,7 +137,7 @@ function numberToEAN13($input) {
     $int = intval($input);
     if (strlen($int) < 12) {
         $treated = str_pad($int, 12, '0', STR_PAD_LEFT);
-    } elseif ($strlen($int) > 12) {
+    } elseif (strlen($int) > 12) {
         $treated = substr($int, 0, 12);
     } else {
         $treated = $int;
@@ -275,13 +275,17 @@ function EANToNumber($input)
  * @access public
  * @return string
  */
-function staticLink($filename)
+function staticLink($filename, $random = true)
 {
     if (!($stat = stat(PUBLIC_PATH . $filename))) {
         return $filename;
     }
 
-    return $filename . (mb_strpos($filename, '?') !== false ? '&' : '?') . 'random=' . $stat['mtime'];
+    if ($random) {
+        $filename .= (mb_strpos($filename, '?') !== false ? '&' : '?') . 'v=' . $stat['mtime'];
+    }
+
+    return $filename;
 }
 
 if (file_exists(LIB_FOLDER . 'markdown/markdown.php')) {

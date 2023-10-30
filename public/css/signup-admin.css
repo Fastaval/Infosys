@@ -4,7 +4,7 @@ body {
 /*---------------------------------------------------------
 Settings
 ---------------------------------------------------------*/
-div#page-admin-container {
+div#signup-admin-container {
   --selection-color: rgba(0,0,255,.5);
   --hover-color: rgba(0,0,255,.1);
   --tab-border: 2px;
@@ -43,21 +43,21 @@ div#page-admin-toolbar button#bold{
 /*---------------------------------------------------------
 Main container
 ---------------------------------------------------------*/
-div#page-admin-container {
+div#signup-admin-container {
   margin: 2rem;
 }
 
-div#page-admin-container .title-wrapper h1 {
+div#signup-admin-container .title-wrapper h1 {
   font-size: 3rem;
   margin-bottom: 3rem;
 }
 
-div#page-admin-container i {
+div#signup-admin-container i {
   margin-right: .5em;
   width: 29px;
 }
 
-div#page-admin-container i:before {
+div#signup-admin-container i:before {
   text-align: right;
   width: 29px;
   margin: 0;
@@ -66,14 +66,14 @@ div#page-admin-container i:before {
 /*---------------------------------------------------------
 Navigation
 ---------------------------------------------------------*/
-div#page-admin-container nav {
+div#signup-admin-container nav {
   display: flex;
   justify-content: center;
   border-bottom: var(--tab-border) solid black;
   flex-wrap: wrap;
 }
 
-div#page-admin-container nav .nav-button {
+div#signup-admin-container nav .nav-button {
   border: var(--tab-border) solid black;
   padding: .2em 1em;
   background-color: lightgray;
@@ -82,7 +82,7 @@ div#page-admin-container nav .nav-button {
   cursor: pointer;
 }
 
-div#page-admin-container nav .nav-button.selected {
+div#signup-admin-container nav .nav-button.selected {
   border-bottom: none;
   background-color: white;
 }
@@ -90,7 +90,7 @@ div#page-admin-container nav .nav-button.selected {
 /*---------------------------------------------------------
 Content section
 ---------------------------------------------------------*/
-div#page-admin-container legend {
+div#signup-admin-container legend {
   border: 0px;
   margin: 0px;
   padding: 5px;
@@ -100,25 +100,25 @@ div#page-admin-container legend {
   line-height: 1.2rem;
 }
 
-div#page-admin-container .title-wrapper,
-div#page-admin-container .headline-wrapper,
-div#page-admin-container .item-wrapper {
+div#signup-admin-container .title-wrapper,
+div#signup-admin-container .headline-wrapper,
+div#signup-admin-container .item-wrapper {
   display: flex;
   align-items: center;
 }
 
-div#page-admin-container .title-wrapper h1 {
+div#signup-admin-container .title-wrapper h1 {
   font-size: 2rem;
   line-height: 2rem;
   margin-bottom: 0;
 }
 
-div#page-admin-container .headline-wrapper h2 {
+div#signup-admin-container .headline-wrapper h2 {
   font-size: 1.5rem;
   line-height: 1.5rem;
 }
 
-div#page-admin-container .item-wrapper p {
+div#signup-admin-container .item-wrapper p {
   margin: 2px 0px;
 }
 
@@ -133,9 +133,13 @@ div#page-admin-container .item-wrapper p {
   z-index: 2;
 }
 
-div#page-admin-container .item-checkbox {
+div#signup-admin-container .item-checkbox {
   vertical-align: baseline;
   margin-left: .3em;
+}
+
+div#signup-admin-container textarea {
+  box-sizing: border-box;
 }
 /*---------------------------------------------------------
 Selection
@@ -171,12 +175,12 @@ legend.selected::before {
   height: 100%;
 }
 
-div#page-admin-container .editable {
+div#signup-admin-container .editable {
   cursor: text;
   min-width: 1em;
   display: inline-block;
 }
-div#page-admin-container .editable:hover {
+div#signup-admin-container .editable:hover {
   background-color: unset;
 }
 /*---------------------------------------------------------

@@ -1408,9 +1408,9 @@ SQL;
 
     public function generateParticipantBarcodes(array $participants) {
         require_once 'PEAR.php';
-        require_once 'Image/Barcode.php';
+        require_once 'Image/Barcode2.php';
 
-        $barcode = new Image_Barcode;
+        $barcode = new Image_Barcode2;
 
         foreach ($participants as $participant) {
             $img = @$barcode->draw(numberToEAN13($participant->id), 'ean13', 'png', false);
@@ -2283,28 +2283,6 @@ INSERT INTO participantidtemplates SET template_id = ?, participant_id = ? ON DU
      * @access public
      * @return null|Deltagere
      */
-    public function getParticipantFromPaymentHash($hash)
-    {
-        $query = "SELECT participant_id FROM participantpaymenthashes WHERE hash = ?";
-
-        $participant = null;
-
-        if ($results = $this->db->query($query, array($hash))) {
-            $participant = $this->createEntity('Deltagere')->findById($results[0]['participant_id']);
-        }
-
-        return $participant;
-    }
-
-    /**
-     * fetches a participant from a payment hash, that is
-     * an md5 hash of id and password
-     *
-     * @param string $hash Hash to search by
-     *
-     * @access public
-     * @return null|Deltagere
-     */
     public function getParticipantFromResetPasswordHash($hash)
     {
         $query = "SELECT id FROM deltagere WHERE MD5(CONCAT('reset-pw-', id, '-', password)) = ?";
@@ -2426,16 +2404,8 @@ SET participant_id = ?, amount = ?, cost = ?, fees = ?, timestamp = NOW()
 
         $api = $this->factory('Api');
 
-        try {
-            $hash = $api->getParticipantPaymentHash($participant);
-
-        } catch (FrameworkException $e) {
-            $hash = $api->setParticipantPaymentHash($participant);
-        }
-
         $page->participant = $participant;
         $page->payment_remainder = $participant->calcSignupTotal() - $participant->betalt_beloeb;
-        $page->payment_url = $this->url('participant_payment', array('hash' => $hash));
         $page->payment_day = date('d/m-Y', $paytime);
         $page->payment_day_en = date('M d, Y', $paytime);
 

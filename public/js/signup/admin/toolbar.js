@@ -5,6 +5,8 @@ jQuery(function() {
 });
 
 class SignupAdminTools {
+  static extra_functions = [];
+
   static init() {
     this.toolbar = jQuery("<div id='page-admin-toolbar'></div>");
 
@@ -35,9 +37,15 @@ class SignupAdminTools {
       }
     });
 
-
-
     jQuery('div.content-container').prepend(this.toolbar);
+
+    this.extra_functions.forEach(function(callBack) {
+      callBack();
+    });
+  }
+
+  static extra(callBack) {
+    this.extra_functions.push(callBack);
   }
 
   static lang_change(lang) {
@@ -95,13 +103,8 @@ class SignupAdminTools {
       text += end_text;
     }
 
-
     SignupAdminControls.replace_selection(before+text+after);
   }
-
-  // static list_click() {
-  //   this.wrap_selection("[list]","[/list]");
-  // }
 
   static bold_click() {
     this.wrap_selection("[b]","[/b]");
