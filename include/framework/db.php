@@ -214,7 +214,12 @@ class DB
             $args  = $query->getArguments();
             $query = $query->assemble();
         } else {
-            if (!empty($args) && count($args) == 1 && is_array($args[0])) {
+            if (
+                !empty($args) 
+                && (count($args) == 1 || (count($args) == 2 && $args[1] == 'assoc'))
+                && is_array($args[0])
+            ) {
+                if (isset($args[1]) && $args[1] == 'assoc') $mode = PDO::FETCH_ASSOC;
                 $args = $args[0];
             }
         }

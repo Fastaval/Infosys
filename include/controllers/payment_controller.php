@@ -23,7 +23,10 @@ class PaymentController extends Controller {
     fastcgi_finish_request(); // No need to keep the payment server waiting
 
     $post = $this->page->request->post;
-    $this->model->completePayment($post);
+    [$participant, $amount] = $this->model->completePayment($post);
+
+    $mc = new MailController($this->route, $this->config, $this->dic);
+    $mc->sendPaymentConfirmation($participant, $amount);
     exit;
   }
   
