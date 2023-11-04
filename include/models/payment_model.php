@@ -24,7 +24,7 @@ class PaymentModel extends Model {
     } while(count($this->db->query("SELECT * FROM payment_log WHERE token = ?", $token)) > 0);
     
     // Set values for the payment
-    $return_url = "https://fastaval.westh.it/test-tilmelding/payment";
+    $return_url = $this->config->get('payment.return_page');
     $base_url = $this->config->get('app.public_uri');
     $testmode = $this->config->get('payment.testing');
 

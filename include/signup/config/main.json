@@ -78,5 +78,11 @@
   "dkk": {
     "en": "DKK",
     "da": "kr."
-  }
+  },
+  "no_edit": [
+    "signup_end",
+    "con_start",
+    "autocomplete",
+    "current_financial_support"
+  ]
 }

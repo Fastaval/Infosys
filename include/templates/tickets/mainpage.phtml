@@ -1,0 +1,9 @@
+<div class="tickets-wrapper"></div>
+
+<script>
+  window.infosys = window.infosys || {};
+  window.infosys.user_id = <?=$this->user_id?>;
+  <?php if ($this->ticket_id !== 0) { ?>
+    window.infosys.ticket_id = <?=$this->ticket_id?>;
+  <?php } ?>
+</script>

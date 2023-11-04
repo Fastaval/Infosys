@@ -209,6 +209,7 @@ class DB
         }
 
         $query = array_shift($args);
+        $mode = PDO::FETCH_DEFAULT;
 
         if ($query instanceof Select) {
             $args  = $query->getArguments();
@@ -245,7 +246,7 @@ class DB
             }
 
             if (false !== $statement->execute($args)) {
-                while (false !== ($row = $statement->fetch())) {
+                while (false !== ($row = $statement->fetch($mode))) {
                     $this->query_result[] = $row;
                 }
             } else {

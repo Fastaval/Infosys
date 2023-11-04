@@ -43,6 +43,14 @@ class SignupConfigRender {
     let page = jQuery(`<div id='config-page-${name}'></div>`);
     this.config_container.append(page);
     this.config_pages[name] = page;
+    
+    // Remove read-only elements
+    for(const index in config.no_edit) {
+      let key = config.no_edit[index];
+      delete config[key];
+    }
+    delete config.no_edit;
+
     this.render_children(config, page, name);
   }
 
