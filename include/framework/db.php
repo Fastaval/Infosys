@@ -220,7 +220,7 @@ class DB
                 && (count($args) == 1 || (count($args) == 2 && $args[1] == 'assoc'))
                 && is_array($args[0])
             ) {
-                if ($args[1] == 'assoc') $mode = PDO::FETCH_ASSOC;
+                if (isset($args[1]) && $args[1] == 'assoc') $mode = PDO::FETCH_ASSOC;
                 $args = $args[0];
             }
         }

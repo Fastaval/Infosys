@@ -24,8 +24,8 @@
         "da": "Du retter en eksisterende tilmelding med ID:"
     },
     "reset": {
-        "en": "Create New",
-        "da": "Opret Ny"
+        "en": "New registration",
+        "da": "Ny tilmelding"
     },
     "pay_now": {
         "en": "You can pay right away by pressing this button",

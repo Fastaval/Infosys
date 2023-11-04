@@ -11,8 +11,8 @@ class PaymentModel extends Model {
     if($participant->password !== $post->pass) return ['error', "Wrong password"];
 
     // Check amount
-    $ammount = $participant->calcSignupTotal() - $participant->betalt_beloeb;
-    if ($ammount <= 0) return ['error', "No payment needed"];
+    $amount = $participant->calcSignupTotal() - $participant->betalt_beloeb;
+    if ($amount <= 0) return ['error', "No payment needed"];
 
     // Check for exiting payments for participant and set order ID accordingly
     $payments = $this->db->query("SELECT * FROM payment_log WHERE participant_id = ?", $participant->id);
@@ -29,7 +29,7 @@ class PaymentModel extends Model {
     $testmode = $this->config->get('payment.testing');
 
     $fields = [
-      'Amount'			      => $ammount * 100, //amount in minor units e.g. 1DKK = 100
+      'Amount'			      => $amount * 100, //amount in minor units e.g. 1DKK = 100
       'Currency'          => 'DKK',
       'OrderNumber'		    => "".$order_id,
       'CustomerAcceptUrl'	=> "$return_url?status=accept&token=$token",
@@ -55,7 +55,7 @@ class PaymentModel extends Model {
     $query = "INSERT INTO payment_log (participant_id, amount, payment_id, created, token) VALUES (?,?,?,?,?)";
     $values = [
       $participant->id,
-      $ammount,
+      $amount,
       $vars->paymentIdentifier,
       time(),
       $token,
@@ -83,7 +83,7 @@ class PaymentModel extends Model {
     if (count($result) == 0) {
       return ['error', 'invalid token'];
     }
-    return [$result[0]['status']];
+    return [$result[0]['status'], ''];
   }
 
   public function completePayment($vars) {
@@ -97,12 +97,12 @@ class PaymentModel extends Model {
     // Get info about the payment authorization
     $json = $this->doCurl('authorization/' . $auth_id, null, 'GET');
     $info = json_decode($json);
-    $this->fileLog("Payment Info:\n".print_r($info,true));
+    //$this->fileLog("Payment Info:\n".print_r($info,true));
 
     // Capture the full ammount
     $json = $this->doCurl('authorization/' . $auth_id . '/capture', '{}', 'POST');
     $capture_result = json_decode($json);
-    $this->fileLog("Payment Capture:\n".print_r($capture_result,true));
+    //$this->fileLog("Payment Capture:\n".print_r($capture_result,true));
 
     // Save payment status
     $status = $capture_result->IsSuccess ? 'confirmed' : 'failed';
@@ -110,16 +110,18 @@ class PaymentModel extends Model {
     $query = "UPDATE payment_log SET status = ?, amount = ?, completed = ? WHERE payment_id = ?";
     $this->db->exec($query, [$status, $amount, time(), $payment_id]);
 
+    // Get participant from payment
+    $query = "SELECT * FROM payment_log WHERE payment_id = ?";
+    $result = $this->db->query($query, [$payment_id]);
+    $participant = $this->createEntity('Deltagere')->findById($result[0]['participant_id']);
+
     if ($status == 'failed') {
       // Maybe add a note to the participant
       // The participant will be notified about the error on the payment page when checking status
+      $this->log("FAILED on-line payment for participant $participant->id of $amount DKK ", 'Payment', null);
       exit;
     }
 
-    $query = "SELECT * FROM payment_log WHERE payment_id = ?";
-    $result = $this->db->query($query, [$payment_id]);
-
-    $participant = $this->createEntity('Deltagere')->findById($result[0]['participant_id']);
     $amount = $result[0]['amount'] / 100;
     $participant->betalt_beloeb += $amount;
 
@@ -135,6 +137,10 @@ class PaymentModel extends Model {
       $participant->paid_note = $note;
     }
     $participant->update();
+
+    $this->log("Registered on-line payment for participant $participant->id of $amount DKK", 'Payment', null);
+
+    return [$participant, $amount];
   }
 
   public function checkTotal($post) {
