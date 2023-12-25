@@ -376,7 +376,7 @@ class SignupApiModel extends Model {
     $total = 0;
     $junior_contact = "";
     $sprog = [];
-    $sleeping_areas = $author = [];
+    $sleeping_areas = [];
     $food_credits = [
       'breakfast' => 0,
       'dinner' => 0,
@@ -500,20 +500,6 @@ class SignupApiModel extends Model {
               $bk  = $this->createEntity('BrugerKategorier');
               $participant->brugerkategori_id = $bk->findByname($value)->id;
               $is_organizer = $value == 'Arrangør';
-              break;
-
-            case 'author':
-              if ($value == 'off') continue 2;
-              $author[] = 'role';
-              break;
- 
-            case 'designer':
-              if ($value == 'off') continue 2;
-              $author[] = 'board';
-              break;
-
-            case 'organizer':
-              if ($value == 'off') continue 2;
               break;
 
             case 'wear_orders':
@@ -1015,23 +1001,29 @@ class SignupApiModel extends Model {
     // Sleeping area
     $participant->setCollection('sleeping_area', $sleeping_areas);
 
-    // Author of rpg or designer of board game
-    $participant->forfatter = count($author) > 0 ? 'ja' : 'nej';
-    if (count($author)  == 0) $participant->game_id = null;
-    $participant->setCollection('author', $author);
-
+    // TODO some smart sollution to avoid hardcoding organizer category IDs
+    
     // Check for actual organizer selection
-    if ($is_organizer && $participant->forfatter == 'nej' && !$participant->work_area) {
+    if ($is_organizer && !$participant->work_area) {
       $errors['organizer'][] = [
         'type' => 'no_organizer_selection',
         'id' => 'participant',
       ];
+    // Author of rpg or designer of board game
+    } elseif (in_array($participant->work_area, [1,2])) {
+      $participant->forfatter = 'ja';
+      $author = [];
+      if ($participant->work_area == 1) $author[] = 'role';
+      if ($participant->work_area == 2) $author[] = 'board';
+      $participant->setCollection('author', $author);
+    } else {
+      $participant->forfatter = 'nej';
+      $participant->game_id = null;
+      $participant->setCollection('author', []);
     }
 
     // Notes
     if ($junior_contact) $participant->setNote('junior_ward', $junior_contact);
-
-    // TODO signup up for automatic activities
 
     return [
       'errors' => $errors,
