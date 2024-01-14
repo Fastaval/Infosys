@@ -55,7 +55,8 @@
                         "en": "",
                         "da": ""
                     },
-                    "infosys_id": "adresse2"
+                    "infosys_id": "adresse2",
+                    "disabled": "true"
                 },
                 {
                     "type": "text_input",
@@ -103,7 +104,8 @@
                         "en": "I would like to receive text alerts about activities i have signed up for, as well as general updates\/info about Fastaval. (Note that Fastaval SMS-alerts do not work with non-Danish phones)",
                         "da": "Jeg vil gerne modtaget SMS beskeder om aktiviteter jeg er tilmeldt, samt generelle opdateringer\/info om Fastaval. (Bem\u00e6rk at sms-funktionen kun fungerer med danske telefonnumre)."
                     },
-                    "infosys_id": "medbringer_mobil"
+                    "infosys_id": "medbringer_mobil",
+                    "disabled": "true"
                 },
                 {
                     "type": "date",
@@ -176,29 +178,22 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "If you sign up for before the 20th of february, you will receive a nametag upon check-in at Fastaval.",
-                        "da": "Hvis du tilmelder dig inden d. 20. februar, vil du f\u00e5 et navneskilt n\u00e5r du checker ind p\u00e5 Fastaval.\u00a0\u00a0"
+                        "en": "If you sign up for before the 23th of february, you will receive a nametag upon check-in at Fastaval.\u00a0The nametag will display your participant number first name and preferred pronouns.\u00a0",
+                        "da": "Hvis du tilmelder dig inden d. 23. februar, vil du f\u00e5 et navneskilt n\u00e5r du checker ind p\u00e5 Fastaval. P\u00e5 navneskiltet vil der fremg\u00e5 dit deltagernummer, fornavn og fortrukne pronomen (stedord).\u00a0\u00a0\u00a0"
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "The nametag will display your name and preferred pronouns. If your full name is too long to fit on the tag, only your first and last name will be used. If a problem still occurs, we will reach out to you by email.",
-                        "da": "P\u00e5 navneskiltet vil der fremg\u00e5 dit navn og fortrukne pronomen (stedord). Er dit fulde navn for langt til at passe p\u00e5 skiltet, vil dit fornavn og efternavn blive brugt. Hvis der er problemer, vil vi kontakte dig p\u00e5 mail."
-                    }
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "The name on the nametag does not have to be your legal name. If you want to use a name other than your legal name, fx. a middle name, or to avoid deadnaming,\u00a0please provide the full name that you want to use in this field.",
-                        "da": "Navnet p\u00e5 navneskiltet beh\u00f8ver ikke at v\u00e6re dit juridiske navn. Hvis du \u00f8nsker at bruge et andet navn end dit juridiske navn, fx. et mellemnavn, eller for at undg\u00e5 deadnaming, s\u00e5 oplys det fulde navn du gerne vil bruge i dette felt."
+                        "en": "If you use a name other than your legal first name in your daily life, that name can be used for the name tag instead.\u00a0",
+                        "da": "Hvis du til dagligt bruger et andet navn end dit juridiske fornavn, kan det fremg\u00e5 af dit navneskilt i stedet."
                     }
                 },
                 {
                     "type": "text_input",
                     "text": {
-                        "en": "Used name (max 17 characters)",
-                        "da": "Kaldenavn (maks 17 tegn)"
+                        "en": "Name for name tag (max 17 characters)",
+                        "da": "Navn til navneskilt (maks 17 tegn)"
                     },
                     "infosys_id": "nickname",
                     "maxlength": 17
@@ -283,8 +278,8 @@
                         {
                             "value": "Arrang\u00f8r",
                             "text": {
-                                "en": "I am an organizer (including scenario writer or board game designer).",
-                                "da": "Jeg er arrang\u00f8r (inkl. scenarieforfatter eller br\u00e6tspilsdesigner)."
+                                "en": "I am an organizer (including scenario writers and board game designers).",
+                                "da": "Jeg er arrang\u00f8r (inkl. scenarieforfattere og br\u00e6tspilsdesignere)."
                             }
                         }
                     ],
@@ -299,14 +294,14 @@
                     "type": "paragraph",
                     "text": {
                         "en": "If you are\u00a0 attending Fastaval with your club\/school, fill out the name below",
-                        "da": "Hvis du er p\u00e5 Fastaval med din klub\/ungdomsskole, s\u00e5 udfyld navnet nedenfor\n"
+                        "da": "Hvis du er p\u00e5 Fastaval med din forening\/klub\/ungdomsskole, s\u00e5 udfyld navnet nedenfor"
                     }
                 },
                 {
                     "type": "text_input",
                     "text": {
                         "en": "Name of club\/school",
-                        "da": "Navn p\u00e5 klub\/ungdomsskole"
+                        "da": "Navn p\u00e5 forening\/klub\/ungdomsskole"
                     },
                     "infosys_id": "ungdomsskole"
                 }
