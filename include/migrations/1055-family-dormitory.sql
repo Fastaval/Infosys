@@ -1,0 +1,1 @@
+ALTER TABLE deltagere MODIFY sleeping_area set('regular','sober', 'youth', 'organizer', 'family');
