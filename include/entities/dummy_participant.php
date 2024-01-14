@@ -391,10 +391,15 @@ class DummyParticipant extends DBObject
 
     public function setCollection(string $column, array $values)
     {
+        $accepted = $this->createEntity('Deltagere')->getAvailableValues($column);
         foreach ($values as &$value) {
             $value = strtolower($value);
+            if (!in_array($value, $accepted)) return [
+                'result' => 'error',
+                'value' => $value,
+            ];
         }
         $this->$column = implode(',', $values);
-        return true;
+        return 'success';
     }
 }

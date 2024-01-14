@@ -64,6 +64,14 @@
         "wine_too_young": {
             "en": " years is too young to be allowed to buy wine",
             "da": " \u00e5r er for ung til at m\u00e5tte k\u00f8be vin"
+        },
+        "unknown_language": {
+            "en": "Contains an unssuported language selection",
+            "da": "Indeholder et sprog der ikke underst\u00f8ttes"
+        },
+        "unknown_sleeping_area": {
+            "en": "Unknown sleeping area",
+            "da": "Ukendt soveomr\u00e5de"
         }
     },
     "input_error": {

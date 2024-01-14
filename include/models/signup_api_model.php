@@ -1014,7 +1014,8 @@ class SignupApiModel extends Model {
     }
 
     // Languages
-    if(!$participant->setCollection('sprog', $sprog)){
+    $result = $participant->setCollection('sprog', $sprog);
+    if( $result != 'success' ){
       $errors['activities'][] = [
         'type' => 'unknown_language',
         'languages' => $sprog,
@@ -1022,10 +1023,12 @@ class SignupApiModel extends Model {
     }
 
     // Sleeping area
-    if (!$participant->setCollection('sleeping_area', $sleeping_areas)){
+    $result = $participant->setCollection('sleeping_area', $sleeping_areas);
+    if( $result != 'success' ){
       $errors['entry'][] = [
         'type' => 'unknown_sleeping_area',
         'areas' => $sleeping_areas,
+        'id' => 'sleeping_area:'.$result['value'],
       ];
     }
 
