@@ -419,6 +419,65 @@
                     "value": 13
                 }
             ]
+        },
+        {
+            "headline": {
+                "en": "The Fastaval Bus",
+                "da": "Fastavalbussen"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "Description of how the bus works. How, what and where you need to do",
+                        "da": "Beskrivelse af hvordan bussen virker. Hvad, hvor og hvordan man skal g\u00f8re"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "Bus tickets are sold out",
+                        "da": "Billetter til bussen er udsolgt"
+                    },
+                    "text_id": "sold-out-bus",
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "config": "current_bus_tickets",
+                            "status": "hidden",
+                            "compare": "less",
+                            "value": "config.max_bus_tickets"
+                        },
+                        {
+                            "type": "checkbox",
+                            "status": "hidden",
+                            "input": "misc:fastaval_bus"
+                        }
+                    ]
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I would like a ticket for the Fastaval bus",
+                        "da": "Jeg vil gerne have billet til Fastavalbussen"
+                    },
+                    "infosys_id": "misc:fastaval_bus",
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "config": "current_bus_tickets",
+                            "status": "disabled",
+                            "compare": "greater_equal",
+                            "value": "config.max_bus_tickets"
+                        },
+                        {
+                            "type": "checkbox",
+                            "status": "normal",
+                            "input": "misc:fastaval_bus"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
