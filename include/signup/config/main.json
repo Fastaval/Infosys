@@ -8,6 +8,10 @@
     "birth": "birthdate",
     "participant": "participant",
     "organizer": "organizercategory",
+    "payment_logo_text": {
+        "en": "Here you can pay with",
+        "da": "Her kan du betale med"
+    },
     "main_signup_only": {
         "pages": [
             "activity",
