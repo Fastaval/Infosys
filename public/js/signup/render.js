@@ -74,7 +74,9 @@ class InfosysSignupRender {
   }
 
   static render_paragraph(item, lang) {
-    return "<p>" + item.processed + "</p>";
+    let paragraph = jQuery(`<p>${item.processed}</p>`)
+    if (item.text_id) paragraph.attr('id', item.text_id);
+    return paragraph;
   }
 
   static render_checkbox(item) {

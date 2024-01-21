@@ -34,10 +34,24 @@ class SignupApiModel extends Model {
         'game_titles' => $this->loadGameTitles(),
       ];
 
+      // Count financial support
       $query = "SELECT COUNT(*) as count FROM deltagere WHERE financial_struggle = 'ja'";
       $result = $this->db->query($query);
       if (count($result) == 1) {
         $config->current_financial_support = $result[0]['count'];
+      }
+
+      // Count junior participants
+
+      // Count bus tickets
+      $query = 
+        "SELECT COUNT(*) as count FROM deltagere d 
+          JOIN deltagere_indgang di ON d.id = di.deltager_id 
+          JOIN indgang i ON di.indgang_id = i.id
+        WHERE i.type = 'Fastavalbussen'";
+      $result = $this->db->query($query);
+      if (count($result) == 1) {
+        $config->current_bus_tickets = $result[0]['count'];
       }
 
       return json_encode($config, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
@@ -796,6 +810,10 @@ class SignupApiModel extends Model {
                   $select->setWhere('type', '=', 'Billetgebyr');
                   break;
 
+                case 'fastaval_bus':
+                  $select->setWhere('type', '=', 'Fastavalbussen');
+                  break;
+
                 case 'extra_support':
                   $amount = min(15, floor(intval($value) / 100));
                   if ($amount == 0) continue 3;
@@ -996,13 +1014,24 @@ class SignupApiModel extends Model {
     }
 
     // Languages
-    $participant->setCollection('sprog', $sprog);
+    $result = $participant->setCollection('sprog', $sprog);
+    if( $result != 'success' ){
+      $errors['activities'][] = [
+        'type' => 'unknown_language',
+        'languages' => $sprog,
+      ];
+    }
 
     // Sleeping area
-    $participant->setCollection('sleeping_area', $sleeping_areas);
+    $result = $participant->setCollection('sleeping_area', $sleeping_areas);
+    if( $result != 'success' ){
+      $errors['entry'][] = [
+        'type' => 'unknown_sleeping_area',
+        'areas' => $sleeping_areas,
+        'id' => 'sleeping_area:'.$result['value'],
+      ];
+    }
 
-    // TODO some smart sollution to avoid hardcoding organizer category IDs
-    
     // Check for actual organizer selection
     if ($is_organizer && !$participant->work_area) {
       $errors['organizer'][] = [
@@ -1153,10 +1182,6 @@ class SignupApiModel extends Model {
           $signup['junior:entrance'] = 'on';
           break;
 
-        case $entrance->type == 'Leje af madras':
-          $signup['misc:mattres'] = 'on';
-          break;
-
         case $entrance->type == 'Alea medlemskab':
           $signup['misc:alea'] = 'on';
           break;
@@ -1165,6 +1190,14 @@ class SignupApiModel extends Model {
           $signup['misc:ticket_fee'] = 'on';
           break;
 
+        case $entrance->type == 'Leje af madras':
+          $signup['misc:mattres'] = 'on';
+          break;
+
+        case $entrance->type == 'Fastavalbussen':
+          $signup['misc:fastaval_bus'] = 'on';
+          break;
+    
         case preg_match("/Rig onkel - (\d+)/", $entrance->type, $matches):
           $signup['misc:extra_support'] = $matches[1];
           break;

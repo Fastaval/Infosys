@@ -1,88 +1,103 @@
 {
-  "age_young": 18,
-  "age_kid": 13,
-  "max_financial_support": 85,
-  "birth": "birthdate",
-  "participant": "participant",
-  "organizer": "organizercategory",
-  "main_signup_only": {
-    "pages": [
-      "activity",
-      "food",
-      "wear",
-      "junior"
-    ],
-    "items": {
-      "extra": [
-        "misc:party1"
-      ]
+    "age_young": 18,
+    "age_kid": "15",
+    "max_financial_support": 85,
+    "max_bus_tickets": "48",
+    "max_junior_tickets": 75,
+    "max_junior_reserve": 75,
+    "birth": "birthdate",
+    "participant": "participant",
+    "organizer": "organizercategory",
+    "payment_logo_text": {
+        "en": "Here you can pay with",
+        "da": "Her kan du betale med"
     },
-    "options": {
-      "practical": {
-        "participant": [
-          "Juniordeltager"
-        ]
-      }
-    }
-  },
-  "errors": {
-    "required": {
-      "en": "This input may not be empty",
-      "da": "Feltet må ikke være tomt"
+    "main_signup_only": {
+        "pages": [
+            "activity",
+            "food",
+            "wear",
+            "junior"
+        ],
+        "items": {
+            "extra": [
+                "misc:party1"
+            ]
+        },
+        "options": {
+            "practical": {
+                "participant": [
+                    "Juniordeltager"
+                ]
+            }
+        }
     },
-    "disabled": {
-      "en": "Has been disabled",
-      "da": "Skal ikke bruges"
+    "errors": {
+        "required": {
+            "en": "This input may not be empty",
+            "da": "Feltet m\u00e5 ikke v\u00e6re tomt"
+        },
+        "disabled": {
+            "en": "Has been disabled",
+            "da": "Skal ikke bruges"
+        },
+        "excludes": {
+            "en": "May not be selected at the same time",
+            "da": "M\u00e5 ikke v\u00e6lges samtidig"
+        },
+        "no_match": {
+            "en": "No matching categories",
+            "da": "Ingen kategorier der passer"
+        },
+        "not_on_list": {
+            "en": "The content of this field is not on the list of allowed options.\n(Make sure to check the spelling and select a valid option from the list as you type)",
+            "da": "Indholdet af feltet er ikke p\u00e5 listen over gyldige muligheder.\n(Kontroller stavning og v\u00e6lg en v\u00e6rdi fra listen der dukker op mens du skriver)"
+        },
+        "require_one": {
+            "en": "You must choose atleast one of the options",
+            "da": "Du skal v\u00e6lge mindst en af mulighederne"
+        },
+        "one_day": {
+            "en": "You must choose atleast one day to attend Fastaval",
+            "da": "Du skal v\u00e6lge mindst en dag du kommer p\u00e5 Fastaval"
+        },
+        "sleeping_too_young": {
+            "en": " years is too young to be allowed to sleep at Fastaval",
+            "da": " \u00e5r er for ung til at m\u00e5tte overnatte p\u00e5 Fastaval"
+        },
+        "wine_too_young": {
+            "en": " years is too young to be allowed to buy wine",
+            "da": " \u00e5r er for ung til at m\u00e5tte k\u00f8be vin"
+        },
+        "unknown_language": {
+            "en": "Contains an unssuported language selection",
+            "da": "Indeholder et sprog der ikke underst\u00f8ttes"
+        },
+        "unknown_sleeping_area": {
+            "en": "Unknown sleeping area",
+            "da": "Ukendt soveomr\u00e5de"
+        }
     },
-    "excludes": {
-      "en": "May not be selected at the same time",
-      "da": "Må ikke vælges samtidig"
+    "input_error": {
+        "en": "There some issues with the input on the current page.\nDo you want to stay and fix them?",
+        "da": "Der er nogle problemer med indtastningen p\u00e5 den nuv\u00e6rende side.\nVil du blive p\u00e5 siden og rette dem?"
     },
-    "no_match": {
-      "en": "No matching categories",
-      "da": "Ingen kategorier der passer"
+    "sub_total": {
+        "en": "Sub total",
+        "da": "Sub total"
     },
-    "not_on_list": {
-      "en": "The content of this field is not on the list of allowed options.\n(Make sure to check the spelling and select a valid option from the list as you type)",
-      "da": "Indholdet af feltet er ikke på listen over gyldige muligheder.\n(Kontroller stavning og vælg en værdi fra listen der dukker op mens du skriver)"
+    "pieces": {
+        "en": "pcs.",
+        "da": "stk."
     },
-    "require_one": {
-      "en": "You must choose atleast one of the options",
-      "da": "Du skal vælge mindst en af mulighederne"
+    "dkk": {
+        "en": "DKK",
+        "da": "kr."
     },
-    "one_day": {
-      "en": "You must choose atleast one day to attend Fastaval",
-      "da": "Du skal vælge mindst en dag du kommer på Fastaval"
-    },
-    "sleeping_too_young": {
-      "en": " years is too young to be allowed to sleep at Fastaval",
-      "da": " år er for ung til at måtte overnatte på Fastaval"
-    },
-    "wine_too_young": {
-      "en": " years is too young to be allowed to buy wine",
-      "da": " år er for ung til at måtte købe vin"
-    }
-  },
-  "input_error": {
-    "en": "There some issues with the input on the current page.\nDo you want to stay and fix them?",
-    "da": "Der er nogle problemer med indtastningen på den nuværende side.\nVil du blive på siden og rette dem?"
-  },
-  "sub_total": {
-    "en": "Sub total",
-    "da": "Sub total"
-  },
-  "pieces": {
-    "en": "pcs.",
-    "da": "stk."
-  },
-  "dkk": {
-    "en": "DKK",
-    "da": "kr."
-  },
-  "no_edit": [
-    "signup_end",
-    "con_start",
-    "autocomplete",
-    "current_financial_support"
-  ]
+    "no_edit": [
+        "signup_end",
+        "con_start",
+        "autocomplete",
+        "current_financial_support"
+    ]
 }

@@ -48,8 +48,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "A partout ticket costs 350 kr. Organizers and participants below the age of 18, receive a 100 kr. discount on partout entry. These discounts can be combined for organizers below the age of 18. Members of ALEA also get a 125 kr. discount. Kids under the age of 13 can attend Fastaval for free.",
-                        "da": "En partout-billet koster 350 kr.\u00a0\u00a0Arrang\u00f8rer og deltagere under 18 \u00e5r, f\u00e5r 100 kr. rabat p\u00e5 en partout-billet.\u00a0Er du arrang\u00f8r under 18 \u00e5r f\u00e5 du b\u00e5de ungdoms- og arrang\u00f8rrabat.\u00a0Medlemmer af ALEA f\u00e5r ogs\u00e5 125 kr. rabat. B\u00f8rn under 13 \u00e5r kan komme gratis med p\u00e5 Fastaval."
+                        "en": "A partout ticket costs 400 kr. Organizers and participants below the age of 18, receive a 125 kr. discount on partout entry. These discounts can be combined for organizers below the age of 18. Members of ALEA also get a 125 kr. discount. Kids under the age of 15 can attend Fastaval for free.",
+                        "da": "En partout-billet koster 400 kr.\u00a0\u00a0Arrang\u00f8rer og deltagere under 18 \u00e5r, f\u00e5r 125 kr. rabat p\u00e5 en partout-billet.\u00a0Er du arrang\u00f8r under 18 \u00e5r f\u00e5 du b\u00e5de ungdoms- og arrang\u00f8rrabat.\u00a0Medlemmer af ALEA f\u00e5r ogs\u00e5 125 kr. rabat. B\u00f8rn under 15 \u00e5r kan komme gratis med p\u00e5 Fastaval."
                     }
                 },
                 {
@@ -70,8 +70,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "One-day tickets are 120 kr. per day",
-                        "da": "Endagsbilletter koster 120 kr. per dag"
+                        "en": "One-day tickets are 140 kr. per day",
+                        "da": "Endagsbilletter koster 140 kr. per dag"
                     }
                 },
                 {
@@ -150,8 +150,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "At Fastaval, we have four different sleeping areas. You can find a detailed description of each on the [url=https:\/\/www.fastaval.dk\/en\/praktisk\/praktiske-informationer\/]website[\/url].",
-                        "da": "P\u00e5 Fastaval har du fire forskellige overnatningsmuligheder. Du kan l\u00e6se mere detaljeret om dem p\u00e5\u00a0[url=https:\/\/www.fastaval.dk\/praktisk\/praktiske-informationer\/]hjemmesiden[\/url]."
+                        "en": "At Fastaval, we have a number of different sleeping areas. You can find a detailed description of each on the [url=https:\/\/www.fastaval.dk\/en\/praktisk\/praktiske-informationer\/#overnatning]website[\/url].",
+                        "da": "P\u00e5 Fastaval har du nogle forskellige overnatningsmuligheder. Du kan l\u00e6se mere detaljeret om dem p\u00e5\u00a0[url=https:\/\/www.fastaval.dk\/praktisk\/praktiske-informationer\/#overnatning]hjemmesiden[\/url]."
                     }
                 },
                 {
@@ -257,8 +257,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "[b]Standard Dormitory[\/b]\nIf you have bought a ticket that includes a standard overnight stay you will get a space in our large dormitory at Hobro Idr\u00e6tscenter. This year we will give the dormitory a makeover which includes cozy lighting (for a couple of hours each day) and\u00a0partition walls.",
-                        "da": "[b]Almindelig Sovesal[\/b]\nDen store sovesal p\u00e5 Hobro Idr\u00e6tscenter er standardl\u00f8sningen, som de fleste af vores deltagere benytter. Sovesalen er placeret 100 meter fra Mariagerfjord Gymnasium. Bem\u00e6rk at vi i \u00e5r opgraderer sovesalen med bl.a. hyggelig belysning (et par timer om dagen) og skillev\u00e6gge."
+                        "en": "[b]Standard Dormitory[\/b]\nIf you have bought a ticket that includes a standard overnight stay you will get a space in our standard dormitory at Hobro Idr\u00e6tscenter.\u00a0",
+                        "da": "[b]Almindelig Sovesal[\/b]\nDen almindelige sovesal p\u00e5 Hobro Idr\u00e6tscenter er standardl\u00f8sningen, som de fleste af vores deltagere benytter.\u00a0"
                     }
                 },
                 {
@@ -308,7 +308,7 @@
                         "en": "I want to sleep in the quiet and sober dormitory.",
                         "da": "Jeg vil gerne sove i stille- og \u00e6drusovesalen."
                     },
-                    "infosys_id": "sober_sleeping"
+                    "infosys_id": "sleeping_area:sober"
                 },
                 {
                     "type": "paragraph",
@@ -346,7 +346,7 @@
                         "en": "I would like a spot in the organizer dormitory.",
                         "da": "Jeg vil gerne have en plads i arrang\u00f8rsovesalen."
                     },
-                    "infosys_id": "sovesal",
+                    "infosys_id": "sleeping_area:organizer",
                     "display_logic": [
                         {
                             "type": "default",
@@ -362,10 +362,25 @@
                     ]
                 },
                 {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "[b]Family Dormitory[\/b]\nIf you are visiting Fastaval with children you can sleep in the family dormitory. This is [b]not[\/b] a children's dorm, and it is required that all children have an accompanying adult with them. Children sleeping in the family dorm should be old enough to keep quiet during the night, and show consideration to other sleepers, especially regarding noise and light.",
+                        "da": "[b]Familiesovesal[\/b]\nHvis du er p\u00e5 Fastaval med b\u00f8rn kan i sove sammen i familiesovesalen. Familiesovesalen er [b]ikke[\/b] en b\u00f8rnesovesal, og det er et krav at alle b\u00f8rn har en ledsagende voksen med dem. B\u00f8rn der sover i familiesovealen skal v\u00e6re gamle nok til at v\u00e6re rolige natten igennem, og tage hensyn til andre sovende deltagere, med hensyn til is\u00e6r larm og lys."
+                    }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I would like a spot in the family dormitory",
+                        "da": "Jeg vil gerne have en plads i familiesovesalen"
+                    },
+                    "infosys_id": "sleeping_area:family"
+                },
+                {
                     "type": "text_area",
                     "text": {
-                        "en": "[b]Comments[\/b]\nIf you have any remarks about your sleeping arrangements, for instance if you would rather sleep in a certain place compared to another, or have special sleeping needs, let us know here.",
-                        "da": "[b]Bem\u00e6rkninger[\/b]\nHvis du har nogle bem\u00e6rkninger til hvor du skal sove, f.eks hvis du hellere vil sove et sted frem for et andet, eller har s\u00e6rlige sovebehov, s\u00e5 skriv det her."
+                        "en": "[b]Comments[\/b]\nIf you have any remarks about your sleeping arrangements, for instance if you would rather sleep in a certain place compared to another, or have special sleeping needs, let us know here",
+                        "da": "[b]Bem\u00e6rkninger[\/b]\nHvis du har nogle bem\u00e6rkninger til hvor du skal sove, f.eks hvis du hellere vil sove et sted frem for et andet, eller har s\u00e6rlige sovebehov, s\u00e5 skriv det her"
                     },
                     "infosys_id": "note:sleeping"
                 },
@@ -417,6 +432,72 @@
                     "status": "hidden",
                     "compare": "less",
                     "value": 13
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "The Fastaval Bus",
+                "da": "Fastavalbussen"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "This year Fastaval is organizing a shared bus trip from Copenhagen to Fastaval in Hobro (and back again). It will be possible to add a ticket for the Fastaval bus in your sign-up.",
+                        "da": "Fastaval arrangerer i \u00e5r en f\u00e6lles bustur fra K\u00f8benhavn til Fastaval i Hobro (og tilbage igen)."
+                    }
+                },
+                {
+                    "type": "list",
+                    "text": {
+                        "en": "Price: 450kr (round trip)\u00a0\nPick-up point: Ingerslevsgade by DGI Byen, Copenhagen C\u00a0\nPick-up time: D. 27. March, exact time to follow (approx. 12-13.00)\u00a0\nSeats: 48 (first come, first served)\u00a0\nReturn trip on 1. April (exact time to follow)",
+                        "da": "Pris: 450kr (tur-retur)\nOpsamlingssted: Ingerslevsgade ved DGI byen, K\u00f8benhavn C\nOpsamlingstidspunkt: D. 27. Marts, pr\u00e6cise tidspunkt f\u00f8lger (ca. kl. 12-13.00)\nPladser: 48 (f\u00f8rst til m\u00f8lle)\u00a0\n\nHjemtur d. 1. April (pr\u00e6cis tidspunkt f\u00f8lger)"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "[b]Bus tickets are sold out [\/b]",
+                        "da": "[b]Billetter til bussen er udsolgt [\/b]"
+                    },
+                    "text_id": "sold-out-bus",
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "config": "current_bus_tickets",
+                            "status": "hidden",
+                            "compare": "less",
+                            "value": "config.max_bus_tickets"
+                        },
+                        {
+                            "type": "checkbox",
+                            "status": "hidden",
+                            "input": "misc:fastaval_bus"
+                        }
+                    ]
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I would like a ticket for the Fastaval bus",
+                        "da": "Jeg vil gerne have billet til Fastavalbussen"
+                    },
+                    "infosys_id": "misc:fastaval_bus",
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "config": "current_bus_tickets",
+                            "status": "disabled",
+                            "compare": "greater_equal",
+                            "value": "config.max_bus_tickets"
+                        },
+                        {
+                            "type": "checkbox",
+                            "status": "normal",
+                            "input": "misc:fastaval_bus"
+                        }
+                    ]
                 }
             ]
         }
