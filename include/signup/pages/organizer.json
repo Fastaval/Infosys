@@ -31,14 +31,14 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "Fastaval is forever grateful for the extraordinary work done by our many organizers. Therefore we offer some benefits and discounts to our lovely organizers.",
-                        "da": "Fastaval er dybt taknemlige for det ekstraordin\u00e6re arbejde som vores mange arrang\u00f8rer l\u00e6gger i vores alle sammens Fastaval. Derfor tilbyder vi nogle fordele og rabatter til vores dejlige arrang\u00f8rer."
+                        "en": "Fastaval is forever grateful for the extraordinary work you as an organizer put into Fastaval. That's why we're offering you some benefits and discounts!",
+                        "da": "Fastaval er dybt taknemlige for det ekstraordin\u00e6re arbejde, du som arrang\u00f8r l\u00e6gger i vores alle sammens Fastaval. Derfor tilbyder vi nogle fordele og rabatter til dig!"
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "Organizers (including writers and designers) are participants who work more than 48 hours before\/after Fastaval and\/or 24 hours during Fastaval. They will receive:",
+                        "en": "Organizers (including writers and designers) are participants who work more than 48 hours before\/after Fastaval and\/or 24 hours during Fastaval. They receive:",
                         "da": "Arrang\u00f8rer (inklusiv forfattere og designere) er deltagere der arbejder mere end 48 timer f\u00f8r\/efter Fastaval og\/eller 24 timer p\u00e5 Fastaval. De modtager:"
                     }
                 },
@@ -59,8 +59,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "On behalf of the participants and main organizers: Thank you for your dedication to Fastaval 2023!",
-                        "da": "P\u00e5 vegne af alle deltagerne og hovedarrang\u00f8rerne: Tusind tak for dit engagement i Fastaval 2023!"
+                        "en": "On behalf of the participants and main organizers: Thank you for your dedication to Fastaval 2024!",
+                        "da": "P\u00e5 vegne af alle deltagerne og hovedarrang\u00f8rerne: Tusind tak for dit engagement i Fastaval 2024!"
                     }
                 }
             ]
@@ -79,6 +79,13 @@
                     }
                 },
                 {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "If you are an organizer on more than one area, you should choose the area that you want to appear on your name tag.\u00a0",
+                        "da": "Er du arrang\u00f8r p\u00e5 mere end \u00e9t omr\u00e5de skal du v\u00e6lge det omr\u00e5de som du gerne vil have p\u00e5 dit navneskilt."
+                    }
+                },
+                {
                     "type": "text_input",
                     "text": {
                         "en": "Organizational area?",
@@ -93,13 +100,14 @@
                         "list": "organizer_categories",
                         "mode": "exhaustive",
                         "value": "id"
-                    }
+                    },
+                    "required": "true"
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "If you are an organizer on more than one area, you should choose the area that you want to appear on your name tag.\u00a0",
-                        "da": "Er du arrang\u00f8r p\u00e5 flere omr\u00e5der skal du v\u00e6lge det omr\u00e5de som du gerne vil have p\u00e5 dit navneskilt."
+                        "en": "",
+                        "da": "\u00a0"
                     }
                 },
                 {
@@ -133,7 +141,8 @@
                         "list": "game_titles",
                         "mode": "exhaustive",
                         "value": "id"
-                    }
+                    },
+                    "required": "true"
                 }
             ]
         }

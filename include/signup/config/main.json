@@ -2,7 +2,7 @@
     "age_young": 18,
     "age_kid": "15",
     "max_financial_support": 85,
-    "max_bus_tickets": "1",
+    "max_bus_tickets": "48",
     "max_junior_tickets": 75,
     "max_junior_reserve": 75,
     "birth": "birthdate",

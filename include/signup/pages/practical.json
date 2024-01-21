@@ -96,7 +96,8 @@
                         "en": "Mobile",
                         "da": "Mobil"
                     },
-                    "infosys_id": "mobiltlf"
+                    "infosys_id": "mobiltlf",
+                    "required": "true"
                 },
                 {
                     "type": "checkbox",
@@ -186,7 +187,7 @@
                     "type": "paragraph",
                     "text": {
                         "en": "If you use a name other than your legal first name in your daily life, that name can be used for the name tag instead.\u00a0",
-                        "da": "Hvis du til dagligt bruger et andet navn end dit juridiske fornavn, kan det fremg\u00e5 af dit navneskilt i stedet."
+                        "da": "Hvis du til dagligt bruger et andet navn end dit juridiske fornavn, kan det fremg\u00e5 af dit navneskilt i stedet.\u00a0"
                     }
                 },
                 {
@@ -241,7 +242,7 @@
                 {
                     "type": "radio",
                     "text": {
-                        "en": "Which type of participant are you?",
+                        "en": "Which kind of participant are you?",
                         "da": "Hvilken deltagertype er du? "
                     },
                     "infosys_id": "participant",
@@ -258,7 +259,7 @@
                             "value": "Juniordeltager",
                             "text": {
                                 "en": "I want to participate in Fastaval Junior (180 kr.)\u00a0 [b]not available in english[\/b]",
-                                "da": "Jeg vil gerne deltage i Fastaval Junior (180 kr.) - For b\u00f8rn fra 6 til 14 \u00e5r."
+                                "da": "Jeg vil gerne deltage i Fastaval Junior (180 kr.) - For b\u00f8rn fra 6 til 14 \u00e5r"
                             },
                             "display_logic": [
                                 {
@@ -279,7 +280,7 @@
                             "value": "Arrang\u00f8r",
                             "text": {
                                 "en": "I am an organizer (including scenario writers and board game designers).",
-                                "da": "Jeg er arrang\u00f8r (inkl. scenarieforfattere og br\u00e6tspilsdesignere)."
+                                "da": "Jeg er arrang\u00f8r (inkl. scenarieforfattere og br\u00e6tspilsdesignere)"
                             }
                         }
                     ],
@@ -338,8 +339,8 @@
                         {
                             "value": "2",
                             "text": {
-                                "en": "From my place of education",
-                                "da": "P\u00e5 mit uddannelsessted"
+                                "en": "At my efterskole or ungdomsskole",
+                                "da": "P\u00e5 min efterskole eller ungdomsskole"
                             }
                         },
                         {
@@ -366,7 +367,7 @@
                         {
                             "value": "6",
                             "text": {
-                                "en": "Add in store",
+                                "en": "Adds\/flyers in stores",
                                 "da": "Reklamer i butikker"
                             }
                         },
@@ -397,8 +398,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "Alea is the organization behind Fastaval, with has the responsibility of the overall coordination and in the handing over of important information, experiences and resources to future Fastavals. Read more about Alea [url=https:\/\/http:\/\/alea.fastaval.dk.]here[\/url].\u00a0Alea is a member of [url=https:\/\/landsforeningenbifrost.dk\/]Landsforeningen Bifrost[\/url]. Membership of Alea automatically makes you a member of Landsforeningen Bifrost.",
-                        "da": "Alea er foreningen bag Fastava, som har ansvaret for den overordnede koordinering, vidensopsamling og overlevering af vigtig erfaring og ressourcer til fremtidige Fastavaller. L\u00e6s mere om Alea p\u00e5 [url=https:\/\/http:\/\/alea.fastaval.dk.] Aleas hjemmeside[\/url]. Alea er medlem af [url=https:\/\/landsforeningenbifrost.dk\/]Landsforeningen Bifrost[\/url]. Medlemskab af Alea g\u00f8r dig automatisk til medlem af Landsforeningen Bifrost."
+                        "en": "Alea is the organization behind Fastaval, and is responsible for the continuity of Fastaval, and the handling of important experiences and resources to future Fastavals. Read more about Alea [url=https:\/\/http:\/\/alea.fastaval.dk.]here[\/url].\u00a0Alea is a member of [url=https:\/\/landsforeningenbifrost.dk\/]Landsforeningen Bifrost[\/url]. Membership of Alea automatically makes you a member of Landsforeningen Bifrost.",
+                        "da": "Alea er foreningen bag Fastava, som har ansvaret for den overordnede koordinering, vidensopsamling og overlevering af vigtig erfaring og ressourcer til fremtidige Fastavaller. L\u00e6s mere om Alea p\u00e5 [url=https:\/\/alea.fastaval.dk] Aleas hjemmeside[\/url]. Alea er medlem af [url=https:\/\/landsforeningenbifrost.dk\/]Landsforeningen Bifrost[\/url]. Medlemskab af Alea g\u00f8r dig automatisk til medlem af Landsforeningen Bifrost."
                     }
                 },
                 {
