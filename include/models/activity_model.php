@@ -1497,12 +1497,12 @@ ORDER BY
      * @access public
      * @return array
      */
-    public function getActivitiesByType($type)
+    public function getActivitiesByType($type, bool $with_master = true)
     {
         $select = $this->createEntity('Aktiviteter')->getSelect();
 
-        $select->setWhere('type', '=', $type)
-            ->setWhere('spilledere_per_hold', '>', 0);
+        $select->setWhere('type', '=', $type);
+        if ($with_master) $select->setWhere('spilledere_per_hold', '>', 0);
 
         return $this->createEntity('Aktiviteter')->findBySelectMany($select);
     }
@@ -2019,5 +2019,27 @@ GROUP BY
 
     public function getAutoRegisterCategories() {
         return $this->createEntity('Aktiviteter')->getValidColumnValues('auto_signup_category')['values'];
+    }
+
+    public function setupVotes(array $categories, Page $page) {
+        $return_list = [];
+        foreach($categories as $category) {
+            $activities = $this->getActivitiesByType($category, false);
+            foreach($activities as $activity) {
+                $schedules = $activity->getafviklinger();
+                $return_list[$category][$activity->id] = [
+                    'name_da' => $activity->navn,
+                    'name_en' => $activity->title_en,
+                    'schedules' => [],
+                ];
+    
+                foreach($schedules as $schedule) {
+                    $votes = $schedule->createVotes($page);
+                    $return_list[$category][$activity->id]['schedules'][$schedule->start] = $votes;
+                }
+            }
+        }
+
+        return $return_list;
     }
 }

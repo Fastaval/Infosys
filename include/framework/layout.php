@@ -436,7 +436,6 @@ XML;
             <li><a href='{$this->url('vis_spilledere')}'>Spilledere</a></li>
             <li><a href='{$this->url('opret_deltager')}'>Opret deltager</a></li>
             <li><a href='{$this->url('checkin_interface')}'>Checkin registrering</a></li>
-            <!--<li><a href='{$this->url('edit_participant_types')}'>Rediger deltagertyper</a></li> This one isn't implemented yet-->
             <li><a href='{$this->url('show_double_bookings')}'>Tjek for dobbelt-bookinger</a></li>
             <li><a href='{$this->url('show_refund')}'>Deltagere der skal have penge tilbage</a></li>
 HTML;
@@ -468,16 +467,17 @@ HTML;
             <li><a href='{$this->url('activities_graphed')}'>Grafisk oversigt</a></li>
             <li><a href='{$this->url('opret_aktivitet')}'>Opret aktivitet</a></li>
 			<li><a href='{$this->url('import_activities')}'>Importer/eksporter aktiviter</a></li>
-            <li><a href='{$this->url('show_vote_stats')}'>Afstemnings-statistik</a></li>
             <li><a href='{$this->url('priority_signup_statistics')}'>Tilmeldings-statistik</a></li>
             <li><hr/></li>
             <li><a href='{$this->url('create_gm_briefings')}'>Opret spilleder briefings</a></li>
+            <li><a href='{$this->url('gamemaster_list_export')}'>Eksporter GM liste</a></li>
             <li><hr/></li>
             <li><a href='{$this->url('holdhome')}'>Hold</a></li>
             <li><a href='{$this->url('vis_alle_hold')}'>Alle hold</a></li>
             <li><a href='{$this->url('opret_hold')}'>Opret hold</a></li>
             <li><hr/></li>
-            <li><a href='{$this->url('gamemaster_list_export')}'>Eksporter GM liste</a></li>
+            <li><a href='{$this->url('show_vote_stats')}'>Afstemnings-statistik</a></li>
+            <li><a href='{$this->url('voting_ballots')}'>Hent Stemmesedler</a></li>
         </ul>
     </li>
     <li class='topmenu-item'>

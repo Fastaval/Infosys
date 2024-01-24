@@ -1038,5 +1038,100 @@ html;
         exit;
     }
 
+    public function votingBallots() {
+        $button = $this->page->request->get->button;
+        
+        // Just show default page if no button was pressed
+        if (!isset($button)) return;
+
+        switch ($button) {
+            case 'role':
+                $categories = ['rolle'];
+                break;
+            
+            case 'board':
+                $categories = ['braet'];
+                break;
+
+            default:
+                $categories = ['rolle', 'braet'];
+        }
+
+        $votes = $this->model->setupVotes($categories, $this->page);
+
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->use_kwt = true; // Keep header with table
+
+        $header_count = 1;
+
+        foreach($votes as $category => $activities) {
+            $mpdf->SetHTMLHeaderByName('');
+            $mpdf->AddPage('','','1');
+            switch ($category) {
+                case 'rolle':
+                    $category_name = 'Rollespil';
+                    break;
+                
+                case 'braet':
+                    $category_name = 'Brætspil';
+                    break;
+            }
+            $mpdf->SetHTMLFooter("<div style='text-align:right;'>$category_name Side {PAGENO}</div>");
+            $mpdf->WriteHTML("<h1>Afstemningssedler</h1>");
+            $mpdf->WriteHTML("<h2>$category_name</h2>");
+
+            foreach ($activities as $activity) {
+                foreach ($activity['schedules'] as $start => $votes) {
+                    $schedule_string = e($activity['name_da'])." ".e($start);
+
+                    $header_name = "header$header_count";
+                    $mpdf->DefHTMLHeaderByName($header_name, "<div>$schedule_string</div>");
+                    $mpdf->SetHTMLHeaderByName($header_name);
+                    $header_count++;
+
+                    $html = "<h3>$schedule_string</h3>";
+                    
+                    $cell = 0;
+                    $html .= "<table style='border-collapse:collapse;text-align:center;'><tr>";
+                    foreach($votes as $vote) {
+                        $name_da = e($activity['name_da']);
+                        $name_en = e($activity['name_en']);
+                        $code = e($vote['code']);
+
+                        $mpdf->imageVars[$vote['id']] = file_get_contents(PUBLIC_PATH."/vote-barcodes/$vote[id].png");
+
+                        $html .= <<<HTML
+                        <td style="padding:10px;border:1px solid black;">
+                            <span class="vote-activity">Vote for $name_da / $name_en here:</span>
+                            <span class="vote-address">infosys.fastaval.dk/vote</span>
+                            <span class="vote-code">Use code: <strong>$code</strong></span>
+                            <img src="var:$vote[id]" class="vote-barcode" alt=""/>
+                        </td>
+                        HTML;
+
+                        $cell++;
+                        if ($cell > 4) {
+                            $cell = 0;
+                            $html .= "</tr><tr>";
+                        }
+                    }
+                    $html .= "</tr></table>";
+                    $mpdf->WriteHTML($html);
+                }
+            }
+        }
+
+        $filename = "Stemmesedler ". $this->getConYear();
+        switch ($button) {
+            case "role":
+                $filename .= " - Rollespil";
+                break;
+
+            case "board":
+                $filename .= " - Brætspil";
+        }
+        $mpdf->OutputHttpDownload("$filename.pdf");
+    }
+
     //}}}
 }
