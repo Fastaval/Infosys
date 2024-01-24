@@ -10,27 +10,75 @@
     },
     "sections": [
         {
-            "headline": {
-                "en": "",
-                "da": ""
-            },
-            "items": [
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "Here you can sign up for board games, scenarios and other activities. You can prioritise which activities you want to participate in and when.",
-                        "da": "Her tilmelder du dig br\u00e6tspil, scenarier og \u00f8vrige aktiviteter. Du kan prioritere din tilmelding efter hvad du helst vil spille hvorn\u00e5r."
-                    }
-                }
-            ]
-        },
-        {
             "items": [
                 {
                     "type": "paragraph",
                     "text": {
                         "en": "",
-                        "da": "Som Junior deltager kan du v\u00e6lge hvad du skal spille i l\u00f8bet af dagen. I kan se alle aktiviteterne for Fastaval Junior nedenfor.\nDu kommer til at spille 2 ting. F\u00f8rste blok kl. 10-12 og anden blok kl. 13-15."
+                        "da": "Nu skal du v\u00e6lge, hvad du gerne vil spille i l\u00f8bet af dagen. Du kan se alle aktiviteterne for Fastaval Junior nedenfor. Du kommer til at spille 2 ting. F\u00f8rste blok kl. 10-12 og anden blok kl. 13-15."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "[b]V\u00e6lg 4 eller flere prioriteter.[\/b]\nVi beder jer om at prioritere b\u00e5de br\u00e6tspil og rollespil, for det er stort puslespil, vi skal i gang med, n\u00e5r vi laver hold. Som udgangspunkt skal man regne med at komme til at spille b\u00e5de br\u00e6tspil og rollespil.\u00a0Hvis du har et stort \u00f8nske om kun at spille det ene eller det andet, s\u00e5 skriv det i kommentarfeltet p\u00e5 den forrige side, s\u00e5 vil vi fors\u00f8ge at tage hensyn til det."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "Som udgangspunkt skal man tilmelde sig inden for sin aldersgruppe. Det g\u00f8r det nemmere at l\u00e6gge hold, og nemmere for den voksne ansvarlige at sikre, at alle f\u00e5r en god oplevelse. Hvis man som for\u00e6lder er i tvivl om, hvorvidt en aktivitet passer til barnet, eller hvis man har en meget god grund til at v\u00e6lge en aktivitet uden for aldersgruppen, kan man skrive til fastavaljunior@gmail.com"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "[b]Bonusinfo: Hvis du gerne vil spille rollespil [\/b]\nHvert rollespilshold f\u00e5r sit eget lokale. Din spilleder er en erfaren, voksen rollespiller, og scenariet er skrevet, s\u00e5 det kan spilles af b\u00e5de nybegyndere og erfarne rollespillere p\u00e5 din alder. S\u00e5 hvis det er f\u00f8rste gang, du skal spille rollespil, kan du trygt kaste dig ud i det \u2013 vi lover, at du ikke kan g\u00f8re noget forkert. :-)"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "[b]Bonusinfo: Hvis du gerne vil spille br\u00e6tspil [\/b]\nI er h\u00f8jst fem j\u00e6vnaldrende br\u00e6tspillere p\u00e5 holdet, og I kommer til at sidde i vores lille f\u00e6lleslokale sammen med et eller to andre hold \u2013 eller i f\u00e6llesomr\u00e5det, hvis I er blandt de \u00e6ldste. Der er en voksen spilleder p\u00e5, som kender spillet og sidder med under hele spillet for at forklare reglerne og hj\u00e6lpe undervejs."
+                    }
+                }
+            ],
+            "display_logic": [
+                {
+                    "type": "default",
+                    "status": "hidden"
+                },
+                {
+                    "type": "field_compare",
+                    "status": "normal",
+                    "input": "participant",
+                    "compare": "equals",
+                    "value": "Juniordeltager"
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "\u00a0",
+                "da": "S\u00e5dan prioriterer du - Junior"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "Som Junior deltager kan du v\u00e6lge hvad du skal spille i l\u00f8bet af dagen. I kan se alle aktiviteterne for Fastaval Junior nedenfor. Du kommer til at spille 2 ting. F\u00f8rste blok kl. 10-12 og anden blok kl. 13-15."
+                    }
+                },
+                {
+                    "type": "list",
+                    "text": {
+                        "en": "",
+                        "da": "Klik p\u00e5 de enkelte aktivitetsnavne for at se en foromtale\/beskrivelse.\nDu prioriterer ved at klikke p\u00e5 s\u00f8jlen ud for hver aktivitet.\n1-3 indikerer din prioritering (1 er h\u00f8jest, 3 lavest).\n'SL' og 'SL\/1. prioritet' er ikke til Junior - s\u00e5 dem skal du bare ignorere.\nDu skal v\u00e6lge mindst 4 prioriteter.\nForvirret? Der er hj\u00e6lp at hente [url=http:\/\/www.fastaval.dk\/ofte-stillede-spoergsmaal-om-tilmeldingen\/]her[\/url].\u00a0 (\u00e5bner i nyt vindue)"
                     }
                 }
             ],
@@ -53,51 +101,29 @@
                 {
                     "type": "paragraph",
                     "text": {
+                        "en": "This is the sign-up page for the activities of Fastaval 2024.",
+                        "da": "Dette er tilmeldingsiden for aktiviteter til Fastaval 2024."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "More explanation ...",
+                        "da": "Mere forklaring ..."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
                         "en": "Click on the individual activities for a short description and find an overview on the [url=https:\/\/www.fastaval.dk\/en\/]website[\/url].",
                         "da": "Klik p\u00e5 de enkelte aktiviteter for at se en foromtale\/beskrivelse af aktiviteten eller se en oversigt p\u00e5 \u00a0[url=https:\/\/www.fastaval.dk\/]hjemmesiden[\/url].\u00a0"
-                    }
-                }
-            ]
-        },
-        {
-            "items": [
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "V\u00e6lg 4 eller flere prioriteter.\nVi beder jer om at prioritere b\u00e5de br\u00e6tspil og rollespil, for det er stort puslespil, vi skal i gang med, n\u00e5r vi laver hold, og som udgangspunkt skal man regne med at komme til at spille b\u00e5de br\u00e6tspil og rollespil.\u00a0\nHvis du har et stort \u00f8nske om kun at spille det ene eller det andet, s\u00e5 skriv det i kommentarfeltet p\u00e5 forrige side, og s\u00e5 vil vi fors\u00f8ge at tage hensyn til det.",
-                        "da": "V\u00e6lg 4 eller flere prioriteter.\nVi beder jer om at prioritere b\u00e5de br\u00e6tspil og rollespil, for det er stort puslespil, vi skal i gang med, n\u00e5r vi laver hold, og som udgangspunkt skal man regne med at komme til at spille b\u00e5de br\u00e6tspil og rollespil.\u00a0\nHvis du har et stort \u00f8nske om kun at spille det ene eller det andet, s\u00e5 skriv det i kommentarfeltet p\u00e5 forrige side, og s\u00e5 vil vi fors\u00f8ge at tage hensyn til det."
-                    }
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "Alderskategorierne er vejledende. Det vil sige, at man gerne m\u00e5 tilmelde sig uden for sin aldersgruppe, hvis der er noget, man meget gerne vil spille. Hvis man som for\u00e6lder er i tvivl om, hvorvidt en aktivitet passer til barnets alder, s\u00e5 skriv til [email]fastavaljunior@gmail.com[\/email]",
-                        "da": "Alderskategorierne er vejledende. Det vil sige, at man gerne m\u00e5 tilmelde sig uden for sin aldersgruppe, hvis der er noget, man meget gerne vil spille. Hvis man som for\u00e6lder er i tvivl om, hvorvidt en aktivitet passer til barnets alder, s\u00e5 skriv til [email]fastavaljunior@gmail.com[\/email]"
-                    }
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "Bonusinfo: Hvis du gerne vil spille rollespil\nHvert rollespilshold f\u00e5r sit eget lokale. Din spilleder er en erfaren, voksen rollespiller, og scenariet er skrevet, s\u00e5 det kan spilles af b\u00e5de nybegyndere og erfarne p\u00e5 din alder. S\u00e5 hvis det er f\u00f8rste gang, du skal spille rollespil, kan du trygt kaste dig ud i det \u2013 vi lover, at du ikke kan g\u00f8re noget forkert. :-)",
-                        "da": "Bonusinfo: Hvis du gerne vil spille rollespil\nHvert rollespilshold f\u00e5r sit eget lokale. Din spilleder er en erfaren, voksen rollespiller, og scenariet er skrevet, s\u00e5 det kan spilles af b\u00e5de nybegyndere og erfarne p\u00e5 din alder. S\u00e5 hvis det er f\u00f8rste gang, du skal spille rollespil, kan du trygt kaste dig ud i det \u2013 vi lover, at du ikke kan g\u00f8re noget forkert. :-)"
-                    }
-                },
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "JUNIOR",
-                        "da": "Bonusinfo: Hvis du gerne vil spille br\u00e6tspil\nI er h\u00f8jst fem j\u00e6vnaldrende br\u00e6tspillere p\u00e5 holdet, og I kommer til at sidde i vores lille f\u00e6lleslokale sammen med et eller to andre hold \u2013 eller i f\u00e6llesomr\u00e5det, hvis I er blandt de \u00e6ldste. Der er en voksen spilleder p\u00e5, som kender spillet og sidder med under hele spillet for at forklare reglerne og hj\u00e6lpe undervejs."
                     }
                 }
             ],
             "display_logic": [
                 {
-                    "type": "default",
-                    "status": "hidden"
-                },
-                {
                     "type": "field_compare",
-                    "status": "normal",
+                    "status": "hidden",
                     "input": "participant",
                     "compare": "equals",
                     "value": "Juniordeltager"
@@ -117,26 +143,11 @@
                         "da": "Du prioriterer ved at klikke p\u00e5 s\u00f8jlen ud for hver aktivitet\n1-4 indikerer din prioritering (1 er h\u00f8jest, 4 lavest).\nFor hver blok kan du v\u00e6lge en 1. og 2. prioritet\nDu kan v\u00e6lge s\u00e5 mange 3. og 4. prioriteter du har lyst til"
                     }
                 }
-            ]
-        },
-        {
-            "items": [
-                {
-                    "type": "list",
-                    "text": {
-                        "en": "Du skal v\u00e6lge mindst 4 junior aktiviteter.",
-                        "da": "Du skal v\u00e6lge mindst 4 junior aktiviteter"
-                    }
-                }
             ],
             "display_logic": [
                 {
-                    "type": "default",
-                    "status": "hidden"
-                },
-                {
                     "type": "field_compare",
-                    "status": "normal",
+                    "status": "hidden",
                     "input": "participant",
                     "compare": "equals",
                     "value": "Juniordeltager"
@@ -181,11 +192,6 @@
                     "input": "participant",
                     "compare": "equals",
                     "value": "Juniordeltager"
-                },
-                {
-                    "type": "checkbox",
-                    "status": "normal",
-                    "input": "junior:plus"
                 }
             ]
         },
@@ -231,11 +237,6 @@
                     "input": "participant",
                     "compare": "equals",
                     "value": "Juniordeltager"
-                },
-                {
-                    "type": "checkbox",
-                    "status": "normal",
-                    "input": "junior:plus"
                 }
             ]
         },
@@ -267,11 +268,6 @@
                     "input": "participant",
                     "compare": "equals",
                     "value": "Juniordeltager"
-                },
-                {
-                    "type": "checkbox",
-                    "status": "normal",
-                    "input": "junior:plus"
                 }
             ]
         },
