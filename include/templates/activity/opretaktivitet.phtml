@@ -41,14 +41,24 @@
                     <td><?php echo $this->genSelect('aktivitet[lokale_eksklusiv]', array('ja', 'nej'));?></td>
                 </tr>
                 <tr>
-                    <td colspan="4">
-                        <strong>Sprog:</strong>
-                        <label><input type='radio' name='aktivitet[sprog]' value='dansk' checked='checked'> dansk</label>
-                        <label><input type='radio' name='aktivitet[sprog]' value='engelsk'> engelsk</label>
-                        <label><input type='radio' name='aktivitet[sprog]' value='dansk+engelsk'> dansk, med mulighed for engelsk</label>
-                    </td>
                     <td><strong>Udelukker samtidige aktiviteter:</strong></td>
                     <td><?= $this->genSelect('aktivitet[tids_eksklusiv]', array('ja', 'nej'));?></td>
+                </tr>
+                <tr>
+                    <td><strong>Sprog:</strong></td>
+                    <td colspan="4">
+                        <label><input type='radio' name='aktivitet[sprog]' value='dansk' checked='checked'> dansk</label>
+                        <label><input type='radio' name='aktivitet[sprog]' value='engelsk'> engelsk</label>
+                        <label><input type='radio' name='aktivitet[sprog]' value='dansk+engelsk'> dansk og engelsk</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Sprog spilledere:</strong></td>
+                    <td colspan="4">                        
+                        <label><input type='radio' name='aktivitet[lang_gm]' value='da' checked='checked'> dansk</label>
+                        <label><input type='radio' name='aktivitet[lang_gm]' value='en'> engelsk</label>
+                        <label><input type='radio' name='aktivitet[lang_gm]' value='both'> dansk og engelsk</label>
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Kan spilles flere gange:</strong></td>
