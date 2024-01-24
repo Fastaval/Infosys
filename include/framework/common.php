@@ -149,7 +149,7 @@ class Common
         
         $start = $this->config->get('con.start');
         $start_time = strtotime($start);
-        return date('y', $start_time);
+        return date('Y', $start_time);
     }
 
     protected function debugOutput($var) {

@@ -233,8 +233,9 @@ class Routes
 
         $this->routes['priority_signup_statistics'] = ['url' => 'activities/priority-signups', 'controller' => 'Activity', 'method' => 'showPrioritySignupStatistics'];
 
-        $this->routes['prepare_schedule_votes']    = array('url' => 'aktiviteter/schedule-votes/prepare/:time:', 'controller' => 'Activity', 'method' => 'prepareScheduleVotes');
-        $this->routes['show_vote_stats']           = array('url' => 'aktiviteter/voting/stats', 'controller' => 'Activity', 'method' => 'showVotingStats');
+        $this->routes['prepare_schedule_votes']     = array('url' => 'aktiviteter/schedule-votes/prepare/:time:', 'controller' => 'Activity', 'method' => 'prepareScheduleVotes');
+        $this->routes['show_vote_stats']            = array('url' => 'aktiviteter/voting/stats', 'controller' => 'Activity', 'method' => 'showVotingStats');
+        $this->routes['voting_ballots']             = array('url' => 'aktiviteter/voting/ballots', 'controller' => 'Activity', 'method' => 'votingBallots');
 
         $this->routes['activity_vote']             = array('url' => 'vote', 'controller' => 'Activity', 'method' => 'specifyVote');
         $this->routes['activity_vote_post']        = array('url' => 'vote/post', 'controller' => 'Activity', 'method' => 'specifyVotePosted');
