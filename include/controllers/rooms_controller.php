@@ -76,7 +76,14 @@ class RoomsController extends Controller
      */
     public function visAlle()
     {
-        $this->page->lokaler = $this->model->getAll();
+        $rooms = $this->model->getAll();
+        uasort($rooms, function($a, $b) {
+            if ($a->skole == $b->skole) {
+                return strcmp($a->beskrivelse, $b->beskrivelse);
+            }
+            return strcmp($a->skole, $b->skole);  
+        });
+        $this->page->lokaler = $rooms;
     }
 
     /**
