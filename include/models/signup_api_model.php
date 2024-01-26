@@ -738,14 +738,14 @@ class SignupApiModel extends Model {
 
             case 'sleeping':
               // Check age
-              if ($age < $config['main']->age_kid) {
-                $errors[$category][] = [
-                  'type' => 'sleeping_too_young',
-                  'id' => "$key",
-                  'age'  => $age,
-                ];
-                continue 2;
-              }
+              // if ($age < $config['main']->age_kid) {
+              //   $errors[$category][] = [
+              //     'type' => 'sleeping_too_young',
+              //     'id' => "$key",
+              //     'age'  => $age,
+              //   ];
+              //   continue 2;
+              // }
 
               $entry = $this->createEntity('Indgang');
               $select = $entry->getSelect();
