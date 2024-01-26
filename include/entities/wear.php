@@ -314,4 +314,10 @@ class Wear extends DBObject
         }
         return $list;
     }
+
+    public function getOrders() {
+        $query = "SELECT * FROM wearpriser wp JOIN deltagere_wear_order dwo ON wp.id = dwo.wearpris_id WHERE wear_id = ?";
+        $result = $this->db->query($query, [$this->id]);
+        return $result;
+    }
 }

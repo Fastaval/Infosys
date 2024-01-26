@@ -139,6 +139,16 @@ class WearController extends Controller {
             $this->hardRedirect($this->url('vis_wear', array('id' => $wear->id)));
         }
 
+        $orders = $wear->getOrders();
+        if (count($orders) > 0) {
+            $this->errorMessage(
+                "Denne wear type har allerede ".count($orders)." bestillinger.".
+                " For at slette wear typen skal du slette disse bestillinger.".
+                " (Hvis tilmeldingen ikke er åbnet endnu kan du eventuelt nulstille hele tilmeldingen)"
+            );
+            $this->hardRedirect($this->url('vis_wear', array('id' => $wear->id)));
+        }
+
         foreach($wear->getWearpriser() as $wear_price) {
             $wear_price->delete();
         }

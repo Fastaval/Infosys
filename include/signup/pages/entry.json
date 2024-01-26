@@ -508,6 +508,72 @@
                     ]
                 }
             ]
+        },
+        {
+            "headline": {
+                "en": "The Fastaval Bus",
+                "da": "Fastavalbussen"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "This year Fastaval is organizing a shared bus trip from Copenhagen to Fastaval in Hobro (and back again). It will be possible to add a ticket for the Fastaval bus in your sign-up.",
+                        "da": "Fastaval arrangerer i \u00e5r en f\u00e6lles bustur fra K\u00f8benhavn til Fastaval i Hobro (og tilbage igen)."
+                    }
+                },
+                {
+                    "type": "list",
+                    "text": {
+                        "en": "Price: 450kr (round trip)\u00a0\nPick-up point: Ingerslevsgade by DGI Byen, Copenhagen C\u00a0\nPick-up time: D. 27. March, exact time to follow (approx. 12-13.00)\u00a0\nSeats: 48 (first come, first served)\u00a0\nReturn trip on 1. April (exact time to follow)",
+                        "da": "Pris: 450kr (tur-retur)\nOpsamlingssted: Ingerslevsgade ved DGI byen, K\u00f8benhavn C\nOpsamlingstidspunkt: D. 27. Marts, pr\u00e6cise tidspunkt f\u00f8lger (ca. kl. 12-13.00)\nPladser: 48 (f\u00f8rst til m\u00f8lle)\u00a0\n\nHjemtur d. 1. April (pr\u00e6cis tidspunkt f\u00f8lger)"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "[b]Bus tickets are sold out [\/b]",
+                        "da": "[b]Billetter til bussen er udsolgt [\/b]"
+                    },
+                    "text_id": "sold-out-bus",
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "config": "current_bus_tickets",
+                            "status": "hidden",
+                            "compare": "less",
+                            "value": "config.max_bus_tickets"
+                        },
+                        {
+                            "type": "checkbox",
+                            "status": "hidden",
+                            "input": "misc:fastaval_bus"
+                        }
+                    ]
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I would like a ticket for the Fastaval bus",
+                        "da": "Jeg vil gerne have billet til Fastavalbussen"
+                    },
+                    "infosys_id": "misc:fastaval_bus",
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "config": "current_bus_tickets",
+                            "status": "disabled",
+                            "compare": "greater_equal",
+                            "value": "config.max_bus_tickets"
+                        },
+                        {
+                            "type": "checkbox",
+                            "status": "normal",
+                            "input": "misc:fastaval_bus"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
