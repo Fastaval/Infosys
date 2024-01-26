@@ -15,14 +15,14 @@
                     "type": "paragraph",
                     "text": {
                         "en": "",
-                        "da": "Nu skal du v\u00e6lge, hvad du gerne vil spille i l\u00f8bet af dagen. Du kan se alle aktiviteterne for Fastaval Junior nedenfor. Du kommer til at spille 2 ting. F\u00f8rste blok kl. 10-12 og anden blok kl. 13-15."
+                        "da": "Nu skal du v\u00e6lge, hvad du gerne vil spille i l\u00f8bet af dagen. Du kan se alle aktiviteterne for Fastaval Junior nedenfor. Du kommer til at spille 2 ting. F\u00f8rste blok kl. 10-12 og anden blok kl. 13-15.\u00a0Bem\u00e6rk, at du ikke selv kan v\u00e6lge tidspunkt for dine aktiviteter. Pingvintanterne l\u00e6gger planen ud fra de tilmeldte \u00f8nsker, og du vil f\u00e5 en email med hvorn\u00e5r du skal spille hvad."
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
                         "en": "",
-                        "da": "[b]V\u00e6lg 4 eller flere prioriteter.[\/b]\nVi beder jer om at prioritere b\u00e5de br\u00e6tspil og rollespil, for det er stort puslespil, vi skal i gang med, n\u00e5r vi laver hold. Som udgangspunkt skal man regne med at komme til at spille b\u00e5de br\u00e6tspil og rollespil.\u00a0Hvis du har et stort \u00f8nske om kun at spille det ene eller det andet, s\u00e5 skriv det i kommentarfeltet p\u00e5 den forrige side, s\u00e5 vil vi fors\u00f8ge at tage hensyn til det."
+                        "da": "[b]V\u00e6lg 4 eller flere prioriteter.[\/b]\nVi beder jer om at prioritere b\u00e5de br\u00e6tspil og rollespil, for det er et stort puslespil, vi skal i gang med, n\u00e5r vi laver hold. Som udgangspunkt skal man regne med at komme til at spille b\u00e5de br\u00e6tspil og rollespil.\u00a0Hvis du har et stort \u00f8nske om kun at spille det ene eller det andet, s\u00e5 skriv det i kommentarfeltet p\u00e5 den forrige side, s\u00e5 vil vi fors\u00f8ge at tage hensyn til det."
                     }
                 },
                 {
@@ -78,7 +78,7 @@
                     "type": "list",
                     "text": {
                         "en": "",
-                        "da": "Klik p\u00e5 de enkelte aktivitetsnavne for at se en foromtale\/beskrivelse.\nDu prioriterer ved at klikke p\u00e5 s\u00f8jlen ud for hver aktivitet.\n1-3 indikerer din prioritering (1 er h\u00f8jest, 3 lavest).\n'SL' og 'SL\/1. prioritet' er ikke til Junior - s\u00e5 dem skal du bare ignorere.\nDu skal v\u00e6lge mindst 4 prioriteter.\nForvirret? Der er hj\u00e6lp at hente [url=http:\/\/www.fastaval.dk\/ofte-stillede-spoergsmaal-om-tilmeldingen\/]her[\/url].\u00a0 (\u00e5bner i nyt vindue)"
+                        "da": "Klik p\u00e5 de enkelte aktivitetsnavne for at se en foromtale\/beskrivelse.\nDu prioriterer ved at klikke p\u00e5 s\u00f8jlen ud for hver aktivitet.\nKlik flere gange for at v\u00e6lge prioritet 1 til 4 (1 er h\u00f8jest, 4 er lavest).\nDu m\u00e5 gerne have flere 3. og 4. prioriteterDu skal v\u00e6lge mindst 4 aktiviteter.\nForvirret? Der er hj\u00e6lp at hente [url=https:\/\/www.fastaval.dk\/ofte-stillede-spoergsmaal-om-tilmeldingen\/]her[\/url].\u00a0 (\u00e5bner i nyt vindue)"
                     }
                 }
             ],
@@ -97,6 +97,32 @@
             ]
         },
         {
+            "headline": {
+                "en": "",
+                "da": "Hvis du ogs\u00e5 deltager i det almindelige Fastaval\u00a0"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "Hvis du ogs\u00e5 deltager i det almindelige Fastaval, ud over at deltage i Fastaval Junior, vil der v\u00e6re flere aktiviteter at v\u00e6lge imellem. Junior-aktiviteterne er markeret med r\u00f8d, og afholdes l\u00f8rdag, de andre aktiviteter er farvekodet med andre farver. [tilf\u00f8j m\u00e5ske mere her, tante?]"
+                    }
+                }
+            ],
+            "display_logic": [
+                {
+                    "type": "default",
+                    "status": "hidden"
+                },
+                {
+                    "type": "checkbox",
+                    "status": "normal",
+                    "input": "junior:plus"
+                }
+            ]
+        },
+        {
             "items": [
                 {
                     "type": "paragraph",
@@ -108,14 +134,14 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "More explanation ...",
-                        "da": "Mere forklaring ..."
+                        "en": "Below, you will be able to sign up the activities available at Fastaval 2024, including scenarios and boardgames premiering at this years Fastaval, a trip to the swimmingpool, magic tournaments and every other activity.\u00a0",
+                        "da": "Nedenfor vil det v\u00e6re muligt at tilmelde sig aktiviteterne der er tilg\u00e6ngelige p\u00e5 Fastaval 2024, heriblandt pr\u00e6miererscenarier og -br\u00e6tspil, en tur i sv\u00f8mmehallen, magic turneringer og alle andre aktiviteter.\u00a0"
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "Click on the individual activities for a short description and find an overview on the [url=https:\/\/www.fastaval.dk\/en\/]website[\/url].",
+                        "en": "Click on the individual activities for a short description and find an overview at [url=https:\/\/www.fastaval.dk\/en\/]website[\/url].",
                         "da": "Klik p\u00e5 de enkelte aktiviteter for at se en foromtale\/beskrivelse af aktiviteten eller se en oversigt p\u00e5 \u00a0[url=https:\/\/www.fastaval.dk\/]hjemmesiden[\/url].\u00a0"
                     }
                 }
