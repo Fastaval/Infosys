@@ -53,17 +53,20 @@ $this->registerLateLoadJS('activity.js');
                     <td><strong>Fylder lokale:</strong> <i><?= $this->activity->lokale_eksklusiv;?></i></td>
                 </tr>
                 <tr>
-                    <td><strong>Sprog:</strong> <i><?= e($this->activity->sprog);?></i></td>
                     <td><strong>Udelukker samtidige aktiviteter:</strong> <i><?= $this->activity->tids_eksklusiv;?></i></td>
-                    <td><strong>Kan spilles flere gange:</strong> <i><?= e($this->activity->replayable);?></i></td>
+                    <td><strong>Sprog:</strong> <i><?= e($this->activity->sprog);?></i></td>
+                    <td><strong>Sprog spilledere:</strong> <i><?= e($this->activity->lang_gm);?></i></td>
                 </tr>
                 <tr>
+                    <td><strong>Kan spilles flere gange:</strong> <i><?= e($this->activity->replayable);?></i></td>
                     <td><strong>Skjult:</strong> <i><?= e($this->activity->hidden);?></i></td>
                     <td><strong>Karmatype:</strong> <i><?= e($this->activity->getMeaningfulKarmatype());?></i></td>
-                    <td><strong>Max tilmeldinger:</strong> <i><?= e($this->activity->max_signups);?></i></td>
                 </tr>
                 <tr>
                     <td colspan="2"><strong>Aldersbegrænsning:</strong> Min: <strong><?= e($this->activity->getMinAge());?></strong>,  max: <strong><?= e($this->activity->getMaxAge());?></strong></td>
+                    <td><strong>Max tilmeldinger:</strong> <i><?= e($this->activity->max_signups);?></i></td>
+                </tr>
+                <tr>
                     <td><strong>Automatisk tilmelding:</strong> <i><?=$this->activity->auto_signup_category?></i></td>
                 </tr>
                 <tr>

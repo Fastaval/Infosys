@@ -460,11 +460,11 @@ class Routes
         $this->routes['api_signup_load']            = array('url' => 'api/signup/load', 'controller' => 'SignupApi', 'method' => 'loadSignup');
 
         // Payment
-        $this->routes['payment_callback']           = array('url' => 'payment/callback', 'controller' => 'Payment', 'method' => 'paymentCallBack');
-        $this->routes['payment_create_url']         = array('url' => 'payment/createurl', 'controller' => 'Payment', 'method' => 'createPaymentURL');
-        $this->routes['payment_cancel']             = array('url' => 'payment/cancel', 'controller' => 'Payment', 'method' => 'cancelPayment');
-        $this->routes['payment_status']             = array('url' => 'payment/status', 'controller' => 'Payment', 'method' => 'checkPayment');
-        $this->routes['payment_check_total']        = array('url' => 'payment/participanttotal', 'controller' => 'Payment', 'method' => 'checkTotal');
+        // $this->routes['payment_callback']           = array('url' => 'payment/callback', 'controller' => 'Payment', 'method' => 'paymentCallBack');
+        // $this->routes['payment_create_url']         = array('url' => 'payment/createurl', 'controller' => 'Payment', 'method' => 'createPaymentURL');
+        // $this->routes['payment_cancel']             = array('url' => 'payment/cancel', 'controller' => 'Payment', 'method' => 'cancelPayment');
+        // $this->routes['payment_status']             = array('url' => 'payment/status', 'controller' => 'Payment', 'method' => 'checkPayment');
+        // $this->routes['payment_check_total']        = array('url' => 'payment/participanttotal', 'controller' => 'Payment', 'method' => 'checkTotal');
 
         // Ticket system
         $this->routes['tickets_main']               = array('url' => 'tickets', 'controller' => 'Tickets', 'method' => 'mainPage');

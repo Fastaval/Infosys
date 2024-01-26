@@ -92,10 +92,7 @@
                         "da": "Arrang\u00f8romr\u00e5de?"
                     },
                     "infosys_id": "work_area",
-                    "required_if": {
-                        "type": "checkbox",
-                        "input": "organizer"
-                    },
+                    "required": "true",
                     "autocomplete": {
                         "list": "organizer_categories",
                         "mode": "exhaustive",
@@ -142,7 +139,22 @@
                         "mode": "exhaustive",
                         "value": "id"
                     },
-                    "required": "true"
+                    "required_if": [
+                        {
+                            "type": "field_compare",
+                            "status": "required",
+                            "input": "work_area",
+                            "compare": "equals",
+                            "value": "1"
+                        },
+                        {
+                            "type": "field_compare",
+                            "status": "required",
+                            "input": "work_area",
+                            "compare": "equals",
+                            "value": "2"
+                        }
+                    ]
                 }
             ]
         }

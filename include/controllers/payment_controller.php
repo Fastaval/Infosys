@@ -5,6 +5,7 @@ class PaymentController extends Controller {
     ['method' => 'allowCrossSiteAccess', 'exclusive' => true, 'methodlist' => [
       'paymentCallBack',
     ]], 
+    ['method' => 'moduleDisabled', 'exclusive' => false, 'methodlist' => []], 
   ];
 
   /**
@@ -17,6 +18,10 @@ class PaymentController extends Controller {
   public function allowCrossSiteAccess()
   {
       header('Access-Control-Allow-Origin: *');
+  }
+
+  public function moduleDisabled() {
+    die('The payment module is not enabled');
   }
 
   public function paymentCallBack() {

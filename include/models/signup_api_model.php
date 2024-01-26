@@ -198,6 +198,7 @@ class SignupApiModel extends Model {
         'en' => str_contains($activity->sprog, 'engelsk'),
         'da' => str_contains($activity->sprog, 'dansk'),
       ];
+      $activity_info->lang_gm = $activity->lang_gm;
       $activity_info->desc = [
         'en' => $activity->description_en,
         'da' => $activity->foromtale,
@@ -737,14 +738,14 @@ class SignupApiModel extends Model {
 
             case 'sleeping':
               // Check age
-              if ($age < $config['main']->age_kid) {
-                $errors[$category][] = [
-                  'type' => 'sleeping_too_young',
-                  'id' => "$key",
-                  'age'  => $age,
-                ];
-                continue 2;
-              }
+              // if ($age < $config['main']->age_kid) {
+              //   $errors[$category][] = [
+              //     'type' => 'sleeping_too_young',
+              //     'id' => "$key",
+              //     'age'  => $age,
+              //   ];
+              //   continue 2;
+              // }
 
               $entry = $this->createEntity('Indgang');
               $select = $entry->getSelect();
