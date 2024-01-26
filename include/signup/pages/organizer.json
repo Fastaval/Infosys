@@ -97,7 +97,8 @@
                         "list": "organizer_categories",
                         "mode": "exhaustive",
                         "value": "id"
-                    }
+                    },
+                    "required": "true"
                 },
                 {
                     "type": "paragraph",
