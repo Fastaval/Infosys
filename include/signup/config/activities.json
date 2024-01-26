@@ -69,6 +69,10 @@
     "en": "Full",
     "da": "Fyldt"
   },
+  "designer_text" : {
+    "en": "Designer",
+    "da": "Designer"
+  },
   "errors": {
     "no_days": {
       "en": "There are no activities on the days you're attending Fastaval that matches the current category.",
