@@ -41,15 +41,15 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "At Fastaval, you can either buy a ticket for all days (partout) or to the individual days separately.  Note that a ticket fee og 15 kr. is placed on all sign-ups.",
+                        "en": "At Fastaval, you can either buy a ticket for all days (partout) or to the individual days separately.  Note that a ticket fee of 15 kr. is placed on all sign-ups.",
                         "da": "Til Fastaval kan du enten k\u00f8be billet til alle dage (partout) eller til de enkelte dage hver for sig. V\u00e6r opm\u00e6rksom p\u00e5, at der p\u00e5l\u00e6gges et billetgebyr p\u00e5 15 kr. til alle tilmeldinger."
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "A partout ticket costs 400 kr. Organizers and participants below the age of 18, receive a 125 kr. discount on partout entry. These discounts can be combined for organizers below the age of 18. Members of ALEA also get a 125 kr. discount. Kids under the age of 15 can attend Fastaval for free.",
-                        "da": "En partout-billet koster 400 kr.\u00a0\u00a0Arrang\u00f8rer og deltagere under 18 \u00e5r, f\u00e5r 125 kr. rabat p\u00e5 en partout-billet.\u00a0Er du arrang\u00f8r under 18 \u00e5r f\u00e5 du b\u00e5de ungdoms- og arrang\u00f8rrabat.\u00a0Medlemmer af ALEA f\u00e5r ogs\u00e5 125 kr. rabat. B\u00f8rn under 15 \u00e5r kan komme gratis med p\u00e5 Fastaval."
+                        "en": "A partout ticket costs 400 kr. Organizers and participants below the age of 18, receive a 125 kr. discount on partout entry. These discounts can be combined for organizers below the age of 18. Members of ALEA also get a 125 kr. discount. Kids under the age of 15 can attend Fastaval for free provided they are accompanied by an adult.",
+                        "da": "En partout-billet koster 400 kr.\u00a0\u00a0Arrang\u00f8rer og deltagere under 18 \u00e5r, f\u00e5r 125 kr. rabat p\u00e5 en partout-billet.\u00a0Er du arrang\u00f8r under 18 \u00e5r f\u00e5 du b\u00e5de ungdoms- og arrang\u00f8rrabat.\u00a0Medlemmer af ALEA f\u00e5r ogs\u00e5 125 kr. rabat. B\u00f8rn under 15 \u00e5r kan komme gratis med p\u00e5 Fastaval s\u00e5 l\u00e6nge de er ledsaget af en voksen."
                     }
                 },
                 {
@@ -150,7 +150,7 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "At Fastaval, we have a number of different sleeping areas. You can find a detailed description of each on the [url=https:\/\/www.fastaval.dk\/en\/praktisk\/praktiske-informationer\/#overnatning]website[\/url].",
+                        "en": "At Fastaval, we have a number of different sleeping areas. You can find a detailed description of each area at [url=https:\/\/www.fastaval.dk\/en\/praktisk\/praktiske-informationer\/#overnatning]website[\/url].",
                         "da": "P\u00e5 Fastaval har du nogle forskellige overnatningsmuligheder. Du kan l\u00e6se mere detaljeret om dem p\u00e5\u00a0[url=https:\/\/www.fastaval.dk\/praktisk\/praktiske-informationer\/#overnatning]hjemmesiden[\/url]."
                     }
                 },
@@ -238,14 +238,6 @@
                         "sleeping:partout"
                     ]
                 }
-            ],
-            "display_logic": [
-                {
-                    "type": "age",
-                    "status": "hidden",
-                    "compare": "less",
-                    "value": 13
-                }
             ]
         },
         {
@@ -267,7 +259,15 @@
                         "en": "I want to sleep in the standard dormitory.",
                         "da": "Jeg vil gerne sove i den almindelige sovesal."
                     },
-                    "infosys_id": "sleeping_area:regular"
+                    "infosys_id": "sleeping_area:regular",
+                    "display_logic": [
+                        {
+                            "type": "age",
+                            "status": "disabled",
+                            "compare": "less",
+                            "value": "config.age_kid"
+                        }
+                    ]
                 },
                 {
                     "type": "paragraph",
@@ -298,8 +298,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "[b]quiet and sober dormitory[\/b]\nThis year there will be a sober dormitory for people who want to stay sober, quiet and prefer others to do the same. The quiet\/sober dormitory is located at Mariagerfjord Gymnasium.\u00a0",
-                        "da": "[b]Stille- og \u00e6drusovesal[\/b]\nI \u00e5r vil der v\u00e6re en s\u00e6rlig sovesal for folk der \u00f8nsker at holde sig \u00e6dru, stille og \u00f8nsker at andre g\u00f8r det samme. Stille\/\u00e6dru sovesalen ligger p\u00e5 Mariagerfjord Gymnasium."
+                        "en": "[b]quiet and sober dormitory[\/b]\nThis year there will be a sober dormitory for people who want to stay sober, quiet and prefer others to do the same. The quiet\/sober dormitories are located at Mariagerfjord Gymnasium, where you will share a classroom with up to 9 other people.\u00a0",
+                        "da": "[b]Stille- og \u00e6drusovesal[\/b]\nI \u00e5r vil der v\u00e6re en s\u00e6rlig sovesal for folk der \u00f8nsker at holde sig \u00e6dru, stille og \u00f8nsker at andre g\u00f8r det samme. Stille\/\u00e6dru sovesalene ligger p\u00e5 Mariagerfjord Gymnasium, hvor du vil dele et klassev\u00e6relse med op til 9 andre deltagere."
                     }
                 },
                 {
@@ -308,7 +308,15 @@
                         "en": "I want to sleep in the quiet and sober dormitory.",
                         "da": "Jeg vil gerne sove i stille- og \u00e6drusovesalen."
                     },
-                    "infosys_id": "sleeping_area:sober"
+                    "infosys_id": "sleeping_area:sober",
+                    "display_logic": [
+                        {
+                            "type": "age",
+                            "status": "disabled",
+                            "compare": "less",
+                            "value": "config.age_kid"
+                        }
+                    ]
                 },
                 {
                     "type": "paragraph",
@@ -328,8 +336,14 @@
                         {
                             "type": "age",
                             "status": "disabled",
-                            "compare": "greater",
-                            "value": 17
+                            "compare": "greater_equal",
+                            "value": "config.age_young"
+                        },
+                        {
+                            "type": "age",
+                            "status": "disabled",
+                            "compare": "less",
+                            "value": "config.age_kid"
                         }
                     ]
                 },
@@ -426,12 +440,6 @@
                     "type": "checkbox",
                     "status": "normal",
                     "input": "sleeping:partout"
-                },
-                {
-                    "type": "age",
-                    "status": "hidden",
-                    "compare": "less",
-                    "value": 13
                 }
             ]
         },
