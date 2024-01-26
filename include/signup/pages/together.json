@@ -25,7 +25,7 @@
             "type": "age",
             "status": "disabled",
             "compare": "less",
-            "value": 13
+            "value": "config.age_kid"
         }
     ],
     "sections": [
@@ -79,21 +79,21 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "[b]What is The Hero Force?[\/b]\nYou become a part of a network of participants who help the organizers out around Fastaval to keep the congress running. You will get assigned a hero-task at one of Fastavals many sales and service venues, according to the timespans you choose in your sign-up. You are more than welcome to do more heroic deeds than one. Read more about The Hero Force [url=https:\/\/www.fastaval.dk\/en\/praktisk\/faelles-fastaval\/#heltestyrken]here[\/url].",
+                        "en": "[b]What is The Hero Force?[\/b]\nYou become a part of a network of participants who help the organizers out around Fastaval to keep the congress running. You will be assigned a hero-task at one of Fastavals many sales and service venues, according to the timespans you choose in your sign-up. You are more than welcome to do more heroic deeds than one. Read more about The Hero Force [url=https:\/\/www.fastaval.dk\/en\/praktisk\/faelles-fastaval\/#heltestyrken]here[\/url].",
                         "da": "[b]Hvad er Heltestyrken?[\/b]\nDu bliver en del af et netv\u00e6rk af andre deltagere, Helte, som hj\u00e6lper arrang\u00f8rerne rundt omkring p\u00e5 Fastaval, for at f\u00e5 Fastaval til at k\u00f8re rundt. Du vil f\u00e5 tildelt en helte-opgave p\u00e5 en af Fastavals salgs- eller servicesteder, alt efter de tidsrum, som du noterer i din tilmelding. Man er ogs\u00e5 velkommen til at tage flere opgaver end \u00e9n. L\u00e6s mere om Heltestyrken\u00a0[url=https:\/\/www.fastaval.dk\/praktisk\/faelles-fastaval\/#heltestyrken\/]her[\/url]."
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "[b]What is a Game Master?[\/b]\u00a0\nMost of the scenarios at Fastaval are designed to be\u00a0run by a Game Master. The Game Master reads the scenario beforehand, and makes\u00a0herself familiar with the story, mechanics, roles, and so on. The scenario\u00a0functions kind of like a manual, which the Game Master follows and interprets\u00a0when playing the scenario. The Game Master is the person who runs the scenario for\u00a0the players, and makes sure it moves forward. They typically don\u2019t have a main\u00a0role in the scenario, but can sometimes be expected to play smaller supporting\u00a0roles.\nOften it is an important part of the job for the Game Master to set the\u00a0scenes - which means describing the setting, and what is happening, and to cut\u00a0the scenes when they are played out. Read more about Game Master [url=https:\/\/www.fastaval.dk\/en\/praktisk\/faelles-fastaval\/#spilleder]here[\/url].",
-                        "da": "[b]Hvad er en spilleder?[\/b]\nLangt de fleste scenarier p\u00e5 Fastaval er designet, s\u00e5 der er en spilleder til scenariet. Spillederen er den der har l\u00e6st scenariet p\u00e5 forh\u00e5nd, sat sig ind i fort\u00e6lling, virkemidler, roller osv. Scenariet er en slags manual\/drejebog, som spillederen f\u00f8lger og fortolker i praksis. Spillederen er den person, der formidler scenariet videre og i den rigtige retning. De har typisk ikke en rolle i scenariet, men kan spille fx flere sm\u00e5 biroller.Det er tit ogs\u00e5 en vigtig opgave for spillederen at s\u00e6tte scenerne - alts\u00e5 beskriver hvor og hvad der foreg\u00e5r, og klippe scenerne, n\u00e5r de er spillet f\u00e6rdig. L\u00e6s mere om spilleder \u00a0[url=https:\/\/www.fastaval.dk\/praktisk\/faelles-fastaval\/#spilleder]her[\/url]."
+                        "en": "[b]What is a Game Master?[\/b]\u00a0\nMost of the scenarios at Fastaval are designed to be\u00a0run by a Game Master. The Game Master reads the scenario beforehand, and makes themselves familiar with the story, mechanics, roles, and so on. The scenario\u00a0functions kind of like a manual, which the Game Master follows and interprets\u00a0when playing the scenario. The Game Master is the person who runs the scenario for\u00a0the players, and makes sure it moves forward. They typically don\u2019t have a main\u00a0role in the scenario, but can sometimes be expected to play smaller supporting\u00a0roles.\nOften it is an important part of the job for the Game Master to set the\u00a0scenes - which means describing the setting, and what is happening, and to cut\u00a0the scenes when they are played out. Read more about being a Game Master [url=https:\/\/www.fastaval.dk\/en\/praktisk\/faelles-fastaval\/#spilleder]here[\/url].",
+                        "da": "[b]Hvad er en spilleder?[\/b]\nLangt de fleste scenarier p\u00e5 Fastaval er designet, s\u00e5 der er en spilleder til scenariet. Spillederen er den der har l\u00e6st scenariet p\u00e5 forh\u00e5nd, sat sig ind i fort\u00e6lling, virkemidler, roller osv. Scenariet er en slags manual\/drejebog, som spillederen f\u00f8lger og fortolker i praksis. Spillederen er den person, der formidler scenariet videre og i den rigtige retning. De har typisk ikke en rolle i scenariet, men kan spille fx flere sm\u00e5 biroller. Det er tit ogs\u00e5 en vigtig opgave for spillederen at s\u00e6tte scenerne - alts\u00e5 beskriver hvor og hvad der foreg\u00e5r, og klippe scenerne, n\u00e5r de er spillet f\u00e6rdig. L\u00e6s mere om at v\u00e6re\u00a0 spilleder \u00a0[url=https:\/\/www.fastaval.dk\/praktisk\/faelles-fastaval\/#spilleder]her[\/url]."
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "[b]What is a Game Guide?[\/b]\nWhen playing a board game for the first time, it is often a great help if one of the other players already know the game and its rules. As a Game Guide, you are this player for one of this year\u2019s designer boardgames, and you are responsible for helping your table run well. You get an opportunity to help Fastaval by doing what many boardgames do best: create a good atmosphere, and help everyone have a great time by.  Read more about Game Guide [url=https:\/\/www.fastaval.dk\/en\/praktisk\/faelles-fastaval\/#regelformidler]here[\/url].",
+                        "en": "[b]What is a Game Guide?[\/b]\nWhen playing a board game for the first time, it is often a great help if one of the other players already know the game and its rules. As a Game Guide, you are this player for one of this year\u2019s designer boardgames, and you are responsible for helping your table run well. You get an opportunity to help Fastaval by doing what many boardgames do best: create a good atmosphere, and help everyone have a great time.  Read more about Game Guide [url=https:\/\/www.fastaval.dk\/en\/praktisk\/faelles-fastaval\/#regelformidler]here[\/url].",
                         "da": "[b]Hvad er en regelformidler?[\/b]\nN\u00e5r man spiller et br\u00e6tspil for f\u00f8rste gang er det ofte en stor hj\u00e6lp at have en medspiller ved bordet som allerede kender spillet og dets regler. Som regelformidler i en spilblok er du denne spiller, for et af \u00e5rets designerbr\u00e6tspil, og du har ansvaret for at dit bord k\u00f8rer bedst muligt. Du f\u00e5r mulighed for at bidrage til Fastaval ved at g\u00f8re det mange br\u00e6tspillere g\u00f8r bedst: skab en god stemning om bordet og hj\u00e6lp medspillere med at have en god spiloplevelse. L\u00e6s mere om Regelformidler \u00a0[url=https:\/\/www.fastaval.dk\/praktisk\/faelles-fastaval\/#regelformidler]her[\/url]."
                     }
                 },
@@ -274,6 +274,13 @@
                     "options": [
                         {
                             "text": {
+                                "en": "",
+                                "da": ""
+                            },
+                            "value": ""
+                        },
+                        {
+                            "text": {
                                 "en": "No limit",
                                 "da": "Ingen gr\u00e6nse"
                             },
@@ -283,6 +290,11 @@
                     "range": {
                         "start": 1,
                         "end": 10
+                    },
+                    "required_if": {
+                        "type": "checkbox",
+                        "status": "normal",
+                        "input": "together:gm"
                     }
                 }
             ],
