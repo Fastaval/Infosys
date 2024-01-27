@@ -385,33 +385,49 @@ class WearModel extends Model
     protected function updateAttributes(Wear $wear, RequestVars $post) {
         $attribute_types = $this->getAttributes();
         $current_attributes = $wear->getVariants();
-        
-        if (isset($post->attributes)) {
-            $vmax = max(count($current_attributes), count($post->attributes));
-        } else {
-            $vmax = count($current_attributes);
+
+        // Get a copy of the attribute arrays, where we control the internal pointer
+        $posted_attributes = $post->attributes;
+
+        $keys = array_keys($current_attributes);
+        if (is_array($posted_attributes)) {
+            $keys[] = count($posted_attributes) - 1;
         }
-        
-        for($i = 0 ; $i < $vmax; $i++) {
-            $selected_attributes = array_key_exists($i, $post->attributes) ? array_flip($post->attributes[$i]) : null;
+        $vmax = max($keys);
+        $this->fileLog("\$keys:".print_r($keys, true). "\$vmax: $vmax");
+
+        $posted_attribute_set = current($posted_attributes);
+        for($i = 0 ; $i <= $vmax; $i++) {
+            if (is_array($posted_attribute_set)) {
+                // Flip the array so we can use the IDs as keys
+                $posted_attribute_set = array_flip($posted_attribute_set);
+            } else {
+                // Or create an empty array if we have no more attribute sets
+                $posted_attribute_set = [];
+            }
+
+            $this->fileLog("Posted Attribute Set:".print_r($posted_attribute_set, true));
 
             foreach($attribute_types as $type => $attributes) {
                 foreach($attributes as $key => $value) {
                     // Insert missing
-                    if (isset($selected_attributes[$key]) && !isset($current_attributes[$i][$type][$key])) {
+                    if (isset($posted_attribute_set[$key]) && !isset($current_attributes[$i][$type][$key])) {
                         $query = "INSERT INTO wear_attribute_available (wear_id, attribute_id, variant) VALUES (?,?,?)";
                         $args = [$wear->id, $key, $i];
                         $this->db->exec($query, $args);
                     }
 
                     // Remove unselected
-                    if (!isset($selected_attributes[$key]) && isset($current_attributes[$i][$type][$key])) {
+                    if (!isset($posted_attribute_set[$key]) && isset($current_attributes[$i][$type][$key])) {
                         $query = "DELETE FROM wear_attribute_available WHERE wear_id=? AND attribute_id=? AND variant=?";
                         $args = [$wear->id, $key, $i];
                         $this->db->exec($query, $args);
                     }
                 }
             }
+
+            // Get the next set of attributes
+            $posted_attribute_set = next($posted_attributes);
         }
 
         return true;
