@@ -1,0 +1,1 @@
+ALTER TABLE deltagere ADD junior_gm enum ('ja', 'nej') NOT NULL DEFAULT 'nej';
