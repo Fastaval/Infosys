@@ -38,8 +38,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "Organizers (including writers and designers) are participants who work more than 48 hours before\/after Fastaval and\/or 24 hours during Fastaval. They receive:",
-                        "da": "Arrang\u00f8rer (inklusiv forfattere og designere) er deltagere der arbejder mere end 48 timer f\u00f8r\/efter Fastaval og\/eller 24 timer p\u00e5 Fastaval. De modtager:"
+                        "en": "Organizers (including writers and designers) are participants who do volunteer work for more than 48 hours before\/after Fastaval and\/or 24 hours during Fastaval. They receive:",
+                        "da": "Arrang\u00f8rer (inklusiv forfattere og designere) er deltagere, der arbejder frivilligt mere end 48 timer f\u00f8r\/efter Fastaval og\/eller 24 timer p\u00e5 Fastaval. De modtager:"
                     }
                 },
                 {
@@ -52,8 +52,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "Organizers below 18 receive both the youth and organizer discount on partout entrance. Be aware that organizers discount cannot be given at sales venues without a valid name tag with picture.",
-                        "da": "Arrang\u00f8rer under 18 f\u00e5r b\u00e5de arrang\u00f8r- og ungdomsrabat p\u00e5 partout indgang. V\u00e6r opm\u00e6rksom p\u00e5 at arrang\u00f8rrabat ikke kan tilbydes ved salgssteder uden et gyldigt navneskilt med billede."
+                        "en": "Organizers below 18 receive both the youth and organizer discount on partout entrance. Be aware that the organizers discount cannot be given at sales venues without a valid name tag with picture.",
+                        "da": "Arrang\u00f8rer under 18 f\u00e5r b\u00e5de arrang\u00f8r- og ungdomsrabat p\u00e5 partout indgang.\u00a0V\u00e6r opm\u00e6rksom p\u00e5, at arrang\u00f8rrabat ikke kan tilbydes ved salgssteder uden et gyldigt navneskilt med billede."
                     }
                 },
                 {
@@ -74,8 +74,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "What kind work do you do at Fastaval?\nIf you are an author or a designer, you need to write this as your organizational area.",
-                        "da": "Hvilken slags arbejde udf\u00f8rer du for Fastaval?\nHvis du er forfatter eller designer, skal du skrive dette som dit arrang\u00f8romr\u00e5de"
+                        "en": "What kind work do you do at Fastaval?\nIf you are an author or a designer, you write this as your organizer area.",
+                        "da": "Hvilket slags arbejde udf\u00f8rer du for Fastaval?Hvis du er forfatter eller designer, skal du skrive det som dit arrang\u00f8romr\u00e5de."
                     }
                 },
                 {
@@ -92,7 +92,6 @@
                         "da": "Arrang\u00f8romr\u00e5de?"
                     },
                     "infosys_id": "work_area",
-                    "required": "true",
                     "autocomplete": {
                         "list": "organizer_categories",
                         "mode": "exhaustive",
