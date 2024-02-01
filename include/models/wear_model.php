@@ -394,7 +394,6 @@ class WearModel extends Model
             $keys[] = count($posted_attributes) - 1;
         }
         $vmax = max($keys);
-        $this->fileLog("\$keys:".print_r($keys, true). "\$vmax: $vmax");
 
         $posted_attribute_set = current($posted_attributes);
         for($i = 0 ; $i <= $vmax; $i++) {
@@ -405,8 +404,6 @@ class WearModel extends Model
                 // Or create an empty array if we have no more attribute sets
                 $posted_attribute_set = [];
             }
-
-            $this->fileLog("Posted Attribute Set:".print_r($posted_attribute_set, true));
 
             foreach($attribute_types as $type => $attributes) {
                 foreach($attributes as $key => $value) {
