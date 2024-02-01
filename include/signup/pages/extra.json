@@ -25,6 +25,72 @@
     "sections": [
         {
             "headline": {
+                "en": "The Fastaval Bus",
+                "da": "Fastavalbussen"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "This year Fastaval is organizing a shared bus trip from Copenhagen to Fastaval in Hobro (and back again). It will be possible to add a ticket for the Fastaval bus in your sign-up.",
+                        "da": "Fastaval arrangerer i \u00e5r en f\u00e6lles bustur fra K\u00f8benhavn til Fastaval i Hobro (og tilbage igen)."
+                    }
+                },
+                {
+                    "type": "list",
+                    "text": {
+                        "en": "Price: 450kr (round trip)\u00a0\nPick-up point: Ingerslevsgade by DGI Byen, Copenhagen C\u00a0\nPick-up time: D. 27. March, exact time to follow (approx. 12-13.00)\u00a0\nSeats: 48 (first come, first served)\u00a0\nReturn trip on 1. April (exact time to follow)",
+                        "da": "Pris: 450kr (tur-retur)\nOpsamlingssted: Ingerslevsgade ved DGI byen, K\u00f8benhavn C\nOpsamlingstidspunkt: D. 27. Marts, pr\u00e6cise tidspunkt f\u00f8lger (ca. kl. 12-13.00)\nPladser: 48 (f\u00f8rst til m\u00f8lle)\u00a0\n\nHjemtur d. 1. April (pr\u00e6cis tidspunkt f\u00f8lger)"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "[b]Bus tickets are sold out [\/b]",
+                        "da": "[b]Billetter til bussen er udsolgt [\/b]"
+                    },
+                    "text_id": "sold-out-bus",
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "config": "current_bus_tickets",
+                            "status": "hidden",
+                            "compare": "less",
+                            "value": "config.max_bus_tickets"
+                        },
+                        {
+                            "type": "checkbox",
+                            "status": "hidden",
+                            "input": "misc:fastaval_bus"
+                        }
+                    ]
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I would like a ticket for the Fastaval bus",
+                        "da": "Jeg vil gerne have billet til Fastavalbussen"
+                    },
+                    "infosys_id": "misc:fastaval_bus",
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "config": "current_bus_tickets",
+                            "status": "disabled",
+                            "compare": "greater_equal",
+                            "value": "config.max_bus_tickets"
+                        },
+                        {
+                            "type": "checkbox",
+                            "status": "normal",
+                            "input": "misc:fastaval_bus"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "headline": {
                 "en": "The Otto Party",
                 "da": "Ottofesten"
             },
@@ -32,8 +98,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "The Otto Party on Sunday is included in your entry ticket. This year, you can experience an exciting Sunday with fun activities and a lot of entertainment. Wind up your Fastaval with a huge party to the Ottoshow in the evening. Read more about [url=https:\/\/www.fastaval.dk\/en\/supersoendag\/\/]SuperSunday here[\/url].\u00a0",
-                        "da": "Ottofesten om s\u00f8ndagen er inkluderet i din entr\u00e9billet. Du kan i \u00e5r opleve en sp\u00e6ndende s\u00f8ndag med sjove aktiviteter og masser af underholdning. Slut Fastaval af med et brag af en fest til Ottoshowet om aftenen. L\u00e6s mere om [url=https:\/\/www.fastaval.dk\/supersoendag\/]SuperS\u00f8ndag her[\/url]."
+                        "en": "The Otto Party on Sunday is included in your entry ticket. This year, you can experience an exciting Sunday with fun activities and a lot of entertainment. Wind up your Fastaval with a huge party to the Ottoshow in the evening. Read more about [url=https:\/\/www.fastaval.dk\/en\/oevrige-aktiviteter\/ activities at the bottom of the page here[\/url].\u00a0",
+                        "da": "Ottofesten om s\u00f8ndagen er inkluderet i din entr\u00e9billet. Du kan i \u00e5r opleve en sp\u00e6ndende s\u00f8ndag med sjove aktiviteter og masser af underholdning. Slut Fastaval af med et brag af en fest til Ottoshowet om aftenen. L\u00e6s mere om [url=https:\/\/www.fastaval.dk\/oevrige-aktiviteter\/]SuperS\u00f8ndag aktiviteterne nederste p\u00e5 siden her[\/url]."
                     }
                 },
                 {
@@ -71,7 +137,7 @@
                     "type": "paragraph",
                     "text": {
                         "en": "If you want to contribute to Fastaval with some additional coin, you can become a part of the rich aunts and uncles, and donate an amount of your choosing, in addition to your ticket etc. You can also choose if you want to appear on the list of charitable individuals, or if you wish to remain as a shadow benefactor.\u00a0\n\nThis year, the donations will be used to give financially challenged participants 2x free breakfast and dinner, if they feel a need for a financial contribution.",
-                        "da": "Hvis du har lyst til at bidrage med en ekstra skilling til Fastaval, kan du blive en del af de rige tanter og onkler, og donere et valgfrit bel\u00f8b til Fastaval, oveni din betaling for billet etc. Du kan selv v\u00e6lge om dit navn skal optr\u00e6de p\u00e5 listen over velg\u00f8rende personer, eller om du \u00f8nsker at forblive i skyggerne.\n\nI \u00e5r bruger vi st\u00f8tten til at give \u00f8konomisk tr\u00e6ngte deltagere 2x gratis morgen- og aftensmad, hvis de f\u00f8ler, de har behov for et \u00f8konomisk bidrag"
+                        "da": "Hvis du har lyst til at bidrage med en ekstra skilling til Fastaval, kan du blive en del af de rige tanter og onkler, der donerer et valgfrit bel\u00f8b til Fastaval oveni billetten. Du kan selv v\u00e6lge, om dit navn skal optr\u00e6de p\u00e5 listen over velg\u00f8rende personer, eller om du \u00f8nsker at forblive i skyggerne.\nI \u00e5r bruger vi st\u00f8tten til at give \u00f8konomisk tr\u00e6ngte deltagere 2x gratis morgen- og aftensmad, hvis de f\u00f8ler, de har behov for et \u00f8konomisk bidrag."
                     }
                 },
                 {
@@ -126,14 +192,14 @@
                     "type": "paragraph",
                     "text": {
                         "en": "Is there something you have not been able to share with us? Then write it here. Alternatively, you can write a nice message to our hard-working Infonauts.",
-                        "da": "Er der noget du ikke har haft mulighed for at fort\u00e6lle os? S\u00e5 kan du skrive det her. Eller er du altid velkommen til at skrive en s\u00f8d besked til vores h\u00e5rdtarbejdende Infonauter."
+                        "da": "Er der noget, du ikke har haft mulighed for at fort\u00e6lle os? S\u00e5 kan du skrive det her. Du er derudover altid velkommen til at skrive en s\u00f8d besked til vores h\u00e5rdtarbejdende Infonauter."
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
                         "en": "[b]Note:[\/b] We do not look at the comments until after sign-up has closed. If you have questions or need to get in contact with us, we can be reached by mail [email]info@fastaval.dk[\/email]\u00a0",
-                        "da": "[b]Bem\u00e6rk:[\/b] Vi kigger f\u00f8rst bem\u00e6rkningerne igennem efter at tilmeldingen er lukket. Hvis du har sp\u00f8rgsm\u00e5l eller skal i kontakt med os, kan du fange os p\u00e5 mail [email]info@fastaval.dk[\/email]\u00a0"
+                        "da": "[b]Bem\u00e6rk:[\/b] Vi kigger f\u00f8rst bem\u00e6rkningerne igennem efter, at tilmeldingen er lukket. Hvis du har sp\u00f8rgsm\u00e5l eller skal i kontakt med os, kan du fange os p\u00e5 mail [email]info@fastaval.dk[\/email]."
                     }
                 },
                 {
