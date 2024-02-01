@@ -169,9 +169,14 @@ class SignupAdminRender {
       legend.append(' : <span class="infosys-id editable">'+item.infosys_id+'</span>');
     }
     if(['text_input', 'telephone', 'checkbox', 'date', 'email','radio'].includes(item.type)) { // Checkboxes
-      let required = item.required ? 'checked="checked"' : '';
       let label_required = jQuery('<label class="checkbox-label">Påkrævet</label>');
-      label_required.append('<input type="checkbox" class="item-checkbox toggle-required" setting="required" '+required+'>');
+      if (item.required_if) {
+        label_required.text('Kan være påkrævet');
+      } else {
+        let required = item.required ? 'checked="checked"' : '';
+        label_required.text('Påkrævet');
+        label_required.append(`<input type="checkbox" class="item-checkbox toggle-required" setting="required" ${required}>`);
+      }
       legend.append(label_required);
 
       let disabled = item.disabled ? 'checked="checked"' : '';
