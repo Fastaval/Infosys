@@ -2448,17 +2448,6 @@ SET participant_id = ?, amount = ?, cost = ?, fees = ?, timestamp = NOW()
         $page->gds         = $participant->getGDSTilmeldinger();
         $page->food        = $participant->getMadtider();
 
-        $api = $this->factory('Api');
-        if ($participant->id) {
-            try {
-                $hash = $api->getParticipantPaymentHash($participant);
-            } catch (FrameworkException $e) {
-                $hash = $api->setParticipantPaymentHash($participant);
-            }
-
-            $page->payment_url = $this->url('participant_payment', array('hash' => $hash));
-        }
-
         $entrance = array();
         $prices   = array(
             'alea'              => 0,
