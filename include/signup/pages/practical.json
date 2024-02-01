@@ -180,7 +180,7 @@
                     "type": "paragraph",
                     "text": {
                         "en": "If you sign up for before the 23th of february, you will receive a nametag upon check-in at Fastaval.\u00a0The nametag will display your participant number first name and preferred pronouns.\u00a0",
-                        "da": "Hvis du tilmelder dig inden d. 23. februar, vil du f\u00e5 et navneskilt n\u00e5r du checker ind p\u00e5 Fastaval. P\u00e5 navneskiltet vil der fremg\u00e5 dit deltagernummer, fornavn og fortrukne pronomen (stedord).\u00a0\u00a0\u00a0"
+                        "da": "Hvis du tilmelder dig inden d. 23. februar, vil du f\u00e5 et navneskilt n\u00e5r du checker ind p\u00e5 Fastaval. P\u00e5 navneskiltet vil der fremg\u00e5 dit deltagernummer, fornavn og fortrukne pronomen.\u00a0\u00a0\u00a0"
                     }
                 },
                 {
@@ -323,7 +323,7 @@
                     "infosys_id": "knows_fastaval_from",
                     "options": [
                         {
-                            "value": "0",
+                            "value": "",
                             "text": {
                                 "en": "",
                                 "da": "Ingen valgt"
@@ -385,7 +385,8 @@
                                 "da": "Internettet"
                             }
                         }
-                    ]
+                    ],
+                    "required": true
                 }
             ]
         },
@@ -412,15 +413,15 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "For insurance reasons, organizers must be members of Alea.",
-                        "da": "Af forsikringsm\u00e6ssige \u00e5rsager er det obligatorisk for arrang\u00f8rer, at v\u00e6re medlemmer af Alea."
+                        "en": "If you are an organizer, you must be a member of ALEA. Fastavals organizers are insurred through ALEA, and in order to be covered, you must be part of the organization.\u00a0",
+                        "da": "Hvis du er arrang\u00f8r er det obligatorisk at v\u00e6re medlemmer af Alea, da det g\u00f8r det muligt for os at d\u00e6kke dig ind under vores forsikring."
                     }
                 },
                 {
                     "type": "checkbox",
                     "text": {
-                        "en": "Yes, I would like to join Alea and get a discount on the entry fee\u00a0",
-                        "da": "Ja tak, jeg vil gerne melde mig ind i Alea og f\u00e5 rabat p\u00e5 partout billet"
+                        "en": "Yes, I would like to join Alea and get a discount on the entry fee.",
+                        "da": "Ja tak, jeg vil gerne melde mig ind i Alea og f\u00e5 rabat p\u00e5 partout billet."
                     },
                     "infosys_id": "misc:alea",
                     "errors": {
