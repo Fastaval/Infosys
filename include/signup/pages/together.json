@@ -161,7 +161,7 @@
                         "en": "I've been chosen to be a GM for Fastaval Junior",
                         "da": "Jeg har en aftale om at være spilleder for Fastaval Junior"
                     },
-                    "infosys_id": "together:junior_gm"
+                    "infosys_id": "junior_gm",
                 }
             ],
             "section_id": "hero",
@@ -185,7 +185,7 @@
                     "together:gm",
                     "together:rules",
                     "together:prepare",
-                    "together:junior_gm"
+                    "junior_gm"
                 ]
             }
         },

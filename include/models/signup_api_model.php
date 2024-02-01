@@ -872,22 +872,6 @@ class SignupApiModel extends Model {
               }
               break;
 
-            case 'together':
-              // Most items in the together category aren't submittet since it's reflected elsewhere in the signup
-              switch ($key_item) {
-                case 'junior_gm':
-                  $participant->junior_gm = $value == 'on' ? 'ja' : 'nej';
-                  break;
-                
-                default:
-                  $errors[$category][] = [
-                    'type' => 'unknown_together_category',
-                    'info' => "$key_cat:$key_item $value",
-                  ];
-                  continue 2;
-              }
-              break;
-
             case 'hero':
               [$day, $time] = explode("-", $key_item, 2);
               $day = intval($day) -3;
