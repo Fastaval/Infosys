@@ -47,7 +47,14 @@
                     "type": "paragraph",
                     "text": {
                         "en": "Dinner will be served in shifts. Your time slot will appear on your participant sheet closer to Fastaval.",
-                        "da": "Aftensmad udleveres i runder. Du f\u00e5r dit tidsrum p\u00e5 din deltagerseddel n\u00e5r vi n\u00e6rmer os Fastaval."
+                        "da": "Aftensmad udleveres i runder. Du f\u00e5r dit tidsrum p\u00e5 din deltagerseddel, n\u00e5r vi n\u00e6rmer os Fastaval."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "If you have an allergy not mentioned in the detailed description bellow, and worry that it will be present in the food, please contact our food coordinator at mathias@fastaval.dk",
+                        "da": "Har du en allergi, som ikke er n\u00e6vnt, og er du bange for, at den findes i maden, s\u00e5 kontakt vores madansvarlige p\u00e5 mathias@fastaval.dk"
                     }
                 }
             ]
@@ -84,21 +91,21 @@
                     "type": "paragraph",
                     "text": {
                         "en": "This year, the funds provided by the rich aunts and uncles (people who choose to contribute to Fastaval with additional funds) will be used to give financial aid to those who may need it. In practice, it will be possible to get 2 days of food (breakfast + dinner) paid for by Fastaval.",
-                        "da": "I \u00e5r g\u00e5r st\u00f8tten fra rige onkler og tanter (personer der v\u00e6lger at donere ekstra penge til Fastaval) til at give et \u00f8konomisk bidrag til dem der m\u00e5tte have behov for det. Konkret vil det v\u00e6re muligt at f\u00e5 betalt 2 mad-dage (morgenmad + aftensmad) under Fastaval."
+                        "da": "I \u00e5r g\u00e5r st\u00f8tten fra rige onkler og tanter (personer, der v\u00e6lger at donere ekstra penge til Fastaval) til at give et \u00f8konomisk bidrag til dem, der m\u00e5tte have behov for det. Konkret vil det v\u00e6re muligt at f\u00e5 betalt to fulde dages mad (morgenmad + aftensmad) under Fastaval."
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "It is up to you to decide if you are eligible for financial aid. The program is designed for, but not limited to, students, the unemployed, pensioners, and people on government assistance. We do not require documentation of your economic situation.",
-                        "da": "Om du har behov for st\u00f8tte er op til dig selv at vurdere. Ordningen er tilt\u00e6nkt, men ikke begr\u00e6nset til, studerende, arbejdsl\u00f8se, pensionister og andre personer p\u00e5 offentlige ydelser. Vi kr\u00e6ver ikke dokumentation for din \u00f8konomiske situation."
+                        "en": "It is up to you to decide if you are eligible for financial aid. The program is designed for, but not limited to, students, the unemployed, pensioners, single family providers and people on government assistance, or with otherwise limited funds. We do not require documentation of your economic situation.",
+                        "da": "Om du har behov for st\u00f8tte er op til dig selv at vurdere. Ordningen er tilt\u00e6nkt, men ikke begr\u00e6nset til, studerende, arbejdsl\u00f8se, pensionister, f\u00f8rtidspensionister, enlige fors\u00f8gere og andre personer p\u00e5 offentlige ydelser eller med en p\u00e5 anden m\u00e5de trang \u00f8konomi. Vi kr\u00e6ver ikke dokumentation for din \u00f8konomiske situation."
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "To receive financial aid, select the \"I wish to receive financial aid\" checkbox below, and add at least two morning and evening meals to your sign-up. The cost will automatically be deducted from the total price.",
-                        "da": "For at f\u00e5 denne \u00f8konomiske st\u00f8tte skal du afkrydse \u201cJeg \u00f8nsker at f\u00e5 \u00f8konomisk st\u00f8tte\u201d af herunder samt tilf\u00f8je mindst to morgenmad og to aftenm\u00e5ltider til din tilmelding nedenfor i madtabellen. Derefter vil bel\u00f8bet automatisk blive modregnet i din tilmelding."
+                        "en": "The only thing you need to do to receive financial aid, is to select the \"I wish to receive financial aid\" checkbox below, and add at least two morning and evening meals to your sign-up. The cost will automatically be deducted from the total price.\u00a0If you wish to purchase more food, please add it below.",
+                        "da": "Det eneste, du skal g\u00f8re for at f\u00e5 \u00f8konomisk st\u00f8tte, er at klikke: \u201cJeg \u00f8nsker at f\u00e5 \u00f8konomisk st\u00f8tte\u201d, samt tilf\u00f8je mindst to morgenmad og to aftenm\u00e5ltider til din tilmelding nedenfor i madtabellen. Derefter vil bel\u00f8bet automatisk blive modregnet i din tilmelding. \u00d8nsker du at tilk\u00f8be mere mad, skal det ogs\u00e5 tilf\u00f8jes nedenfor."
                     }
                 },
                 {
@@ -160,13 +167,6 @@
                 "da": "Detaljer om maden"
             },
             "items": [
-                {
-                    "type": "paragraph",
-                    "text": {
-                        "en": "NB: Do you have a food allergy that is not listed and are you\u00a0afraid it is in the food, contact [email]mathias@fastaval.dk[\/email]",
-                        "da": "OBS: Har du en mad allergi som ikke er n\u00e6vnt og du er bange for at den findes i maden kontakt [email]mathias@fastaval.dk[\/email]"
-                    }
-                },
                 {
                     "type": "paragraph",
                     "text": {

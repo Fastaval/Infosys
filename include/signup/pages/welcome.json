@@ -15,8 +15,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "The sign-up is open until February 23th. Until this date, you can add activities, food, and order wear in your sign-up.",
-                        "da": "Tilmeldingen er \u00e5ben indtil den 23. februar. Frem til den dato kan du tilf\u00f8je aktiviteter, mad og wear til din tilmelding."
+                        "en": "The sign-up is open until [b]February 23th.[\/b] Until this date, you can add activities, food, and order wear in your sign-up.",
+                        "da": "Tilmeldingen er \u00e5ben til og med [b]den 23. februar.[\/b] Frem til den dato kan du tilf\u00f8je aktiviteter, mad og wear til din tilmelding."
                     }
                 },
                 {
@@ -30,7 +30,7 @@
                     "type": "paragraph",
                     "text": {
                         "en": "You can go back and forth in your sign-up, by clicking the tabs. Red tabs indicate that you need to fill out required information on that tab. You can also change your sign-up later, by using the login in your sign-up mail.",
-                        "da": "Du kan g\u00e5 frem og tilbage i din tilmelding undervejs ved at trykke p\u00e5 fanerne. R\u00f8de faner betyder, at du mangler at udfylde noget p\u00e5 den fane. Du kan ogs\u00e5 \u00e6ndre din tilmelding efterf\u00f8lgende, ved at logge ind med den info du modtager i din tilmeldingsmail."
+                        "da": "Du kan g\u00e5 frem og tilbage i din tilmelding undervejs ved at trykke p\u00e5 fanerne. R\u00f8de faner betyder, at du mangler at udfylde noget p\u00e5 den fane. Du kan ogs\u00e5 \u00e6ndre din tilmelding efterf\u00f8lgende ved at logge ind med den info, du modtager i din tilmeldingsmail."
                     }
                 },
                 {
@@ -43,15 +43,15 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "Last day of payment is also February 23th, but we urge you to pay immediately after you sign-up. In the unfortunate case that Fastaval is canceled or postponed, your payment will be refunded.",
-                        "da": "Betalingen skal ogs\u00e5 ske senest 23. februar, men vi opfordrer dig til at betale straks efter tilmelding. Hvis Fastaval skulle blive aflyst eller flyttet, vil du f\u00e5 din betaling retur."
+                        "en": "[b]Last day of payment is also February 23th,[\/b] but we urge you to pay immediately after you sign-up. In the unfortunate case that Fastaval is canceled or postponed, your payment will be refunded.",
+                        "da": "[b]Betalingen skal ogs\u00e5 ske senest 23. februar,[\/b] men vi opfordrer dig til at betale straks efter tilmelding. Hvis Fastaval skulle blive aflyst eller flyttet, vil du f\u00e5 din betaling retur."
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
                         "en": "If you have trouble with your sign-up, you can always contact us at [email]info@fastaval.dk[\/email]",
-                        "da": "L\u00f8ber du ind i problemer i l\u00f8bet af tilmeldingen kan du altid skrive til [email]info@fastaval.dk[\/email]"
+                        "da": "Oplever du problemer i l\u00f8bet af din tilmelding, kan du altid skrive til  info@fastaval.dk."
                     }
                 }
             ]
@@ -65,15 +65,15 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "You are not registered as a participant of Fastaval 2024, until you receive your confirmation email. If you do NOT receive the confirmation email, please contact us at [email]info@fastaval.dk[\/email], so that we can resend it to you or figure out where the error might be.",
-                        "da": "Du er f\u00f8rst registreret som deltager p\u00e5 Fastaval 2024, n\u00e5r du modtager din registreringsmail. Hvis du IKKE modtager en registreringsmail, s\u00e5 skriv til os p\u00e5 [email]info@fastaval.dk[\/email], s\u00e5 kan vi eftersende den, eller finde ud af hvad fejlen kan v\u00e6re."
+                        "en": "You are not registered as a participant of Fastaval 2024, until you [b]\u00a0receive your confirmation email. If you do NOT receive the confirmation email, please contact us at [email]info@fastaval.dk[\/email], [\/b] so that we can resend it to you or figure out where the error might be.",
+                        "da": "Du er f\u00f8rst registreret som deltager p\u00e5 Fastaval 2024, n\u00e5r du [b]modtager din registreringsmail. Hvis du IKKE modtager en registreringsmail, s\u00e5 skriv til os p\u00e5 [email]info@fastaval.dk[\/email],[\/b] s\u00e5 kan vi eftersende den, eller finde ud af hvad fejlen kan v\u00e6re."
                     }
                 },
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "It is important to keep an eye out for emails from Fastaval, as updates, your participant form etc. will be sent via email before Fastaval.",
-                        "da": "Det er ogs\u00e5 vigtigt at holde et v\u00e5gent \u00f8je med mails fra os, hvor vi sender opdateringer, deltagerseddel og anden information ud op til Fastaval."
+                        "en": "Keep an eye on your email! Before Fastaval, you will receive a participant email with your program. Would you like to stay up to date with news and information about this year's Fastaval? Then sign up for the [b]Fastaval newsletter[\/b] [url=http:\/\/eepurl.com\/iE_F8E]here[\/url].",
+                        "da": "Hold \u00f8je med din mail! Inden Fastaval f\u00e5r du tilsendt en deltagermail med dit program.\nVil du gerne holde dig opdateret med nyheder og information om \u00e5rets Fastaval? S\u00e5 tilmeld dig [b]Fastavals nyhedsbrev[\/b] [url=http:\/\/eepurl.com\/iE_F8E]her[\/url]."
                     }
                 }
             ]
@@ -88,7 +88,7 @@
                     "type": "paragraph",
                     "text": {
                         "en": "Please note that Fastaval 2024 is cashless. It is only possible to pay by card or Mobilepay at the service and sales vendors at Fastaval.",
-                        "da": "Bem\u00e6rk at Fastaval 2024 er kontantl\u00f8s. Du kan derfor kun betale med betalingskort\u00a0eller Mobilepay ved service- og salgssteder under Fastaval.\u00a0"
+                        "da": "Bem\u00e6rk, at Fastaval 2024 er kontantl\u00f8s. Du kun betale med betalingskort eller Mobilepay ved service- og salgssteder under Fastaval."
                     }
                 }
             ]

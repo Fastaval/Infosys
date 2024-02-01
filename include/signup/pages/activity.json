@@ -78,7 +78,7 @@
                     "type": "list",
                     "text": {
                         "en": "",
-                        "da": "Klik p\u00e5 de enkelte aktivitetsnavne for at se en foromtale\/beskrivelse.\nDu prioriterer ved at klikke p\u00e5 s\u00f8jlen ud for hver aktivitet.\nKlik flere gange for at v\u00e6lge prioritet 1 til 4 (1 er h\u00f8jest, 4 er lavest).\nDu m\u00e5 gerne have flere 3. og 4. prioriteterDu skal v\u00e6lge mindst 4 aktiviteter.\nForvirret? Der er hj\u00e6lp at hente [url=https:\/\/www.fastaval.dk\/ofte-stillede-spoergsmaal-om-tilmeldingen\/]her[\/url].\u00a0 (\u00e5bner i nyt vindue)"
+                        "da": "Klik p\u00e5 de enkelte aktivitetsnavne for at se en foromtale\/beskrivelse.\nDu prioriterer ved at klikke p\u00e5 s\u00f8jlen ud for hver aktivitet.\nKlik flere gange for at v\u00e6lge prioritet 1 til 4 (1 er h\u00f8jest, 4 er lavest).\nDu m\u00e5 gerne have flere 3. og 4. prioriteter\nDu skal v\u00e6lge mindst 4 aktiviteter."
                     }
                 }
             ],
@@ -106,7 +106,7 @@
                     "type": "paragraph",
                     "text": {
                         "en": "",
-                        "da": "Hvis du ogs\u00e5 deltager i det almindelige Fastaval, ud over at deltage i Fastaval Junior, vil der v\u00e6re flere aktiviteter at v\u00e6lge imellem. Junior-aktiviteterne er markeret med r\u00f8d, og afholdes l\u00f8rdag, de andre aktiviteter er farvekodet med andre farver. [tilf\u00f8j m\u00e5ske mere her, tante?]"
+                        "da": "Hvis du ogs\u00e5 deltager i det almindelige Fastaval, ud over at deltage i Fastaval Junior, vil der v\u00e6re flere aktiviteter at v\u00e6lge imellem. Junior-aktiviteterne er markeret med r\u00f8d, og afholdes l\u00f8rdag, de andre aktiviteter er farvekodet med andre farver. Husk at du som deltager til Fastaval Junior stadig skal prioritere mindst 4 Fastaval Junior aktiviteter som beskrevet ovenfor."
                     }
                 }
             ],
@@ -135,7 +135,7 @@
                     "type": "paragraph",
                     "text": {
                         "en": "Below, you will be able to sign up the activities available at Fastaval 2024, including scenarios and boardgames premiering at this years Fastaval, a trip to the swimmingpool, magic tournaments and every other activity.\u00a0",
-                        "da": "Nedenfor vil det v\u00e6re muligt at tilmelde sig aktiviteterne der er tilg\u00e6ngelige p\u00e5 Fastaval 2024, heriblandt pr\u00e6miererscenarier og -br\u00e6tspil, en tur i sv\u00f8mmehallen, magic turneringer og alle andre aktiviteter.\u00a0"
+                        "da": "Nedenfor vil det v\u00e6re muligt at tilmelde sig aktiviteterne der er tilg\u00e6ngelige p\u00e5 Fastaval 2024, heriblandt premiererscenarier og -br\u00e6tspil, en tur i sv\u00f8mmehallen, Magic turneringer og alle andre aktiviteter.\u00a0"
                     }
                 },
                 {
@@ -276,14 +276,14 @@
                     "type": "paragraph",
                     "text": {
                         "en": "\u00a0If you want to be a\u00a0scenario facilitator\/game guide (eg. if you have chosen it as part of 'Fastaval together'), you can input which scenarios\/board games you want to facilitate\/guide bellow.",
-                        "da": "Hvis du gerne vil v\u00e6re spilleder\/regelformidler (f.eks. fordi du har valgt det som en del af 'F\u00e6lles Fastaval'), kan du nedenfor ogs\u00e5 angive hvilke scenarier\/br\u00e6tspil du gerne vil spillede\/regelformidler.\u00a0"
+                        "da": "Hvis du gerne vil v\u00e6re spilleder\/regelformidler (For eksempel som en del af 'F\u00e6lles Fastaval'), kan du nedenfor ogs\u00e5 angive, hvilke scenarier\/br\u00e6tspil du gerne vil spillede\/regelformidler.\u00a0"
                     }
                 },
                 {
                     "type": "list",
                     "text": {
                         "en": "'GM\/GG' means you would like to be a game master (GM) of a scenario or game guide (GG) for a board game.\n'GM\/GG - 1st prio' means you would like to be a player if you cannot be a game master\/guide.",
-                        "da": "'SL\/RF' betyder at du gerne vil v\u00e6re spilleder p\u00e5 et scenarie eller regelformidler p\u00e5 et br\u00e6tspil.\n'SL\/RF - 1. prio' betyder, at du gerne vil v\u00e6re spiller, hvis du ikke kan blive spilleder eller regelformidler."
+                        "da": "'SL\/RF' betyder, at du gerne vil v\u00e6re spilleder p\u00e5 et scenarie eller regelformidler p\u00e5 et br\u00e6tspil.\n'SL\/RF - 1. prio' betyder, at du gerne vil v\u00e6re spiller, hvis du ikke kan blive spilleder eller regelformidler."
                     }
                 }
             ],
