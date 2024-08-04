@@ -240,6 +240,47 @@
             },
             "items": [
                 {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "[b]Fastaval Junior er lige nu fyldt, men du kan stadig melde dig til p\u00e5 venteliste.[\/b]"
+                    },
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "status": "hidden",
+                            "config": "current_junior_participants",
+                            "compare": "less",
+                            "value": "config.max_junior_tickets"
+                        },
+                        {
+                            "type": "config",
+                            "status": "hidden",
+                            "config": "junior_closed",
+                            "compare": "equals",
+                            "value": true
+                        }
+                    ],
+                    "text_id": "practical-junior-reserve-text"
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "[b]Alle pladser til Fastaval Junior og ventelisten er desv\u00e6rre fyldt ud.[\/b]"
+                    },
+                    "display_logic": [
+                        {
+                            "type": "config",
+                            "status": "hidden",
+                            "config": "junior_closed",
+                            "compare": "not_equals",
+                            "value": true
+                        }
+                    ],
+                    "text_id": "practical-junior-closed-text"
+                },
+                {
                     "type": "radio",
                     "text": {
                         "en": "Which kind of participant are you?",
@@ -273,6 +314,13 @@
                                     "status": "disabled",
                                     "compare": "less",
                                     "value": 6
+                                },
+                                {
+                                    "type": "config",
+                                    "status": "disabled",
+                                    "config": "junior_closed",
+                                    "compare": "equals",
+                                    "value": true
                                 }
                             ]
                         },
