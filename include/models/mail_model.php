@@ -24,16 +24,16 @@ class MailModel extends Model {
     // Get all participants
     $participants = $this->createEntity('Deltagere')->findAll();
 
-    // Filter out anyone ho recently recieved a mail of the same type (if needed)
-    if ($filter_recent) {
-      $this->filterOutRecentMails($participants, $type, $filter_recent);
-    }
-
     // Filter out canceled participants
     foreach ($participants as $id => $participant) {
       if ($participant->annulled == 'ja') {
         unset($participants[$id]);
       }
+    }
+
+    // Filter out anyone who recently recieved a mail of the same type (if needed)
+    if ($filter_recent) {
+      $this->filterOutRecentMails($participants, $type, $filter_recent);
     }
 
     // Filter out participants based on type
