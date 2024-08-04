@@ -79,7 +79,7 @@ FROM
         FROM
             boardgameevents AS ibe
         WHERE
-            ibe.type IN ("borrowed", "present", "returned", "not-present")
+            ibe.type IN ("borrowed", "present", "returned", "not-present", "finished")
         GROUP BY
             ibe.boardgame_id
     ) AS temp ON temp.boardgame_id = b.id
@@ -89,13 +89,19 @@ ORDER BY
     b.name
 ';
 
+        $result = $this->db->query($query);
+
+        $result = array_filter($result, function($row) {
+            return $row['state'] !== 'finished';
+        });
+
         return array_values(array_map(function ($row) {
             return [
                     'name'  => $row['name'],
                     'id'    => $row['id'],
                     'state' => $row['state'] === 'returned' ? 'not-present' : $row['state'],
                    ];
-            }, $this->db->query($query)));
+            }, $result));
 
     }
 
@@ -160,37 +166,15 @@ FROM
             $return['Samlet antal spil'] = $row['count'];
         }
 
-        $query = '
-SELECT
-    bge.boardgame_id,
-    COUNT(*) AS count
-FROM
-    boardgameevents AS bge
-    JOIN (
-        SELECT
-            boardgame_id,
-            type
-        FROM (
-            SELECT
-                boardgame_id,
-                type
-            FROM
-                boardgameevents
-            WHERE
-                type IN ("borrowed", "returned")
-            ORDER BY
-                boardgame_id,
-                timestamp DESC
-        ) AS temped
-        GROUP BY
-            boardgame_id
-    ) AS temp ON temp.boardgame_id = bge.boardgame_id
-WHERE
-    bge.boardgame_id NOT IN (SELECT boardgame_id FROM boardgameevents WHERE type = "finished")
-    AND temp.type = "borrowed"
-GROUP BY
-    bge.boardgame_id
-';
+        $query = 'SELECT * 
+            FROM boardgameevents a 
+            LEFT JOIN boardgameevents b 
+                ON a.boardgame_id = b.boardgame_id 
+                AND a.timestamp < b.timestamp 
+            WHERE 
+                b.boardgame_id IS NULL
+                AND a.type = "borrowed"
+        ';
 
         $return['Udlån lige nu'] = count($this->db->query($query));
 
@@ -265,39 +249,17 @@ WHERE
             $return['Samlet antal spil'] = $row['count'];
         }
 
-        $query = '
-SELECT
-    bge.boardgame_id,
-    COUNT(*) AS count
-FROM
-    boardgameevents AS bge
-    JOIN boardgames AS bg ON bg.id = bge.boardgame_id
-    JOIN (
-        SELECT
-            boardgame_id,
-            type
-        FROM (
-            SELECT
-                boardgame_id,
-                type
-            FROM
-                boardgameevents
-            WHERE
-                type IN ("borrowed", "returned")
-            ORDER BY
-                boardgame_id,
-                timestamp DESC
-        ) AS temped
-        GROUP BY
-            boardgame_id
-    ) AS temp ON temp.boardgame_id = bge.boardgame_id
-WHERE
-    bge.boardgame_id NOT IN (SELECT boardgame_id FROM boardgameevents WHERE type = "finished")
-    AND temp.type = "borrowed"
-    AND bg.designergame = 1
-GROUP BY
-    bge.boardgame_id
-';
+        $query = 'SELECT * 
+        FROM boardgames bg
+        JOIN boardgameevents a ON bg.id = a.boardgame_id 
+        LEFT JOIN boardgameevents b 
+            ON a.boardgame_id = b.boardgame_id 
+            AND a.timestamp < b.timestamp 
+        WHERE 
+            b.boardgame_id IS NULL
+            AND a.type = "borrowed"
+            AND bg.designergame = 1
+        ';
 
         $return['Udlån lige nu'] = count($this->db->query($query));
 
@@ -525,9 +487,7 @@ GROUP BY
                             );
 
         $header_index = array();
-
         $data = explode("\n", str_replace(array("\r\n", "\r"), "\n", $post->input));
-
         $headers = array_flip(explode("\t", array_shift($data)));
 
         foreach ($required_headers as $header) {
@@ -559,7 +519,6 @@ GROUP BY
             $game->designergame = $columns[$header_index['Designerspil']];
             $game->comment      = $columns[$header_index['Kommentar']];
             $game->bgg_id       = intval($columns[$header_index['BGG-id']]);
-
 
             $game->insert();
         }
@@ -644,7 +603,8 @@ SET boardgame_id = ?, type = ?, timestamp = NOW(), data = ""
             return '(' . $item['id'] . ', "not-present", NOW(), "")';
         };
 
-        $games = array_map($map, array_filter($this->fetchPresence(), $filter));
+        $presence = $this->fetchPresence();
+        $games = array_map($map, array_filter($presence, $filter));
 
         if (!$games) {
             return;
@@ -671,7 +631,7 @@ SET boardgame_id = ?, type = ?, timestamp = NOW(), data = ""
                 return true;
             }
 
-            return !in_array($part['status'], ['borrowed', 'returned']);
+            return !in_array($part['status'], ['borrowed', 'finished']);
         };
 
         $mapper = function ($game) use ($availability) {
