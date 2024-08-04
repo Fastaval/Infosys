@@ -54,13 +54,11 @@
 
 $count = 0;
 foreach ($this->participants as $participant) {
-  $nickname = !empty($participant->nickname) ? $participant->nickname: $participant->getName(); 
-
   $class = 'class ="alterngrey"'
   ?>
     <tr <?=$count % 2 ? $class : ""?>>
       <td><?=$participant->id?></td>
-      <td><?=$nickname?></td>
+      <td><?=$participant->getNickname()?></td>
       <td><?=$participant->getPronoun()?></td>
       <td class='align-right'><img class='barcode-image' src='/participant/ean8sheet/<?= $participant->id;?>' alt='barcode'/></td>    
   <?php

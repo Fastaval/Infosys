@@ -1874,4 +1874,13 @@ WHERE
         $result = $this->db->query("SELECT * FROM countries WHERE code = ?", [$this->storage['country']]);
         return count($result) === 1 ? $result[0]["iso"] : "";
     }
+
+    public function getNickname() {
+        if (!empty($this->storage['nickname'])) {
+            return $this->storage['nickname'];
+        } else {
+            return explode(' ', $this->storage['fornavn'])[0];
+        } 
+    }
+
 }

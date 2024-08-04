@@ -2003,11 +2003,10 @@ exit;
             if ($post->filetype === "csv") {
                 $data = [ 0 => ["ID", "Kaldenavn", "Pronomen", "Område"]];
                 foreach ($participants as $participant) {
-                    $nickname = !empty($participant->nickname) ? $participant->nickname: $participant->getName();
                     $work_area = $participant->work_area ? $participant->arbejdsomraade : "";
                     $data[] = [
                         $participant->id,
-                        $nickname,
+                        $participant->getNickname(),
                         $participant->getPronoun(),
                         $work_area,
                     ];
@@ -2027,9 +2026,7 @@ exit;
                 foreach ($participants as $participant) {
                     $sheet->setCellValue('A'.$row, $participant->id);
                     
-                    $nickname = !empty($participant->nickname) ? $participant->nickname: $participant->getName();
-                    $sheet->setCellValue('B'.$row, $nickname);
-                    
+                    $sheet->setCellValue('B'.$row, $participant->getNickname());
                     $sheet->setCellValue('C'.$row, $participant->getPronoun());
 
                     $barcode = $this->model->generateEan8SheetBarcode($participant->id);
