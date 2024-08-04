@@ -7,7 +7,7 @@
         <?php foreach ($activities as $activity) : ?>
             <dt><?= e($activity['name']);?></dt>
             <dd>
-            <?= implode(' &bull; ', array_map(function ($x) {return $x['distinct'] . ' (' . $x['signed_up'] . ')';}, $activity['data']));?> =&gt; <?= e($activity['distinct']);?>
+            <?= implode(' &bull; ', array_map(function ($x) {return $x['distinct'] . ' (' . ($x['signed_up'] ?? 0) . ')';}, $activity['data']));?> =&gt; <?= e($activity['distinct']);?>
             </dd>
         <?php endforeach ;?>
         </dl>

@@ -1842,31 +1842,31 @@ WHERE
     public function calculateSignupStatistics()
     {
         $query = '
-SELECT
-    ak.id AS activity_id,
-    ak.navn,
-    ak.type,
-    af.id AS schedule_id,
-    COUNT(*) AS signups
-FROM
-    aktiviteter AS ak
-    JOIN afviklinger AS af ON af.aktivitet_id = ak.id
-    JOIN deltagere_tilmeldinger AS dt ON dt.afvikling_id = af.id
-WHERE
-    dt.prioritet = 1
-    AND dt.tilmeldingstype = "spiller"
-GROUP BY
-    ak.id,
-    ak.navn,
-    ak.type,
-    af.id
-ORDER BY
-    ak.type,
-    ak.navn
-';
+            SELECT
+                ak.id AS activity_id,
+                ak.navn,
+                ak.type,
+                af.id AS schedule_id,
+                COUNT(*) AS signups
+            FROM
+                aktiviteter AS ak
+                JOIN afviklinger AS af ON af.aktivitet_id = ak.id
+                JOIN deltagere_tilmeldinger AS dt ON dt.afvikling_id = af.id
+            WHERE
+                dt.prioritet = 1
+                AND dt.tilmeldingstype = "spiller"
+            GROUP BY
+                ak.id,
+                ak.navn,
+                ak.type,
+                af.id
+            ORDER BY
+                ak.type,
+                ak.navn,
+                af.start
+            ';
 
         $data = [];
-
         foreach ($this->db->query($query) as $row) {
             if (!isset($data[$row['type']])) {
                 $data[$row['type']] = [];
@@ -1874,22 +1874,19 @@ ORDER BY
 
             if (!isset($data[$row['type']][$row['activity_id']])) {
                 $data[$row['type']][$row['activity_id']] = [
-                                                            'name'     => $row['navn'],
-                                                            'data'     => [],
-                                                            'distinct' => 0,
-                                                           ];
-
+                    'name'     => $row['navn'],
+                    'data'     => [],
+                    'distinct' => 0,
+                ];
             }
 
             $data[$row['type']][$row['activity_id']]['data'][$row['schedule_id']] = [
-                                                                                     'signed_up' => $row['signups'],
-                                                                                     'distinct'  => 0,
-                                                                                    ];
-
+                'signed_up' => $row['signups'],
+                'distinct'  => 0,
+            ];
         }
 
         $query_data = [];
-
         foreach ($data as $type => $activities) {
             foreach ($activities as $id => $activity) {
                 if (count($activity['data']) === 1) {
@@ -1907,73 +1904,66 @@ ORDER BY
                                 'mask_ids'    => array_diff($ids, [$item]),
                                ];
                     }, $ids));
-
                 }
-
             }
-
         }
 
         $clauses = $arguments = [];
-
         foreach ($query_data as $index => $row) {
             $clauses[] = str_replace('MASK', implode(', ', array_fill(0, count($row['mask_ids']), '?')), '
-SELECT
-    ? AS type,
-    ? AS activity_id,
-    dt.afvikling_id,
-    COUNT(*) AS signups
-FROM
-    deltagere_tilmeldinger AS dt
-WHERE
-    afvikling_id = ?
-    AND dt.prioritet = 1
-    AND dt.tilmeldingstype = "spiller"
-    AND dt.deltager_id NOT IN (
-        SELECT
-            dt.deltager_id
-        FROM
-            deltagere_tilmeldinger AS dt
-        WHERE
-            dt.afvikling_id IN (MASK)
-            AND dt.prioritet = 1
-            AND dt.tilmeldingstype = "spiller"
-    )
-');
-
+                SELECT
+                    ? AS type,
+                    ? AS activity_id,
+                    dt.afvikling_id,
+                    COUNT(*) AS signups
+                FROM
+                    deltagere_tilmeldinger AS dt
+                WHERE
+                    afvikling_id = ?
+                    AND dt.prioritet = 1
+                    AND dt.tilmeldingstype = "spiller"
+                    AND dt.deltager_id NOT IN (
+                        SELECT
+                            dt.deltager_id
+                        FROM
+                            deltagere_tilmeldinger AS dt
+                        WHERE
+                            dt.afvikling_id IN (MASK)
+                            AND dt.prioritet = 1
+                            AND dt.tilmeldingstype = "spiller"
+                    )
+                ');
             $arguments = array_merge($arguments, [$row['type'], $row['activity_id'], $row['schedule_id']], $row['mask_ids']);
-
         }
 
         $query = implode("\nUNION\n", $clauses);
-
         foreach ($this->db->query($query, $arguments) as $row) {
             $data[$row['type']][$row['activity_id']]['data'][$row['afvikling_id']]['distinct'] = $row['signups'];
         }
 
         $query = '
-SELECT
-    t.activity_id,
-    t.type,
-    COUNT(*) AS count
-FROM (
-    SELECT
-        DISTINCT
-        ak.id AS activity_id,
-        ak.type,
-        dt.deltager_id
-    FROM
-        aktiviteter AS ak
-        JOIN afviklinger AS af ON af.aktivitet_id = ak.id
-        JOIN deltagere_tilmeldinger AS dt ON dt.afvikling_id = af.id
-    WHERE
-        dt.prioritet = 1
-        AND dt.tilmeldingstype = "spiller"
-) AS t
-GROUP BY
-    t.activity_id,
-    t.type
-';
+            SELECT
+                t.activity_id,
+                t.type,
+                COUNT(*) AS count
+            FROM (
+                SELECT
+                    DISTINCT
+                    ak.id AS activity_id,
+                    ak.type,
+                    dt.deltager_id
+                FROM
+                    aktiviteter AS ak
+                    JOIN afviklinger AS af ON af.aktivitet_id = ak.id
+                    JOIN deltagere_tilmeldinger AS dt ON dt.afvikling_id = af.id
+                WHERE
+                    dt.prioritet = 1
+                    AND dt.tilmeldingstype = "spiller"
+            ) AS t
+            GROUP BY
+                t.activity_id,
+                t.type
+            ';
 
         foreach ($this->db->query($query) as $row) {
             $data[$row['type']][$row['activity_id']]['distinct'] = $row['count'];
