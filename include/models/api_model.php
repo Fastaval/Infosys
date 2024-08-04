@@ -1688,7 +1688,7 @@ HAVING
                 continue;
             }
 
-            $type = $play->type === 'spilleder' && $version >= 2 ? 'spilleder' : $activity->type;
+            $type = $play->type === 'spiller' ? $activity->type : $play->type;
 
             $item = array(
                 'type'          => 'activity',
