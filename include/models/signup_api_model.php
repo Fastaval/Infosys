@@ -42,6 +42,12 @@ class SignupApiModel extends Model {
       }
 
       // Count junior participants
+      $query = "SELECT COUNT(*) as count FROM deltagere WHERE brugerkategori_id = 10"; //Junior participants have ID 10
+      $result = $this->db->query($query);
+      if (count($result) == 1) {
+        $config->current_junior_participants = $result[0]['count'];
+        $config->junior_closed = $result[0]['count'] >= ($config->max_junior_tickets + $config->max_junior_reserve);
+      }
 
       // Count bus tickets
       $query = 
@@ -243,6 +249,7 @@ class SignupApiModel extends Model {
       $run_info = (object)[];
       $run_info->id = $run->id;
       $run_info->activity = $run->aktivitet_id;
+      $run_info->activity_name = $result->activities[$run->aktivitet_id]->title['da'];
       $run_info->start = $set_time($run->start);
       $run_info->end = $set_time($run->slut);
       $run_info->signups = $run_signups[$run->id] ?? 0;
@@ -270,6 +277,12 @@ class SignupApiModel extends Model {
     
     foreach($result->runs as $day => $runs) {
       usort($result->runs[$day], function($a, $b) {
+        if ($a->start['stamp'] == $b->start['stamp']) {
+          if($a->end['stamp'] == $b->end['stamp']) {
+            return strcmp($a->activity_name, $b->activity_name);
+          }
+          return $a->end['stamp'] - $b->end['stamp'];
+        }
         return $a->start['stamp'] - $b->start['stamp'];
       });
     }
@@ -349,8 +362,17 @@ class SignupApiModel extends Model {
     
     if(count($result['errors']) == 0) {
       // Update participant
-      if(!$participant->update()) {
+      try {
+        if(!$participant->update()) {
+          throw new FrameworkException("Failed update on participant\nParticipant:".print_r($participant, true));
+        }
+      } catch (FrameworkException $error) {
+        $this->fileLog("Failed to create participant from data with hash: $data[hash]");
+        $error->logException();
         $result['errors']['confirm'][] = ['type' => 'database'];
+
+        // Delete participant if this was a new entry that failed
+        if (!isset($data['info'])) $participant->delete();
       }
     }
 
@@ -432,11 +454,12 @@ class SignupApiModel extends Model {
     $participant->signed_up = date('Y-m-d H:i:s');
     
     // Reset entrance types
+    // Don't remove bank transfer fee (37)
+    // Don't remove sparkling wine (81) from late signup
     if ($late_signup) {
-      // Don't remove sparkling wine from late signups since it's disabled on the page
-      $participant->removeEntranceExcept([81]);
+      $participant->removeEntranceExcept([81, 37]);
     } else {
-      $participant->removeEntrance();
+      $participant->removeEntranceExcept([37]);
     }
 
     // Reset DIY
@@ -699,7 +722,7 @@ class SignupApiModel extends Model {
                   }
                 }
                 // NB! We assume Alea signup is earlier or same page
-                if ($age >= $config['main']->age_kid && ($is_alea || $items->{'misc:alea'})) {
+                if ($age >= $config['main']->age_kid && ($is_alea || $items['misc:alea'])) {
                   $select->setWhere('type', 'like', '%Alea%');
                  } else {
                   $select->setWhere('type', 'not like', '%Alea%');
@@ -727,7 +750,7 @@ class SignupApiModel extends Model {
                   'type' => 'no_entry',
                   'info' => "$key_cat:$key_item $value",
                   'age'  => $age,
-                  'alea' => ($is_alea || $items->{'misc:alea'}),
+                  'alea' => ($is_alea || $items['misc:alea']),
                   'organizer' => $is_organizer,
                 ];
                 continue 2;
@@ -797,7 +820,7 @@ class SignupApiModel extends Model {
                       'id' => "$key",
                       'age'  => $age,
                     ];
-                    continue 2;
+                    continue 3;
                   }
                   $select->setWhere('id', '=', 81); // Sparkling wine ID
                   break;
@@ -1173,9 +1196,9 @@ class SignupApiModel extends Model {
 
         case  $entrance->isDayTicket() || $entrance->isSleepTicket():
           $type = $entrance->isDayTicket() ? 'entry' : 'sleeping';
-          $entrance = $type == 'entry' ? true : $entrance;
+          $has_entrance = $type == 'entry' ? true : $has_entrance;
           $start = new DateTime($entrance->start);
-          $day = intval($start->format('d')) -2;
+          $day = intval($start->format('N')) -2;
           $signup["$type:$day"] = 'on';
           break;
 
@@ -1209,6 +1232,9 @@ class SignupApiModel extends Model {
 
         case in_array($entrance->id, [81, 82, 83]): // Ottofest extra
           $signup['misc:party'.($entrance->id - 80)] = 'on';
+          break;
+
+        case $entrance->id == 37: // Bank transfer fee
           break;
 
         default:
