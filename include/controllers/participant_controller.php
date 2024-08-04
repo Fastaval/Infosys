@@ -1751,7 +1751,7 @@ die("Not actually sending final reminders<br>\n");
         die();
     }
 
-    protected function sendPaymentReminder($participant, $template, $danish, $danish_title = '', $english_title = '')
+    protected function sendPaymentReminder($participant, $template, $danish, $danish_title = null, $english_title = null)
     {
         $this->model->setupPaymentReminderEmail($participant, $this->page);
 
