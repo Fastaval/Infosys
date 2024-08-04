@@ -80,7 +80,7 @@ class Indgang extends DBObject
             return false;
         }
 
-        return stripos($this->type, 'indgang') !== false;
+        return (stripos($this->type, 'indgang') !== false) || (stripos($this->type, 'Dagsbillet') !== false);
     }
 
     public function isParty()
@@ -176,7 +176,7 @@ class Indgang extends DBObject
         {
             return false;
         }
-        return stripos($this->type, 'partout') !== false ? true : false;
+        return stripos($this->type, 'partout') !== false;
     }
 
     /**
@@ -200,7 +200,7 @@ class Indgang extends DBObject
             return false;
         }
 
-        return $this->type == "Indgang - Enkelt";
+        return ($this->type == "Indgang - Enkelt") || (stripos($this->type, 'Dagsbillet') !== false);
     }
 
     public function isAleaMembership()
