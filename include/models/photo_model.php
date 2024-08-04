@@ -190,6 +190,8 @@ class PhotoModel extends Model
      */
     public function fetchParticipantsToRemind($days)
     {
+        // return [$this->createEntity('Deltagere')->findById(1)];
+
         $query = '
 SELECT
     d.id,
