@@ -36,37 +36,116 @@
  */
 class EconomyController extends Controller
 {
-    /**
-     * pre run hooks
-     * format of array is: an array of method (string), exclusive (bool), methodlist (array of strings) per hook
-     * - method is method to run
-     * - exclusive determines whether the next array consists of methods to be excluded or included in the prerun hook
-     * - methodlist is the array of methods for which the prerun hook will either be run (inclusive) or not be run (exclusive)
-     *
-     * @var array
-     */
-    protected $prerun_hooks = array(
-        array('method' => 'checkUser','exclusive' => true, 'methodlist' => array()),
-    );
+  /**
+   * pre run hooks
+   * format of array is: an array of method (string), exclusive (bool), methodlist (array of strings) per hook
+   * - method is method to run
+   * - exclusive determines whether the next array consists of methods to be excluded or included in the prerun hook
+   * - methodlist is the array of methods for which the prerun hook will either be run (inclusive) or not be run (exclusive)
+   *
+   * @var array
+   */
+  protected $prerun_hooks = array(
+    array('method' => 'checkUser','exclusive' => true, 'methodlist' => array()),
+  );
 
-    /**
-     * displays a table with detailed budget info
-     *
-     * @access public
-     * @return void
-     */
-    public function detailedBudget() {
-        $this->page->budget_details = $this->model->computeDetailedBudget();
+  /**
+   * displays a table with detailed budget info
+   *
+   * @access public
+   * @return void
+   */
+  public function detailedBudget() {
+    $this->page->budget_details = $this->model->computeDetailedBudget();
+  }
+
+  /**
+   * returns accounting overview of the convention
+   *
+   * @access public
+   * @return void
+   */
+  public function accountingOverview()
+  {
+    $this->page->accounting_data = $this->model->computeAccountingData();
+  }
+
+  /**
+   * Shows table of participant economy
+   *
+   * @access public
+   * @return void
+   */
+  public function participantOverview()
+  {
+    $columns = [
+      'id' => [
+        'header' => 'ID',
+      ],
+      'name' => [
+        'header' => 'Navn',
+      ],
+      'area' => [
+        'header' => 'Område',
+      ],
+      'entry' => [
+        'header' => 'Ingang/overnatning',
+        'align' => 'right'
+      ],
+      'food' => [
+        'header' => 'Mad',
+        'align' => 'right'
+      ],
+      'wear' => [
+        'header' => 'Wear',
+        'align' => 'right'
+      ],
+      'activities' => [
+        'header' => 'Aktiviteter',
+        'align' => 'right'
+      ],
+      'alea'=> [
+        'header' => 'Alea',
+        'align' => 'right'
+      ],
+      'other' => [
+        'header' => 'Andet',
+        'align' => 'right'
+      ],
+      'total'=> [
+        'header' => 'I alt',
+        'align' => 'right'
+      ],
+    ];
+    $data = $this->model->computeParticipantData();
+    
+    if ($this->page->request->isPost()){
+      $post = $this->page->request->post;
     }
 
-    /**
-     * returns accounting overview of the convention
-     *
-     * @access public
-     * @return void
-     */
-    public function accountingOverview()
-    {
-        $this->page->accounting_data = $this->model->computeAccountingData();
+    if (isset($post->download) && $post->download == 'csv') {
+      $csv_data = [];
+      $csv_row = [];
+      
+      foreach ($columns as $column) { 
+        $csv_row[] = $column['header'];
+      }
+      $csv_data[] = $csv_row;
+
+      foreach ($data as $data_row) {
+        $csv_row = [];
+        foreach ($columns as $key => $column) { 
+          $csv_row[] = $data_row[$key];
+        }
+        $csv_data[] = $csv_row;
+      }      
+
+      $this->returnCSV($csv_data, "participant-economy");
+      exit;
     }
+
+
+    $this->page->columns = $columns;
+    $this->page->data = $data;
+  }
 }

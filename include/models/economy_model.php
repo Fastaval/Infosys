@@ -345,4 +345,28 @@ ORDER BY
 
         return $this->db->query($query);
     }
+
+    public function computeParticipantData() {
+        $participant = $this->createEntity('Deltagere');
+        $select = $participant->getSelect()->setWhere('annulled','=','nej');
+        $participants = $participant->findBySelectMany($select);
+
+        $result = [];
+        foreach ($participants as $participant) {
+            $result[] = [
+                'id' => $participant->id,
+                'name' => $participant->getName(),
+                'area' => $participant->arbejdsomraade,
+                'entry' => $participant->calcEntry(),
+                'food' => $participant->calcFood(),
+                'wear' => $participant->calcWear(),
+                'activities' => $participant->calcActivities(),
+                'other' => $participant->calcOtherStuff(),
+                'alea'=> $participant->calcAlea(),
+                'total' => $participant->betalt_beloeb,
+            ];
+        }
+        
+        return $result;
+    }
 }

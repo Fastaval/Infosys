@@ -197,8 +197,9 @@ class Routes
         $this->routes['participant_register_bank_payment']          = array('url' => 'participant/register-bank-transfer/:id:', 'controller' => 'Participant', 'method' => 'registerBankTransfer');
 
         // economy stuffs
-        $this->routes['economy_breakdown']    = array('url' => 'economy/breakdown', 'controller' => 'Participant', 'method' => 'economyBreakdown');
-        $this->routes['accounting_overview']  = array('url' => 'economy/accounting-overview/', 'controller' => 'Economy', 'method' => 'accountingOverview');
+        $this->routes['economy_breakdown']      = array('url' => 'economy/breakdown', 'controller' => 'Participant', 'method' => 'economyBreakdown');
+        $this->routes['accounting_overview']    = array('url' => 'economy/accounting-overview/', 'controller' => 'Economy', 'method' => 'accountingOverview');
+        $this->routes['participant_overview']   = array('url' => 'economy/participant-overview/', 'controller' => 'Economy', 'method' => 'participantOverview');
 
         // TODO remove methods and pages only used by this route
         $this->routes['detailed_budget']      = array('url' => 'economy/detailedbudget/', 'controller' => 'Economy', 'method' => 'detailedBudget');

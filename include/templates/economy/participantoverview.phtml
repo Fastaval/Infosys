@@ -1,0 +1,28 @@
+<style>
+  td, th {
+    padding: 0 1em;    
+  }
+</style>
+<form method="post">
+  <button name="download" type="submit" value="csv">Hent som CSV</button>
+</form>
+<table>
+  <thead>
+    <tr>
+      <?php foreach ($this->columns as $column) { ?>
+        <th><?=$column['header']?></th>
+      <?php } ?>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($this->data as $row) { ?>
+      <tr>
+        <?php foreach ($this->columns as $key => $column) { 
+          $style = "";
+          if (isset($column['align'])) $style .= "text-align: right;"; ?>
+          <td style="<?=$style?>"><?=$row[$key]?></td>
+        <?php } ?>
+      </tr>
+    <?php } ?>
+  </tbody>
+</table>
