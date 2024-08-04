@@ -1446,9 +1446,9 @@ SQL;
         }
 
         require_once 'PEAR.php';
-        require_once 'Image/Barcode.php';
+        require_once 'Image/Barcode2.php';
 
-        $barcode    = new Image_Barcode;
+        $barcode    = new Image_Barcode2;
         $img        = $barcode->draw($participant->getEan8Number($this->getConYear()), 'ean8', 'png', false);
         $width      = imagesx($img);
         $height     = imagesy($img);
@@ -1487,9 +1487,9 @@ SQL;
         }
 
         require_once 'PEAR.php';
-        require_once 'Image/Barcode.php';
+        require_once 'Image/Barcode2.php';
 
-        $barcode    = new Image_Barcode;
+        $barcode    = new Image_Barcode2;
         $img        = @$barcode->draw($participant->getEan8Number($this->getConYear()), 'ean8', 'png', false);
         $width      = imagesx($img);
         $height     = imagesy($img);
@@ -1527,9 +1527,9 @@ SQL;
         }
 
         require_once 'PEAR.php';
-        require_once 'Image/Barcode.php';
+        require_once 'Image/Barcode2.php';
 
-        $barcode    = new Image_Barcode;
+        $barcode    = new Image_Barcode2;
         $img        = $barcode->draw($participant->getEan8Number($this->getConYear()), 'ean8', 'png', false);
         $width      = imagesx($img);
         $height     = imagesy($img);
@@ -1596,9 +1596,9 @@ SQL;
         imagettftext($text2, $lineheight, 0, 4, $bbox2_height - 4, $black, "/usr/share/fonts/truetype/ttf-liberation/LiberationMono-Regular.ttf", "#" . $participant_id);
 
         require_once 'PEAR.php';
-        require_once 'Image/Barcode.php';
+        require_once 'Image/Barcode2.php';
 
-        $barcode    = new Image_Barcode;
+        $barcode    = new Image_Barcode2;
         $img        = $barcode->draw($participant->getEan8Number($this->getConYear()), 'ean8', 'png', false);
         $width      = imagesx($img);
         $height     = imagesy($img);
@@ -2696,13 +2696,13 @@ SET participant_id = ?, amount = ?, cost = ?, fees = ?, timestamp = NOW()
      */
     public function getParticipantsForPaymentReminder($days_ago = 1)
     {
+        //return [$this->createEntity('Deltagere')->findById(1)];
+
         $participants = $this->getParticipantsSignedupDaysAgo($days_ago);
-        $participants = $this->filterOutPaidSignups($participants);
+        $participants = $this->filterOutAnnulled($participants);
         $participants = $this->filterOutGroups($participants);
         $participants = $this->filterOutRecentReminders($participants, $days_ago);
-        $participants = $this->filterOutAnnulled($participants);
-
-        //return [$this->createEntity('Deltagere')->findById(1)];
+        $participants = $this->filterOutPaidSignups($participants);
         return $participants;
     }
 
@@ -2711,8 +2711,8 @@ SET participant_id = ?, amount = ?, cost = ?, fees = ?, timestamp = NOW()
         //return [$this->createEntity('Deltagere')->findById(1)];
 
         $participants = $this->createEntity('Deltagere')->findAll();
-        $participants = $this->filterOutRecentMails($participants, 1);
         $participants = $this->filterOutAnnulled($participants);
+        $participants = $this->filterOutRecentMails($participants, 1);
 
         return $participants;
     }
