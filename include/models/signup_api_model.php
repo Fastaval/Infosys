@@ -670,11 +670,11 @@ class SignupApiModel extends Model {
               }
           }
         } else {
+          if ($value === 'off') continue;
+
           $key_cat = $key_parts[0];
           $key_item = $key_parts[1];
 
-          if ($value === 'off') continue;
-          
           switch($key_cat) {
             case 'junior':
 
