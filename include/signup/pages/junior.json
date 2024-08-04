@@ -25,6 +25,58 @@
         {
             "headline": {
                 "en": "",
+                "da": ""
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "[b]Fastaval Junior melder helt udsolgt! [\/b] (men du kan stadig komme p\u00e5 ventelisten)"
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "Vi har begr\u00e6nset antal pladser p\u00e5 arrangementet Fastaval Junior, og vi har f\u00e5et rigtig mange tilmeldinger. Alle 60 pladser er nu besat, men du kan komme p\u00e5 venteliste, hvis du udfylder tilmeldingen her."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "Hvad skal der ske nu?\nVi vil g\u00f8re alt, hvad vi kan, for at der ogs\u00e5 bliver plads til dig, men vi kan ikke love noget, og vi kan f\u00f8rst give endelig besked, n\u00e5r vi har lavet hold til de enkelte aktiviteter. Du f\u00e5r en mail med svar hurtigst muligt derefter. Det kan ogs\u00e5 v\u00e6re, vi ringer, hvis det skal g\u00e5 rigtig st\u00e6rkt."
+                    }
+                },
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "Hold \u00f8je med din mailboks - du h\u00f8rer fra os inden udgangen af marts"
+                    }
+                }
+            ],
+            "display_logic": [
+                {
+                    "type": "config",
+                    "status": "hidden",
+                    "config": "current_junior_participants",
+                    "compare": "less",
+                    "value": "config.max_junior_tickets"
+                },
+                {
+                    "type": "config",
+                    "status": "hidden",
+                    "config": "junior_closed",
+                    "compare": "equals",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "",
                 "da": "\n"
             },
             "items": [
@@ -166,6 +218,29 @@
                         "en": "",
                         "da": "Mens Fastaval Junior k\u00f8rer, skal alle deltagere have en ansvarlig voksen til stede p\u00e5 Fastaval, som vi kan tilkalde, hvis der er behov for det. Hvis det ikke er den samme som ovenst\u00e5ende, bedes du skrive dennes navn og telefonnummer i kommentarfeltet p\u00e5 tilmeldingen.\u00a0\u00a0"
                     }
+                }
+            ]
+        },
+        {
+            "headline": {
+                "en": "",
+                "da": "Tilladelse til fotografering"
+            },
+            "items": [
+                {
+                    "type": "paragraph",
+                    "text": {
+                        "en": "",
+                        "da": "Der vil v\u00e6re fotografer til stede under Fastaval, som tager et f\u00e6llesbillede af Fastaval Junior b\u00f8rnene. Derfor beder vi om samtykke til at inkludere dit barn p\u00e5 billeder. Hvis du er okay med det, bedes I udfylde nedenst\u00e5ende checkboks.\u00a0"
+                    }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "",
+                        "da": "Jeg giver samtykke til at der m\u00e5 tages billeder af mit barn"
+                    },
+                    "infosys_id": "photo_consent"
                 }
             ]
         },
