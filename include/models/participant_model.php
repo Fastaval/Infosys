@@ -2071,7 +2071,7 @@ INSERT INTO participantidtemplates SET template_id = ?, participant_id = ? ON DU
      */
     public function getDisplayColumns()
     {
-        $filter_out = array('id', 'krigslive_bus', 'password', 'ovelokale_id', 'ny_alea', 'er_alea', 'adresse1', 'adresse2', 'alder', 'rabat', 'deltaget_i_fastaval', 'sovelokale_id');
+        $filter_out = array('id', 'krigslive_bus', 'password', 'ovelokale_id', 'ny_alea', 'er_alea', 'adresse2', 'alder', 'rabat', 'deltaget_i_fastaval', 'sovelokale_id');
         $columns    = array_diff($this->createEntity('Deltagere')->getColumns(), $filter_out);
 
         $readable_columns = $this->createEntity('Deltagere')->getHumanReadableFieldNames();

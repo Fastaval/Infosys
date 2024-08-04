@@ -51,6 +51,7 @@ class Deltagere extends DBObject implements AgeFulfilment
         'email'                         => 'E-mail',
 //        'tlf'                           => 'Alt. telefon',
         'mobiltlf'                      => 'Mobilnr.',
+        'adresse1'                      => 'Adresse',
         'postnummer'                    => 'Postnummer',
         'by'                            => 'By',
         'land'                          => 'Land',
