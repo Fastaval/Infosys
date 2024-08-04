@@ -242,10 +242,6 @@ class DBObject
             return array('type' => 'text');
         }
 
-        if (preg_match("/int\((\d+)\)/", $info[$column], $matches)) {
-            return array('type' => 'int', 'size' => $matches[1]);
-        }
-
         if (substr(strtolower($info[$column]), 0, 7) === 'varchar') {
             return array('type' => 'varchar', 'size' => substr($info[$column], 8, -1));
         }
@@ -256,6 +252,10 @@ class DBObject
                 explode(',', substr($info[$column], 5, -1))
             );
             return array('type' => 'enum', 'values' => $types);
+        }
+
+        if (preg_match("/int/", $info[$column])) {
+            return array('type' => 'int');
         }
 
         // default
