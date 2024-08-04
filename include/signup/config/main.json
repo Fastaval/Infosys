@@ -4,7 +4,7 @@
     "max_financial_support": "88",
     "max_bus_tickets": "48",
     "max_junior_tickets": "60",
-    "max_junior_reserve": "20",
+    "max_junior_reserve": "10",
     "birth": "birthdate",
     "participant": "participant",
     "organizer": "organizercategory",
