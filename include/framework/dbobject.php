@@ -132,24 +132,8 @@ class DBObject
      * @access public
      * @return mixed - the value asked for or null
      */
-    public function __get($var)
-    {
-        $val = ((array_key_exists($var, $this->storage)) ? $this->storage[$var] : null);
-        /*
-        if (strpos($val, 'Ã¦') || strpos($val, 'Ã¸') || strpos($val, 'Ã¸') || strpos($val, 'Ã¥')) {
-            $val = utf8_decode($val);
-        }
-        */
-        if (is_string($val) && !ctype_digit($val) && mb_detect_encoding($val, 'UTF-8', true)) {
-            if (stripos($val, 'ø') !== false || stripos($val, 'æ') !== false || stripos($val, 'å') !== false) return $val;
-            if (stripos($val, 'Ø') !== false || stripos($val, 'Æ') !== false || stripos($val, 'Å') !== false) return $val;
-            if (stripos($val, 'ö') !== false || stripos($val, 'ü') !== false || stripos($val, 'ä') !== false) return $val;
-            if (stripos($val, 'Þ') !== false) return $val;
-            if (stripos($val, 'ß') !== false) return $val;
-            if (stripos($val, 'é') !== false) return $val;
-            return utf8_decode($val);
-        }
-        return $val;
+    public function __get($var) {
+        return ((array_key_exists($var, $this->storage)) ? $this->storage[$var] : null);
     }
 
     /**
