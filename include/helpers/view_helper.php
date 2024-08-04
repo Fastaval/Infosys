@@ -95,10 +95,8 @@ class ViewHelper extends Common
                                 <option value=""></option>
 HTML;
 
-         foreach ($model->getAllBrugerkategorier() as $b) {
-             $output .= '
-                                <option value="' . e($b->id) . '">' . e($b->navn) . '</option>
-';
+        foreach ($model->getAllBrugerkategorier() as $b) {
+            $output .= '<option value="' . e($b->id) . '">' . e($b->navn) . '</option>';
         }
 
         $output .= <<<HTML
@@ -180,7 +178,18 @@ HTML;
                     </tr>
                     <tr>
                         <td><b>Ungdomsskole:</b> <input class='tripleinput' type='text' value='' name='deltager_search[ungdomsskole]' /></td>
-                        <td><b>Arrangørområde:</b> <input class='tripleinput' type='text' value='' name='deltager_search[arbejdsomraade]' /></td>
+                        <td><b>Arrangørområde:</b>
+                        <select name="deltager_search[work_area]" class="doubleinput">
+                                <option value=""></option>
+
+HTML;
+            foreach ($model->getWorkAreas() as $area) {
+                $output .= '<option value="'.$area['id'].'">'.e($area['name_da']) . '</option>';
+            }
+
+            $output .= <<<HTML
+                                </select>
+                            </td>
                         <td><b>Scenarie:</b> <input class='tripleinput' type='text' value='' name='deltager_search[scenarie]' /></td>
                     </tr>
                     <tr>
