@@ -180,11 +180,11 @@ class PhotoController extends Controller
      */
     public function sendUploadReminders()
     {
-die('Not sending photo reminders');
         $participant_model = $this->model->factory('Participant');
         $participants = $this->model->fetchParticipantsToRemind(0);
 
         echo "Sender foto reminder mail til ".count($participants)." deltagere<br>\n";
+die('Not sending photo reminders');
 
         // Finish response before sending mails, to avoid timeout
         session_write_close();
