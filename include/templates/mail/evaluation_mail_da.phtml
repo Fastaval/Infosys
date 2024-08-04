@@ -1,37 +1,68 @@
-<h2>Hej <?=$this->name?>!</h2>
+<div id="content" style="max-width: 800px; margin: auto; font-family: Arial, Helvetica, sans-serif;">
+  <style>
+    div.section {
+      max-width: 81.5%;
+      margin: auto;
 
-<p>
-  Af hjertet tak for din deltagelse på Fastaval 2023 - og en ekstra tusind tak, hvis du også arrangerede. 
-</p>
+      background-color: #f9ad1b;
+      padding: 1rem;
+      border-radius: 10px;
 
-<p>
-  Hermed modtager du link til evalueringen af årets Fastaval, og vi ville blive så glade, hvis du vil bruge et par
-  øjeblikke på at gå den igennem, så vi kan arbejde videre med at udvikle Fastaval i fremtiden. 
-</p>
+      margin-bottom: 2rem;
+    }
 
-<p>
-  Evaluering tager ca. 5 min. og er delt op i forskellige kategorier med spørgsmål vedrørende de forskellige ting,
-  Fastaval har at byde på.
-</p>
+    div.section h2 {
+      text-align: center;
+      margin-top: 0;
+    }
 
-<?php if (isset($this->info['work_area'])) { ?>
-<p>
-  Som arrangør har vi nogle spørgsmål rettet til dit arbejde på Fastaval. Efterfølgende vil du blive introduceret for
-  de samme spørgsmål som deltagerne.<br>
-  Spørgeskemaet kan derfor virke en smule længere for arrangører, men denne første halvdel er rigtig vigtig for os!
-</p>
-<?php } // IF work_area ?>
+    div.section table {
+      margin: auto;
+    }
+  </style>
 
-<p>
-  Dansk evaluering: <a href="https://forms.gle/pE2tk9q2kUYmwxQP9">https://forms.gle/pE2tk9q2kUYmwxQP9</a>
-</p>
+  <img src="https://infosys.fastaval.dk/img/banner-2024.png" style="width: 100%"/>
+  
+  <div class="section">
+    <h2>Hej <?=$this->name?>!</h2>
 
-<p>
-  Tusind tak!<br>
-  Vi glæder os til at se jer igen næste år.
-</p>
+    <p>
+      Af hjertet tak for din deltagelse på Fastaval 2024 - og en ekstra tusind tak, hvis du også arrangerede. 
+    </p>
 
-<p>
-  Venlig Hilsen<br>
-  Hovedarrangørerne for Fastaval 2023
-</p>
+    <p>
+      Hermed modtager du link til evaluering af årets Fastaval, og vi ville blive så glade, hvis du vil bruge lidt tid på at
+      gå den igennem, så vi kan arbejde videre med at udvikle Fastaval i fremtiden.
+    </p>
+
+    <p>
+      Evaluering tager ca. 5 min. og er delt op i forskellige kategorier med spørgsmål vedrørende de forskellige ting,
+      Fastaval har at byde på.
+    </p>
+
+    <?php if (isset($this->info['work_area'])) { ?>
+    <p>
+      Som arrangør har vi nogle spørgsmål rettet til dit arbejde på Fastaval. Efterfølgende vil du blive introduceret for
+      de samme spørgsmål som deltagerne. 
+      Spørgeskemaet kan derfor virke en smule længere for arrangører, men denne første halvdel er rigtig vigtig for os!
+    </p>
+    <?php } // IF work_area ?>
+
+    <p>
+      Dansk evaluering: <a href="https://forms.gle/rp9WxXyTZj8chFAK8">https://forms.gle/rp9WxXyTZj8chFAK8</a><br>
+      Engelsk evaluering: <a href="https://forms.gle/gHvrrkXYxsodrmC89">https://forms.gle/gHvrrkXYxsodrmC89</a>
+    </p>
+
+    <p>
+      Tusind tak!<br>
+      Vi glæder os til at se jer igen næste år.
+    </p>
+
+    <p>
+      Venlig Hilsen<br>
+      Hovedarrangørerne for Fastaval 2024
+    </p>
+  </div>
+
+  <img src="https://infosys.fastaval.dk/img/logo-plain-text.png" width="200" style="display: block; margin: auto;"/>
+</div>

@@ -1,38 +1,71 @@
-<h2>Hey <?=$this->name?>!</h2>
+<div id="content" style="max-width: 800px; margin: auto; font-family: Arial, Helvetica, sans-serif;">
+  <style>
+    div.section {
+      max-width: 81.5%;
+      margin: auto;
 
-<p>
-  A thousand, thousand many thanks from the bottom of our heart for your participation in Fastaval 2023 - and throw in
-  another thousand thanks if you were an organizer.
-</p>
+      background-color: #f9ad1b;
+      padding: 1rem;
+      border-radius: 10px;
 
-<p>
-  In this mail you'll find a link to the evaluation of this year's Fastaval, and we would be so happy if you would spend
-  a few moments answering it, so that we can further optimize Fastaval in the future.
-</p>
+      margin-bottom: 2rem;
+    }
 
-<p>
-  The evaluation only takes approx. 5 min. To answer and is split into different categories regarding the different
-  things Fastaval has to offer.
-</p>
+    div.section h2 {
+      text-align: center;
+      margin-top: 0;
+    }
 
-<?php if (isset($this->info->work_area)) { ?>
-<p>
-  As an organizer we have a few questions regarding your work at Fastaval. Afterwards you will be introduced to the same
-  questions as the other participants.<br> 
-  Therefore the questionnaire can seem a bit longer for the organizers, but the first half is very important to us!
-</p>
-<?php } // IF work_area ?>
+    div.section table {
+      margin: auto;
+    }
+  </style>
 
-<p>
-  English evaluation: <a href="https://forms.gle/5YfTXbgBq3NhAkWPA">https://forms.gle/5YfTXbgBq3NhAkWPA</a>
-</p>
+  <img src="https://infosys.fastaval.dk/img/banner-2024.png" style="width: 100%"/>
+  
+  <div class="section">
+    <h2>Hey <?=$this->name?>!</h2>
 
-<p>
-  Thank you so much!<br>
-  We look forward to seeing you again next year.
-</p>
+    <p>
+      A thousand, thousand many thanks from the bottom of our heart for your participation in Fastaval 2024 - and throw
+      in another thousand thanks if you were an organizer.
+    </p>
 
-<p>
-  Kind Regards<br>
-  The Main Organizers, Fastaval 2023
-</p>
+    <p>
+      In this mail you'll find a link to the evaluation of this year's Fastaval, and we would be so happy if you would
+      spend a few moments answering it, so that we can further optimise Fastaval in the future.
+    </p>
+
+    <p>
+      The evaluation only takes approx. 5 min. To answer and is split into different categories regarding the different
+      things Fastaval has to offer.
+    </p>
+
+    <?php if (isset($this->info['work_area'])) { ?>
+    <p>
+      As an organizer we have a few questions regarding your work at Fastaval. Afterwards you will be introduced to the
+      same questions as the other participants.<br> 
+      Therefore the questionnaire can seem a bit longer for the organizers, but the first half is very important to us!
+    </p>
+    <?php } // IF work_area ?>
+
+    <p>
+      Danish evaluation: <a href="https://forms.gle/rp9WxXyTZj8chFAK8">https://forms.gle/rp9WxXyTZj8chFAK8</a><br>
+      English evaluation: <a href="https://forms.gle/gHvrrkXYxsodrmC89">https://forms.gle/gHvrrkXYxsodrmC89</a>
+    </p>
+
+    <p>
+      Thank you so much!<br>
+      We look forward to seeing you again next year.
+    </p>
+
+    <p>
+      Kind Regards<br>
+      The Main Organizers, Fastaval 2024
+    </p>
+  </div>
+
+  <img src="https://infosys.fastaval.dk/img/logo-plain-text.png" width="200" style="display: block; margin: auto;"/>
+</div>
+
+

@@ -30,14 +30,15 @@ email <a href=mailto:andreas@fastaval.dk>andreas@fastaval.dk</a> and we'll figur
     <?= ($this->prices['total'] - $this->participant->betalt_beloeb + 100);?> DKK
 </p>
 <p>
-Alternatively you can pay by bank transfer - please note that there is a fee on bank transfer amounting to 20 DKK (which makes the amount to pay <strong><?=($this->prices['total'] - $this->participant->betalt_beloeb + 20)?></strong> DKK)<br/>
-* Paying from a Danish bank, use these details: Reg.: 9314 / Accountnr.: 4573884464<br/>
-* Our bank information is IBAN DK6693144573884464 and BIC SPNODK22.<br/>
+Alternatively you can pay by bank transfer - please note that we take a fee on bank transfer amounting to 20 DKK (which makes the amount to pay <strong><?=($this->prices['total'] - $this->participant->betalt_beloeb + 20)?></strong> DKK)<br/>
+Please notice that there are usually an extra fee on international bank transfers. <b>All fees incurred on international transfers will be your responsibility</b>.</br>
+* Paying from a Danish bank, use these details: Reg.: 9070 / Accountnr.: 1638710893<br/>
+* Our bank information is IBAN DK1090701638710893 and BIC VRAADK21.<br/>
 * deadline for payment is the same here: <?=$this->payment_day?>
 </p>
 <?php endif;?>
 <p>
-<strong>Please note </strong>that you can change your signup details through the signup at <a href="https://www.fastaval.dk/en/23tilmelding/">www.fastaval.dk</a>, up until <?=$this->end_signup_changes_date?>. All you need is your e-mail address and this code: <strong><?=$this->participant->password?></strong>
+<strong>Please note </strong>that you can change your signup details through the signup at <a href="https://www.fastaval.dk/en/24tilmelding/">www.fastaval.dk</a>, up until <?=$this->end_signup_changes_date?>. All you need is your e-mail address and this code: <strong><?=$this->participant->password?></strong>
 </p>
 <?php if ($this->participant_photo_upload_link) : ?>
 <p>

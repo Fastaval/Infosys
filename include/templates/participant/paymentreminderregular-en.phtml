@@ -11,7 +11,7 @@
 
 <p>
     If you haven&#39;t already paid, remember that your deadline for paying is <?=$this->payment_day_en;?>.
-    If you don&#39;t pay by this date your sign up will be canceled.
+    If you don&#39;t pay by this date your registration will be canceled.
 </p>
 
 
@@ -37,7 +37,8 @@
 <p>
     If you cannot pay using one of the above methods, it is also possible to pay through banktransfer. This is a bit
     more expensive however, as it involves more work. Because of that, there is a fee of <?= e($this->banking_fee);?>DKK
-    on bank transfers.
+    on bank transfers. Also be aware that there are usually an extra fee on international bank transfers.
+    <b>All fees incurred on international transfers will be your responsibility</b>.</br>
 </p>
 
 <p>To pay by banktransfer, use the information below:</p>
@@ -46,8 +47,8 @@
         Payment due is <?= e($this->payment_remainder + floatval($this->banking_fee));?>DKK
         (<?= e($this->payment_remainder);?>DKK + <?= e($this->banking_fee);?>DKK fee)
     </li>
-    <li>From a Danish bank: Reg.: 9314 / Account: 4573884464</li>
-    <li>Our bank information is IBAN DK6693144573884464 and BIC SPNODK22.</li>
+    <li>From a Danish bank: Reg.: 9070 / Account: 1638710893</li>
+    <li>Our bank information is IBAN DK1090701638710893 and BIC VRAADK21.</li>
     <li>
         ALWAYS make sure to add your name and participant ID <strong><?=$this->participant->id?></strong> as message so
         we know who the payment was from

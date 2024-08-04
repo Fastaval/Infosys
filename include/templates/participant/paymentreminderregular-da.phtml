@@ -30,19 +30,18 @@
 <p>
     Har du ikke mulighed for at betale via MobilePay, så kan du også gøre det via bankoverførsel. Det er dog noget
     dyrere, fordi det involverer mere arbejde. Derfor tager vi et gebyr på <?= e($this->banking_fee);?>,- for
-    betaling via bankoverførsel.
+    betaling via bankoverførsel. Hvis du betaler via overførsel fra en bank udenfor Danmark, skal du være opmærksom på at,
+    banken ofte tager et ekstra gebyr som du selv skal betale.
 </p>
 
 <p>For at betale via bankoverførsel skal du benytte dig af informationerne herunder:</p>
 <ul>
     <li>
         Du skal overføre <?= e($this->payment_remainder + floatval($this->banking_fee));?>kr. 
-        (<?= e($this->payment_remainder);?>kr + <?= e($this->banking_fee);?>kr i gebyr) enten via indbetalingskort
-        eller direkte overførsel
+        (<?= e($this->payment_remainder);?>kr + <?= e($this->banking_fee);?>kr i gebyr)
     </li>
-    <li>Ved indbetaling på indbetalingskort: Kortart: +73 / Kreditornr.: 84520098</li>
-    <li>Ved bankoverførsel til vores bankkonto: Reg.: 9314 / Kontonr.: 4573884464</li>
-    <li>Ved indbetaling fra en bank UDENFOR Danmark, så kontakt venligst <a href=mailto:fastaval@fastaval.dk>fastaval@fastaval.dk</a></li>
+    <li>Ved bankoverførsel til vores bankkonto: Reg.: 9070 / Kontonr.: 1638710893</li>
+    <li>Ved indbetaling fra en bank UDENFOR Danmark: IBAN DK1090701638710893 og BIC VRAADK21 <strong>Alle gebyrer for internationale overførlser er dit ansvar</strong></li>
     <li>deadline for indbetaling er her ligeledes <?=$this->payment_day?></li>
     <li>Anfør ALTID navn og deltager ID så vi ved hvem betalingen var fra</li>
 </ul>

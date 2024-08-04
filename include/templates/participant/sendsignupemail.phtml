@@ -25,16 +25,16 @@ Det er vigtigt, at du betaler fra samme telefonnummer, som du har angivet i din 
 skriv til <a href=mailto:andreas@fastaval.dk>andreas@fastaval.dk</a>, og så finder vi en løsning.
 </p>
 <p>
-Alternativt kan du betale via indbetalingskort eller bankoverførsel - bemærk at der er et gebyr på bankoverførsel på 20 kr (og betalingen bliver derfor <strong><?=($this->prices['total'] - $this->participant->betalt_beloeb + 20)?></strong> kr.)<br/>
-* Ved indbetaling på indbetalingskort: Kortart: +73 / Kreditornr.: 84520098<br/>
-* Ved bankoverførsel til vores bankkonto: Reg.: 9314 / Kontonr.: 4573884464<br/>
-* Ved indbetaling fra en bank UDENFOR Danmark så kontakt venligst <a href=mailto:fastaval@fastaval.dk>fastaval@fastaval.dk</a><br/>
+Alternativt kan du betale via bankoverførsel - bemærk at der er et gebyr på bankoverførsel på 20 kr (og betalingen bliver derfor <strong><?=($this->prices['total'] - $this->participant->betalt_beloeb + 20)?></strong> kr.)<br/>
+Hvis du betaler via overførsel fra en bank udenfor Danmark, skal du være opmærksom på at, banken ofte tager et ekstra gebyr som du selv skal betale.<br/>
+* Ved bankoverførsel til vores bankkonto: Reg.: 9070 / Kontonr.: 1638710893<br/>
+* Ved indbetaling fra en bank UDENFOR Danmark: BIC VRAADK21 og IBAN DK1090701638710893 <strong>Alle gebyrer for internationale overførlser er dit ansvar</strong><br/>
 * deadline for indbetaling er her ligeledes <?= $this->payment_day;?>
 </p>
 <?php endif;?>
 
 <p>
-<strong>Læg mærke til</strong> at du via tilmeldingen på <a href="https://www.fastaval.dk/23tilmelding/">www.fastaval.dk</a> kan loade og ændre din tilmelding, helt frem til <?=$this->end_signup_changes_date?>. Du skal bare bruge din email og denne kode: <strong><?=$this->participant->password?></strong>
+<strong>Læg mærke til</strong> at du via tilmeldingen på <a href="https://www.fastaval.dk/24tilmelding/">www.fastaval.dk</a> kan loade og ændre din tilmelding, helt frem til <?=$this->end_signup_changes_date?>. Du skal bare bruge din email og denne kode: <strong><?=$this->participant->password?></strong>
 </p>
 
 <?php if ($this->participant_photo_upload_link) : ?>
