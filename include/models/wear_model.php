@@ -393,6 +393,9 @@ class WearModel extends Model
         if (is_array($posted_attributes)) {
             $keys[] = count($posted_attributes) - 1;
         }
+
+        if (!isset($keys) || empty($keys)) return true; // Wear type has no attributes
+
         $vmax = max($keys);
 
         $posted_attribute_set = current($posted_attributes);
