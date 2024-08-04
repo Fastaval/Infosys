@@ -33,7 +33,7 @@ $this->registerLateLoadJS('participant.js');
 <div id='topboxes'>
     <div id='personal_info'>
         <fieldset>
-            <legend>Personlig info - <a href="<?= $this->url('edit_deltager', array('id' => $this->deltager->id));?>">Ret/slet</a> - <a id="character-sheet-link" href="<?= $this->url('spillersedler', array('id_range' => $this->deltager->id));?>" target="_blank">Spillerseddel</a></legend>
+            <legend>Personlig info - <a href="<?= $this->url('edit_deltager', array('id' => $this->deltager->id));?>"><?=$this->deltager->annulled === 'ja'? 'Ret/slet' : 'Ret' ?></a> - <a id="character-sheet-link" href="<?= $this->url('spillersedler', array('id_range' => $this->deltager->id));?>" target="_blank">Spillerseddel</a></legend>
             <table>
                 <tr>
                     <td class='label'>ID: </td><td><?= $this->deltager->id;?></td>
@@ -132,7 +132,8 @@ $this->registerLateLoadJS('participant.js');
                     <td colspan='6'><hr/></td>
                 </tr>
                 <tr>
-                    <td class='label'>Ungdomsskole: </td><td colspan='5' id='ungdomsskole' class='editable text'><?= e($this->deltager->ungdomsskole);?></td>
+                    <td class='label'>Ungdomsskole: </td><td colspan='3' id='ungdomsskole' class='editable text'><?= e($this->deltager->ungdomsskole);?></td>
+                    <td class='label'>Foto tiladelse: </td><td id='photo_consent' class='editable yesno'><?=$this->deltager->photo_consent?></td>
                 </tr>
                 <?php endif;?>
             </table>
