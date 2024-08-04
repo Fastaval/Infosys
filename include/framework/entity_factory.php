@@ -75,6 +75,7 @@ class EntityFactory
         'DeltagereTilmeldinger'     => 'DeltagereTilmeldinger',
         'DeltagereUngdomsskole'     => 'DeltagereUngdomsskole',
         'DeltagereWear'             => 'DeltagereWear',
+        'SpecialSpot'               => 'SpecialSpot',
         'Gamestart'                 => 'Gamestart',
         'GamestartSchedule'         => 'GamestartSchedule',
         'GDS'                       => 'GDS',

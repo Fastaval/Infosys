@@ -399,7 +399,30 @@ class Deltagere extends DBObject implements AgeFulfilment
         {
             return array();
         }
-        return $this->createEntity('Pladser')->getDeltagerPladser($this);
+
+        $spots = $this->createEntity('Pladser')->getDeltagerPladser($this);
+        
+        if (!$this->isDesigner()) return $spots;
+
+        // Add runs of their board game for designers
+        $duties = $this->getDesignerDuties();
+        foreach ($duties as $duty) {
+            $spots[] = $this->entity_factory->create('SpecialSpot', $duty['id'], $this, 'designer');
+        }
+
+        // Add special events for the participant type
+        $autos = $this->getAutoSpots();
+        foreach ($autos as $auto) {
+            $spots[] = $this->entity_factory->create('SpecialSpot', $auto[0], $this, 'spiller');
+        }
+
+        uasort($spots, function($a, $b) {
+            $atime = strtotime($a->getAfvikling()->start);
+            $btime = strtotime($b->getAfvikling()->start);
+            return $atime - $btime;
+        });
+
+        return $spots;
     }
 
     /**
@@ -1883,4 +1906,45 @@ WHERE
         } 
     }
 
+    /**
+     * Check if participant is a board game designer
+     */
+    public function isDesigner() {
+        return $this->storage['work_area'] == 2;
+    }
+
+    /**
+     * Get all runs where the activity is the designer's board game
+     */
+    public function getDesignerDuties() {
+        if (!$this->isDesigner()) return [];
+
+        if (!isset($this->storage['game_id'])) return [];
+
+        $result = $this->db->query(
+            "SELECT * FROM afviklinger WHERE aktivitet_id = ?",
+            [$this->storage['game_id']],
+        );
+        return $result;
+    }
+
+    /**
+     * Get special activities for designers and authors
+     */
+    public function getAutoSpots() {
+        $area = "";
+        if (in_array($this->storage['work_area'], [1, 54, 55, 56])) {
+            $area = "author";
+        } elseif (in_array($this->storage['work_area'], [2, 17, 18, 19])) {
+            $area = "designer";
+        } else {
+            return [];
+        }
+
+        $result = $this->db->query(
+            "SELECT * FROM afviklinger af JOIN aktiviteter ak ON af.aktivitet_id = ak.id WHERE ak.auto_signup_category = ?",
+            [$area],
+        );
+        return $result;
+    }
 }
