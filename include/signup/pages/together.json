@@ -34,8 +34,8 @@
                 {
                     "type": "paragraph",
                     "text": {
-                        "en": "\u00a0If you are an organizer arriving during the set-up days (monday, tuesday) you must sign up for the set-up crew, even if you are just setting up for the area you work in. This is to ensure that there is enough food for the people setting up. If you do not arrive in the set-up days, you can safely ignore this page.",
-                        "da": "Hvis du er arrang\u00f8r og kommer i ops\u00e6tningsdagene (mandag, tirsdag), skal du tilmelde dig ops\u00e6tningsholdet, ogs\u00e5 selvom du s\u00e6tter dit eget omr\u00e5de op. P\u00e5 den m\u00e5de kan vi sikre os, at der er mad nok til alle, der hj\u00e6lper med at s\u00e6tte Fastaval op. Hvis du ikke kommer i ops\u00e6tningsdagene, skal du bare ignorere denne side."
+                        "en": "\u00a0If you are an organizer arriving during the [b]set-up days (monday, tuesday)[\/b] you must sign up for the set-up crew, even if you are just setting up for the area you work in. This is to ensure that there is enough food for the people setting up. If you do not arrive in the set-up days, you can safely ignore this page.If you are a [b]game master\/game guide[\/b], you can mark it in the activity form on the next page.",
+                        "da": "Hvis du er arrang\u00f8r og kommer i [b]ops\u00e6tningsdagene (mandag, tirsdag),[\/b] skal du tilmelde dig ops\u00e6tningsholdet, ogs\u00e5 selvom du s\u00e6tter dit eget omr\u00e5de op. P\u00e5 den m\u00e5de kan vi sikre os, at der er mad nok til alle, der hj\u00e6lper med at s\u00e6tte Fastaval op. Hvis du er [b]spilleder\/regelformidler[\/b] kan du markere det i aktivitetsskemaet p\u00e5 n\u00e6ste side."
                     }
                 }
             ],
@@ -288,6 +288,14 @@
                         "start": 1,
                         "end": 10
                     }
+                },
+                {
+                    "type": "checkbox",
+                    "text": {
+                        "en": "I want to be a [b] super hero [\/b] - The Hero Force may contact me during Fastaval, if they are in need of additional assistance.",
+                        "da": "Jeg vil gerne v\u00e6re en [b] superhelt [\/b] - Helestyrken m\u00e5 kontakte mig i l\u00f8bet af Fastaval, hvis der er brug for ekstra h\u00e6nder."
+                    },
+                    "infosys_id": "supergds"
                 },
                 {
                     "type": "text_area",
