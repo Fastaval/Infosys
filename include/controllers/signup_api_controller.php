@@ -71,7 +71,7 @@ class SignupApiController extends Controller {
     }
     $data = $this->page->request->post->getRequestVarArray();
 
-    $json = json_encode($data['signup'], JSON_PRETTY_PRINT);
+    $json = json_encode($data['signup'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     $hash = date('Y-m-d-').hash('md5', $json);
     file_put_contents(self::DATA_FOLDER."$hash.json", $json);
 
@@ -94,7 +94,8 @@ class SignupApiController extends Controller {
     $signup_file = self::DATA_FOLDER."$data[hash].json";
     if(!is_file($signup_file)) die("Signup with Hash:$data[hash] not found.");
 
-    $signup = json_decode(file_get_contents($signup_file), true);
+    $file_content = file_get_contents($signup_file);
+    $signup = json_decode($file_content,  true);
     $data['signup'] = $signup;
     [$result, $participant] = $this->model->confirmSignup($data);
     
