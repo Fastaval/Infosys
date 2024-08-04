@@ -88,8 +88,11 @@ class Routes
         $this->routes['reset_pass_submit']     = array('url' => 'reset-pass-submit/:hash:', 'controller' => 'Index', 'method' => 'resetPassAction');
 
         // SMS stuffs - hackish
-        $this->routes['kickoff_sms_script'] = array('url' => 'index/kickoffsmsscript', 'controller' => 'index', 'method' => 'kickOffSMSScript');
         $this->routes['sms_auto_dryrun']    = array('url' => 'sms/auto-dryrun', 'controller' => 'sms', 'method' => 'autoDryRun');
+
+        // Automatic messages
+        $this->routes['kickoff_sms_script'] = array('url' => 'index/automaticmessages', 'controller' => 'index', 'method' => 'sendAutomaticMessages');
+
 
         // deltager routes
         $this->routes['all_users_ajax']                             = array('url' => 'deltager/ajax/userlist', 'controller' => 'Participant', 'method' => 'ajaxlist');

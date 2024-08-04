@@ -346,29 +346,161 @@ ORDER BY
      * @access public
      * @return void
      */
-    public function runAutomaticSMSSend()
+    public function sendAutomaticMessages()
     {
+        $this->fileLog("Running auto message script");
+
         $time   = date('Y-m-d H:i:s');
         $log    = $this->dic->get('Log');
-        $sender = $this->dic->get('SMSSender');
-        if (!$sender->safetyCheck()) {
-            $log->logToDB("Kan ikke sende automatiske beskeder - udenfor tidsperioden", 'SMS', 1);
+
+        $firebase = new Firebase($this->config);
+
+        $start = new DateTime($this->config->get('con.start'));
+        $end   = new DateTime($this->config->get('con.end'));
+
+        if (time() < $start->getTimestamp() || time() > $end->getTimestamp()) {
+            $log->logToDB("Kan ikke sende automatiske beskeder - udenfor tidsperioden", 'Messages', 1);
             return;
         }
 
         $activities = $this->getActivitiesForAutoSend($time);
-        $count      = $this->sendActivityMessages($activities, $sender);
-        $log->logToDB("InfoSys har sendt {$count} SMS beskeder til spilstart", 'SMS', 1);
+        $count = $error = 0;
+        foreach ($activities as $activity) {
+            $deltager = $this->createEntity('Deltagere')->findById($activity['deltager_id']);
+            $hold     = $this->createEntity('Hold')->findById($activity['hold_id']);
+
+            if (empty($deltager->gcm_id) || !$hold) {
+                continue;
+            }
+
+            $aktivitet = $hold->getAktivitet();
+            $afvikling = $hold->getAfvikling();
+
+            $firstname = $deltager->fornavn;
+            $tid       = date('H:i', strtotime($afvikling->start));
+
+            $message_da = "Hej {$firstname}. Om lidt kl {$tid} skal du være med til {$aktivitet->navn}";
+            $message_en = "Hello {$firstname}. Soon at {$tid} you're supposed to join {$aktivitet->title_en}";
+
+            if ($afvikling->lokale_id && ($lokale = $this->createEntity('Lokaler')->findById($afvikling->lokale_id))) {
+                $message_da .= " i lokale/lokation {$lokale->beskrivelse}";
+                $message_en .= " in room/at location {$lokale->beskrivelse}";
+            }
+            
+            $query = "INSERT INTO messages (text_da, text_en, send_time) VALUES (?,?, NOW())";
+            $args = [$message_da, $message_en];
+            $message_id = $this->db->exec($query, $args);
+
+            // $recipient = $this->createEntity('Deltagere')->findById(1);
+            $recipient = $deltager;
+            if ($this->sendMessage($recipient, $deltager->speaksDanish() ? $message_da : $message_en ,$message_id, $firebase)) {
+                $count++;
+            } else {
+                $error++;
+            }
+        }
+        $log->logToDB("InfoSys har sendt beskeder om spilstart. {$count} lykkedes, {$error} fejlede", 'Firebase', 1);
 
         $diy   = $this->getDIYForAutoSend($time);
-        $count = $this->sendDIYMessages($diy, $sender);
+        $count = $error = 0;
+        foreach ($diy as $res) {
+            $deltager = $this->createEntity('Deltagere')->findById($res['deltager_id']);
+            $vagt     = $this->createEntity('GDSVagter')->findById($res['gdsvagt_id']);
 
-        $log->logToDB("InfoSys har sendt {$count} SMS beskeder til GDS", 'SMS', 1);
+            if (empty($deltager->gcm_id) || !$vagt) {
+                continue;
+            }
+
+            $gds = $vagt->getGDS();
+
+            $firstname = $deltager->fornavn;
+            $tid       = date('H:i', strtotime($vagt->start));
+
+            $message_da   = "Hej {$firstname}. Din {$gds->navn} helte-tjans starter om lidt - kl.{$tid} :-) Masser af tak og kram fra Fastaval";
+            $message_en   = "Hello {$firstname}. Your {$gds->title_en} hero task starts soon - {$tid} :-) Many thanks and hugs from Fastaval";
+            
+            $query = "INSERT INTO messages (text_da, text_en, send_time) VALUES (?,?, NOW())";
+            $args = [$message_da, $message_en];
+            $message_id = $this->db->exec($query, $args);
+
+            // $recipient = $this->createEntity('Deltagere')->findById(1);
+            $recipient = $deltager;
+            if ($this->sendMessage($recipient, $deltager->speaksDanish() ? $message_da : $message_en ,$message_id, $firebase)) {
+                $count++;
+            } else {
+                $error++;
+            }
+        }
+        $log->logToDB("InfoSys har sendt beskeder til helte. {$count} lykkedes, {$error} fejlede", 'Firebase', 1);
 
         $diy   = $this->getTomorrowsDiyForAutoSend($time);
-        $count = $this->sendTomorrowsDiyMessages($diy, $sender);
+        $count = $error = 0;
+        foreach ($diy as $res) {
+            $deltager = $this->createEntity('Deltagere')->findById($res['deltager_id']);
+            $vagt     = $this->createEntity('GDSVagter')->findById($res['gdsvagt_id']);
 
-        $log->logToDB("InfoSys har sendt {$count} SMS beskeder til GDS", 'SMS', 1);
+            if (empty($deltager->gcm_id) || !$vagt) {
+                continue;
+            }
+
+            $gds = $vagt->getGDS();
+
+            $firstname = $deltager->fornavn;
+            $tid       = date('H:i', strtotime($vagt->start));
+
+            $message_da   = "Hej {$firstname}. Din {$gds->navn} helte-tjans starter om lidt - kl.{$tid} :-) Masser af tak og kram fra Fastaval";
+            $message_en   = "Hello {$firstname}. Your {$gds->title_en} hero task starts soon - {$tid} :-) Many thanks and hugs from Fastaval";
+            
+            $query = "INSERT INTO messages (text_da, text_en, send_time) VALUES (?,?, NOW())";
+            $args = [$message_da, $message_en];
+            $message_id = $this->db->exec($query, $args);
+
+            // $recipient = $this->createEntity('Deltagere')->findById(1);
+            $recipient = $deltager;
+            if ($this->sendMessage($recipient, $deltager->speaksDanish() ? $message_da : $message_en ,$message_id, $firebase)) {
+                $count++;
+            } else {
+                $error++;
+            }
+        }
+        $log->logToDB("InfoSys har sendt beskeder til mogendagens helte. {$count} lykkedes, {$error} fejlede", 'Firebase', 1);
+    }
+
+    function sendMessage($receiver, $message, $message_id, $firebase) {
+        try {
+            $query = "INSERT INTO participant_messages (message_id, participant_id) VALUES (?,?)";
+            $args = [$message_id, $receiver->id];
+            $this->db->exec($query, $args);
+
+            if ($receiver->gcm_id) { // Sending via Firebase
+                if (!$firebase->sendMessage($message, $receiver->gcm_id)) {
+                    $error = $firebase->getError();
+
+                    switch($error['code']) {
+                        case 'UNKNOWN':
+                            $this->fileLog("Unknown error sending firebase message: ".$firebase->getResponse());
+                            break;
+
+                        case "UNREGISTERED":
+                            $receiver->gcm_id = '';
+                            $receiver->update();
+                            $this->log("Deltager #$receiver->id Firebase token er udløbet og token er derfor blevet slettet", 'Deltager', null);
+                            break;
+                    }
+
+                    $result = "Failed";
+                } else {
+                    $result = "Success";
+                }
+                $this->log("Sent Firebase notification to participant #$receiver->id Result: $result", 'Besked', $this->getLoggedInUser());
+            }
+        } catch (Exception $e) {
+            $this->fileLog($e->getMessage());
+            $this->log('Failed notification to participant #' . $receiver->id . '. Error: ' . explode("\n",$e->getMessage())[0] , 'Besked', $this->getLoggedInUser());
+            $result = "Failed";
+        }
+
+        return $result;
     }
 
     /**
@@ -381,7 +513,7 @@ ORDER BY
      */
     public function canSendAutoSmsToParticipant($participant)
     {
-        return !(!$participant || $participant->medbringer_mobil === 'nej' || !empty($participant->gcm_id) || !empty($participant->apple_id));
+        return $participant && ( $participant->medbringer_mobil === 'ja' || !empty($participant->gcm_id) || !empty($participant->apple_id));
     }
 
     /**
@@ -494,7 +626,7 @@ SQL;
             $firstname = $deltager->fornavn;
             $title     = $gds->navn;
             $tid       = date('H:i', strtotime($vagt->start));
-            $message   = "Hej {$firstname}. Din {$title} GDS-tjans starter om lidt - kl.{$tid} :-) Masser af tak og kram fra Fastaval";
+            $message   = "Hej {$firstname}. Din {$title} helte-tjans starter om lidt - kl.{$tid} :-) Masser af tak og kram fra Fastaval";
             $count++;
 
             $deltager->sendSMS($sender, $message);

@@ -42,7 +42,7 @@ class IndexController extends Controller
          'methodlist' => array(
                           'login',
                           'noAccess',
-                          'kickOffSMSScript',
+                          'sendAutomaticMessages',
                           'forgottenPassDialog',
                           'forgottenPassAction',
                           'resetPassDialog',
@@ -57,9 +57,9 @@ class IndexController extends Controller
      * @access public
      * @return void
      */
-    public function kickOffSMSScript()
+    public function sendAutomaticMessages()
     {
-        $this->model->runAutomaticSMSSend();
+        $this->model->sendAutomaticMessages();
         exit;
     }
 
