@@ -50,10 +50,11 @@ class MailController extends Controller {
 
   /**
    * Send all participants a link to the evaluation
+   * /mail/sendevaluationmail
    */
   public function sendEvaluationMail() {
     $recipients = $this->model->getRecipients('evaluation');
-    //$recipients = $this->model->getRecipients(3);
+    //$recipients = $this->model->getRecipients(1);
 
     $year = $this->getConYear();
     $title = [
