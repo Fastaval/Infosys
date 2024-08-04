@@ -1066,7 +1066,6 @@ html;
 
         foreach($votes as $category => $activities) {
             $mpdf->SetHTMLHeaderByName('');
-            $mpdf->AddPage('','','1');
             switch ($category) {
                 case 'rolle':
                     $category_name = 'Rollespil';
@@ -1077,22 +1076,20 @@ html;
                     break;
             }
             $mpdf->SetHTMLFooter("<div style='text-align:right;'>$category_name Side {PAGENO}</div>");
-            $mpdf->WriteHTML("<h1>Afstemningssedler</h1>");
-            $mpdf->WriteHTML("<h2>$category_name</h2>");
 
             foreach ($activities as $activity) {
                 foreach ($activity['schedules'] as $start => $votes) {
-                    $schedule_string = e($activity['name_da'])." ".e($start);
-
-                    $header_name = "header$header_count";
-                    $mpdf->DefHTMLHeaderByName($header_name, "<div>$schedule_string</div>");
-                    $mpdf->SetHTMLHeaderByName($header_name);
-                    $header_count++;
-
-                    $html = "<h3>$schedule_string</h3>";
-                    
                     $cell = 0;
-                    $html .= "<table style='border-collapse:collapse;text-align:center;'><tr>";
+                    $html = <<<HTML
+                    <style>
+                        td {
+                            height: 250px;
+                        }
+                    </style>
+                    <table style='border-collapse:collapse;text-align:center;'>
+                        <tr>
+                    HTML;
+                    
                     foreach($votes as $vote) {
                         $name_da = e($activity['name_da']);
                         $name_en = e($activity['name_en']);
