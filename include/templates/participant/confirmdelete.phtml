@@ -2,6 +2,13 @@
     <fieldset>
         <legend>Slet deltager?</legend>
         <p>Er du sikker på du vil slette deltager <?php echo e($this->deltager->getName());?> (#<?php echo $this->deltager->id;?>)?</p>
+        <p>
+            Hvis du sletter en deltager, så åbner du for at en anden deltager kan få samme nummer. Derfor er det en god ide kun at slette
+            deltagere der er blevet pårette ved en fejl eller på anden måde ikke har være knyttet til en rigtig person.
+        </p>
+        <p>
+            I de fleste tilfælde burde det være nok at annullere en tilmelding.
+        </p>
         <form action="<?php echo $this->url('delete_deltager', array('id' => $this->deltager->id ));?>" method='post'>
             <input type='submit' value='Slet for pokker' name='delete_deltager' />
             <input type='submit' value='Nej, live and let live' />

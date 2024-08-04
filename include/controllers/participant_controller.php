@@ -574,6 +574,12 @@ class ParticipantController extends Controller
                     $this->page->model    = $this->model;
                     $this->page->setTemplate('visEdit');
                 }
+            } elseif ($post->cancel_deltager) {
+                $deltager->anulled = 'ja';
+                $deltager->update();
+                $this->successMessage('Tilmeldingen er anulleret');
+                $this->log("Deltager #{$deltager->id} blev anulleret af {$this->model->getLoggedInUser()->user}", 'Deltager', $this->model->getLoggedInUser());
+                $this->hardRedirect($this->url('visdeltager', array('id' => $deltager->id)));
             } elseif ($post->delete_deltager) {
                 $this->page->deltager = $deltager;
                 $this->page->setTemplate('confirmDelete');

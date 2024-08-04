@@ -2,7 +2,7 @@
 <div class='edit_details'>
     <form name='edit_deltager' action="<?php echo $this->url('update_deltager', array('id' => $this->deltager->id));?>" method='post'>
         <fieldset>
-            <legend><b>Ret/slet deltager info</b></legend>
+            <legend><b><?=$this->deltager->annulled === 'ja'? 'Ret/slet' : 'Ret' ?> deltager info</b></legend>
             <table>
                 <tr>
                     <td><b>ID:</b> <i style='margin-left: 10px; font-weight: bold'><?php echo $this->deltager->id;?></i></td>
@@ -86,6 +86,10 @@
             </table>
         </fieldset>
         <input type='submit' value='Opdater deltager' name='edit_deltager' class='centersubmits' />
-        <input type='submit' value='Slet deltager' name='delete_deltager' class='centersubmits' />
+        <?php if ($this->deltager->annulled === 'ja') { ?>
+            <input type='submit' value='Slet deltager' name='delete_deltager' class='centersubmits' />
+        <?php } else { ?>
+            <input type='submit' value='Annuler tilmelding' name='cancel_deltager' class='centersubmits' />
+        <?php } ?>
     </form>
 </div>
