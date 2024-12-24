@@ -79,7 +79,7 @@
         }
     },
     "input_error": {
-        "en": "There some issues with the input on the current page.\nDo you want to stay and fix them?",
+        "en": "There's some issues with the input on the current page.\nDo you want to stay and fix them?",
         "da": "Der er nogle problemer med indtastningen p\u00e5 den nuv\u00e6rende side.\nVil du blive p\u00e5 siden og rette dem?"
     },
     "sub_total": {

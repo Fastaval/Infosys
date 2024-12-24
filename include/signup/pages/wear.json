@@ -8,6 +8,15 @@
         "en": "Fastaval Wear",
         "da": "Fastaval Wear"
     },
+    "display_logic": [
+        {
+            "type": "field_compare",
+            "status": "disabled",
+            "input": "participant",
+            "compare": "equals",
+            "value": "Forælder"
+        }
+    ],
     "sections": [
         {
             "headline": {

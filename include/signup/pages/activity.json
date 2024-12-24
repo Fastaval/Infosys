@@ -8,6 +8,15 @@
         "en": "Activities",
         "da": "Aktiviteter"
     },
+    "display_logic": [
+        {
+            "type": "field_compare",
+            "status": "disabled",
+            "input": "participant",
+            "compare": "equals",
+            "value": "Forælder"
+        }
+    ],
     "sections": [
         {
             "items": [

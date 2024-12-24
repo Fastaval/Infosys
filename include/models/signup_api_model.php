@@ -341,7 +341,7 @@ class SignupApiModel extends Model {
     if (!isset($data['info'])) {
       // Create barebone participant
       $participant = $this->createEntity('Deltagere');
-      $participant->password = sprintf('%06d', mt_rand(0, 999999));
+      $participant->password = sprintf('%06d', mt_rand(100000, 999999));
       $participant->fornavn = "";
       $participant->efternavn = "";
       $participant->adresse1 = "";
@@ -538,6 +538,40 @@ class SignupApiModel extends Model {
               $bk  = $this->createEntity('BrugerKategorier');
               $participant->brugerkategori_id = $bk->findByname($value)->id;
               $is_organizer = $value == 'Arrangør';
+
+              // Some special logic for parents
+              if ($participant->brugerkategori_id == 11) {
+                $entry = $this->createEntity('Indgang');
+                $select = $entry->getSelect();
+                $select->setWhere('type', 'like', '%Forælder%');
+                $entry = $entry->findBySelect($select);
+                if (!$entry) {
+                  $errors['entry'][] = [
+                    'type' => 'no_entry',
+                    'info' => "parent",
+                    'age'  => $age,
+                    'alea' => ($is_alea || $items['misc:alea']),
+                    'organizer' => $is_organizer,
+                  ];
+                  continue 2;
+                }
+                $participant->setIndgang($entry);
+
+                $categories['entry'] = [
+                  [
+                    'key' => 'parent',
+                    'value' => 'on',
+                    'price' => $entry->pris,
+                  ],
+                  [
+                    'key' => 'sub_total',
+                    'value' => $entry->pris,
+                  ]
+                ];
+  
+                $total += $entry->pris;
+              }
+
               break;
 
             case 'wear_orders':
@@ -1078,6 +1112,8 @@ class SignupApiModel extends Model {
     // Notes
     if ($junior_contact) $participant->setNote('junior_ward', $junior_contact);
 
+    $participant->original_price = $total;
+
     return [
       'errors' => $errors,
       'categories' => $categories,
@@ -1332,19 +1368,21 @@ class SignupApiModel extends Model {
     }
 
     // Get notes
-    foreach($participant->note as $key => $note) {
-      if ($key == 'junior_ward') {
-        $ids = [
-          'Navn' => 'contact_name',
-          'Telefon' => 'contact_number',
-          'Email' => 'contact_mail',
-        ];
-        foreach(explode("\n", $note->content) as $line) {
-          [$label, $value] = explode(":", $line);
-          $signup['junior:'.$ids[$label]] = trim($value);
+    if (is_array($participant->note)) {
+      foreach($participant->note as $key => $note) {
+        if ($key == 'junior_ward') {
+          $ids = [
+            'Navn' => 'contact_name',
+            'Telefon' => 'contact_number',
+            'Email' => 'contact_mail',
+          ];
+          foreach(explode("\n", $note->content) as $line) {
+            [$label, $value] = explode(":", $line);
+            $signup['junior:'.$ids[$label]] = trim($value);
+          }
+        } else {
+          $signup['note:'.$key] = $note->content;
         }
-      } else {
-        $signup['note:'.$key] = $note->content;
       }
     }
 

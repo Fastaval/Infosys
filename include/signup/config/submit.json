@@ -119,6 +119,10 @@
         "misc:secret_support": {
             "en": "Secret support",
             "da": "Hemmelig st\u00f8tte"
+        },
+        "parent": {
+            "en": "Parent entrance ticket",
+            "da": "Forældrebillet"
         }
     },
     "warnings": {

@@ -330,6 +330,13 @@
                                 "en": "I am an organizer (including scenario writers and board game designers).",
                                 "da": "Jeg er arrang\u00f8r (inkl. scenarieforfattere og br\u00e6tspilsdesignere)"
                             }
+                        },
+                        {
+                            "value": "For\u00e6lder",
+                            "text": {
+                                "en": "I'm a parent of a Fastaval Junior participant",
+                                "da": "Jeg er for\u00e6lder til en Fastaval Junior deltager"
+                            }
                         }
                     ],
                     "errors": {
